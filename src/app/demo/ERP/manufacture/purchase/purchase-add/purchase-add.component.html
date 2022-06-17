@@ -1,0 +1,160 @@
+<div class="container">
+    <button type="button" class="btn btn-warning mt-3" (click)="previousPage()">Back</button>
+    <div class="bg-white">
+        <!-- <div class="card-body"> -->
+          <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+            <div class="row col-sm-12">
+
+                <div class="col-sm-12 text-right"><button class="btn btn-success" (click)="openModal()"
+                        [disabled]="purchase_form.invalid">Add Product</button></div>
+            </div>
+            <form [formGroup]="purchase_form">
+                <div class="row col-sm-12 mt-1">
+
+                    <div class="col-sm-4 ">
+                        <label for="">Invoicenumber</label>
+                        <input type="text" formControlName="invo" class="form-control">
+                    </div>
+                    <div class="col-sm-4 ">
+                        <label for="">Vendor Name</label>
+                        <select class="form-control" formControlName="vendor" (ngModelChange)="vendorType($event)">
+                            <option [value]="vendor.vendor_id" *ngFor="let vendor of getVendorData">{{vendor.name}}
+                            </option>
+                        </select>
+
+                    </div>
+                    <div class="col-sm-4">
+                        <label for="">Purchase Date</label>
+                        <input type="date" formControlName="p_date" class="form-control">
+
+                    </div>
+                </div>
+            </form>
+            <table class="table w-100 mt-5" *ngIf="productformarray.length!=0">
+                <thead class="bg-primary">
+                    <tr>
+                        <th class="text-white" scope="col">Product Id</th>
+                        <th class="text-white" scope="col">Item Id</th>
+                        <th class="text-white" scope="col">IGST</th>
+                        <th class="text-white" scope="col">CGST</th>
+                        <th class="text-white" scope="col">SGST</th>
+                        <th class="text-white" scope="col">HSN</th>
+                        <th class="text-white" scope="col">Price</th>
+                        <th class="text-white" scope="col">Quantity</th>
+                        <th class="text-white" scope="col">Discount</th>
+                        <th class="text-white" scope="col">Total</th>
+                        <th class="text-white" scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of duplicateproductformarray;let i=index">
+
+                        <td>{{data.category}}</td>
+                        <td>{{data.item_id}}</td>
+                        <td>{{data.igst}}</td>
+                        <td>{{data.cgst}}</td>
+                        <td>{{data.sgst}}</td>
+                        <td>{{data.hsn}}</td>
+                        <td>{{data.price}}</td>
+                        <td>{{data.qty}}</td>
+                        <td>{{data.discount}}</td>
+                        <td>{{data.total}}</td>
+                        <td (click)="delete(i)"><i class="fa fa-trash" aria-hidden="true"></i></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div class="row col-sm-12" *ngIf="productformarray.length!=0">
+
+                <div class="col-sm-12 text-right"><button class="btn btn-success"
+                        (click)="add_purchase_details()">Submit</button></div>
+            </div>
+
+        <!-- </div> -->
+    </div>
+</div>
+<div id="myModal2" class="modal2" *ngIf="openmodal">
+  <!-- <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3> -->
+
+    <div class="card">
+        <div class="card-header text-danger text-right"><span (click)="openmodal=false"
+                style="cursor: pointer;">X</span>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="productForm">
+                <div class="row">
+                    <div class="col">
+                        <label>Choose Catagory</label>
+                        <select class="form-control" (change)="chooseCategory($event.target.value)"
+                            formControlName="category">
+                            <option selected value="choose">ChooseCategory</option>
+                            <option *ngFor="let category of getCatagoryData;let i=index" [value]="category.cat_id">
+                                {{category.cat_name}}</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Item</label>
+                        <select class="form-control" formControlName="item_id"
+                            (change)="chooseItem($event.target.value)">
+                            <option selected value="choose">ChooseItem </option>
+                            <option *ngFor="let item of itemData" [value]="item.item_id">{{item.item_name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <label>IGST</label>
+                        <input type="number" formControlName="igst" class="form-control" disabled>
+                    </div>
+                    <div class="col">
+                        <label>CGST</label>
+                        <input type="number" formControlName="cgst" class="form-control" disabled>
+                    </div>
+                    <div class="col">
+                        <label>SGST</label>
+                        <input type="number" formControlName="sgst" class="form-control" disabled>
+                    </div>
+                    <div class="col">
+                        <label>Hsn</label>
+                        <input type="number" formControlName="hsn" class="form-control" disabled>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <label>Pur. Price</label>
+                        <input type="number" formControlName="price" class="form-control" (input)="calc_total()">
+                    </div>
+                    <div class="col">
+                        <label>Quantity</label>
+                        <input type="number" formControlName="qty" class="form-control" (input)="calc_total()">
+                    </div>
+                    <div class="col">
+                        <label>Discount</label>
+                        <input type="number" formControlName="discount" class="form-control" (input)="calc_total()">
+                    </div>
+                    <div class="col">
+                        <label>Total</label>
+                        <input type="number" formControlName="total" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-sm-12 text-right ">
+                        <button type="button" class="btn btn-danger" (click)="submitArray();openmodal=false"
+                            [disabled]="productForm.invalid">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!-- Loader Starts -->
+<div *ngIf="loader"
+    class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+<!-- Loader Ends -->

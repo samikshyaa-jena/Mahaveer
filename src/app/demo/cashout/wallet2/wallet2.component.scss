@@ -1,0 +1,52 @@
+.submitBtnCol {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    // .form-group {
+    //   margin-bottom: 2.3rem;
+    // }
+  }
+
+  .wall-cash-submit {
+    padding-top: 29px;
+  }
+
+  .wallet-container{
+    border: 1px solid;
+    height: 130px;
+    border-color: var(--blue);
+    border-radius: 10px;
+    padding: 0;
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+  }
+
+  .wallet-heading {
+    padding: 10px;
+    background-color: var(--blue);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    color: #fff;
+  }
+
+  .wallet-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .wallet-price {
+    text-align: center;
+  }
+
+  :host ::ng-deep {
+    .card {
+      border-radius: 10px;
+    }
+  }
+
+  @media screen and (max-width: 760px) {
+    .wall-cash-submit {
+      padding-top: 0;
+    }
+  }

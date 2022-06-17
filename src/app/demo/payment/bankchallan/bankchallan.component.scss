@@ -1,0 +1,48 @@
+.bnkChlnLoader {
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.6);
+    z-index: 9999;
+}
+.radioPymntInfo {
+    visibility: hidden;
+    position: absolute;
+}
+.tabTitle {
+    font-size: 18px;
+    font-weight: bold;
+}
+.divModal {
+    width: 400px;
+    left: 100%;
+    top: 0px;
+    border: 1px solid #00BCD4;
+    padding: 15px;
+    background-color: #ffffff;
+    z-index: 9;
+
+    &.modalLeft {
+        left: auto;
+        right: 100%;
+    }
+    .btnlnk {
+        background: none;
+        font-weight: 500;
+        color: #00BCD4;
+        padding: 0px;
+        border: none !important;
+        outline: none !important;
+    }
+    .feather {
+        font-size: 20px;
+        vertical-align: bottom;
+    }
+    p {
+        font-weight: 500;
+    }
+    h5 {
+        font-weight: 600;
+    }
+}

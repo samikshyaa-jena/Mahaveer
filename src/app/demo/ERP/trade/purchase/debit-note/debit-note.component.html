@@ -1,0 +1,315 @@
+<div *ngIf="loader"
+  class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+
+<div [ngClass]="debitNote ? 'container' : 'page_color'">
+    <div class="debitNoteTable" *ngIf="debitNote">
+        <div class="row col-sm-12 px-0 py-0 mx-0 mt-4 mb-2">
+            <form [formGroup]="filterForm" class="col-sm-12 px-0 py-0 mx-0 my-0">
+                <div class="row col-sm-12">
+                    <div class="col-sm-3">
+                        <select formControlName="month" class="form-control"
+                            (change)="searchmonth($event.target.value)">
+                            <option selected disabled value="Choose Month">Choose Month</option>
+                            <option value="{{m}}" *ngFor="let m of monthList">{{m}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="date" [(ngModel)]="fateRange" formControlName="fromDate" class="form-control"
+                            placeholder="From Date">
+                    </div>
+                    <div class="col-sm-3">
+                        <input type="date" [(ngModel)]="fateRange1" (ngModelChange)="searchDate()" formControlName="toDate"
+                            class="form-control" placeholder="To Date">
+                    </div>
+                    <div class="col-sm-3">
+                        <select id="" formControlName="firm" class="form-control">
+                            <option value="Choose Firm" selected disabled>Choose Firm</option>
+                            <option [value]="f" *ngFor="let f of firmList">{{f}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="tableDiv">
+            <div class="top_buttons">
+                <div class="debitBtn">
+                    <form [formGroup]="modeForm">
+                        <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" routerLink="/v1/manufacture/debit" title="Manufacture">Manufacture</button>
+                        <button class="btn btn-primary" title="Go To Trade" disabled>Trade</button>
+                      </form>
+                </div>
+                <div class="debitBtn">
+                    <button class="btn btn-primary" (click)="toggleDiv(1)">Add Debit Note</button>
+                </div>
+            </div>
+            <table class="table w-100 mt-1">
+                <thead class="bg-primary">
+                    <tr>
+                        <th class="text-white" scope="col">Date</th>
+                        <th class="text-white" scope="col">Reference Id</th>
+                        <th class="text-white" scope="col">Party Name</th>
+                        <th class="text-white" scope="col">Catagory Name</th>
+                        <th class="text-white" scope="col">Type</th>
+                        <th class="text-white" scope="col">Total</th>
+                        <th class="text-white" scope="col">Recieved</th>
+                        <th class="text-white" scope="col">Balance</th>
+                        <th class="text-white" scope="col">Due Date</th>
+                        <th class="text-white" scope="col">Status</th>
+                        <th class="text-white" scope="col">Print</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of manufacture_data">
+                        <td>{{data.return_date}}</td>                       
+                        <td>{{data.item_name}}</td>                       
+                        <td>{{data.return_date}}</td>                       
+                        <td>{{data.return_date}}</td>                       
+                        <td>{{data.return_date}}</td>                       
+                        <td>{{data.return_date}}</td>                       
+                        <td>{{data.return_date}}</td>                       
+                        <td>{{data.return_date}}</td>                       
+                        <td>{{data.return_date}}</td>                       
+                        <td>{{data.return_date}}</td>                       
+                        <td>{{data.return_date}}</td>                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="debitNotePage" *ngIf="!debitNote">
+        <!-- <div class="debitNote_div">
+            <div class="heading col-sm-12 text-center mt-5">
+                <h3 class="head text-warning">
+                    Debit Note
+                </h3>
+            </div>
+            <form [formGroup]="debitNoteForm" class="my-3">
+                <div class="col-sm-12 row">
+                    <div class="col-sm-4">
+                        <label class="lab_tag" for="">Invoice No:</label>
+                        <input type="number" class="form-control" formControlName="invo" readonly>
+
+
+                        <label class="lab_tag" for="">Vendor:</label>
+                        <input type="text" class="form-control" formControlName="vendor_id" readonly>
+
+                        <label class="lab_tag" for="">Item:</label>
+                        <select formControlName="item_id" class="form-control" (change)="getGst($event.target.value)">
+                            <option selected disabled value="selectItem">Select Item</option>
+                            <option *ngFor="let item of filterdItem" [value]="item.item_id">{{item.item_name}}</option>
+                        </select>
+
+                        <label class="lab_tag" for="">IGST:</label>
+                        <input type="number" class="form-control" formControlName="igst" readonly>
+
+                        
+                    </div>
+
+
+
+                    <div class="col-sm-4">
+                        <label class="lab_tag" for="">Total:</label>
+                        <input type="number" class="form-control" formControlName="total" readonly>
+
+
+                        <label class="lab_tag" for="">Type:</label>
+                        <input type="text" class="form-control" formControlName="type" readonly>
+
+                        <label class="lab_tag" for="">CGST:</label>
+                        <input type="number" class="form-control" formControlName="cgst" readonly>
+
+                        <label class="lab_tag" for="">Purchase Price:</label>
+                        <input type="number" class="form-control" formControlName="prc" readonly>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <label class="lab_tag" for="">Date:</label>
+                        <input type="date" class="form-control" formControlName="date">
+
+                        <label class="lab_tag" for="">SGST:</label>
+                        <input type="number" class="form-control" formControlName="sgst" readonly>
+
+                        <label class="lab_tag" for="">Quantity:</label>
+                        <input type="number" class="form-control" formControlName="qty" (input)="calc_debit_price()">
+
+                        <div class="text-right mt-4">
+                            <button type="button" class="btn btn-outline-dark mr-1">Submit</button>
+                            <button type="reset" class="btn btn-outline-dark" (click)="toggleDiv(2)">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div> -->
+    <!-- <div class="heading">
+        <h3>Debit Note</h3>
+    </div> -->
+
+    <button border="none" class="btn back_btn" (click)="debitNote=true"><i class="fas fa-arrow-alt-circle-left"></i></button>
+    <div class="formDiv row col-sm-12 mt-2">
+        <form [formGroup]="userForm" class="col-sm-12 row px-0 py-0 mx-0 my-0">
+            <div class="col-sm-12 row px-0 py-0 mx-0 my-0">
+                <div class="leftInps col-sm-4 text-lext px-0 py-0 mx-0 my-0">
+                    <div class="col-sm-12">
+                        <select class="form-control" formControlName="choose_vender">
+                            <option value="ch_vender" disabled>Choose Vendor</option>
+                            <option *ngFor="let vender of vendor_data" value="vender.name">{{vender.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="rightInps col-sm-8 text-right px-0 py-0 mx-0 my-0">
+                    <div class="col-sm-12" style="display: flex; justify-content: flex-end;">
+                        <table cellpadding="2px">
+                            <tr class="text_left">
+                                <td>Return No.</td>
+                                <td><input type="text" class="inpTag"></td>
+                            </tr>
+                            <tr class="text_left">
+                                <td>Invoice No.</td>
+                                <td><input type="text" class="inpTag"></td>
+                            </tr>
+                            <tr class="text_left">
+                                <td>Invoice Date</td>
+                                <td><input type="date" class="inpTag"></td>
+                            </tr>
+                            <tr class="text_left">
+                                <td>Date</td>
+                                <td><input type="date" class="inpTag"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 row px-0 py-0 mx-0 mt-3">
+                <table width="100%" border="1px solid gray" class="text-center"
+                    style="border-collapse: separate;text-indent: initial;border-spacing: 2px;">
+                    <thead class="bg-white">
+                        <tr>
+                            <th rowspan="3" style="width: 300px;">Item</th>
+                            <th rowspan="3">Model No</th>
+                            <th rowspan="3">Variant</th>
+                            <th rowspan="3">Quantity</th>
+                            <th style="width: 80px;">Unit</th>
+                            <th rowspan="3">Price/Unit</th>
+                            <th colspan="2">Discount</th>
+                            <th colspan="2">Tax</th>
+                            <th colspan="2" rowspan="3">Amount</th>
+                            <th rowspan="2">Delete</th>
+                        </tr>
+                        <tr>
+                            <th class="text-left">
+                                <select name="" id="" class="inpTag2">
+                                    <option value="">WithoutTax</option>
+                                    <option value="">With Tax</option>
+                                </select>
+                            </th>
+                            <th class="inpTag2">%</th>
+                            <th class="inpTag2">Amount</th>
+                            <th class="inpTag2">%</th>
+                            <th class="inpTag2">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container formArrayName="user">
+                            <tr *ngFor="let User of userForm.get('user')['controls'];let i=index"
+                                [formGroupName]="i">
+                                <td>
+                                    <select class="inpTag1"
+                                        formControlName="item">
+                                        <option value="ch_item" disabled>Choose Item</option>
+                                        <option *ngFor="let items of item_data" value="items.item_name">
+                                            {{items.item_name}}</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" class="inpTag1" formControlName="model_no"></td>
+                                <td><input type="text" class="inpTag1" formControlName="variant"></td>
+                                <td><input type="text" class="inpTag1" formControlName="quantity"></td>
+                                <td>
+                                    <select class="inpTag1" formControlName="unit">
+                                        <option value="None">None</option>
+                                        <option value="PCS">PCS</option>
+                                        <option value="Pack">Pack</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" class="inpTag1" formControlName="price"></td>
+                                <td><input type="text" class="inpTag1" formControlName="a"></td>
+                                <td><input type="text" class="inpTag1" formControlName="discount"></td>
+                                <td><input type="text" class="inpTag1" formControlName="b"></td>
+                                <td><input type="text" class="inpTag1" formControlName="tax"></td>
+                                <td colspan="2"><input type="text" class="inpTag1" formControlName="amount"></td>
+                                <td><button border="none" class="btn delete_btn" (click)="deleteRow(i)"><i
+                                            class="fas fa-times-circle"></i></button></td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                    <tfoot style="border: none;">
+                        <tr style="border: none;">
+                            <td style="display: flex;justify-content:space-between;padding: 5px"><button
+                                    class="btn btn-primary" (click)="add_row()">Add Row</button> <span>Total</span>
+                            </td>
+                            <td colspan="3" class="text-right" style="padding: 5px;">0</td>
+                            <td colspan="4" class="text-right" style="padding: 5px;">0</td>
+                            <td colspan="2" class="text-right" style="padding: 5px;">0</td>
+                            <td colspan="1" class="text-right" style="padding: 5px;">0</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-sm-12 row px-0 py-0 mx-0 mt-3">
+                <div class="col-sm-8">
+                    <div class="col-sm-12 row">
+                        <div class="col-sm-4">
+                            <input type="text" placeholder="Transport Name" class="form-control mt-3">
+                            <input type="text" placeholder="Vehicle Number" class="form-control mt-3">
+                            <input type="text" placeholder="Delivery Date" class="form-control mt-3">
+                        </div>
+                        <div class="col-sm-4">
+                            <input type="text" placeholder="Delivery Location" class="form-control mt-3">
+                        </div>
+                        <div class="col-sm-4">
+                            <select name="" id="" class="form-control mt-3">
+                                <option value="" selected disabled>Payment Mode</option>
+                            </select>
+                            <input type="text" placeholder="Add Description" class="form-control mt-3">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="col-sm-12 mt-3" style="display: flex; justify-content: flex-end;">
+                        <table>
+                            <tr>
+                                <td>GST</td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>Exchange Value Of Old Machine</td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>Advance Recieved</td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="footer_btn">
+        <button class="btn btn-danger mr-2">Cancel</button>
+        <button class="btn btn-primary">Save</button>
+    </div>
+    
+    </div> 
+
+</div>

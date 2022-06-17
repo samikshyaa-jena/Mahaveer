@@ -1,0 +1,219 @@
+<!-- Loader Starts -->
+<div *ngIf="loader"
+  class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+<!-- Loader Ends -->
+<!-- <div class="container"> -->
+<app-purchase-add *ngIf="purchase_tab" (get_purchase_details)="get_purchase_details()" (BackTab)="back()">
+</app-purchase-add>
+<div class="container" style="padding:15px" *ngIf='!purchase_tab'>
+  <!-- <div class="card"> -->
+    <!-- <div> -->
+      <div class="row col-sm-12 mt-3">
+        <div class="mode_change col-sm-9">
+          <form [formGroup]="modeForm">
+            <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture" disabled>Manufacture</button>
+            <button class="btn btn-primary" routerLink="/v1/trade/purchase" title="Go To Trade">Trade</button>
+          </form>
+        </div>
+        <div class="col-sm-3">
+          <button class="btn btn-primary" (click)="purchase_entry() ">Purchase Entry</button>
+        </div>
+      </div>
+      <div class="prod_table px-0 py-0 mx-0 my-0">
+        <div class="table-responsive px-0 py-0 mx-0 my-0">
+          <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+          <table class="table v-middle nowrap">
+            <thead class="table-secondary">
+              <tr>
+                <th class="border-top-0">Invoice</th>
+                <th class="border-top-0">Date</th>
+                <th class="border-top-0">Vendor</th>
+                <th class="border-top-0">GSTN</th>
+                <th class="border-top-0">CGST</th>
+                <th class="border-top-0">SGST</th>
+                <th class="border-top-0">IGST</th>
+                <th class="border-top-0">Total</th>
+                <!-- <th class="border-top-0">Debit Note</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of get_purchase_data; let i = index">
+                <td><span style="color: blue; cursor: pointer;"
+                    (click)="invoicenumberPopup(data.invoice_no,data.purchase_data,data.vendorData)">{{data.invoice_no}}</span></td>
+                <td>{{data.purchase_date | date: 'dd/MM/yyyy'}}</td>
+                <td>{{data.vendorData.name}}</td>
+                <td>{{data.vendorData.gstn}}</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>{{data.totalPrice}}</td>
+                <!-- <td><span style="color: blue; cursor: pointer;" (click)="debitNote(data.invoice_no,data.purchase_data,data.vendorData,debit)">Return</span></td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <!-- </div> -->
+  <!-- </div> -->
+</div>
+
+<ng-template #updt let-c="close" let-d="dismiss">
+  <!-- <div class="modal-header">
+    <button class="close_btn">
+      <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="updateVendorForm">
+      <form [formGroup]="updatePurchase" class="my-3">
+        <label class="lab_tag" for="">Catagory:</label>
+        <input type="text" class="form-control" formControlName="catagory" readonly>
+        <!-- <select [(ngModel)]="cattName" formControlName="catagory" class="form-control" >
+          <option [value]="catt_id">{{cattName}}</option>
+          <option *ngFor="let category of getCatagoryData;let i=index" [value]="category.cat_id">{{category.cat_name}}</option>
+        </select> -->
+        <label class="lab_tag" for="">Item:</label>
+        <input type="text" class="form-control" formControlName="item_id" readonly>
+        <!-- <select [(ngModel)]="itemmName" formControlName="item_id" class="form-control" disabled>
+          <option [value]="itemm_id" selected disabled >{{itemmName}}</option>
+          <option *ngFor="let item of itemData" [ngValue]="item.item_id">{{item.item_name}}</option>
+        </select> -->
+        <label class="lab_tag" for="">HSN:</label>
+        <input type="text" class="form-control" formControlName="hsn" readonly>
+        <label class="lab_tag" for="">Pur. Price:</label>
+        <input type="number" class="form-control" formControlName="price" (input)="calc_total()">
+        <label class="lab_tag" for="">Quantity:</label>
+        <input type="number" class="form-control" formControlName="qty" (input)="calc_total()">
+        <label class="lab_tag" for="">Unit:</label>
+        <input type="text" class="form-control" formControlName="unit" >
+        <label class="lab_tag" for="">Discount:</label>
+        <input type="number" class="form-control" formControlName="discount" (input)="calc_total()">
+        <label class="lab_tag" for="">CGST:</label>
+        <input type="number" class="form-control" formControlName="cgst" readonly>
+        <label class="lab_tag" for="">SGST:</label>
+        <input type="number" class="form-control" formControlName="sgst" readonly>
+        <label class="lab_tag" for="">IGST:</label>
+        <input type="number" class="form-control" formControlName="igst" readonly>
+        <label class="lab_tag" for="">Total:</label>
+        <input type="number" class="form-control" formControlName="total" readonly>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark mr-1" (click)="updateArray()">Submit</button>
+    <button type="reset" class="btn btn-outline-dark" (click)="closeUpdateForm(updt)">Cancel</button>
+  </div>
+</ng-template>
+
+
+<div id="myModal2" class="modal2 px-5 col-sm-12 row" *ngIf="modal">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-10">
+    <div class="card">
+      <div class="card-header">
+        <button class="btn btn-dark" style="float: right; cursor: pointer;" (click)="modal=false">X</button>
+      </div>
+      <div class="card-body">
+       <table class="table table-bordered">
+         <thead class="bg-primary">
+           <tr>
+             <th scope="col" class="text-white text-center">Catagory</th>
+             <th scope="col" class="text-white text-center">Item</th>
+             <th scope="col" class="text-white text-center">HSN</th>
+             <th scope="col" class="text-white text-center">Pur. Price</th>
+             <th scope="col" class="text-white text-center">Qty</th>
+             <th scope="col" class="text-white text-center">Unit</th>
+             <th scope="col" class="text-white text-center">Discount</th>
+             <th scope="col" class="text-white text-center">CGST</th>
+             <th scope="col" class="text-white text-center">SGST</th>
+             <th scope="col" class="text-white text-center">IGST</th>
+             <th scope="col" class="text-white text-center">Total</th>
+             <th scope="col" class="text-white text-center">Action</th>
+           </tr>
+         </thead>
+         <tbody class="bg-white">
+           <tr *ngFor="let e of popupData; let i = index">
+             <td class="text-center">{{e.catagoryName}}</td>
+             <td class="text-center">{{e.itemName}}</td>
+             <td class="text-center">{{e.hsn}}</td>
+             <td class="text-center">{{e.price}}</td>
+             <td class="text-center">{{e.qty}}</td>
+             <td class="text-center">{{e.unit}}</td>
+             <td class="text-center">{{e.discount}}</td>
+             <td class="text-center" *ngIf="x">NA</td>
+             <td class="text-center" *ngIf="!x">{{e.cgstVal}} ({{e.cgst}}%)</td>
+             <td class="text-center" *ngIf="y">NA</td>
+             <td class="text-center" *ngIf="!y">{{e.sgstVal}} ({{e.sgst}}%)</td>
+             <td class="text-center" *ngIf="z">NA</td>
+             <td class="text-center" *ngIf="!z">{{e.igstVal}} ({{e.igst}}%)</td>
+             <td class="text-center">{{e.total}}</td>
+             <td>
+               <span style="cursor: pointer" (click)="openUpdatePucrchase(i,popupData,updt)"><i
+                   class="fa fa-edit" aria-hidden="true"></i></span>
+               <span class="mx-2" style="cursor: pointer"><i class="fa fa-trash" aria-hidden="true"></i></span>
+             </td>
+           </tr>
+ 
+         </tbody>
+       </table>
+       <div class="btns" style="float: right;">
+         <button type="reset" class="btn btn-danger mr-1" (click)="modal=false">cancel</button>
+         <button type="submit" class="btn btn-primary" [disabled]='!enable' (click)="update_purchase_details()">Update</button>
+       </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="col-sm-2"></div> -->
+   
+</div>
+<!-- </div> -->
+
+
+
+<ng-template #debit let-c="close" let-d="dismiss">
+  <!-- <div class="modal-header">
+    <button class="close_btn">
+      <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
+    </button>
+  </div> -->
+  <div class="modal-body"> 
+    <div class="debitNote">
+      <form [formGroup]="debitNoteForm" class="my-3">
+        <label class="lab_tag" for="">Vendor:</label>
+        <input type="text" class="form-control" formControlName="vendor_id" readonly>
+        <label class="lab_tag" for="">Type:</label>
+        <input type="text" class="form-control" formControlName="type" readonly>
+        <label class="lab_tag" for="">Date:</label>
+        <input type="date" class="form-control" formControlName="date">
+        <label class="lab_tag" for="">Item:</label>
+        <select  formControlName="item_id" class="form-control" (change)="getGst($event.target.value)">
+          <option selected disabled value="selectItem">Select Item</option>
+          <option *ngFor="let item of filterdItem" [value]="item.item_id">{{item.item_name}}</option>
+        </select>
+        <!-- <input type="number" class="form-control" formControlName="item_id"> -->
+        <label class="lab_tag" for="">CGST:</label>
+        <input type="number" class="form-control" formControlName="cgst" readonly>
+        <label class="lab_tag" for="">SGST:</label>
+        <input type="number" class="form-control" formControlName="sgst" readonly>
+        <label class="lab_tag" for="">IGST:</label>
+        <input type="number" class="form-control" formControlName="igst" readonly>
+        <label class="lab_tag" for="">Purchase Price:</label>
+        <input type="number" class="form-control" formControlName="prc" readonly>
+        <label class="lab_tag" for="">Quantity:</label>
+        <input type="number" class="form-control" formControlName="qty" (input)="calc_debit_price()">
+        <label class="lab_tag" for="">Total:</label>
+        <input type="number" class="form-control" formControlName="total" readonly>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="update_debit_note()">Submit</button>
+    <button type="reset" class="btn btn-outline-dark" (click)="closeDebitForm(debit)">Cancel</button>
+  </div>
+</ng-template>

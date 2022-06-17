@@ -1,0 +1,111 @@
+<app-card [hidHeader]="true">
+    <form [formGroup]="wallet2Form">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Select Service Type: </label>
+                    <select class="form-control" formControlName="transactionType">
+                      <option disabled value="">Select</option>
+                      <option value="wallet2_cashout">Wallet Cashout</option>
+                      <option value="wallet_transfer">Wallet Transfer</option>
+                    </select>
+                  </div>
+            </div>
+        </div>
+    </form>
+
+    <ng-container *ngIf="wallet2Form.get('transactionType').value === 'wallet2_cashout'">
+      <div class="card">
+          <div class="card-body">
+              <form [formGroup]="cashoutForm" (submit)="submitCashout()">
+          
+                <div class="row mb-3">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Amount to be transaferred to Bank * : </label>
+                      <input type="text" class="form-control" placeholder="Enter Amount">
+                    </div>
+                  </div>
+                  <div class="col wall-cash-submit">
+                    <button type="submit" class="btn btn-primary">Transfer</button>
+                  </div>
+                </div>
+  
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Bank Name: </label>
+                      <input type="text" class="form-control" placeholder="Enter Bank Name" formControlName="bankName">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>IFSC Code: </label>
+                      <input type="text" class="form-control" placeholder="Enter IFSC Code" formControlName="ifsc">
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>Account No.: </label>
+                      <input type="text" class="form-control" placeholder="Enter Accout Number" formControlName="accountNumber">
+                    </div>
+                  </div>
+                  <div class="col"></div>
+                </div>
+  
+  
+              </form>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="wallet2Form.get('transactionType').value === 'wallet_transfer'">
+      <div class="card">
+        <div class="card-body">
+          <form>
+
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Amount to be transaferred to Wallet 1 * : </label>
+                  <input type="text" class="form-control" placeholder="Enter Amount">
+                </div>
+              </div>
+              <div class="col wall-cash-submit">
+                <button type="button" class="btn btn-primary">Transfer</button>
+              </div>
+            </div>
+
+          </form>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="wallet-container">
+                <div class="wallet-heading">
+                  <span><i class="fas fa-wallet"></i></span>&nbsp;&nbsp;<span>Wallet 2</span>
+                </div>
+                <div class="wallet-body">
+                  <h2 class="text-center">
+                    {{ storeData.w2Data | currency: 'INR' }}
+                  </h2>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="wallet-container">
+                <div class="wallet-heading">
+                  <span><i class="fas fa-wallet"></i></span>&nbsp;&nbsp;<span>Wallet 1</span>
+                </div>
+                <div class="wallet-body">
+                  <h2 class="text-center">
+                    {{ storeData.w1Data | currency: 'INR' }}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ng-container>
+</app-card>

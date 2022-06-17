@@ -1,0 +1,631 @@
+:host ::ng-deep {
+    .card {
+        border-radius: 10px;
+    }
+    .card-body {
+        min-height: 560px;
+    }
+    .initial-banner {
+        .card-body {
+            padding: 0;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    }
+    .modal-content {
+      border-radius: 15px !important;
+      overflow: hidden;
+    }
+    .modal-body {
+      padding: 0px !important;
+    }
+}
+.aadharPay_div{
+  padding: 20px;
+}
+
+.mat-form-field {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.border-rad-5 {
+    border-radius: 5px;
+}
+
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.otp-elements {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    justify-items: center;
+
+    input {
+        height: 2.5vw;
+        width: 2.5vw;
+        padding: 0 .9vw;
+    }
+}
+
+.bene-name {
+    border-bottom: 1px solid;
+    padding: 0 10px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    &:last-child {
+      border-bottom: 0;
+    }
+    .bene-info {
+      display: flex;
+      flex-direction: column;
+      span {
+        font-weight: bold;
+        &:first-child {
+          font-size: 16px;
+        }
+      }
+      small {
+        font-weight: bold;
+      }
+    }
+    .bene-verified {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      // position: relative;
+      // color: var(--green);
+
+      .banktick {
+        top: 10px;
+        right: 8px;
+        background: white;
+        z-index: 9;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .bene-list {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px !important;
+    position: absolute;
+    top: 48px;
+    width: 100%;
+    background-color: #fff;
+    z-index: 9;
+    border-radius: 5px;
+    max-height: 350px;
+    overflow-y: auto;
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+
+.amount-details {
+    top: 0;
+    width: 100%;
+    padding: 0 15px;
+    height: 100%;
+
+    .amounts {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .amount-type {
+            font-weight: bold;
+            color: white;
+            font-size: 14px;
+        }
+
+        .amount {
+            font-weight: bold;
+            color: white;
+            font-size: 25px;
+        }
+
+        .amount-not-applicable {
+            font-weight: bold;
+            color: white;
+            font-size: 20px;
+        }
+    }
+
+    .inr {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 50%;
+        }
+    }
+}
+
+.amount-container {
+    img {
+        width: 100%;
+    }
+}
+
+  .pay-confirm-header {
+    padding: 5px;
+    background-color: #F6F6F6;
+    font-weight: bold;
+  }
+
+  .conf-message {
+    div {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    small {
+      font-size: 13px;
+    }
+  }
+
+  .trans-details {
+    .trans-message-dmt {
+        .trans-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          padding: 9px;
+          .trans-left {
+            font-weight: bold;
+          }
+        }
+    }
+}
+
+
+button.close.btnModalClose {
+    font-size: 50px;
+    opacity: 1 !important;
+    color: #4B5B5B;
+    font-weight: normal !important;
+    text-shadow: none !important;
+    line-height: 35px !important;
+  }
+
+  div.app-modal-body {
+    background: url('/assets/images/dmt/popupbackground.png') no-repeat left top / cover;
+    padding: 20px 25px;
+  }
+
+  .modal-content {
+    border-radius: 15px !important;
+  }
+
+  .app-modal-body {
+        .trans-message-dmt {
+          border: 1px solid #68a9a9;
+          .trans-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #68a9a9;
+            padding: 9px;
+            .trans-left {
+              font-weight: bold;
+            }
+          }
+          .trans-row:last-child {
+            border-bottom: none;
+        }
+    }
+  }
+
+    .to-from {
+      .heading {
+        color: #97AAAA;
+        font-weight: normal;
+        color: #303636;
+        font-size: 15px;
+
+        &.hdngborder {
+          border-bottom: 1px dashed #97AAAA;
+        }
+      }
+      .to-name, .from-name {
+        font-weight: bold;
+        font-size: 20px;
+        color: #303636;
+      }
+    }
+
+    .bank-image {
+      // span .fa-university {
+      //   font-size: 120px;
+      // }
+      span {
+        .fa-check-circle, .fa-times-circle, .fa-exclamation-circle {
+          font-size: 50px;
+          border-radius: 50%;
+          position: absolute;
+          background-color: #ffffff;
+          right: -6px;
+          bottom: 5px;
+        }
+        .fa-check-circle {
+          color: #0E989A;
+        }
+        .fa-times-circle {
+          color: #ff5252;
+        }
+        .fa-exclamation-circle {
+          color: #ffa21d;
+        }
+      }
+      .DMTStatusImg .approvalIcon {
+        bottom: 0;
+        right: -25px;
+      }
+      .amount-section-popup {
+        font-size: 30px;
+        font-weight: bold;
+        color: #303636;
+      }
+
+
+      .transSuccess {
+        color: #0E989A;
+      }
+      .trans-subheading-popup { font-size: 1.5em; }
+    }
+
+
+
+    .inp_fld{
+      width: 100%;
+      height: 40px;
+      border: 2px solid gray;
+      border-radius: 5px;
+      padding: 5px;
+  }
+  
+  .btn{
+      height: 40px;
+      width: 180px;
+      border-radius: 5px;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 5px;
+  }
+  .btn_can{
+      border: 2px solid red;
+      background-color: red;
+      float: right;
+  }
+  
+  .btn_ok{
+      border: 2px solid #00bed4;
+      background-color: #00bed4;
+  }
+  mat-icon{
+      height: 40px !important;
+      width: 40px !important;
+  }
+  .toggles{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .thumb{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .cap_btn{
+      height: 40px;
+      width: 100px;
+      background-color: #00bed4;
+      text-transform: uppercase;
+      color: #fff;
+  }
+  .sub_btn{
+      height: 50px;
+      width: 180px;
+      background-color: #00bed4;
+      text-transform: uppercase;
+      color: #fff; 
+  }
+
+
+
+  // internal css
+
+  .aeps-form label {
+    display: block;
+    font-weight: 500;
+  }
+
+  .aeps-form mat-slide-toggle {
+    margin-top: 12px;
+  }
+
+  .aeps-form {
+    margin-top: 20px;
+  }
+
+  .aeps-formBE label {
+    display: block;
+    font-weight: 500;
+  }
+
+  .aeps-formBE mat-slide-toggle {
+    margin-top: 12px;
+  }
+
+  .aeps-formBE {
+    margin-top: 20px;
+  }
+
+  .aeps-formMS label {
+    display: block;
+    font-weight: 500;
+  }
+
+  label {
+    display: block;
+    font-weight: 500;
+  }
+
+  mat-slide-toggle {
+    margin-top: 12px;
+  }
+
+//   .aeps-formAP {
+//     margin-top: 20px;
+//   }
+
+  .smsgroup {
+    margin-left: 15px !important;
+  }
+
+  .smsgroup_min {
+    margin: 15px !important;
+  }
+
+
+  .flex-inline {
+    display: flex;
+    align-items: center;
+  }
+
+  .thumb {
+    display: flex;
+    align-items: center;
+
+  }
+
+  .thumb mat-icon {
+    font-size: 67px;
+    color: #ccc;
+    padding: 10px;
+    border: 1px dashed #ccc;
+    display: flex;
+    width: 90px;
+    height: 90px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-weight: 600;
+  }
+
+  .flex-inline input,
+  .flex-inline input:focus {
+    border-bottom: 1px solid #ddd !important;
+    border: 0;
+    outline: none;
+    box-shadow: none;
+    padding-left: 0;
+    font-size: 20px;
+    letter-spacing: 20px;
+    text-align: center;
+  }
+
+  .sprite {
+    width: 95px;
+    margin-top: -5px;
+    position: relative;
+    height: 32px;
+    display: inline-block;
+    background: url('../../../../assets/images/bank_wallet_grid_1x.png');
+  }
+
+  .radioGroup .mat-radio-button {
+    padding: 0px 10px;
+  }
+
+  .sbi {
+    background-position: 290px -144px;
+  }
+
+  .hdfc {
+    background-position: -480px -72px;
+  }
+
+  .icici {
+    background-position: -575px -72px;
+  }
+
+  .baroda {
+    background-position: -575px 0;
+  }
+
+  .canara {
+    background-position: 0 -36px;
+  }
+
+  .bob {
+    background-position: -575px -1px;
+  }
+
+  .IndusInd {
+    background-position: -866px -72px;
+  }
+
+  .flex-inline input:focus {
+    border-color: #6f42c1 !important;
+  }
+
+  .input-flex {
+    padding-right: 30px;
+    position: relative;
+  }
+
+  .flex-inline .input-flex::after {
+    position: absolute;
+    content: '/';
+    right: 7px;
+    top: 4px;
+    font-weight: 100;
+    font-size: 26px;
+    color: #ddd;
+  }
+
+  input#mobileNumber.mat-input-element .mat-form-field-autofill-control .cdk-text-field-autofill-monitored .ng-touched .ng-dirty .ng-valid {
+    background-color: white !important;
+  }
+
+  .option1 {
+    background: url("../../../../assets/images/mantra.svg") left / contain no-repeat;
+    white-space: nowrap;
+    display: inline-block;
+    height: 30px !important;
+    padding-left: 30px
+  }
+
+
+  .option2 {
+    background: url("../../../../assets/images/morfo.svg") left / contain no-repeat;
+    white-space: nowrap;
+    display: inline-block;
+    height: 30px !important;
+    padding-left: 30px
+  }
+
+  .option3 {
+    background: url("../../../../assets/images/startek.svg") left / contain no-repeat;
+    white-space: nowrap;
+    display: inline-block;
+    height: 30px !important;
+    padding-left: 30px
+  }
+
+  .option4 {
+    background: url(../../../../assets/images/precision.svg) left / contain no-repeat;
+    white-space: nowrap;
+    display: inline-block;
+    height: 30px !important;
+    padding-left: 30px;
+  }
+
+  .inputline {
+    position: absolute;
+    bottom: 0;
+    height: 33px;
+    left: 0;
+    width: 100%;
+    color: white;
+    background-color: #1c059f;
+    border-radius: 0px 0px 10px 10px;
+  }
+
+  .mat-progress-bar {
+    display: block;
+    height: 8px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+    transition: opacity 250ms linear;
+    width: 100%;
+  }
+
+  .h-auto {
+    height: auto;
+  }
+
+  h6.textclass {
+    text-align: center;
+    color: white;
+    padding-top: 6px;
+  }
+
+  .h-auto .card-body {
+    min-height: 200px !important;
+  }
+
+  .flex-inline .input-flex:nth-last-child(1):after {
+    display: none;
+  }
+
+  .greenbg {
+    background-color: #71EC85;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  .greybg {
+    background-color: lightgrey;
+    color: white;
+    padding: 1px;
+  }
+
+  .report-card ul li {
+    padding: 7px 24px;
+    display: flex;
+  }
+
+  .report-card ul li .list {
+    width: 50%;
+  }
+
+  .conf-message.mb-4.text-center {
+    padding-top: 29px;
+  }
+
+  .app-modal-body::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    opacity: 0.4;
+  }
+
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  .mat-progress-bar-fill::after {
+    background-color: green;
+  }
+
+  .flex-box {
+    display: flex;
+    justify-content: space-between;
+    outline: 2px dashed blue;
+  }

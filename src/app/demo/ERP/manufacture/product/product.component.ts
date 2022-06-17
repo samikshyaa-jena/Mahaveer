@@ -1,0 +1,201 @@
+import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import * as Notiflix from 'notiflix';
+import { finalize } from 'rxjs/operators';
+import { ErpServiceService } from '../../erp-service.service';
+import { erp_all_api } from '../../erpAllApi';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+@Component({
+  selector: 'app-product',
+  templateUrl: './product.component.html',
+  styleUrls: ['./product.component.scss']
+})
+export class ProductComponent implements OnInit {
+
+  updateProduct: string;
+  addProductForm: FormGroup;
+  editProductForm: FormGroup;
+  getProductData: any = [];
+  showAddProd: boolean=false;
+  showUpdate: boolean = false;
+  prod_table: boolean;
+  loader: boolean;
+  prod_id_index: any;
+
+  constructor(
+    private ErpService: ErpServiceService,
+    private http: HttpClient,
+    private router: Router,
+    config: NgbModalConfig,
+    private modalService: NgbModal
+  ) { 
+    this.addProductForm = new FormGroup({
+      prod_name: new FormControl("",[Validators.required]),
+      gst: new FormControl("",[Validators.required]),
+      min_stk: new FormControl("",[Validators.required]),
+      unit: new FormControl("",[Validators.required]),
+    });
+    this.editProductForm = new FormGroup({
+      prod_name: new FormControl("",[Validators.required]),
+      gst: new FormControl("",[Validators.required]),
+      min_stk: new FormControl("",[Validators.required]),
+      unit: new FormControl("",[Validators.required]),
+    });
+   }
+
+   ngOnInit(): void {
+    this.get_Product();
+  }
+
+    // edit cat popup open
+    product_edit_popup_open(content, i) {
+      this.prod_id_index = i;
+      this.editProductForm.patchValue({
+        prod_name: this.getProductData[i].prod_name,
+        gst: this.getProductData[i].gst,
+        min_stk: this.getProductData[i].min_stock,
+        unit: this.getProductData[i].unit,
+      });
+      this.modalService.open(content);
+    }
+    // edit cat popup close
+    product_edit_popup_close(content) {
+      this.modalService.dismissAll(content);
+    }
+
+  hide_add_item = () => {
+    this.showAddProd = false;
+    this.prod_table = false;
+  }
+
+  get_Product = () =>{
+    this.getProductData = [];
+    this.loader = true;
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.get_Reqs(erp_all_api.urls.getProduct, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+      (res: any) =>{
+        console.log(res);
+        let prod = res.data;
+        for (let i = 0; i < prod.length; i++) {
+          if (prod[i].delete_stat == 0) {
+            this.getProductData.push(prod[i]);
+          }
+        }
+        console.log(this.getProductData);
+        
+      },
+      (err: any) =>{
+        console.log(err);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');;
+        
+      });
+
+  };
+
+  add_Product = () =>{
+    this.loader = true;
+    const reqBody = {
+      prod_name: this.addProductForm.get('prod_name').value,
+      gst: parseInt(this.addProductForm.get('gst').value),
+      min_stock: parseInt(this.addProductForm.get('min_stk').value),
+      unit: this.addProductForm.get('unit').value,
+      price: 0
+    };
+
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.post_Reqs(erp_all_api.urls.addProduct, reqBody, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+      (res: any) =>{
+        console.log(res);
+        Notiflix.Report.success(res.msg, '', 'Close');;
+        this.getProductData = [];
+        this.get_Product();
+        this.addProductForm.reset();
+        this.hideAddProduct();        
+      },
+      (err: any) =>{
+        console.log(err);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');;
+        
+      });
+
+  };
+  edit_Product = () =>{
+    this.loader = true;
+    const reqBody = {
+      prod_id: this.getProductData[this.prod_id_index].prod_id,
+      prod_name: this.editProductForm.get('prod_name').value,
+      gst: parseInt(this.editProductForm.get('gst').value),
+      min_stock: parseInt(this.editProductForm.get('min_stk').value),
+      unit: this.editProductForm.get('unit').value,
+      price: 0
+    };
+
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.post_Reqs(erp_all_api.urls.updateProduct, reqBody, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+      (res: any) =>{
+        console.log(res);
+        Notiflix.Report.success(res.msg, '', 'Close');;
+        this.editProductForm.reset();
+        this.product_edit_popup_close('content');
+        this.get_Product();
+      },
+      (err: any) =>{
+        console.log(err);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');;
+        
+      });
+
+  };
+
+  delete_Product = (i) =>{
+    this.loader = true;
+    const reqBody = {
+      "prod_id": this.getProductData[i].prod_id
+    };
+
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.post_Reqs(erp_all_api.urls.deleteProduct, reqBody, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+      (res: any) =>{
+        console.log(res);
+        Notiflix.Report.success(res.msg, '', 'Close');;
+        this.get_Product();       
+      },
+      (err: any) =>{
+        console.log(err);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');;
+        
+      });
+
+  };
+
+  showAddProduct() {
+    this.showAddProd = true;
+    this.prod_table = false;
+  };
+  hideAddProduct() {
+    this.showAddProd = false;
+    this.prod_table = false;
+    this.addProductForm.reset();
+  };
+
+  openUpdateProductPage = ()=>{
+    this.showAddProd = false;
+    this.prod_table = true;
+  }
+
+}

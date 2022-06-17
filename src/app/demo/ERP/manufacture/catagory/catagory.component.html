@@ -1,0 +1,278 @@
+<!-- Loader Starts -->
+<div *ngIf="loader"
+  class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+<!-- Loader Ends -->
+
+
+
+<div class="container">
+  <!-- show_cat_item 1 starts -->
+  <div class="cat_table" *ngIf="show_cat_item == 1">
+    <div class="row col-sm-12  mt-3">
+      <div class="mode_change col-sm-9">
+        <form [formGroup]="modeForm">
+          <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture" disabled>Manufacture</button>
+          <button class="btn btn-primary" routerLink="/v1/trade/catagory" title="Go To Trade">Trade</button>
+        </form>
+      </div>
+      <div class="col-sm-3">
+        <button class="btn btn-primary mr-1" type="button" (click)="show_cat_item = 5">
+          Add Item
+        </button>
+        <button class="btn btn-primary" (click)="show_cat_item = 2">
+          Add Catagory
+        </button>
+      </div>
+    </div>
+    <!-- <div class="card"> -->
+      <!-- <div class="card-body card_box"> -->
+    <div class="table-responsive glob_tab">
+      <div class="flexbox mt-3">
+        <div><input type="search"  (keyup)="updateFilter($event)"   placeholder="search" class="form-control mr-5"></div>
+      </div>
+      <table class="table v-middle nowrap">
+        <thead>
+          <tr>
+            <th class="border-top-0">Catagory NAME</th>
+            <th class="border-top-0">Item</th>
+            <th class="border-top-0">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of cat_data |slice:(page-1)* pageSize:page*pageSize; index as i">
+            <td>{{ cat_data[i].cat_name }}</td>
+            <td>
+              <span style="cursor: pointer" (click)="categoryAction(i)" title="View item"><i class="fas fa-ellipsis-h"
+                  aria-hidden="true"></i></span>
+            </td>
+            <td>
+              <span style="cursor: pointer"><i class="fa fa-edit" aria-hidden="true"
+                  (click)="cat_edit_popup_open(content, i)"></i>
+              </span>
+              <span class="mx-2" style="cursor: pointer" (click)="del_Catagory(i)"><i class="fa fa-trash"
+                  aria-hidden="true"></i></span>
+            </td>
+          </tr>
+        </tbody>
+
+
+      </table>
+      <div class="flexboxpagination col-sm-12">
+        <div>
+          <select class="form-control" [(ngModel)]="pageSize">
+            <option [ngValue]="5">5 items per page</option>
+            <option [ngValue]="10">10 items per page</option>
+            <option [ngValue]="15">15 items per page</option>
+        </select>
+        </div>
+
+        <div>
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"></ngb-pagination>
+        </div>
+
+    </div>
+    </div>
+  <!-- </div> -->
+<!-- </div> -->
+</div>
+  <!-- show_cat_item 1 ends -->
+
+  <!-- show_cat_item 2 starts -->
+  <div class="add_prod" *ngIf="show_cat_item == 2">
+    <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+    <div class="btns my-3" style="float: right">
+      <button class="btn btn-primary mr-1" type="submit" [disabled]="!addCatagoryForm.valid" (click)="add_Catagory()">
+        Add
+      </button>
+      <button class="btn btn-warning" type="reset" (click)="show_cat_item = 1">
+        Cancel
+      </button>
+    </div>
+    <div class="modal_head">
+      <div class="modal_body">
+        <div class="addCatagoryForm">
+          <form [formGroup]="addCatagoryForm" class="my-3">
+            <label class="lab_tag" for="">Catagory Name:</label>
+            <input type="text" class="form-control inp_tag" formControlName="cat_name" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- show_cat_item 2 ends -->
+
+  <!-- show_cat_item 3 starts -->
+  <div class="table-responsive" *ngIf="show_cat_item == 3">
+    <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+    <div class="btns my-3" style="float: right">
+      <button class="btn btn-warning mr-1" type="button" (click)="show_cat_item = 1">
+        Back
+      </button>
+      <button class="btn btn-primary" type="button" (click)="show_cat_item = 4">
+        Add Item
+      </button>
+    </div>
+    <table class="table v-middle nowrap">
+      <thead>
+        <tr>
+          <th class="border-top-0">Item Name</th>
+          <th class="border-top-0">GST</th>
+          <th class="border-top-0">HSN</th>
+          <th class="border-top-0">Low Stock</th>
+          <th class="border-top-0">Unit</th>
+          <th class="border-top-0">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of itemList; let i = index">
+          <td>{{ itemList[i].item_name }}</td>
+          <td>{{ itemList[i].gst }} %</td>
+          <td>{{ itemList[i].hsn }}</td>
+          <td>{{ itemList[i].min_stock }}</td>
+          <td>{{ itemList[i].unit }}</td>
+          <td>
+            <span style="cursor: pointer"><i class="fa fa-edit" aria-hidden="true"
+                (click)="item_edit_popup_open(content1, i)"></i>
+            </span>
+            <span class="mx-2" style="cursor: pointer"><i class="fa fa-trash" aria-hidden="true"
+                (click)="del_item(i)"></i></span>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+ <!-- show_cat_item 3 ends -->
+
+  <!-- show_cat_item 4&5 starts -->
+  <div class="item" *ngIf="show_cat_item == 4 || show_cat_item == 5">
+    <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+    <div class="row col-sm-12">
+      <div class="col-sm-12 text-right">
+        <button class="btn btn-primary mr-1" type="submit" (click)="add_item()">
+          Add
+        </button>
+        <button class="btn btn-warning" type="reset" (click)="show_cat_item = 1">
+          Back
+        </button>
+      </div>
+    </div>
+    <div class="form_div" class="my-3">
+      <form [formGroup]="addItemForm" class="my-3">
+        <label class="lab_tag" for="">CategoryName:</label>
+        <select class="form-control inp_tag" (change)="addItemCategory($event.target.value)"
+          formControlName="category_name">
+          <option disabled selected>Choose a category</option>
+          <option *ngFor="let data of cat_data" [value]="data.cat_id">
+            {{ data.cat_name }}
+          </option>
+        </select>
+        <label class="lab_tag" for="">Item Name:</label>
+        <input type="text" class="form-control inp_tag" formControlName="item_name" />
+        <label class="lab_tag" for="">GST:</label>
+        <select name="" id="" formControlName="gst" class="form-control inp_tag">
+          <option value="gst" selected disabled>Select gst</option>
+          <option value="0">0 %</option>
+          <option value="5">5 %</option>
+          <option value="12">12 %</option>
+          <option value="18">18 %</option>
+          <option value="28">28 %</option>
+        </select>
+        <label class="lab_tag" for="">Low Stock:</label>
+        <input type="text" class="form-control inp_tag" formControlName="min_stk" />
+        <label class="lab_tag" for="">HSN:</label>
+        <input type="text" class="form-control inp_tag" formControlName="hsn" />
+        <label class="lab_tag" for="">Unit:</label>
+        <input type="text" class="form-control inp_tag" formControlName="unit" />
+        <label class="lab_tag" for="">Open Stock:</label>
+        <input type="text" class="form-control inp_tag" formControlName="qty" />
+      </form>
+    </div>
+  </div>
+  <!-- show_cat_item 4&5 endds -->
+
+
+</div>
+
+
+
+
+<!-- edit catagory modal starts -->
+<ng-template #content let-c="close" let-d="dismiss">
+  <!-- <div class="modal-header">
+    <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+    <button class="close_btn">
+      <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="updateCatForm">
+      <form [formGroup]="updateCatForm" class="my-3">
+        <label class="lab_tag" for="">Catagory Name:</label>
+        <input type="text" class="form-control inp_tag" formControlName="cat_name" />
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="edit_Catagory()">
+      Submit
+    </button>
+    <button type="button" class="btn btn-outline-dark" (click)="cat_edit_popup_close(content)">
+      Cancel
+    </button>
+  </div>
+</ng-template>
+<!-- edit catagory modal starts -->
+
+<!-- edit item modal starts -->
+<ng-template #content1 let-c="close" let-d="dismiss">
+  <!-- <div class="modal-header">
+    <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+    <button class="close_btn">
+      <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
+    </button>
+  </div> -->
+  <div class="modal-body">
+    <div class="editItemForm">
+      <form [formGroup]="editItemForm" class="my-3">
+        <label class="lab_tag" for="">CategoryName:</label>
+        <input type="text" class="form-control inp_tag" formControlName="category_name" readonly />
+        <label class="lab_tag" for="">Item Name:</label>
+        <input type="text" class="form-control inp_tag" formControlName="item_name" />
+        <label class="lab_tag" for="">GST:</label>
+        <select name="" id="" formControlName="gst" class="form-control inp_tag">
+          <option value="gst" selected disabled>Select gst</option>
+          <option value="0">0 %</option>
+          <option value="5">5 %</option>
+          <option value="12">12 %</option>
+          <option value="18">18 %</option>
+          <option value="28">28 %</option>
+        </select>
+        <label class="lab_tag" for="">Low Stock:</label>
+        <input type="text" class="form-control inp_tag" formControlName="min_stk" />
+        <label class="lab_tag" for="">HSN:</label>
+        <input type="text" class="form-control inp_tag" formControlName="hsn" />
+        <label class="lab_tag" for="">Unit:</label>
+        <input type="text" class="form-control inp_tag" formControlName="unit" />
+        <!-- <label class="lab_tag" for="">Open Stock:</label>
+                <input type="text" class="form-control inp_tag" formControlName="qty"> -->
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="edit_item()">
+      Submit
+    </button>
+    <button type="button" class="btn btn-outline-dark" (click)="item_edit_popup_close(content1)">
+      Cancel
+    </button>
+  </div>
+</ng-template>
+<!-- edit item modal starts -->

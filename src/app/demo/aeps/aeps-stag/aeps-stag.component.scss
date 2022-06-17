@@ -1,0 +1,11 @@
+.spinner-container{
+    top: 0;
+    z-index: 999;
+    // background: rgba(255,255,255,0.8);
+    left: 0;
+    
+    .spinner-border{
+        width: 7rem;
+        height: 7rem;
+    }
+  }

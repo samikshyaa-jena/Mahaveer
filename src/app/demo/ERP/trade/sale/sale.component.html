@@ -1,0 +1,281 @@
+<!-- Loader Starts -->
+<div *ngIf="loader"
+  class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+<!-- Loader Ends -->
+
+<app-sale-add *ngIf="purchase_tab" (get_purchase_details)="get_purchase_details()" (BackTab)="back()"></app-sale-add>
+<div class="container" style="padding: 15px" *ngIf="!purchase_tab">
+  <!-- <div class="card"> -->
+    <!-- <div> -->
+      <div class="mt-3">
+        <button class="btn btn-primary mb-3 mt-2" (click)="purchase_entry()">
+          Sale Entry
+        </button>
+      </div>
+      <div class="prod_table px-0 py-0 mx-0 my-0">
+        <div class="table-responsive px-0 py-0 mx-0 my-0">
+          <table class="table v-middle nowrap">
+            <thead class="table-secondary">
+              <tr>
+                <th class="border-top-0">Invoice</th>
+                <th class="border-top-0">Date</th>
+                <th class="border-top-0">Customer</th>
+                <th class="border-top-0">GSTN</th>
+                <th class="border-top-0">CGST</th>
+                <th class="border-top-0">SGST</th>
+                <th class="border-top-0">IGST</th>
+                <th class="border-top-0">Total</th>
+                <!-- <th class="border-top-0">Action</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of get_purchase_data; let i = index">
+                <td>
+                  <u style="color: blue; cursor: pointer" (click)="invoicenumberPopup(data.invoice_no,data.sellData,data.customerData,i)">{{ data.invoice_no
+                    }}</u>
+                </td>
+                <td>{{ data.sell_date | date: "dd/MM/yyyy" }}</td>
+                <td>{{ data.customerData.name }}</td>
+                <td>{{ data.customerData.gstn }}</td>
+                <td>{{ data.totalcgst }}</td>
+                <td>{{ data.totalsgst }}</td>
+                <td>{{ data.totaligst }}</td>
+                <td>{{ data.totalsum }}</td>
+                <!-- <td>
+                  <span title="View Invoice" style="cursor: pointer;" (click)="openInvoice(content,data.invoice_no)">
+                    <i class="fa fa-print" aria-hidden="true"></i>
+                  </span>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <!-- </div> -->
+  <!-- </div> -->
+</div>
+
+<div id="myModal2" class="modal2 px-5" *ngIf="modal">
+  <div class="card">
+    <div class="card-header">
+      <button class="btn btn-dark" style="float: right; cursor: pointer" (click)="modal = false">
+        X
+      </button>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead class="bg-primary">
+          <tr>
+            <th scope="col" class="text-white text-center">Catagory</th>
+            <th scope="col" class="text-white text-center">Product</th>
+            <th scope="col" class="text-white text-center">HSN</th>
+            <th scope="col" class="text-white text-center">Price</th>
+            <th scope="col" class="text-white text-center">Qty</th>
+            <th scope="col" class="text-white text-center">Discount</th>
+            <th scope="col" class="text-white text-center">CGST</th>
+            <th scope="col" class="text-white text-center">SGST</th>
+            <th scope="col" class="text-white text-center">IGST</th>
+            <th scope="col" class="text-white text-center">Total</th>
+            <th scope="col" class="text-white text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white">
+          <tr *ngFor="let e of popupData; let i = index">
+            <td class="text-center">{{ e.cat_name }}</td>
+            <td class="text-center">{{ e.prod_name }}</td>
+            <td class="text-center">{{ e.hsn }}</td>
+            <td class="text-center">{{ e.price }}</td>
+            <td class="text-center">{{ e.qty }}</td>
+            <td class="text-center">{{ e.discount }}</td>
+            <td class="text-center" *ngIf="x">NA</td>
+            <td class="text-center" *ngIf="!x">
+              {{ e.cgstVal }} ({{ e.cgst }}%)
+            </td>
+            <td class="text-center" *ngIf="y">NA</td>
+            <td class="text-center" *ngIf="!y">
+              {{ e.sgstVal }} ({{ e.sgst }}%)
+            </td>
+            <td class="text-center" *ngIf="z">NA</td>
+            <td class="text-center" *ngIf="!z">
+              {{ e.igstVal }} ({{ e.igst }}%)
+            </td>
+            <td class="text-center">{{ e.total }}</td>
+            <td class="text-center">
+              <span style="cursor: pointer" class="mr-1" (click)="openUpdatePucrchase(i,popupData,updt)"><i
+                class="fa fa-edit" aria-hidden="true"></i></span>
+              <span title="View Invoice" style="cursor: pointer" (click)="openInvoice(content, i)">
+                <i class="fa fa-print" aria-hidden="true"></i>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="btns" style="float: right;">
+        <button type="reset" class="btn btn-danger" (click)="modal=false">cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]='!enable' (click)="update_purchase_details()">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- invoice modal starts -->
+<ng-template #content let-c="close" let-d="dismiss" style="pointer-events: none;" data-backdrop="static"
+  data-keyboard="false">
+  <div class="printDiv row col-sm-12" id="print-me">
+    <div class="col-sm-12 text-center mt-3">
+      <h2 style="line-height: .75;">Invoice</h2>
+    </div>
+    <div class="col-sm-12 text-center">
+      <h5 style="line-height: .75;">Date: 12-04-2022</h5>
+    </div>
+    <hr style="border: 1px solid gray;">
+    <div class="col-sm-12 row mt-2">
+      <div class="col-sm-6" style="display: flex; justify-content: center; align-items: center;">
+        <table style="line-height: .75;">
+          <tr>
+            <td>Name</td>
+            <td>:Mahendra</td>
+          </tr>
+          <tr>
+            <td>Mob No.</td>
+            <td>:1234567890</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>:Mahendra@gmail.com</td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td>:Bhubaneswar, Odisha, 754602</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-sm-6" style="display: flex; justify-content: center; align-items: center;">
+        <table style="line-height: .75;">
+          <tr>
+            <td>Name</td>
+            <td>:Khwaja</td>
+          </tr>
+          <tr>
+            <td>Mob No.</td>
+            <td>:1234567890</td>
+          </tr>
+          <tr>
+            <td>Email</td>
+            <td>:Khwaja@gmail.com</td>
+          </tr>
+          <tr>
+            <td>Address</td>
+            <td>:Cuttack, Odisha, 754200</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <hr style="border: 1px solid gray;">
+    <div class="col-sm-12 row mt-2">
+      <table class="table table-bordered" style="line-height: .75;">
+        <tr>
+          <th class="border-top-0">Invoice No:</th>
+          <th class="border-top-0">Price:</th>
+          <th class="border-top-0">Quantity:</th>
+          <th class="border-top-0">Discount:</th>
+          <th class="border-top-0">GSTN:</th>
+          <th class="border-top-0">CGST:</th>
+          <th class="border-top-0">SGST:</th>
+          <th class="border-top-0">IGST:</th>
+          <th class="border-top-0">Total:</th>
+        </tr>
+        <tr>
+          <td>123456</td>
+          <td>RS. 1500</td>
+          <td>10 PCS</td>
+          <td>Rs. 100</td>
+          <td>186595959</td>
+          <td>12%</td>
+          <td>NA</td>
+          <td>NA</td>
+          <td>Rs. 14900</td>
+        </tr>
+        <tr>
+          <td>123456</td>
+          <td>RS. 1500</td>
+          <td>10 PCS</td>
+          <td>Rs. 100</td>
+          <td>186595959</td>
+          <td>12%</td>
+          <td>NA</td>
+          <td>NA</td>
+          <td>Rs. 14900</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="btns col-sm-12 mt-2 mb-2" style="display: flex; justify-content: flex-end;">
+    <button type="button" class="btn btn-outline-dark btn-primary" printSectionId="print-me" ngxPrint>Print</button>
+    <button type="button" class="btn btn-outline-dark btn-danger ml-1" (click)="closeInvoice(content)">Close</button>
+  </div>
+</ng-template>
+<!-- invoice modal ends -->
+
+
+<ng-template #updt let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <button class="close_btn">
+      <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="updateVendorForm">
+      <form [formGroup]="updatePurchase" class="my-3">
+        <label class="lab_tag" for="">Catagory:</label>
+        <input type="text" class="form-control" formControlName="catagory" readonly>
+        <!-- <select [(ngModel)]="cattName" name="" id="" formControlName="catagory" class="form-control" (change)="chooseCategory($event.target.value)" disabled>
+          <option [value]="catt_id" disabled >{{cattName}}</option>
+          <option *ngFor="let category of getCatagoryData;let i=index" [ngValue]="category.cat_id">
+            {{category.cat_name}}
+          </option>
+        </select> -->
+        <label class="lab_tag" for="">Product:</label>
+        <input type="text" class="form-control" formControlName="prod_id" readonly>
+        <!-- <select [(ngModel)]="itemmName" formControlName="item_id" class="form-control">
+          <option [value]="itemmName" disabled >{{itemmName}}</option>
+          <option *ngFor="let item of itemData" [ngValue]="item.item_id">{{item.item_name}}</option>
+        </select> -->
+
+        <!-- <select name="" id="" [(ngModel)]="proddName" formControlName="prod_id" class="form-control" disabled>
+          <option [value]="prodd_id" disabled >{{proddName}}</option>
+          <option *ngFor="let item of itemData" [ngValue]="item.prod_id">{{item.prod_name}}</option>
+        </select> -->
+        <label class="lab_tag" for="">HSN:</label>
+        <input type="text" class="form-control" formControlName="hsn" readonly>
+        <label class="lab_tag" for="">Price:</label>
+        <input type="number" class="form-control" formControlName="price" (input)="calc_total()">
+        <label class="lab_tag" for="">Quantity:</label>
+        <input type="number" class="form-control" formControlName="qty" (input)="calc_total()">
+        <!-- <label class="lab_tag" for="">Unit:</label>
+        <input type="text" class="form-control" formControlName="unit" > -->
+        <label class="lab_tag" for="">Discount:</label>
+        <input type="number" class="form-control" formControlName="discount" (input)="calc_total()">
+        <label class="lab_tag" for="">CGST:</label>
+        <input type="number" class="form-control" formControlName="cgst" readonly>
+        <label class="lab_tag" for="">SGST:</label>
+        <input type="number" class="form-control" formControlName="sgst" readonly>
+        <label class="lab_tag" for="">IGST:</label>
+        <input type="number" class="form-control" formControlName="igst" readonly>
+        <label class="lab_tag" for="">Total:</label>
+        <input type="number" class="form-control" formControlName="total" readonly>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="updateArray()">Submit</button>
+    <button type="reset" class="btn btn-outline-dark" (click)="closeUpdateForm(updt)">Cancel</button>
+  </div>
+</ng-template>

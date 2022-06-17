@@ -1,0 +1,79 @@
+$andhra: '/assets/images/banks/Andhra.jpeg';
+$axis: '/assets/images/banks/Axis.jpeg';
+$icici: '/assets/images/banks/ICICI.jpeg';
+$indus: '/assets/images/banks/Indus.jpeg';
+$rbl: '/assets/images/banks/RBL.jpeg';
+$sbi: '/assets/images/banks/SBI.jpeg';
+
+.modes {
+    height: 16vh;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    overflow-x: auto;
+    button {
+        width: 200px;
+        height: 100%;
+        text-transform: uppercase;
+        font-weight: bold;
+        div {
+            div:nth-child(2) {
+                text-transform: none;
+                font-weight: normal;
+            }
+        }
+    }
+}
+
+.bank-acc {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    border: 1px solid #e2edeb;
+    overflow: hidden;
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+    border-radius: 5px;
+    position: relative;
+    div {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    img {
+        position: absolute;
+        width: 100%;
+        z-index: 0;
+        height: 50px;
+        opacity: 0.2;
+    }
+}
+
+[type='radio'] {
+    display: none; 
+}
+
+label {
+    display: block;
+    cursor: pointer;
+}
+
+.radioSelected {
+    background: var(--blue);
+    color: #fff;
+    box-shadow: none;
+
+    img {opacity: 0;}
+}
+
+.fileCol {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    .custom-file {
+        margin-bottom: 16px;
+        margin-top: 9px;
+    }
+    button {
+        margin-bottom: 16px;
+    }
+}

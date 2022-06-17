@@ -1,0 +1,80 @@
+<!-- Loader Starts -->
+<div *ngIf="loader"
+    class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+<!-- Loader Ends -->
+<div class="container">
+  <div class="mode_change col-sm-12 mt-3">
+    <form [formGroup]="modeForm">
+      <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture" disabled>Manufacture</button>
+      <button class="btn btn-primary" routerLink="/v1/trade/stock" title="Go To Manufacture">Trade</button>
+    </form>
+  </div>
+    <div class="table-responsive">
+      <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+        <table class="table v-middle nowrap">
+            <thead>
+                <tr>
+                    <th class="border-top-0">Item Name</th>
+                    <th class="border-top-0">T_Quantity</th>
+                    <th class="border-top-0">T_Price</th>
+                    <th class="border-top-0">Unit</th>
+                    <th class="border-top-0">GST</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of stockData; let i = index">
+                    <td><u style="color: blue; cursor: pointer;" (click)="stockTablePopup(data.ItemHistory)">
+                        {{data.item_name}}</u>
+                    </td>
+                    <td>{{data.total_qty}}</td>
+                    <td>{{data.total_price}}</td>
+                    <td>{{data.unit}}</td>
+                    <td>{{data.gst}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- modal starts -->
+<ng-template #content let-c="close" let-d="dismiss">
+    <!-- <div class="modal-header">
+        <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
+    </div> -->
+    <div class="modal-body">
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="close(content)">Submit</button>
+      <button type="button" class="btn btn-outline-dark" (click)="close(content)">Cancel</button>
+    </div>
+  </ng-template>
+  <!-- popup btn starts -->
+
+  <div id="myModal2" class="modal2 px-5 ml-5" *ngIf="stk_modal" (click)="stk_modal=false">
+    <table class="table table-bordered">
+        <thead class="bg-primary">
+            <tr>
+                <th scope="col" class="text-white text-center">Invoice No.</th>
+                <th scope="col" class="text-white text-center">Price</th>
+                <th scope="col" class="text-white text-center">Quantity</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            <tr *ngFor="let e of stockPopupData; let i = index">
+                <td class="text-center">{{e.invoice_no}}</td>
+                <td class="text-center">{{e.price}}</td>
+                <td class="text-center">{{e.qty}}</td>
+
+            </tr>
+
+        </tbody>
+    </table>
+
+</div>

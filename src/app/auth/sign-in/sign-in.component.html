@@ -1,0 +1,21 @@
+<!-- login page Starts -->
+<div class="loginPage row col-sm-12 sideDiv">
+  <div class="pt-5 row col-sm-12 inner">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <div class="col-sm-12 loginForm">
+        <form [formGroup]="signInForm" (submit)="loginUser()" class="detailsForm">
+          <label for="user_name" class="lableTag">User Name</label>
+          <input type="text" class="inpTag form-group" formControlName="username" placeholder="">
+          <label for="pswd" class="lableTag">Pasword</label>
+          <input type="password" class="inpTag form-group" formControlName="password" placeholder="">
+          <div class="subBtn">
+            <button type="submit" class="logBtn">login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-sm-4"></div>
+  </div>
+</div>
+<!-- login page Ends -->

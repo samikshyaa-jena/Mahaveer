@@ -1,0 +1,280 @@
+:host ::ng-deep {
+    .card {
+        border-radius: 10px;
+    }
+    .card-body {
+        min-height: 560px;
+    }
+    .initial-banner {
+        .card-body {
+            padding: 0;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    }
+    .modal-content {
+      border-radius: 15px !important;
+      overflow: hidden;
+    }
+    .modal-body {
+      padding: 0px !important;
+    }
+}
+
+.mat-form-field {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.border-rad-5 {
+    border-radius: 5px;
+}
+
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.otp-elements {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+    justify-items: center;
+
+    input {
+        height: 2.5vw;
+        width: 2.5vw;
+        padding: 0 .9vw;
+    }
+}
+
+.bene-name {
+    border-bottom: 1px solid;
+    padding: 0 10px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    &:last-child {
+      border-bottom: 0;
+    }
+    .bene-info {
+      display: flex;
+      flex-direction: column;
+      span {
+        font-weight: bold;
+        &:first-child {
+          font-size: 16px;
+        }
+      }
+      small {
+        font-weight: bold;
+      }
+    }
+    .bene-verified {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+  
+      // position: relative;
+      // color: var(--green);
+  
+      .banktick {
+        top: 10px;
+        right: 8px;
+        background: white;
+        z-index: 9;
+        border-radius: 50%;
+      }
+    }
+  }
+  
+  .bene-list {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px !important;
+    position: absolute;
+    top: 48px;
+    width: 100%;
+    background-color: #fff;
+    z-index: 9;
+    border-radius: 5px;
+    max-height: 350px;
+    overflow-y: auto;
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+
+.amount-details {
+    top: 0;
+    width: 100%;
+    padding: 0 15px;
+    height: 100%;
+
+    .amounts {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .amount-type {
+            font-weight: bold;
+            color: white;
+            font-size: 14px;
+        }
+
+        .amount {
+            font-weight: bold;
+            color: white;
+            font-size: 25px;
+        }
+
+        .amount-not-applicable {
+            font-weight: bold;
+            color: white;
+            font-size: 20px;
+        }
+    }
+
+    .inr {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        img {
+            width: 50%;
+        }
+    }
+}
+
+.amount-container {
+    img {
+        width: 100%;
+    }
+}
+
+  .pay-confirm-header {
+    padding: 5px;
+    background-color: #F6F6F6;
+    font-weight: bold;
+  }
+
+  .conf-message {
+    div {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    small {
+      font-size: 13px;
+    }
+  }
+
+  .trans-details {
+    .trans-message-dmt {
+        .trans-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          padding: 9px;
+          .trans-left {
+            font-weight: bold;
+          }
+        }
+    }
+}
+
+  
+button.close.btnModalClose {
+    font-size: 50px;
+    opacity: 1 !important;
+    color: #4B5B5B;
+    font-weight: normal !important;
+    text-shadow: none !important;
+    line-height: 35px !important;
+  }
+
+  div.app-modal-body {
+    background: url('/assets/images/dmt/popupbackground.png') no-repeat left top / cover;
+    padding: 20px 25px;
+  }
+
+  .modal-content {
+    border-radius: 15px !important;
+  }
+
+  .app-modal-body {
+        .trans-message-dmt {
+          border: 1px solid #68a9a9;
+          .trans-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid #68a9a9;
+            padding: 9px;
+            .trans-left {
+              font-weight: bold;
+            }
+          }
+          .trans-row:last-child {
+            border-bottom: none;
+        }
+    }
+  }
+    
+    .to-from {
+      .heading {
+        color: #97AAAA;
+        font-weight: normal;
+        color: #303636;
+        font-size: 15px;
+  
+        &.hdngborder {
+          border-bottom: 1px dashed #97AAAA;
+        }
+      }
+      .to-name, .from-name {
+        font-weight: bold;
+        font-size: 20px;
+        color: #303636;
+      }
+    }
+    
+    .bank-image {
+      // span .fa-university {
+      //   font-size: 120px;
+      // }
+      span {
+        .fa-check-circle, .fa-times-circle, .fa-exclamation-circle {
+          font-size: 50px;
+          border-radius: 50%;
+          position: absolute;
+          background-color: #ffffff;
+          right: -6px;
+          bottom: 5px;
+        }
+        .fa-check-circle {
+          color: #0E989A;
+        }
+        .fa-times-circle {
+          color: #ff5252;
+        }
+        .fa-exclamation-circle {
+          color: #ffa21d;
+        }
+      }
+      .DMTStatusImg .approvalIcon {
+        bottom: 0;
+        right: -25px;
+      }
+      .amount-section-popup {
+        font-size: 30px;
+        font-weight: bold;
+        color: #303636;
+      }
+      .transSuccess {
+        color: #0E989A;
+      }
+      .trans-subheading-popup { font-size: 1.5em; }
+    }

@@ -1,0 +1,126 @@
+<div class="d-flex justify-content-center position-fixed align-items-center bnkChlnLoader" *ngIf="bnkChlnLoader">
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+</div>
+<!-- <div *ngIf="InfoTabFlag"> -->
+<div>
+    <div class="row">
+
+      <!-- Karur Vysya Bank -->
+      <div class="col-md-3 col-sm-3 col-xs-12" >
+        <div class="position-relative" ng-cloak>
+          <label (click)="paymentInfo.karurbank = true; paymentInfo.icicibank = false; paymentInfo.axisbank = false; ifNoVA = false" class="w-100">
+            <input type="radio" name="bankInfo" ng-model="paymentInfo.karurbank" id="kvb" class="radioPymntInfo" />
+            <div class="">
+              <div class="panel-body text-center bg-info p-2 text-white tabTitle">
+                Karur Vysya Bank
+              </div>
+            </div>
+          </label>
+          <div class="divModal position-absolute" *ngIf="paymentInfo.karurbank">
+            <div class="">
+              <button class="btn btnlnk" (click)="downloadChalan('kvb')">Download Challan <i class="fa fa-download"></i></button>
+              <button class="btn btnlnk float-right" (click)="paymentInfo.karurbank = false; ifNoVA = false"><i class="fa fa-angle-up"></i> Karur Vys Bank</button>
+              <button type="button" *ngIf="ifNoVA" class="btn btn-info col-xs-12 mt-2 w-100" (click)="addVrtlAccnt('kvb')">Add Virtual Account</button>
+            </div>
+            <div class="mt-2">
+              <dl>
+                <dt>Step 1</dt>
+                <dd>
+                  <p>Download & Print pre-filled Deposit Slip</p>
+                  <h5 style="background-color: #f2f561;color:#000000;padding: 7px;">Enter the time (HH:MM) of deposit, in the Deposit Slip No.</h5>
+                </dd>
+                <dt class="mt-3">Step 2</dt>
+                <dd>
+                  <p>Fill Amount & Date on the Printed Slip</p>
+                  <h5>
+                    A/C No: 3201135000007010 <span class="float-right">IFSC: KVBL0003201</span>
+                  </h5>
+                </dd>
+                <dt class="mt-3">Step 3</dt>
+                <dd><P>Submit Slip at the Branch Counter</P></dd>
+                <dt class="mt-3">Step 4</dt>
+                <dd><p>Upload Stamped Deposit Slip using cash deposit tab above</p></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Axis Bank -->
+      <div class="col-md-3 col-sm-3 col-xs-12" >
+        <div class="position-relative" ng-cloak>
+          <label (click)="paymentInfo.karurbank = false; paymentInfo.icicibank = false; paymentInfo.axisbank = true; ifNoVA = false" class="w-100">
+            <input type="radio" name="bankInfo" ng-model="paymentInfo.axisbank" id="axis" class="radioPymntInfo" />
+            <div class="">
+            <div class="panel-body text-center bg-info p-2 text-white tabTitle">
+                Axis Bank
+              </div>
+            </div>
+          </label>
+          <div class="divModal position-absolute" *ngIf="paymentInfo.axisbank">
+            <div class="">
+              <button class="btn btnlnk" (click)="downloadChalan('axis')">Download Challan <i class="fa fa-download"></i></button>
+              <button class="btn btnlnk float-right" (click)="paymentInfo.axisbank = false; ifNoVA = false"><i class="fa fa-angle-up"></i> Axis Bank</button>
+            </div>
+            <div class="mt-2">
+              <dl>
+                <dt>Step 1</dt>
+                <dd><p>Download & Print pre-filled Deposit Slip</p></dd>
+                <dt class="mt-3">Step 2</dt>
+                <dd>
+                  <p>Fill Amount & Date on the Printed Slip</p>
+                  <h5>
+                    A/C No: 918020090249758 <span class="float-right">IFSC: UTIB0002953</span>
+                  </h5>
+                </dd>
+                <dt class="mt-3">Step 3</dt>
+                <dd><P>Submit Slip at the Branch Counter</P></dd>
+                <dt class="mt-3">Step 4</dt>
+                <dd><p>Upload Stamped Deposit Slip using cash deposit tab above</p></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ICICI Bank -->
+      <div class="col-md-3 col-sm-3 col-xs-12" >
+        <div class="position-relative" ng-cloak>
+          <label (click)="paymentInfo.karurbank = false; paymentInfo.icicibank = true; paymentInfo.axisbank = false; ifNoVA = false" class="w-100">
+            <input type="radio" name="bankInfo" ng-model="paymentInfo.icicibank" id="axis" class="radioPymntInfo" />
+            <div class="">
+            <div class="panel-body text-center bg-info p-2 text-white tabTitle">
+                ICICI Bank
+              </div>
+            </div>
+          </label>
+          <div class="divModal modalLeft position-absolute" *ngIf="paymentInfo.icicibank">
+            <div class="">
+              <button class="btn btnlnk" (click)="downloadChalan('icici')">Download Challan <i class="fa fa-download"></i></button>
+              <button class="btn btnlnk float-right" (click)="paymentInfo.icicibank = false; ifNoVA = false"><i class="fa fa-angle-up"></i> ICICI Bank</button>
+            </div>
+            <div class="mt-2">
+              <dl>
+                <dt>Step 1</dt>
+                <dd><p>Download & Print pre-filled Deposit Slip</p></dd>
+                <dt class="mt-3">Step 2</dt>
+                <dd>
+                  <p>Fill Amount & Date on the Printed Slip</p>
+                  <h5>
+                    A/C No: 369105000110 <span class="float-right">IFSC: ICIC0003691</span>
+                  </h5>
+                </dd>
+                <dt class="mt-3">Step 3</dt>
+                <dd><P>Submit Slip at the Branch Counter</P></dd>
+                <dt class="mt-3">Step 4</dt>
+                <dd><p>Upload Stamped Deposit Slip using cash deposit tab above</p></dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>

@@ -1,0 +1,54 @@
+.top_buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.inpTag{
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    width: 200px;
+    margin-left: 3px;
+}
+.inpTag1{
+    border: none;
+    width: 100%;
+    padding: 8px 5px;
+}
+// .inpTag1{
+//     border: none;
+//     width: 100%;
+//     padding: 10px 5px;
+//     font-size: 10px;
+// }
+.page_color{
+    background-color: #f3f3f3;
+    // height: 95%;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    padding-left: 15px;
+    margin-top: 0;
+    margin-bottom: 3%;
+    
+}
+.text_left{
+    text-align: left;
+}
+.footer_btn{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    button{
+        border-radius: 3px;
+    }
+}
+.back_btn{
+    font-size: 25px;
+    color: royalblue;
+}
+.delete_btn{
+    font-size: 20px;
+    color: red;
+}

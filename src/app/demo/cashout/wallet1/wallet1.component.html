@@ -1,0 +1,60 @@
+<app-card [hidHeader]="true">
+  <form [formGroup]="wallet1Form" (submit)="submitReport()">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>Select Service Type: </label>
+          <select class="form-control" formControlName="transactionType">
+            <option disabled value="">Select</option>
+            <option value="IATM_CASHOUT">iATM Cashout</option>
+            <option value="AEPS_CASHOUT">AEPS1 Cashout</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="dateRange">Date Range: </label>
+          <input name="dateRange" formControlName="dateRange" [owlDateTime]="dateRange"
+            placeholder="DD-MM-YYYY - DD-MM-YYYY" [owlDateTimeTrigger]="dateRange" class="form-control"
+            [selectMode]="'range'" [rangeSeparator]="' - '" />
+
+          <owl-date-time [firstDayOfWeek]="'1'" [pickerType]="'calendar'" #dateRange></owl-date-time>
+          <small class="form-text date-valid-message"
+            [ngStyle]="{'opacity': wallet1Form.get('dateRange').hasError('incorrect') ? '1' : '0'}">Maximum range value
+            is
+            10.</small>
+        </div>
+      </div>
+      <div class="col submitBtnCol">
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" [disabled]="wallet1Form.invalid">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</app-card>
+
+<div class="d-flex justify-content-center" *ngIf="fetchingReport">
+  <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+<div class="dataTable" *ngIf="!fetchingReport && reports.length">
+  <ngx-datatable #table class="material" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+    [rows]="reports" columnMode="force" [scrollbarH]="true" [columns]="tableCols" [rowHeight]="50">
+  </ngx-datatable>
+</div>
+
+<ng-template #checkTemplate let-value="value">
+  <span *ngIf="['SUCCESS', 'REFUNDED'].includes(value)" class="badge m-r-5 badge-pill badge-success">{{value}}</span>
+  <span *ngIf="['PENDING', 'INITIATED'].includes(value)" class="badge m-r-5 badge-pill badge-warning">{{value}}</span>
+  <span *ngIf="value === 'FAILED'" class="badge m-r-5 badge-pill badge-danger">{{value}}</span>
+</ng-template>
+
+<ng-template #actionTemplate>
+  <span><i class="feather icon-settings"></i></span>
+</ng-template>
+
+<ng-template #dateTemplate let-value="value">
+  <span>{{ value | date: 'medium' }}</span>
+</ng-template>

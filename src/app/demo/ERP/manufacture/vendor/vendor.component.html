@@ -1,0 +1,148 @@
+<!-- Loader Starts -->
+<div *ngIf="loader"
+    class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+<!-- Loader Ends -->
+<div class="container">
+    <div class="prod_table" *ngIf='!showAddVendor'>
+      <div class="col-sm-12 row mt-3">
+        <div class="mode_change col-sm-9">
+          <form [formGroup]="modeForm">
+            <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture" disabled>Manufacture</button>
+            <button class="btn btn-primary" routerLink="/v1/trade/vendor" title="Go To Trade">Trade</button>
+          </form>
+        </div>
+        <div class="col-sm-3">
+            <button class="btn btn-primary" (click)="show_AddVendor()">Add Vendor</button>
+        </div>
+      </div>
+        <div class="table-responsive col-sm-12">
+          <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+            <table class="table v-middle nowrap">
+                <thead>
+                    <tr>
+                        <th class="border-top-0">Vendor Name</th>
+                        <th class="border-top-0">Email</th>
+                        <th class="border-top-0">Mobile</th>
+                        <th class="border-top-0">Type</th>
+                        <th class="border-top-0">GST</th>
+                        <th class="border-top-0">Address</th>
+                        <th class="border-top-0">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of getVendorData; let i = index">
+                        <td>{{getVendorData[i].name}}</td>
+                        <td>{{getVendorData[i].email}}</td>
+                        <td>{{getVendorData[i].phone}}</td>
+                        <td>{{getVendorData[i].type}}</td>
+                        <td>{{getVendorData[i].gstn}}</td>
+                        <td>{{getVendorData[i].address}}</td>
+                        <td>
+                            <div class="row">
+                                <span style="cursor: pointer;"><i class="fa fa-edit" aria-hidden="true"
+                                    (click)="update_vend_popup_open(content,i)"></i></span>
+                            <span class="mx-2" style="cursor: pointer;" (click)="delete_vendor(i)"><i
+                                    class="fa fa-trash" aria-hidden="true"></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="add_vendor" *ngIf='showAddVendor'>
+      <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+        <div class="row col-sm-12">
+            <div class="col-sm-12 text-right">
+                <button class="btn btn-primary mr-1" type="submit" (click)="add_Vendor()">Add</button>
+                <button class="btn btn-warning" type="reset" (click)="hide_AddVendor()">Cancel</button>
+            </div>
+        </div>
+        <div class="modal_head">
+            <div class="modal_body">
+                <div class="addVendorForm">
+                    <form [formGroup]="addVendorForm" class="my-3">
+                        <label class="lab_tag" for="">Name:</label>
+                        <input type="text" class="form-control" formControlName="ven_name">
+                        <label class="lab_tag" for="">Email:</label>
+                        <input type="email" class="form-control" formControlName="ven_email">
+                        <label class="lab_tag" for="">Mobile No:</label>
+                        <input type="text" class="form-control" formControlName="mob">
+                        <label class="lab_tag" for="">Type:</label>
+                        <select name="" id="" formControlName="type" class="form-control">
+                            <option value="type" selected disabled>Select Type</option>
+                            <option value="Intra State">Intra State</option>
+                            <option value="Inter State">Inter State</option>
+                        </select>
+                        <label class="lab_tag" for="">GST No:</label>
+                        <input type="text" class="form-control" maxlength="15" minlength="15" formControlName="gst_in"
+                            #gst (input)="gst.value=$event.target.value.toUpperCase()">
+                        <div *ngIf="addVendorForm.get('gst_in').hasError('minlength') && addVendorForm.get('gst_in').touched"
+                            class="err-message">
+                            <span class="text-danger">It should be 15 digits.</span>
+                        </div>
+                        <div *ngIf="addVendorForm.get('gst_in').hasError('pattern') && addVendorForm.get('gst_in').touched"
+                            class="err-message">
+                            <span class="text-danger">Invalid GST No.</span>
+                        </div>
+                        <label class="lab_tag" for="">Address:</label>
+                        <input type="text" class="form-control" formControlName="add">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal starts -->
+<ng-template #content let-c="close" let-d="dismiss">
+    <!-- <div class="modal-header">
+      <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+        <button class="close_btn">
+            <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
+        </button>
+    </div> -->
+    <div class="modal-body">
+        <div class="updateVendorForm">
+            <form [formGroup]="updateVendorForm" class="my-3">
+                <label class="lab_tag" for="">Name:</label>
+                <input type="text" class="form-control" formControlName="ven_name">
+                <label class="lab_tag" for="">Email:</label>
+                <input type="email" class="form-control" formControlName="ven_email">
+                <label class="lab_tag" for="">Mobile No:</label>
+                <input type="text" class="form-control" formControlName="mob">
+                <label class="lab_tag" for="">Type:</label>
+                <select name="" id="" formControlName="type" class="form-control">
+                    <option value="type" selected disabled>Select Type</option>
+                    <option value="Intra State">Intra State</option>
+                    <option value="Inter State">Inter State</option>
+                </select>
+                <label class="lab_tag" for="">GST No:</label>
+                <input type="text" class="form-control" maxlength="15" minlength="15" formControlName="gst_in" #gst
+                    (input)="gst.value=$event.target.value.toUpperCase()" readonly>
+                <div *ngIf="addVendorForm.get('gst_in').hasError('minlength') && addVendorForm.get('gst_in').touched"
+                    class="err-message">
+                    <span class="text-danger">It should be 15 digits.</span>
+                </div>
+                <div *ngIf="addVendorForm.get('gst_in').hasError('pattern') && addVendorForm.get('gst_in').touched"
+                    class="err-message">
+                    <span class="text-danger">Invalid GST No.</span>
+                </div>
+                <label class="lab_tag" for="">Address:</label>
+                <input type="text" class="form-control" formControlName="add">
+
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="update_vendor()">Submit</button>
+        <button type="button" class="btn btn-outline-dark" (click)="update_vend_popup_close(content)">Cancel</button>
+    </div>
+</ng-template>
