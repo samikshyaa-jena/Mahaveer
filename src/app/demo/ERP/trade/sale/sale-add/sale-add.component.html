@@ -1,4 +1,5 @@
-<div class="container-fluid">
+<div class="card p-3">
+<div>
     <!-- <div class="card bg-white"> -->
     <button type="button" class="btn back_btn mt-3" (click)="previousPage()"><i
             class="fas fa-arrow-alt-circle-left"></i></button>
@@ -17,9 +18,10 @@
                 <input type="text" formControlName="invo" class="form-control">
             </div>
             <div class="col-sm-2 ">
-                <label for="">Vendor Name</label>
-                <select class="form-control" formControlName="vendor"
+                <label for="">Custmer Name</label>
+                <select class="form-control" formControlName="custmer"
                     (ngModelChange)="vendorType($event, purchase_form.valid)">
+                    <option value="choose_cname" disabled>Choose</option>
                     <option [value]="vendor.customer_id" *ngFor="let vendor of getVendorData">{{vendor.name}}
                     </option>
                 </select>
@@ -94,8 +96,8 @@
                 style="border-collapse: separate;text-indent: initial;">
                 <thead class="bg-white">
                     <tr>
-                        <th>Choose Product</th>
-                        <th>Item</th>
+                        <th style="width: 25%;">Choose Product</th>
+                        <!-- <th>Item</th> -->
                         <th>IGST</th>
                         <th>CGST</th>
                         <th>SGST</th>
@@ -117,31 +119,31 @@
                                 <select class="form-control" id="category"
                                     (change)="chooseCategory($event.target.value)" formControlName="category"
                                     [disabled]="purchase_form.invalid">
-                                    <option selected value="choose">ChooseCategory</option>
+                                    <option selected value="ChooseCategory">ChooseCategory</option>
                                     <option *ngFor="let category of getCatagoryData;let i=index"
                                         [value]="category.cat_id">
-                                        {{category.cat_name}}</option>
+                                        {{category.prod_name}}</option>
                                 </select>
                             </td>
-                            <td>
+                            <!-- <td>
                                 <select class="form-control" id="prod_id" formControlName="prod_id"
                                     (change)="chooseItem($event.target.value,i)" [disabled]="purchase_form.invalid">
                                     <option selected value="choose">ChooseProduct </option>
                                     <option *ngFor="let item of itemData" [value]="item.prod_id">{{item.prod_name}}
                                     </option>
                                 </select>
-                            </td>
+                            </td> -->
                             <td><input type="number" formControlName="igst" class="form-control" disabled></td>
                             <td><input type="number" formControlName="cgst" class="form-control" disabled></td>
                             <td> <input type="number" formControlName="sgst" class="form-control" disabled></td>
                             <td><input type="text" formControlName="hsn" class="form-control" disabled></td>
                             <td><input type="number" formControlName="price" id="price" class="form-control"
-                                    (input)="calc_total(i)" [readonly]="purchase_form.invalid"></td>
+                                    (input)="calc_total(i)" [readonly]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname'"></td>
                             <td><input type="number" formControlName="qty" id="qty" class="form-control"
-                                    (input)="calc_total(i)" [readonly]="purchase_form.invalid">
+                                    (input)="calc_total(i)" [readonly]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname'">
                             </td>
                             <td><input type="number" formControlName="discount" id="discount" class="form-control"
-                                    (input)="calc_total(i)" [readonly]="purchase_form.invalid"></td>
+                                    (input)="calc_total(i)" [readonly]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname'"></td>
                             <td><input type="number" formControlName="total" class="form-control" readonly></td>
                             <!-- <td>
                                 <button border="none" class="btn btn-primary disable" (click)="submitArray(i)"
@@ -173,6 +175,8 @@
 <div class="footer_btn">
     <button class="btn btn-danger mr-2">Cancel</button>
     <button class="btn btn-primary">Save</button>
+</div>
+
 </div>
 
 

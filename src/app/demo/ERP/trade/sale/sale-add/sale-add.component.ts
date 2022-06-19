@@ -68,7 +68,7 @@ export class SaleAddComponent implements OnInit {
     // })
     this.purchase_form = new FormGroup({
       invo: new FormControl("", [Validators.required]),
-      vendor: new FormControl("", [Validators.required]),
+      custmer: new FormControl("choose_cname", [Validators.required]),
       p_date: new FormControl("", [Validators.required]),
       amnt: new FormControl(""),
       payMode: new FormControl(""),
@@ -78,6 +78,7 @@ export class SaleAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.get_Catagory();
+    this.get_proddata();
     this.get_Vendor();
     this.add_row();
   }
@@ -87,7 +88,30 @@ export class SaleAddComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.getTradeCat, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.get_Reqs(erp_all_api.urls.getProduct, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        // this.getCatagoryData = res.data;
+        let catData = res.data;
+        for (let i = 0; i < catData.length; i++) {
+          if (catData[i].delete_stat == 0) {
+            this.getCatagoryData.push(catData[i]);
+          }
+        }
+        console.log(this.getCatagoryData);
+      },
+      (err: any) => {
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+
+      });
+
+  };
+  get_proddata = () => {
+    this.loader = true;
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.get_Reqs(erp_all_api.urls.get_prod, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         // this.getCatagoryData = res.data;
         let catData = res.data;
@@ -159,6 +183,8 @@ export class SaleAddComponent implements OnInit {
     }
   }
   chooseItem(e, p_form: any) {
+    console.log("gfekjdf");
+    
     if (e != "choose") {
       let hsn;
       let gst;
@@ -312,7 +338,7 @@ export class SaleAddComponent implements OnInit {
     console.log(this.productformarray);
     const reqBody = {
       "invoice": this.purchase_form.get('invo').value,
-      "customer_id": this.purchase_form.get('vendor').value,
+      "customer_id": this.purchase_form.get('custmer').value,
       "type": "rawmaterial",
       "date": this.purchase_form.get('p_date').value,
       "sell_data": this.productformarray,
@@ -349,7 +375,7 @@ export class SaleAddComponent implements OnInit {
     return this.fb.group({
 
       category: new FormControl('ChooseCategory', [Validators.required]),
-      prod_id: new FormControl('ChooseItem', [Validators.required]),
+      // prod_id: new FormControl('ChooseItem', [Validators.required]),
       igst: new FormControl('', [Validators.required]),
       cgst: new FormControl('', [Validators.required]),
       sgst: new FormControl('', [Validators.required]),
