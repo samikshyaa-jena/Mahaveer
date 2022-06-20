@@ -295,7 +295,8 @@ export class SaleAddComponent implements OnInit {
     this.showInps = true;
     this.productformarray;
     let category
-    let value = p_form.value
+    let value = this.productForm.value.product[0]
+    // let value = p_form.value
     let duplicatevalue = { ...value }
     console.log(this.getCatagoryData);
     this.duplicateproductformarray;
@@ -393,23 +394,6 @@ export class SaleAddComponent implements OnInit {
   }
   deleteRow(i) {
     (<FormArray>this.productForm.get('product')).removeAt(i)
-  }
-
-  purches_validation(value) {
-    if (value) {
-      document.getElementById('category').removeAttribute('disabled');
-      document.getElementById('prod_id').removeAttribute('disabled');
-      document.getElementById('price').removeAttribute('disabled');
-      document.getElementById('qty').removeAttribute('disabled');
-      document.getElementById('discount').removeAttribute('disabled');
-
-    } else {
-      document.getElementById('category').setAttribute('disabled', 'true');
-      document.getElementById('prod_id').setAttribute('disabled', 'true');
-      document.getElementById('price').setAttribute('disabled', 'true');
-      document.getElementById('qty').setAttribute('disabled', 'true');
-      document.getElementById('discount').setAttribute('disabled', 'true');
-    }
   }
 
 }
