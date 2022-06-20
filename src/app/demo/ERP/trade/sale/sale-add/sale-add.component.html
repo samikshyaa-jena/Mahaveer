@@ -119,7 +119,7 @@
                                 <select class="form-control" id="category"
                                     (change)="chooseCategory($event.target.value)" formControlName="category"
                                     [disabled]="purchase_form.invalid">
-                                    <option selected value="ChooseCategory">ChooseCategory</option>
+                                    <option selected value="ChooseProduct">Choose Product</option>
                                     <option *ngFor="let category of getCatagoryData;let i=index"
                                         [value]="category.cat_id">
                                         {{category.prod_name}}</option>

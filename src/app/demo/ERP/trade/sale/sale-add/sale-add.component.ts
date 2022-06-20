@@ -262,14 +262,14 @@ export class SaleAddComponent implements OnInit {
 
 
   calc_total(p_form: any) {
-    console.log(this.productForm.get(p_form.price));
+    console.log(this.productForm.value);
     
-    let prc: any = this.productForm.get(p_form.price);
-    let qt: any = this.productForm.get(p_form.qty);
-    let discnt: any = this.productForm.get(p_form.discount);
-    let igst: any = this.productForm.get(p_form.igst);
-    let sgst: any = this.productForm.get(p_form.sgst);
-    let cgst: any = this.productForm.get(p_form.cgst);
+    let prc: any = this.productForm.value.product[p_form].price;
+    let qt: any = this.productForm.value.product[p_form].qty;
+    let discnt: any = this.productForm.value.product[p_form].discount;
+    let igst: any = this.productForm.value.product[p_form].igst;
+    let sgst: any = this.productForm.value.product[p_form].sgst;
+    let cgst: any = this.productForm.value.product[p_form].cgst;
     let sum = 0
     let total = 0;
     let gstTotal = (igst + cgst + sgst) / 100;
@@ -374,7 +374,7 @@ export class SaleAddComponent implements OnInit {
   productdata(): FormGroup {
     return this.fb.group({
 
-      category: new FormControl('ChooseCategory', [Validators.required]),
+      category: new FormControl('ChooseProduct', [Validators.required]),
       // prod_id: new FormControl('ChooseItem', [Validators.required]),
       igst: new FormControl('', [Validators.required]),
       cgst: new FormControl('', [Validators.required]),
