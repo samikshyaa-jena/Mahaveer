@@ -39,6 +39,11 @@ export class SaleAddComponent implements OnInit {
   @Output() get_purchase_details: EventEmitter<any> = new EventEmitter();
   showInps: boolean = false;
 
+  t_igst: number;
+  t_sgst: number;
+  t_cgst: number;
+  t_amount: number;
+
   constructor(
     private ErpService: ErpServiceService,
     private http: HttpClient,
@@ -159,32 +164,98 @@ export class SaleAddComponent implements OnInit {
     })
     console.log(this.type);
   }
-  chooseCategory(e) {
-    console.log(e);
-    if (e != "choose") {
+  chooseCategory(form_cont,item) {
+
+    console.log(item);
+    console.log(form_cont);
+    console.log(this.purchase_form);
+    console.log(this.getCatagoryData);
+
+    if (item != "ChooseProduct") {
+      let hsn;
+      let gst;
+      let GST;
+      let gstvalue;
+      let mrp;
+
       for (let i = 0; i < this.getCatagoryData.length; i++) {
-        if (this.getCatagoryData[i].cat_id == e) {
-          this.itemData = this.getCatagoryData[i].itemData;
-          this.productname = this.getCatagoryData[i].cat_name
+        if (this.getCatagoryData[i].prod_id == item) {
+          GST = parseInt(this.getCatagoryData[i].gst);
+          hsn = this.getCatagoryData[i].hsn;
+
+          if (this.getCatagoryData[i].mrp) {            
+            mrp = this.getCatagoryData[i].mrp;
+            gst = mrp * (GST/100);
+          } else {
+            mrp = this.getCatagoryData[i].price;
+            gst = mrp * (GST/100);
+          }
+          this.itemname = this.getCatagoryData[i].prod_name;          
+          
+          if (this.type == 'Intra State') {
+            gstvalue = gst / 2;
+            form_cont.patchValue({
+              igst: 0,
+              hsn: hsn,
+              cgst: gstvalue,
+              sgst: gstvalue,
+              price: mrp
+            });
+          }
+          else {
+            gstvalue = gst
+            form_cont.patchValue({
+              igst: gstvalue,
+              hsn: hsn,
+              cgst: 0,
+              sgst: 0,
+              price: mrp
+            });
+          }
         }
       }
 
-      let x = this.itemData;
-      this.itemData = [];
-      for (let i = 0; i < x.length; i++) {
-        if (x[i].delete_stat == 0) {
-          this.itemData.push(x[i]);
-        }
-      }
-
-      console.log(this.itemData);
-    } else {
-      Notiflix.Report.failure('choose correct option', '', 'Close');
     }
+
+    else {
+      Notiflix.Report.failure('Choose a correct option', '', 'Close');
+      form_cont.patchValue({
+        igst: 0,
+          hsn: 0,
+          cgst: 0,
+          sgst: 0
+      });
+    }
+
+    this.calc_total(form_cont.controls);
+
+
+    // if (e != "ChooseProduct") {
+    //   for (let i = 0; i < this.getCatagoryData.length; i++) {
+    //     if (this.getCatagoryData[i].cat_id == e) {
+    //       this.itemData = this.getCatagoryData[i].itemData;
+    //       this.productname = this.getCatagoryData[i].cat_name
+    //     }
+    //   }
+
+    //   let x = this.itemData;
+    //   this.itemData = [];
+    //   for (let i = 0; i < x.length; i++) {
+    //     if (x[i].delete_stat == 0) {
+    //       this.itemData.push(x[i]);
+    //     }
+    //   }
+
+    //   console.log(this.itemData);
+    // } else {
+    //   Notiflix.Report.failure('choose correct option', '', 'Close');
+    // }
+
   }
+
   chooseItem(e, p_form: any) {
     console.log("gfekjdf");
-    
+
     if (e != "choose") {
       let hsn;
       let gst;
@@ -203,10 +274,10 @@ export class SaleAddComponent implements OnInit {
             this.productForm.patchValue({
               p_form: {
                 igst: 0,
-              hsn: hsn,
-              cgst: gstvalue,
-              sgst: gstvalue,
-              price: mrp
+                hsn: hsn,
+                cgst: gstvalue,
+                sgst: gstvalue,
+                price: mrp
               }
             });
             // this.productForm.patchValue({
@@ -261,42 +332,52 @@ export class SaleAddComponent implements OnInit {
   }
 
 
-  calc_total(p_form: any) {
-    console.log(this.productForm.value);
-    
-    let prc: any = this.productForm.value.product[p_form].price;
-    let qt: any = this.productForm.value.product[p_form].qty;
-    let discnt: any = this.productForm.value.product[p_form].discount;
-    let igst: any = this.productForm.value.product[p_form].igst;
-    let sgst: any = this.productForm.value.product[p_form].sgst;
-    let cgst: any = this.productForm.value.product[p_form].cgst;
-    let sum = 0
+  calc_total(form_cont) {
+
+
+    // console.log(this.productForm.value);
+
+    let prc: any = form_cont.price.value;
+    let qt: any = form_cont.qty.value;
+    let discnt: any = form_cont.discount.value;
+    let igst: any = form_cont.igst.value;
+    let sgst: any = form_cont.sgst.value;
+    let cgst: any = form_cont.cgst.value;
+    // let sum = 0
     let total = 0;
-    let gstTotal = (igst + cgst + sgst) / 100;
-    if (qt != null) {
-      if (prc != null) {
-        if (discnt != null) {
-          sum = sum + ((prc * qt) - discnt);
-          total = sum + (sum * gstTotal);
+    // let gstTotal = (igst + cgst + sgst) / 100;
+    let gstTotal = (igst + cgst + sgst);
+    if (qt && prc) {
+
+        if (discnt) {
+          total = gstTotal + ((prc * qt) - discnt);
         } else {
-          sum = sum + ((prc * qt) - 0);
-          total = sum + (sum * gstTotal);
+          total = gstTotal + ((prc * qt) - 0);
         }
-      }
+
     }
-    this.productForm.patchValue({
-      p_form: {
-        total: total
-      }
-    });
+    // if (qt != null) {
+    //   if (prc != null) {
+    //     if (discnt != null) {
+    //       sum = sum + ((prc * qt) - discnt);
+    //       total = sum + (sum * gstTotal);
+    //     } else {
+    //       sum = sum + ((prc * qt) - 0);
+    //       total = sum + (sum * gstTotal);
+    //     }
+    //   }
+    // }
+    form_cont.total.patchValue(total)
+    console.log(form_cont);
   }
 
-  submitArray(p_form) {
+  submitArray() {
     this.showInps = true;
-    this.productformarray;
+    // this.productformarray;
     let category
     let value = this.productForm.value.product[0]
     // let value = p_form.value
+    var p_form = this.productForm.get('product')['controls'];
     let duplicatevalue = { ...value }
     console.log(this.getCatagoryData);
     this.duplicateproductformarray;
@@ -305,12 +386,17 @@ export class SaleAddComponent implements OnInit {
         duplicatevalue.category = this.getCatagoryData[i].cat_name
       }
     }
-    for (let i = 0; i < this.itemData.length; i++) {
-      if (this.itemData[i].prod_id == p_form.value.prod_id) {
-        duplicatevalue.prod_id = this.itemData[i].prod_name;
+    for (let i = 0; i < this.getCatagoryData.length; i++) {
+      if (this.getCatagoryData[i].prod_id == p_form.value.prod_id) {
+        duplicatevalue.prod_id = this.getCatagoryData[i].prod_name;
       }
     }
-    this.productformarray.push(value)
+    
+    for (let i = 0; i < this.productForm.get('product')['controls'].length; i++) {
+      console.log(this.productForm.get('product')['controls'][i].value);
+      this.productformarray.push(this.productForm.get('product')['controls'][i].value)
+    }
+    // this.productformarray.push(value)
     this.duplicateproductformarray.push(duplicatevalue)
     console.log(duplicatevalue);
     console.log(this.duplicateproductformarray);
@@ -334,6 +420,12 @@ export class SaleAddComponent implements OnInit {
   //   this.openmodal = true;
   // }
   add_purchase_details = () => {
+    console.log(this.productForm.get('product')['controls']);
+    for (let i = 0; i < this.productForm.get('product')['controls'].length; i++) {
+      console.log(this.productForm.get('product')['controls'][i].value);
+      this.productformarray.push(this.productForm.get('product')['controls'][i].value)
+    }
+
     this.loader = true;
     console.log(this.purchase_form.get('invo').value,);
     console.log(this.productformarray);
@@ -394,6 +486,39 @@ export class SaleAddComponent implements OnInit {
   }
   deleteRow(i) {
     (<FormArray>this.productForm.get('product')).removeAt(i)
+  }
+
+  totalCalculation(){
+
+    var pform = this.productForm.get('product')['controls'];
+
+    this.t_igst = 0;      
+      this.t_sgst = 0;
+      this.t_cgst = 0;
+      this.t_amount = 0;
+
+    for (let i = 0; i < pform.length; i++) {
+      this.t_igst = this.t_igst + pform[i].value.igst;      
+      this.t_sgst = this.t_sgst + pform[i].value.sgst;
+      this.t_cgst = this.t_cgst + pform[i].value.cgst;
+      this.t_amount = this.t_amount + pform[i].value.total;
+    }
+
+  }
+
+  prevent(e, type) {
+    console.log(e);
+    
+    if (type == 'qty') {      
+      if (e.key > '0') {
+        return e.keyCode >= 48 && e.charCode <= 57;
+      } else {
+        return e.keyCode > 48 && e.charCode <= 57;;
+      }
+    }
+   else if (type == 'dis') {      
+      return e.keyCode >= 48 && e.charCode <= 57;
+    }
   }
 
 }

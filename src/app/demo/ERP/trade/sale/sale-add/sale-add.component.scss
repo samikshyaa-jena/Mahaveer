@@ -78,3 +78,20 @@
     .col-sm-12, .col-sm-2{
         padding-left: 0 !important;
     }
+    .total_cal{
+        display: flex;
+        justify-content: flex-end;
+        border: 1px solid transparent;
+        margin-top: 10px;
+    }
+    .total_cal_field{
+        border: 0px solid transparent;
+        border-bottom: 1px solid black;
+    }
+    .delete_btn{
+        color: red;
+    }
+    .table_input{
+        padding: 1px;
+        text-align: center;
+    }
