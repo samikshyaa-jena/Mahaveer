@@ -253,83 +253,83 @@ export class SaleAddComponent implements OnInit {
 
   }
 
-  chooseItem(e, p_form: any) {
-    console.log("gfekjdf");
+  // chooseItem(e, p_form: any) {
+  //   console.log("gfekjdf");
 
-    if (e != "choose") {
-      let hsn;
-      let gst;
-      let gstvalue;
-      let mrp;
-      console.log(this.itemData);
+  //   if (e != "choose") {
+  //     let hsn;
+  //     let gst;
+  //     let gstvalue;
+  //     let mrp;
+  //     console.log(this.itemData);
 
-      for (let i = 0; i < this.itemData.length; i++) {
-        if (this.itemData[i].prod_id == e) {
-          gst = parseInt(this.itemData[i].gst);
-          hsn = this.itemData[i].hsn;
-          mrp = this.itemData[i].mrp;
-          this.itemname = this.itemData[i].prod_name
-          if (this.type == 'Intra State') {
-            gstvalue = gst / 2
-            this.productForm.patchValue({
-              p_form: {
-                igst: 0,
-                hsn: hsn,
-                cgst: gstvalue,
-                sgst: gstvalue,
-                price: mrp
-              }
-            });
-            // this.productForm.patchValue({
-            //   igst: 0,
-            //   hsn: hsn,
-            //   cgst: gstvalue,
-            //   sgst: gstvalue,
-            //   price: mrp
-            // })
-          } else {
-            gstvalue = gst
-            this.productForm.patchValue({
-              p_form: {
-                igst: gstvalue,
-                hsn: hsn,
-                cgst: 0,
-                sgst: 0,
-                price: mrp
-              }
-            });
-            // this.productForm.patchValue({
-            //   igst: gstvalue,
-            //   hsn: hsn,
-            //   cgst: 0,
-            //   sgst: 0,
-            //   price: mrp
-            // })
-          }
-        }
-        console.log(p_form)
-      }
+  //     for (let i = 0; i < this.itemData.length; i++) {
+  //       if (this.itemData[i].prod_id == e) {
+  //         gst = parseInt(this.itemData[i].gst);
+  //         hsn = this.itemData[i].hsn;
+  //         mrp = this.itemData[i].mrp;
+  //         this.itemname = this.itemData[i].prod_name
+  //         if (this.type == 'Intra State') {
+  //           gstvalue = gst / 2
+  //           this.productForm.patchValue({
+  //             p_form: {
+  //               igst: 0,
+  //               hsn: hsn,
+  //               cgst: gstvalue,
+  //               sgst: gstvalue,
+  //               price: mrp
+  //             }
+  //           });
+  //           // this.productForm.patchValue({
+  //           //   igst: 0,
+  //           //   hsn: hsn,
+  //           //   cgst: gstvalue,
+  //           //   sgst: gstvalue,
+  //           //   price: mrp
+  //           // })
+  //         } else {
+  //           gstvalue = gst
+  //           this.productForm.patchValue({
+  //             p_form: {
+  //               igst: gstvalue,
+  //               hsn: hsn,
+  //               cgst: 0,
+  //               sgst: 0,
+  //               price: mrp
+  //             }
+  //           });
+  //           // this.productForm.patchValue({
+  //           //   igst: gstvalue,
+  //           //   hsn: hsn,
+  //           //   cgst: 0,
+  //           //   sgst: 0,
+  //           //   price: mrp
+  //           // })
+  //         }
+  //       }
+  //       console.log(p_form)
+  //     }
 
-    } else {
-      Notiflix.Report.failure('Choose a correct option', '', 'Close');
-      this.productForm.patchValue({
-        p_form: {
-          igst: 0,
-          hsn: 0,
-          cgst: 0,
-          sgst: 0
-        }
-      });
-      // this.productForm.patchValue({
-      //   igst: 0,
-      //   hsn: 0,
-      //   cgst: 0,
-      //   sgst: 0
-      // })
+  //   } else {
+  //     Notiflix.Report.failure('Choose a correct option', '', 'Close');
+  //     this.productForm.patchValue({
+  //       p_form: {
+  //         igst: 0,
+  //         hsn: 0,
+  //         cgst: 0,
+  //         sgst: 0
+  //       }
+  //     });
+  //     // this.productForm.patchValue({
+  //     //   igst: 0,
+  //     //   hsn: 0,
+  //     //   cgst: 0,
+  //     //   sgst: 0
+  //     // })
 
 
-    }
-  }
+  //   }
+  // }
 
 
   calc_total(form_cont) {
@@ -371,46 +371,47 @@ export class SaleAddComponent implements OnInit {
     console.log(form_cont);
   }
 
-  submitArray() {
-    this.showInps = true;
-    // this.productformarray;
-    let category
-    let value = this.productForm.value.product[0]
-    // let value = p_form.value
-    var p_form = this.productForm.get('product')['controls'];
-    let duplicatevalue = { ...value }
-    console.log(this.getCatagoryData);
-    this.duplicateproductformarray;
-    for (let i = 0; i < this.getCatagoryData.length; i++) {
-      if (this.getCatagoryData[i].cat_id == p_form.value.category) {
-        duplicatevalue.category = this.getCatagoryData[i].cat_name
-      }
-    }
-    for (let i = 0; i < this.getCatagoryData.length; i++) {
-      if (this.getCatagoryData[i].prod_id == p_form.value.prod_id) {
-        duplicatevalue.prod_id = this.getCatagoryData[i].prod_name;
-      }
-    }
+  // submitArray() {
+  //   this.showInps = true;
+  //   // this.productformarray;
+  //   let category
+  //   let value = this.productForm.value.product[0]
+  //   // let value = p_form.value
+  //   var p_form = this.productForm.get('product')['controls'];
+  //   let duplicatevalue = { ...value }
+  //   console.log(this.getCatagoryData);
+  //   this.duplicateproductformarray;
+  //   for (let i = 0; i < this.getCatagoryData.length; i++) {
+  //     if (this.getCatagoryData[i].cat_id == p_form.value.category) {
+  //       duplicatevalue.category = this.getCatagoryData[i].cat_name
+  //     }
+  //   }
+  //   for (let i = 0; i < this.getCatagoryData.length; i++) {
+  //     if (this.getCatagoryData[i].prod_id == p_form.value.prod_id) {
+  //       duplicatevalue.prod_id = this.getCatagoryData[i].prod_name;
+  //     }
+  //   }
     
-    for (let i = 0; i < this.productForm.get('product')['controls'].length; i++) {
-      console.log(this.productForm.get('product')['controls'][i].value);
-      this.productformarray.push(this.productForm.get('product')['controls'][i].value)
-    }
-    // this.productformarray.push(value)
-    this.duplicateproductformarray.push(duplicatevalue)
-    console.log(duplicatevalue);
-    console.log(this.duplicateproductformarray);
-    console.log(this.productformarray);
-    let sum = 0;
-    for (let i = 0; i < this.productformarray.length; i++) {
-      sum = sum + this.productformarray[i].total;
-    }
-    this.purchase_form.patchValue({
-      payMode: 'Cash',
-      payStatus: 'Paid',
-      amnt: sum,
-    })
-  }
+  //   for (let i = 0; i < this.productForm.get('product')['controls'].length; i++) {
+  //     console.log(this.productForm.get('product')['controls'][i].value);
+  //     this.productformarray.push(this.productForm.get('product')['controls'][i].value)
+  //   }
+    
+  //   // this.productformarray.push(value)
+  //   this.duplicateproductformarray.push(duplicatevalue)
+  //   console.log(duplicatevalue);
+  //   console.log(this.duplicateproductformarray);
+  //   console.log(this.productformarray);
+  //   let sum = 0;
+  //   for (let i = 0; i < this.productformarray.length; i++) {
+  //     sum = sum + this.productformarray[i].total;
+  //   }
+  //   this.purchase_form.patchValue({
+  //     payMode: 'Cash',
+  //     payStatus: 'Paid',
+  //     amnt: sum,
+  //   })
+  // }
   delete(i) {
     Notiflix.Report.success('Are you want to delete', '', 'Ok');
     this.productformarray.splice(i, 1)
@@ -420,10 +421,29 @@ export class SaleAddComponent implements OnInit {
   //   this.openmodal = true;
   // }
   add_purchase_details = () => {
-    console.log(this.productForm.get('product')['controls']);
-    for (let i = 0; i < this.productForm.get('product')['controls'].length; i++) {
-      console.log(this.productForm.get('product')['controls'][i].value);
-      this.productformarray.push(this.productForm.get('product')['controls'][i].value)
+
+    this.productformarray = [];
+    var p_form = this.productForm.get('product')['controls'];
+    console.log(p_form);
+
+    for (let i = 0; i < p_form.length; i++) {
+      console.log(p_form[i].value);
+      this.productformarray.push(p_form[i].value)
+    }
+
+    if (this.productformarray) {
+
+      var product_arr = this.productformarray.map((p_array) => {
+        return {
+         prod_id: p_array.category,
+         bill_amount: this.t_amount,
+         price: p_array.price,
+         qty: p_array.qty,
+         discount: p_array.discount,
+         total: p_array.total
+        }
+     });
+
     }
 
     this.loader = true;
@@ -434,7 +454,7 @@ export class SaleAddComponent implements OnInit {
       "customer_id": this.purchase_form.get('custmer').value,
       "type": "rawmaterial",
       "date": this.purchase_form.get('p_date').value,
-      "sell_data": this.productformarray,
+      "sell_data": product_arr,
       "payment_status": this.purchase_form.get('payStatus').value,
       "method": this.purchase_form.get('payMode').value,
       "paid_amount": this.purchase_form.get('amnt').value

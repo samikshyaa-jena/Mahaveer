@@ -129,7 +129,7 @@
                             [formGroupName]="i">
                             <td>
                                 <select class="form-control table_input" id="category"
-                                    (change)="chooseCategory(Product, $event.target.value)" formControlName="category"
+                                    (change)="chooseCategory(Product, $event.target.value); totalCalculation()" formControlName="category"
                                     [disabled]="purchase_form.invalid">
                                     <option selected value="ChooseProduct">Choose Product</option>
                                     <option *ngFor="let category of getCatagoryData;let i=index"
@@ -170,7 +170,7 @@
                 <tfoot style="border: none;">
                     <tr style="border: none;">
                         <td colspan="2" style="white-space: nowrap; float: left; padding: 2px;"><button
-                                class="btn btn-primary" (click)="add_row(); totalCalculation()" [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.category == 'ChooseProduct'">Add Row</button>
+                                class="btn btn-primary" (click)="add_row()" [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.category == 'ChooseProduct'">Add Row</button>
                         </td>
                     </tr>
                 </tfoot>
