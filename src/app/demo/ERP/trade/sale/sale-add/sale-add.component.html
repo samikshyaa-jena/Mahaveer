@@ -151,10 +151,10 @@
                             <td><input type="text" formControlName="hsn" class="form-control table_input" disabled></td>
                             <td><input type="number" formControlName="price" id="price" class="form-control table_input" disabled></td>
                             <td><input type="number" formControlName="qty" id="qty" class="form-control table_input"
-                                    (input)="calc_total(Product.controls)" (keypress)="prevent($event, 'qty'); totalCalculation()" min="1" [readonly]="Product.controls.category.value == 'ChooseProduct'">
+                                    (input)="calc_total(Product.controls); totalCalculation()" (keypress)="prevent($event, 'qty')" min="1" [readonly]="Product.controls.category.value == 'ChooseProduct'">
                             </td>
-                            <td><input type="number" formControlName="discount" (keypress)="prevent($event,'dis'); totalCalculation()" min="0" id="discount" class="form-control table_input"
-                                    (input)="calc_total(Product.controls)" [readonly]="Product.controls.category.value == 'ChooseProduct'"></td>
+                            <td><input type="number" formControlName="discount" (keypress)="prevent($event,'dis')" min="0" id="discount" class="form-control table_input"
+                                    (input)="calc_total(Product.controls); totalCalculation()" [readonly]="Product.controls.category.value == 'ChooseProduct'"></td>
                             <td><input type="number" formControlName="total" class="form-control table_input" readonly></td>
                             <!-- <td>
                                 <button border="none" class="btn btn-primary disable" (click)="submitArray(i)"
