@@ -34,8 +34,9 @@ export class SaleAddComponent implements OnInit {
   purchase_form: FormGroup;
   duplicateproductformarray: any = [];
   type: any;
-  @Output() BackTab = new EventEmitter<boolean>()
+  today = new Date();
 
+  @Output() BackTab = new EventEmitter<boolean>()
   @Output() get_purchase_details: EventEmitter<any> = new EventEmitter();
   showInps: boolean = false;
 
@@ -74,10 +75,10 @@ export class SaleAddComponent implements OnInit {
     this.purchase_form = new FormGroup({
       invo: new FormControl("", [Validators.required]),
       custmer: new FormControl("choose_cname", [Validators.required]),
-      p_date: new FormControl("", [Validators.required]),
-      amnt: new FormControl(""),
-      payMode: new FormControl(""),
-      payStatus: new FormControl(""),
+      p_date: new FormControl(this.today, [Validators.required]),
+      amnt: new FormControl("0"),
+      payMode: new FormControl("payMode"),
+      payStatus: new FormControl("choosepay"),
     });
   }
 
@@ -164,7 +165,7 @@ export class SaleAddComponent implements OnInit {
     })
     console.log(this.type);
   }
-  chooseCategory(form_cont,item) {
+  chooseCategory(form_cont, item) {
 
     console.log(item);
     console.log(form_cont);
@@ -183,15 +184,15 @@ export class SaleAddComponent implements OnInit {
           GST = parseInt(this.getCatagoryData[i].gst);
           hsn = this.getCatagoryData[i].hsn;
 
-          if (this.getCatagoryData[i].mrp) {            
+          if (this.getCatagoryData[i].mrp) {
             mrp = this.getCatagoryData[i].mrp;
-            gst = mrp * (GST/100);
+            gst = mrp * (GST / 100);
           } else {
             mrp = this.getCatagoryData[i].price;
-            gst = mrp * (GST/100);
+            gst = mrp * (GST / 100);
           }
-          this.itemname = this.getCatagoryData[i].prod_name;          
-          
+          this.itemname = this.getCatagoryData[i].prod_name;
+
           if (this.type == 'Intra State') {
             gstvalue = gst / 2;
             form_cont.patchValue({
@@ -217,15 +218,15 @@ export class SaleAddComponent implements OnInit {
 
     }
 
-    else {
-      Notiflix.Report.failure('Choose a correct option', '', 'Close');
-      form_cont.patchValue({
-        igst: 0,
-          hsn: 0,
-          cgst: 0,
-          sgst: 0
-      });
-    }
+    // else {
+    //   Notiflix.Report.failure('Choose a correct option', '', 'Close');
+    //   form_cont.patchValue({
+    //     igst: 0,
+    //       hsn: 0,
+    //       cgst: 0,
+    //       sgst: 0
+    //   });
+    // }
 
     this.calc_total(form_cont.controls);
 
@@ -334,7 +335,6 @@ export class SaleAddComponent implements OnInit {
 
   calc_total(form_cont) {
 
-
     // console.log(this.productForm.value);
 
     let prc: any = form_cont.price.value;
@@ -345,15 +345,22 @@ export class SaleAddComponent implements OnInit {
     let cgst: any = form_cont.cgst.value;
     // let sum = 0
     let total = 0;
+    let total_igst = 0;
+    let total_cgst = 0;
+    let total_sgst = 0;
     // let gstTotal = (igst + cgst + sgst) / 100;
-    let gstTotal = (igst + cgst + sgst);
     if (qt && prc) {
 
-        if (discnt) {
-          total = gstTotal + ((prc * qt) - discnt);
-        } else {
-          total = gstTotal + ((prc * qt) - 0);
-        }
+      total_igst = igst * qt;
+      total_cgst = cgst * qt;
+      total_sgst = sgst * qt;
+      let gstTotal = (total_igst + total_cgst + total_sgst);
+
+      if (discnt) {
+        total = gstTotal + ((prc * qt) - discnt);
+      } else {
+        total = gstTotal + ((prc * qt) - 0);
+      }
 
     }
     // if (qt != null) {
@@ -367,7 +374,10 @@ export class SaleAddComponent implements OnInit {
     //     }
     //   }
     // }
-    form_cont.total.patchValue(total)
+    form_cont.total.patchValue(total);
+    form_cont.igst.patchValue(total_igst);
+    form_cont.cgst.patchValue(total_cgst);
+    form_cont.sgst.patchValue(total_sgst);
     console.log(form_cont);
   }
 
@@ -391,12 +401,12 @@ export class SaleAddComponent implements OnInit {
   //       duplicatevalue.prod_id = this.getCatagoryData[i].prod_name;
   //     }
   //   }
-    
+
   //   for (let i = 0; i < this.productForm.get('product')['controls'].length; i++) {
   //     console.log(this.productForm.get('product')['controls'][i].value);
   //     this.productformarray.push(this.productForm.get('product')['controls'][i].value)
   //   }
-    
+
   //   // this.productformarray.push(value)
   //   this.duplicateproductformarray.push(duplicatevalue)
   //   console.log(duplicatevalue);
@@ -420,6 +430,24 @@ export class SaleAddComponent implements OnInit {
   //   p_form.reset()
   //   this.openmodal = true;
   // }
+
+
+  resetProductForm() {
+    var p_form = this.productForm.get('product')['controls'];
+    console.log(p_form);
+    p_form.splice(1, p_form.length);
+    p_form[0].reset();
+    p_form[0].patchValue({
+      category: 'ChooseProduct',
+      price: 0,
+      qty: 1,
+      discount: 0
+    });
+    console.log(p_form);
+    this.totalCalculation()
+  }
+
+
   add_purchase_details = () => {
 
     this.productformarray = [];
@@ -435,14 +463,16 @@ export class SaleAddComponent implements OnInit {
 
       var product_arr = this.productformarray.map((p_array) => {
         return {
-         prod_id: p_array.category,
-         bill_amount: this.t_amount,
-         price: p_array.price,
-         qty: p_array.qty,
-         discount: p_array.discount,
-         total: p_array.total
+          prod_id: p_array.category,
+          igst: p_array.igst,
+          cgst: p_array.cgst,
+          sgst: p_array.sgst,
+          price: p_array.price,
+          qty: p_array.qty,
+          discount: p_array.discount,
+          total: p_array.total
         }
-     });
+      });
 
     }
 
@@ -452,7 +482,7 @@ export class SaleAddComponent implements OnInit {
     const reqBody = {
       "invoice": this.purchase_form.get('invo').value,
       "customer_id": this.purchase_form.get('custmer').value,
-      "type": "rawmaterial",
+      // "type": "rawmaterial",
       "date": this.purchase_form.get('p_date').value,
       "sell_data": product_arr,
       "payment_status": this.purchase_form.get('payStatus').value,
@@ -508,17 +538,17 @@ export class SaleAddComponent implements OnInit {
     (<FormArray>this.productForm.get('product')).removeAt(i)
   }
 
-  totalCalculation(){
+  totalCalculation() {
 
     var pform = this.productForm.get('product')['controls'];
 
-    this.t_igst = 0;      
-      this.t_sgst = 0;
-      this.t_cgst = 0;
-      this.t_amount = 0;
+    this.t_igst = 0;
+    this.t_sgst = 0;
+    this.t_cgst = 0;
+    this.t_amount = 0;
 
     for (let i = 0; i < pform.length; i++) {
-      this.t_igst = this.t_igst + pform[i].value.igst;      
+      this.t_igst = this.t_igst + pform[i].value.igst;
       this.t_sgst = this.t_sgst + pform[i].value.sgst;
       this.t_cgst = this.t_cgst + pform[i].value.cgst;
       this.t_amount = this.t_amount + pform[i].value.total;
@@ -528,15 +558,15 @@ export class SaleAddComponent implements OnInit {
 
   prevent(e, type) {
     console.log(e);
-    
-    if (type == 'qty') {      
+
+    if (type == 'qty') {
       if (e.key > '0') {
         return e.keyCode >= 48 && e.charCode <= 57;
       } else {
         return e.keyCode > 48 && e.charCode <= 57;;
       }
     }
-   else if (type == 'dis') {      
+    else if (type == 'dis') {
       return e.keyCode >= 48 && e.charCode <= 57;
     }
   }

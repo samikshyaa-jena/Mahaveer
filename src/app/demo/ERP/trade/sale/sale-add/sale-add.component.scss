@@ -95,3 +95,6 @@
         padding: 1px;
         text-align: center;
     }
+    .disable:disabled{
+        cursor: not-allowed;
+    }
