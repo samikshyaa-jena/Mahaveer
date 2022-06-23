@@ -59,6 +59,7 @@ export class SaleComponent implements OnInit {
   proddName: any;
   catt_id: any;
   prodd_id: any;
+  modal3: boolean;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -246,7 +247,8 @@ export class SaleComponent implements OnInit {
 
   openUpdatePucrchase = (i, d, updt) => {
     this.gi = i
-    this.modalService.open(updt);
+    // this.modalService.open(updt);
+    this.open_modal2();
     let total = 0;
     let igstVal = 0;
     let cgstVal = 0;
@@ -289,9 +291,9 @@ export class SaleComponent implements OnInit {
       total: this.updateData[i].total,
     });
   };
-  closeUpdateForm = (updt) => {
-    this.modalService.dismissAll(updt);
-  }
+  // closeUpdateForm = (updt) => {
+  //   this.modalService.dismissAll(updt);
+  // }
 
   update_purchase_details = () => {
     this.loader = true;
@@ -404,9 +406,9 @@ export class SaleComponent implements OnInit {
             s = s + sgst[j];
             totalSgst[i] = s;
 
-            totalIgst[i] = (totalIgst[i] == 0) ? "NA" : totalIgst[i] //+ " %";
-            totalCgst[i] = (totalCgst[i] == 0) ? "NA" : totalCgst[i] //+ " %";
-            totalSgst[i] = (totalSgst[i] == 0) ? "NA" : totalSgst[i] //+ " %";
+            // totalIgst[i] = (totalIgst[i] == 0) ? "NA" : totalIgst[i] //+ " %";
+            // totalCgst[i] = (totalCgst[i] == 0) ? "NA" : totalCgst[i] //+ " %";
+            // totalSgst[i] = (totalSgst[i] == 0) ? "NA" : totalSgst[i] //+ " %";
             this.get_purchase_data[i].totalsum = totaldata[i];
             this.get_purchase_data[i].totaligst = totalIgst[i];
             this.get_purchase_data[i].totalcgst = totalCgst[i];
@@ -783,6 +785,28 @@ export class SaleComponent implements OnInit {
       console.log('hi');
       this.closeInvoice('content');
 
+    }
+
+    prevent(e, type) {
+      console.log(e);
+  
+      if (type == 'qty') {
+        if (e.key > '0') {
+          return e.keyCode >= 48 && e.charCode <= 57;
+        } else {
+          return e.keyCode > 48 && e.charCode <= 57;;
+        }
+      }
+      else if (type == 'dis' || type == 'prc') {
+        return e.keyCode >= 48 && e.charCode <= 57;
+      }
+    }
+
+    open_modal2(){
+      this.modal3 = true;
+    }
+    closeUpdateForm(){
+      this.modal3 = false;
     }
 }
 

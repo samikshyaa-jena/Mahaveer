@@ -12,64 +12,66 @@
 <app-sale-add *ngIf="purchase_tab" (get_purchase_details)="get_purchase_details()" (BackTab)="back()"></app-sale-add>
 <div class="container" style="padding: 15px" *ngIf="!purchase_tab">
   <!-- <div class="card"> -->
-    <!-- <div> -->
-      <div class="mt-3">
-        <button class="btn btn-primary mb-3 mt-2" (click)="purchase_entry()">
-          Sale Entry
-        </button>
-      </div>
-      <div class="prod_table px-0 py-0 mx-0 my-0">
-        <div class="table-responsive px-0 py-0 mx-0 my-0">
-          <table class="table v-middle nowrap">
-            <thead class="table-secondary">
-              <tr>
-                <th class="border-top-0">Invoice</th>
-                <th class="border-top-0">Date</th>
-                <th class="border-top-0">Customer</th>
-                <th class="border-top-0">GSTN</th>
-                <th class="border-top-0">CGST</th>
-                <th class="border-top-0">SGST</th>
-                <th class="border-top-0">IGST</th>
-                <th class="border-top-0">Total</th>
-                <!-- <th class="border-top-0">Action</th> -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let data of get_purchase_data; let i = index">
-                <td>
-                  <u style="color: blue; cursor: pointer" (click)="invoicenumberPopup(data.invoice_no,data.sellData,data.customerData,i)">{{ data.invoice_no
-                    }}</u>
-                </td>
-                <td>{{ data.sell_date | date: "dd/MM/yyyy" }}</td>
-                <td>{{ data.customerData.name }}</td>
-                <td>{{ data.customerData.gstn }}</td>
-                <td>{{ data.totalcgst }}</td>
-                <td>{{ data.totalsgst }}</td>
-                <td>{{ data.totaligst }}</td>
-                <td>{{ data.totalsum }}</td>
-                <!-- <td>
+  <!-- <div> -->
+  <div class="mt-3">
+    <button class="btn btn-primary mb-3 mt-2" (click)="purchase_entry()">
+      Sale Entry
+    </button>
+  </div>
+  <div class="prod_table px-0 py-0 mx-0 my-0">
+    <div class="table-responsive px-0 py-0 mx-0 my-0">
+      <table class="table v-middle nowrap">
+        <thead class="table-secondary">
+          <tr>
+            <th class="border-top-0">Invoice</th>
+            <th class="border-top-0">Date</th>
+            <th class="border-top-0">Customer</th>
+            <th class="border-top-0">GSTN</th>
+            <th class="border-top-0">CGST</th>
+            <th class="border-top-0">SGST</th>
+            <th class="border-top-0">IGST</th>
+            <th class="border-top-0">Total</th>
+            <!-- <th class="border-top-0">Action</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of get_purchase_data; let i = index">
+            <td>
+              <u style="color: blue; cursor: pointer"
+                (click)="invoicenumberPopup(data.invoice_no,data.sellData,data.customerData,i)">{{ data.invoice_no
+                }}</u>
+            </td>
+            <td>{{ data.sell_date | date: "dd/MM/yyyy" }}</td>
+            <td>{{ data.customerData.name }}</td>
+            <td>{{ data.customerData.gstn }}</td>
+            <td>{{ data.totalcgst }}</td>
+            <td>{{ data.totalsgst }}</td>
+            <td>{{ data.totaligst }}</td>
+            <td>{{ data.totalsum }}</td>
+            <!-- <td>
                   <span title="View Invoice" style="cursor: pointer;" (click)="openInvoice(content,data.invoice_no)">
                     <i class="fa fa-print" aria-hidden="true"></i>
                   </span>
                 </td> -->
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    <!-- </div> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- </div> -->
   <!-- </div> -->
 </div>
 
 <div id="myModal2" class="modal2 px-5" *ngIf="modal">
   <div class="card">
     <div class="card-header">
-      <button class="btn btn-dark" style="float: right; cursor: pointer" (click)="modal = false">
+      <button class="btn btn-dark p-1" style="float: right; cursor: pointer" (click)="modal = false">
         X
       </button>
     </div>
     <div class="card-body">
-      <table class="table table-bordered">
+      <table width="100%" border="1px solid gray" class="text-center"
+        style="border-collapse: separate;text-indent: initial;">
         <thead class="bg-primary">
           <tr>
             <th scope="col" class="text-white text-center">Catagory</th>
@@ -107,8 +109,8 @@
             </td>
             <td class="text-center">{{ e.total }}</td>
             <td class="text-center">
-              <span style="cursor: pointer" class="mr-1" (click)="openUpdatePucrchase(i,popupData,updt)"><i
-                class="fa fa-edit" aria-hidden="true"></i></span>
+              <span style="cursor: pointer" class="mr-1" (click)="openUpdatePucrchase(i,popupData)"><i
+                  class="fa fa-edit" aria-hidden="true"></i></span>
               <span title="View Invoice" style="cursor: pointer" (click)="openInvoice(content, i)">
                 <i class="fa fa-print" aria-hidden="true"></i>
               </span>
@@ -117,8 +119,9 @@
         </tbody>
       </table>
       <div class="btns" style="float: right;">
-        <button type="reset" class="btn btn-danger" (click)="modal=false">cancel</button>
-        <button type="submit" class="btn btn-primary" [disabled]='!enable' (click)="update_purchase_details()">Update</button>
+        <button type="reset" class="btn btn-danger mr-2" (click)="modal=false">cancel</button>
+        <button type="submit" class="btn btn-primary disable" [disabled]='!enable'
+          (click)="update_purchase_details()">Update</button>
       </div>
     </div>
   </div>
@@ -225,7 +228,7 @@
 <!-- invoice modal ends -->
 
 
-<ng-template #updt let-c="close" let-d="dismiss">
+<!-- <ng-template #updt let-c="close" let-d="dismiss">
   <div class="modal-header">
     <button class="close_btn">
       <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
@@ -235,15 +238,15 @@
     <div class="updateVendorForm">
       <form [formGroup]="updatePurchase" class="my-3">
         <label class="lab_tag" for="">Catagory:</label>
-        <input type="text" class="form-control" formControlName="catagory" readonly>
+        <input type="text" class="form-control" formControlName="catagory" readonly> -->
         <!-- <select [(ngModel)]="cattName" name="" id="" formControlName="catagory" class="form-control" (change)="chooseCategory($event.target.value)" disabled>
           <option [value]="catt_id" disabled >{{cattName}}</option>
           <option *ngFor="let category of getCatagoryData;let i=index" [ngValue]="category.cat_id">
             {{category.cat_name}}
           </option>
         </select> -->
-        <label class="lab_tag" for="">Product:</label>
-        <input type="text" class="form-control" formControlName="prod_id" readonly>
+        <!-- <label class="lab_tag" for="">Product:</label>
+        <input type="text" class="form-control" formControlName="prod_id" readonly> -->
         <!-- <select [(ngModel)]="itemmName" formControlName="item_id" class="form-control">
           <option [value]="itemmName" disabled >{{itemmName}}</option>
           <option *ngFor="let item of itemData" [ngValue]="item.item_id">{{item.item_name}}</option>
@@ -253,15 +256,15 @@
           <option [value]="prodd_id" disabled >{{proddName}}</option>
           <option *ngFor="let item of itemData" [ngValue]="item.prod_id">{{item.prod_name}}</option>
         </select> -->
-        <label class="lab_tag" for="">HSN:</label>
+        <!-- <label class="lab_tag" for="">HSN:</label>
         <input type="text" class="form-control" formControlName="hsn" readonly>
         <label class="lab_tag" for="">Price:</label>
         <input type="number" class="form-control" formControlName="price" (input)="calc_total()">
         <label class="lab_tag" for="">Quantity:</label>
-        <input type="number" class="form-control" formControlName="qty" (input)="calc_total()">
+        <input type="number" class="form-control" formControlName="qty" (input)="calc_total()"> -->
         <!-- <label class="lab_tag" for="">Unit:</label>
         <input type="text" class="form-control" formControlName="unit" > -->
-        <label class="lab_tag" for="">Discount:</label>
+        <!-- <label class="lab_tag" for="">Discount:</label>
         <input type="number" class="form-control" formControlName="discount" (input)="calc_total()">
         <label class="lab_tag" for="">CGST:</label>
         <input type="number" class="form-control" formControlName="cgst" readonly>
@@ -275,7 +278,72 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="updateArray()">Submit</button>
-    <button type="reset" class="btn btn-outline-dark" (click)="closeUpdateForm(updt)">Cancel</button>
+    <button type="button" class="btn btn-primary mr-2" (click)="updateArray()">Submit</button>
+    <button type="reset" class="btn btn-danger" (click)="closeUpdateForm(updt)">Cancel</button>
   </div>
-</ng-template>
+</ng-template> -->
+
+
+<div id="myModal3" class="modal3 px-5" *ngIf="modal3">
+  <div class="card">
+    <div class="card-header">
+      <button class="btn btn-dark p-1" style="float: right; cursor: pointer" (click)="closeUpdateForm()">
+        X
+      </button>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="updatePurchase" class="my-3">
+
+        <table width="100%" border="1px solid gray" class="text-center"
+          style="border-collapse: separate;text-indent: initial;">
+          <thead class="bg-white">
+            <tr>
+              <th style="width: 25%;">Catagory</th>
+              <th>Product</th>
+              <th>HSN</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Discount</th>
+              <th>CGST</th>
+              <th>SGST</th>
+              <th>IGST</th>
+              <th>Total</th>
+              <th>Edit</th>
+            </tr>
+
+          </thead>
+          <tbody>
+              <tr>
+                <td><input type="text" class="form-control table_input" formControlName="catagory" readonly></td>
+
+                <td>
+                  <input type="text" class="form-control table_input" formControlName="prod_id" readonly>
+                </td>
+                <td> <input type="text" class="form-control table_input" formControlName="hsn" readonly> </td>
+                <td><input type="number" class="form-control table_input" formControlName="price" (keypress)="prevent($event, 'prc')" min="0"
+                    (input)="calc_total()"></td>
+                <td><input type="number" class="form-control table_input" formControlName="qty" (keypress)="prevent($event, 'qty')" min="1" (input)="calc_total()">
+                </td>
+                <td><input type="number" class="form-control table_input" formControlName="discount" (keypress)="prevent($event, 'dis')" min="0"
+                    (input)="calc_total()"></td>
+                <td><input type="number" class="form-control table_input" formControlName="cgst" readonly></td>
+                <td><input type="number" class="form-control table_input" formControlName="sgst" readonly></td>
+                <td><input type="number" class="form-control table_input" formControlName="igst" readonly></td>
+                <td><input type="number" class="form-control table_input" formControlName="total" readonly></td>
+
+                <td>
+                  <button><i class="fas fa-times-circle"></i></button>
+                </td>
+              </tr>
+          </tbody>
+
+        </table>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary mr-2" (click)="updateArray()">Submit</button>
+          <button type="reset" class="btn btn-danger" (click)="closeUpdateForm()">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -21,7 +21,7 @@
                     <label for="">Custmer Name</label>
                     <select class="form-control" formControlName="custmer"
                         (ngModelChange)="vendorType($event); resetProductForm()">
-                        <option value="choose_cname" disabled>Choose</option>
+                       <option value="choose_cname" disabled>Choose</option>
                         <option [value]="vendor.customer_id" *ngFor="let vendor of getVendorData">{{vendor.name}}
                         </option>
                     </select>
