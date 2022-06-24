@@ -10,6 +10,7 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ErpServiceService } from '../../../erp-service.service';
 import { SaleSrviceService } from '../sale-srvice.service';
 import { erp_all_api } from '../../../erpAllApi';
+import { DatePipe } from '@angular/common';
 // import { SaleSrviceService } from './sale-srvice.service';
 
 @Component({
@@ -53,6 +54,7 @@ export class SaleAddComponent implements OnInit {
     private modalService: NgbModal,
     private fb: FormBuilder,
     public saleService: SaleSrviceService,
+    private datePipe: DatePipe,
   ) {
 
     this.productForm = new FormGroup({
@@ -483,7 +485,7 @@ export class SaleAddComponent implements OnInit {
       "invoice": this.purchase_form.get('invo').value,
       "customer_id": this.purchase_form.get('custmer').value,
       // "type": "rawmaterial",
-      "date": this.purchase_form.get('p_date').value,
+      "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
       "sell_data": product_arr,
       "payment_status": this.purchase_form.get('payStatus').value,
       "method": this.purchase_form.get('payMode').value,

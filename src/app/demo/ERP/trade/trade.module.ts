@@ -14,6 +14,7 @@ import { SaleAddComponent } from './sale/sale-add/sale-add.component';
 import { CreditNoteComponent } from './sale/credit-note/credit-note.component';
 import { PurchaseAddComponent } from './purchase/purchase-add/purchase-add.component';
 import { DebitNoteComponent } from './purchase/debit-note/debit-note.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 
 @NgModule({
@@ -23,7 +24,9 @@ import { DebitNoteComponent } from './purchase/debit-note/debit-note.component';
     TradeRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ]
 })
 export class TradeModule { }

@@ -26,13 +26,16 @@
   }
   
   .close_btn {
-    cursor: pointer;
     float: right;
-    border: none;
-    background: transparent;
-    margin-left: 450px;
-    font-size: 18px;
+    color: red;
+    font-size: 25px;
   }
+  
+
+  // .popup_field{
+  //   padding: 0.5%;
+  //   font-size: 16px;
+  // }
   
   .close_btn1 {
     cursor: pointer;
@@ -77,6 +80,24 @@
     border-radius: 3px;
   }
 }
+
+.back_btn{
+  font-size: 25px;
+  color: royalblue;
+  padding: 0;  
+}
+
+.btn_wrap{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.invoice_fields{
+    padding: 0.5%;
+    font-size: 16px;
+  }
   
   
   /* invoice starts */

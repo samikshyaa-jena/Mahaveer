@@ -37,7 +37,7 @@ export class SaleComponent implements OnInit {
   itemData: any;
   Item_name: any;
   formArrayValue: any;
-  modal: boolean;
+  invoice: boolean;
   modal1: boolean=false;
   popupData: any = [];
   x: boolean;
@@ -317,7 +317,7 @@ export class SaleComponent implements OnInit {
       (res: any) => {
         console.log(res, "get update_purchase_entry");
         Notiflix.Report.success(res.msg, '', 'Close');
-        this.modal = false;
+        this.invoiceTabclose();
         this.get_purchase_details();
       },
       (err: any) => {
@@ -704,7 +704,8 @@ export class SaleComponent implements OnInit {
       }
     }
     console.log(this.popupData);
-    this.modal = true;
+    this.invoice = true;
+    this.purchase_tab = false;
     this.loader = true;
     for (let l = 0; l < this.popupData.length; l++) {
       this.dummy[l].catagory = this.popupData[l].cat_id;
@@ -807,6 +808,10 @@ export class SaleComponent implements OnInit {
     }
     closeUpdateForm(){
       this.modal3 = false;
+    }
+    invoiceTabclose(){
+      this.purchase_tab = false;
+      this.invoice = false;
     }
 }
 

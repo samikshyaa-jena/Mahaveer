@@ -9,8 +9,9 @@
 </div>
 <!-- Loader Ends -->
 
-<app-sale-add *ngIf="purchase_tab" (get_purchase_details)="get_purchase_details()" (BackTab)="back()"></app-sale-add>
-<div class="container" style="padding: 15px" *ngIf="!purchase_tab">
+<app-sale-add *ngIf="purchase_tab && !invoice" (get_purchase_details)="get_purchase_details()" (BackTab)="back()">
+</app-sale-add>
+<div class="container card" style="padding: 15px" *ngIf="!purchase_tab && !invoice">
   <!-- <div class="card"> -->
   <!-- <div> -->
   <div class="mt-3">
@@ -62,70 +63,78 @@
   <!-- </div> -->
 </div>
 
-<div id="myModal2" class="modal2 px-5" *ngIf="modal">
-  <div class="card">
-    <div class="card-header">
-      <button class="btn btn-dark p-1" style="float: right; cursor: pointer" (click)="modal = false">
+<!-- <div id="myModal2" class="modal2 px-5" *ngIf="invoice && !purchase_tab"> -->
+<div class="card p-1" *ngIf="invoice && !purchase_tab">
+  <!-- <div class="card bg-white"> -->
+  <div class="btn_wrap">
+    <button type="button" class="btn back_btn mt-2 ml-4" (click)="invoiceTabclose()"><i
+      class="fas fa-arrow-alt-circle-left"></i></button>
+      <span title="Print" class="back_btn mt-2 mr-4" (click)="openInvoice(content, i)">
+        <i class="fa fa-print" aria-hidden="true"></i>
+      </span>
+  </div>
+  <!-- <div class="card-header">
+      <button class="btn btn-dark p-1" style="float: right; cursor: pointer" (click)="invoiceTabclose()">
         X
       </button>
-    </div>
-    <div class="card-body">
-      <table width="100%" border="1px solid gray" class="text-center"
-        style="border-collapse: separate;text-indent: initial;">
-        <thead class="bg-primary">
-          <tr>
-            <th scope="col" class="text-white text-center">Catagory</th>
-            <th scope="col" class="text-white text-center">Product</th>
-            <th scope="col" class="text-white text-center">HSN</th>
-            <th scope="col" class="text-white text-center">Price</th>
-            <th scope="col" class="text-white text-center">Qty</th>
-            <th scope="col" class="text-white text-center">Discount</th>
-            <th scope="col" class="text-white text-center">CGST</th>
-            <th scope="col" class="text-white text-center">SGST</th>
-            <th scope="col" class="text-white text-center">IGST</th>
-            <th scope="col" class="text-white text-center">Total</th>
-            <th scope="col" class="text-white text-center">Action</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white">
-          <tr *ngFor="let e of popupData; let i = index">
-            <td class="text-center">{{ e.cat_name }}</td>
-            <td class="text-center">{{ e.prod_name }}</td>
-            <td class="text-center">{{ e.hsn }}</td>
-            <td class="text-center">{{ e.price }}</td>
-            <td class="text-center">{{ e.qty }}</td>
-            <td class="text-center">{{ e.discount }}</td>
-            <td class="text-center" *ngIf="x">NA</td>
-            <td class="text-center" *ngIf="!x">
-              {{ e.cgstVal }} ({{ e.cgst }}%)
-            </td>
-            <td class="text-center" *ngIf="y">NA</td>
-            <td class="text-center" *ngIf="!y">
-              {{ e.sgstVal }} ({{ e.sgst }}%)
-            </td>
-            <td class="text-center" *ngIf="z">NA</td>
-            <td class="text-center" *ngIf="!z">
-              {{ e.igstVal }} ({{ e.igst }}%)
-            </td>
-            <td class="text-center">{{ e.total }}</td>
-            <td class="text-center">
-              <span style="cursor: pointer" class="mr-1" (click)="openUpdatePucrchase(i,popupData)"><i
-                  class="fa fa-edit" aria-hidden="true"></i></span>
-              <span title="View Invoice" style="cursor: pointer" (click)="openInvoice(content, i)">
-                <i class="fa fa-print" aria-hidden="true"></i>
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="btns" style="float: right;">
-        <button type="reset" class="btn btn-danger mr-2" (click)="modal=false">cancel</button>
-        <button type="submit" class="btn btn-primary disable" [disabled]='!enable'
-          (click)="update_purchase_details()">Update</button>
-      </div>
+    </div> -->
+  <div class="card-body">
+    <table width="100%" border="1px solid gray" class="text-center"
+      style="border-collapse: separate;text-indent: initial;">
+      <thead class="bg-primary">
+        <tr>
+          <th scope="col" class="text-white text-center invoice_fields">Catagory</th>
+          <th scope="col" class="text-white text-center invoice_fields">Product</th>
+          <th scope="col" class="text-white text-center invoice_fields">HSN</th>
+          <th scope="col" class="text-white text-center invoice_fields">Price</th>
+          <th scope="col" class="text-white text-center invoice_fields">Qty</th>
+          <th scope="col" class="text-white text-center invoice_fields">Discount</th>
+          <th scope="col" class="text-white text-center invoice_fields">CGST</th>
+          <th scope="col" class="text-white text-center invoice_fields">SGST</th>
+          <th scope="col" class="text-white text-center invoice_fields">IGST</th>
+          <th scope="col" class="text-white text-center invoice_fields">Total</th>
+          <th scope="col" class="text-white text-center invoice_fields">Action</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white">
+        <tr *ngFor="let e of popupData; let i = index">
+          <td class="text-center invoice_fields">{{ e.cat_name }}</td>
+          <td class="text-center invoice_fields">{{ e.prod_name }}</td>
+          <td class="text-center invoice_fields">{{ e.hsn }}</td>
+          <td class="text-center invoice_fields">{{ e.price }}</td>
+          <td class="text-center invoice_fields">{{ e.qty }}</td>
+          <td class="text-center invoice_fields">{{ e.discount }}</td>
+          <td class="text-center invoice_fields" *ngIf="x">NA</td>
+          <td class="text-center invoice_fields" *ngIf="!x">
+            {{ e.cgstVal }} ({{ e.cgst }}%)
+          </td>
+          <td class="text-center invoice_fields" *ngIf="y">NA</td>
+          <td class="text-center invoice_fields" *ngIf="!y">
+            {{ e.sgstVal }} ({{ e.sgst }}%)
+          </td>
+          <td class="text-center invoice_fields" *ngIf="z">NA</td>
+          <td class="text-center invoice_fields" *ngIf="!z">
+            {{ e.igstVal }} ({{ e.igst }}%)
+          </td>
+          <td class="text-center invoice_fields">{{ e.total }}</td>
+          <td class="text-center invoice_fields">
+            <span style="cursor: pointer" class="mr-1" (click)="openUpdatePucrchase(i,popupData)"><i class="fa fa-edit"
+                aria-hidden="true"></i></span>
+            <!-- <span title="View Invoice" style="cursor: pointer" (click)="openInvoice(content, i)">
+              <i class="fa fa-print" aria-hidden="true"></i>
+            </span> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="btns" style="float: right;">
+      <button type="reset" class="btn btn-danger mr-2" (click)="invoiceTabclose()">cancel</button>
+      <button type="submit" class="btn btn-primary disable" [disabled]='!enable'
+        (click)="update_purchase_details()">Update</button>
     </div>
   </div>
 </div>
+<!-- </div> -->
 
 
 <!-- invoice modal starts -->
@@ -239,32 +248,32 @@
       <form [formGroup]="updatePurchase" class="my-3">
         <label class="lab_tag" for="">Catagory:</label>
         <input type="text" class="form-control" formControlName="catagory" readonly> -->
-        <!-- <select [(ngModel)]="cattName" name="" id="" formControlName="catagory" class="form-control" (change)="chooseCategory($event.target.value)" disabled>
+<!-- <select [(ngModel)]="cattName" name="" id="" formControlName="catagory" class="form-control" (change)="chooseCategory($event.target.value)" disabled>
           <option [value]="catt_id" disabled >{{cattName}}</option>
           <option *ngFor="let category of getCatagoryData;let i=index" [ngValue]="category.cat_id">
             {{category.cat_name}}
           </option>
         </select> -->
-        <!-- <label class="lab_tag" for="">Product:</label>
+<!-- <label class="lab_tag" for="">Product:</label>
         <input type="text" class="form-control" formControlName="prod_id" readonly> -->
-        <!-- <select [(ngModel)]="itemmName" formControlName="item_id" class="form-control">
+<!-- <select [(ngModel)]="itemmName" formControlName="item_id" class="form-control">
           <option [value]="itemmName" disabled >{{itemmName}}</option>
           <option *ngFor="let item of itemData" [ngValue]="item.item_id">{{item.item_name}}</option>
         </select> -->
 
-        <!-- <select name="" id="" [(ngModel)]="proddName" formControlName="prod_id" class="form-control" disabled>
+<!-- <select name="" id="" [(ngModel)]="proddName" formControlName="prod_id" class="form-control" disabled>
           <option [value]="prodd_id" disabled >{{proddName}}</option>
           <option *ngFor="let item of itemData" [ngValue]="item.prod_id">{{item.prod_name}}</option>
         </select> -->
-        <!-- <label class="lab_tag" for="">HSN:</label>
+<!-- <label class="lab_tag" for="">HSN:</label>
         <input type="text" class="form-control" formControlName="hsn" readonly>
         <label class="lab_tag" for="">Price:</label>
         <input type="number" class="form-control" formControlName="price" (input)="calc_total()">
         <label class="lab_tag" for="">Quantity:</label>
         <input type="number" class="form-control" formControlName="qty" (input)="calc_total()"> -->
-        <!-- <label class="lab_tag" for="">Unit:</label>
+<!-- <label class="lab_tag" for="">Unit:</label>
         <input type="text" class="form-control" formControlName="unit" > -->
-        <!-- <label class="lab_tag" for="">Discount:</label>
+<!-- <label class="lab_tag" for="">Discount:</label>
         <input type="number" class="form-control" formControlName="discount" (input)="calc_total()">
         <label class="lab_tag" for="">CGST:</label>
         <input type="number" class="form-control" formControlName="cgst" readonly>
@@ -287,8 +296,8 @@
 <div id="myModal3" class="modal3 px-5" *ngIf="modal3">
   <div class="card">
     <div class="card-header">
-      <button class="btn btn-dark p-1" style="float: right; cursor: pointer" (click)="closeUpdateForm()">
-        X
+      <button border="none" class="btn close_btn" (click)="closeUpdateForm()">
+        <i class="fas fa-times-circle"></i>
       </button>
     </div>
     <div class="card-body">
@@ -298,43 +307,44 @@
           style="border-collapse: separate;text-indent: initial;">
           <thead class="bg-white">
             <tr>
-              <th style="width: 25%;">Catagory</th>
-              <th>Product</th>
-              <th>HSN</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Discount</th>
-              <th>CGST</th>
-              <th>SGST</th>
-              <th>IGST</th>
-              <th>Total</th>
-              <th>Edit</th>
+              <th class="popup_field">Catagory</th>
+              <th class="popup_field">Product</th>
+              <th class="popup_field">HSN</th>
+              <th class="popup_field">Price</th>
+              <th class="popup_field">Quantity</th>
+              <th class="popup_field">Discount</th>
+              <th class="popup_field">CGST</th>
+              <th class="popup_field">SGST</th>
+              <th class="popup_field">IGST</th>
+              <th class="popup_field">Total</th>
+              <!-- <th class="popup_field">Edit</th> -->
             </tr>
 
           </thead>
           <tbody>
-              <tr>
-                <td><input type="text" class="form-control table_input" formControlName="catagory" readonly></td>
+            <tr>
+              <td class="popup_field"><input type="text" class="form-control table_input" formControlName="catagory" readonly></td>
 
-                <td>
-                  <input type="text" class="form-control table_input" formControlName="prod_id" readonly>
-                </td>
-                <td> <input type="text" class="form-control table_input" formControlName="hsn" readonly> </td>
-                <td><input type="number" class="form-control table_input" formControlName="price" (keypress)="prevent($event, 'prc')" min="0"
-                    (input)="calc_total()"></td>
-                <td><input type="number" class="form-control table_input" formControlName="qty" (keypress)="prevent($event, 'qty')" min="1" (input)="calc_total()">
-                </td>
-                <td><input type="number" class="form-control table_input" formControlName="discount" (keypress)="prevent($event, 'dis')" min="0"
-                    (input)="calc_total()"></td>
-                <td><input type="number" class="form-control table_input" formControlName="cgst" readonly></td>
-                <td><input type="number" class="form-control table_input" formControlName="sgst" readonly></td>
-                <td><input type="number" class="form-control table_input" formControlName="igst" readonly></td>
-                <td><input type="number" class="form-control table_input" formControlName="total" readonly></td>
+              <td class="popup_field">
+                <input type="text" class="form-control table_input" formControlName="prod_id" readonly>
+              </td>
+              <td class="popup_field"> <input type="text" class="form-control table_input" formControlName="hsn" readonly> </td>
+              <td class="popup_field"><input type="number" class="form-control table_input" formControlName="price"
+                  (keypress)="prevent($event, 'prc')" min="0" (input)="calc_total()"></td>
+              <td class="popup_field"><input type="number" class="form-control table_input" formControlName="qty"
+                  (keypress)="prevent($event, 'qty')" min="1" (input)="calc_total()">
+              </td>
+              <td class="popup_field"><input type="number" class="form-control table_input" formControlName="discount"
+                  (keypress)="prevent($event, 'dis')" min="0" (input)="calc_total()"></td>
+              <td class="popup_field"><input type="number" class="form-control table_input" formControlName="cgst" readonly></td>
+              <td class="popup_field"><input type="number" class="form-control table_input" formControlName="sgst" readonly></td>
+              <td class="popup_field"><input type="number" class="form-control table_input" formControlName="igst" readonly></td>
+              <td class="popup_field"><input type="number" class="form-control table_input" formControlName="total" readonly></td>
 
-                <td>
-                  <button><i class="fas fa-times-circle"></i></button>
-                </td>
-              </tr>
+              <!-- <td class="popup_field">
+                <button border="none" class="btn delete_btn"><i class="fas fa-times-circle"></i></button>
+              </td> -->
+            </tr>
           </tbody>
 
         </table>
