@@ -40,8 +40,8 @@
                     <!-- <input type="text" formControlName="payStatus" class="form-control" readonly> -->
                     <select formControlName="payStatus" class="form-control">
                         <option value="choosepay" disabled>Choose Payment Status</option>
-                        <option value="f_paid">Fully Paid</option>
-                        <option value="p_paid">Partial Paid</option>
+                        <option value="paid">Fully Paid</option>
+                        <option value="part_paid">Partial Paid</option>
                         <option value="not_init">Not Initiated</option>
                     </select>
                 </div>
@@ -50,10 +50,10 @@
                     <!-- <input type="text" formControlName="payMode" class="form-control" readonly> -->
                     <select formControlName="payMode" class="form-control">
                         <option value="choosepaymode" disabled>Choose Payment Mode</option>
-                        <option value="Cash">Cash</option>
-                        <option value="Online">Online</option>
-                        <option value="Cheque">Cheque</option>
-                        <option value="Credit">Credit</option>
+                        <option value="cash">Cash</option>
+                      <option value="online">Online</option>
+                      <option value="cheque">Cheque</option>
+                      <option value="credit">Credit</option>
                     </select>
                 </div>
                 <div class="col-sm-1 px-0">
@@ -233,7 +233,7 @@
 
     <div class="footer_btn">
         <button class="btn btn-danger mr-2" (click)="resetProductForm()">Cancel</button>
-        <button class="btn btn-primary disable" (click)="add_purchase_details()">Submit</button>
+        <button class="btn btn-primary disable" (click)="add_purchase_details()" [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.category == 'ChooseProduct'">Submit</button>
     </div>
 
 </div>

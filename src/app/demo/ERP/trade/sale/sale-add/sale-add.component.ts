@@ -565,7 +565,7 @@ export class SaleAddComponent implements OnInit {
       if (e.key > '0') {
         return e.keyCode >= 48 && e.charCode <= 57;
       } else {
-        return e.keyCode > 48 && e.charCode <= 57;;
+        return e.keyCode > 48 && e.charCode <= 57;
       }
     }
     else if (type == 'dis') {

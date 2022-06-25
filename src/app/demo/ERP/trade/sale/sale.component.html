@@ -39,7 +39,7 @@
           <tr *ngFor="let data of get_purchase_data; let i = index">
             <td>
               <u style="color: blue; cursor: pointer"
-                (click)="invoicenumberPopup(data.invoice_no,data.sellData,data.customerData,i)">{{ data.invoice_no
+                (click)="invoicenumberPopup(data,i)">{{ data.invoice_no
                 }}</u>
             </td>
             <td>{{ data.sell_date | date: "dd/MM/yyyy" }}</td>
@@ -64,21 +64,21 @@
 </div>
 
 <!-- <div id="myModal2" class="modal2 px-5" *ngIf="invoice && !purchase_tab"> -->
-<div class="card p-1" *ngIf="invoice && !purchase_tab">
+<!-- <div class="card p-1" *ngIf="invoice && !purchase_tab"> -->
   <!-- <div class="card bg-white"> -->
-  <div class="btn_wrap">
+  <!-- <div class="btn_wrap">
     <button type="button" class="btn back_btn mt-2 ml-4" (click)="invoiceTabclose()"><i
       class="fas fa-arrow-alt-circle-left"></i></button>
       <span title="Print" class="back_btn mt-2 mr-4" (click)="openInvoice(content, i)">
         <i class="fa fa-print" aria-hidden="true"></i>
       </span>
-  </div>
+  </div> -->
   <!-- <div class="card-header">
       <button class="btn btn-dark p-1" style="float: right; cursor: pointer" (click)="invoiceTabclose()">
         X
       </button>
     </div> -->
-  <div class="card-body">
+  <!-- <div class="card-body">
     <table width="100%" border="1px solid gray" class="text-center"
       style="border-collapse: separate;text-indent: initial;">
       <thead class="bg-primary">
@@ -119,11 +119,11 @@
           <td class="text-center invoice_fields">{{ e.total }}</td>
           <td class="text-center invoice_fields">
             <span style="cursor: pointer" class="mr-1" (click)="openUpdatePucrchase(i,popupData)"><i class="fa fa-edit"
-                aria-hidden="true"></i></span>
+                aria-hidden="true"></i></span> -->
             <!-- <span title="View Invoice" style="cursor: pointer" (click)="openInvoice(content, i)">
               <i class="fa fa-print" aria-hidden="true"></i>
             </span> -->
-          </td>
+          <!-- </td>
         </tr>
       </tbody>
     </table>
@@ -133,12 +133,12 @@
         (click)="update_purchase_details()">Update</button>
     </div>
   </div>
-</div>
+</div> -->
 <!-- </div> -->
 
 
 <!-- invoice modal starts -->
-<ng-template #content let-c="close" let-d="dismiss" style="pointer-events: none;" data-backdrop="static"
+<!-- <ng-template #content let-c="close" let-d="dismiss" style="pointer-events: none;" data-backdrop="static"
   data-keyboard="false">
   <div class="printDiv row col-sm-12" id="print-me">
     <div class="col-sm-12 text-center mt-3">
@@ -233,7 +233,7 @@
     <button type="button" class="btn btn-outline-dark btn-primary" printSectionId="print-me" ngxPrint>Print</button>
     <button type="button" class="btn btn-outline-dark btn-danger ml-1" (click)="closeInvoice(content)">Close</button>
   </div>
-</ng-template>
+</ng-template> -->
 <!-- invoice modal ends -->
 
 
@@ -293,7 +293,7 @@
 </ng-template> -->
 
 
-<div id="myModal3" class="modal3 px-5" *ngIf="modal3">
+<!-- <div id="myModal3" class="modal3 px-5" *ngIf="modal3">
   <div class="card">
     <div class="card-header">
       <button border="none" class="btn close_btn" (click)="closeUpdateForm()">
@@ -317,7 +317,7 @@
               <th class="popup_field">SGST</th>
               <th class="popup_field">IGST</th>
               <th class="popup_field">Total</th>
-              <!-- <th class="popup_field">Edit</th> -->
+              <th class="popup_field">Edit</th>
             </tr>
 
           </thead>
@@ -341,9 +341,9 @@
               <td class="popup_field"><input type="number" class="form-control table_input" formControlName="igst" readonly></td>
               <td class="popup_field"><input type="number" class="form-control table_input" formControlName="total" readonly></td>
 
-              <!-- <td class="popup_field">
+              <td class="popup_field">
                 <button border="none" class="btn delete_btn"><i class="fas fa-times-circle"></i></button>
-              </td> -->
+              </td>
             </tr>
           </tbody>
 
@@ -356,4 +356,212 @@
       </form>
     </div>
   </div>
+</div> -->
+
+
+
+<!-- ///////////////////////////////// -->
+
+
+
+<div class="card p-3" *ngIf="invoice && !purchase_tab">
+  <div>
+      <!-- <div class="card bg-white"> -->
+      <button type="button" class="btn back_btn mt-3" (click)="invoiceTabclose(); resetProductForm()"><i
+              class="fas fa-arrow-alt-circle-left"></i></button>
+      <!-- <div class="card-header">
+      </div> -->
+      <!-- <div class="card-body"> -->
+      <div class="row col-sm-12">
+
+          <!-- <div class="col-sm-12 text-right"><button class="btn btn-success" (click)="openModal()"
+              [disabled]="purchase_form.invalid">Add Product</button></div> -->
+      </div>
+      <form [formGroup]="purchase_form">
+          <div class="col-sm-12 px-0 d-flex flex-row">
+              <div class="col-sm-2 ">
+                  <label for="">Invoice Number</label>
+                  <input type="text" formControlName="invo" class="form-control" readonly>
+              </div>
+              <div class="col-sm-3 pl-0">
+                  <label for="">Custmer Name</label>
+                  <input type="text" formControlName="custmer" class="form-control" readonly>
+
+              </div>
+              <div class="col-sm-2">
+                  <label for="">Purchase Date</label>
+                  <input type="text" formControlName="p_date" class="form-control" readonly>
+              </div>
+              <!-- <ng-template *ngIf="showInps"> -->
+              <div class="col-sm-2 ">
+                  <label for="">Payment Status</label>
+                  <!-- <input type="text" formControlName="payStatus" class="form-control" readonly> -->
+                  <select formControlName="payStatus" class="form-control">
+                      <option value="paid">Fully Paid</option>
+                        <option value="part_paid">Partial Paid</option>
+                        <option value="not_init">Not Initiated</option>
+                  </select>
+              </div>
+              <div class="col-sm-2">
+                  <label for="">Payment Mode</label>
+                  <!-- <input type="text" formControlName="payMode" class="form-control" readonly> -->
+                  <select formControlName="payMode" class="form-control">
+                      <option value="cash">Cash</option>
+                      <option value="online">Online</option>
+                      <option value="cheque">Cheque</option>
+                      <option value="credit">Credit</option>
+                  </select>
+              </div>
+              <div class="col-sm-1 px-0">
+                  <label for="">Amount</label>
+                  <input type="text" formControlName="amnt" class="form-control" readonly>
+              </div>
+              <!-- </ng-template> -->
+          </div>
+      </form>
+      
+      <!-- <div class="row col-sm-12" *ngIf="productformarray.length!=0">
+
+      <div class="col-sm-12 text-right"><button class="btn btn-success"
+              (click)="add_purchase_details()">Submit</button></div>
+                      </div> -->
+
+      <!-- </div> -->
+      <!-- </div> -->
+
+      <div class="mt-3">
+          <form [formGroup]="updatePurchase">
+              <table width="100%" border="1px solid gray" class="text-center"
+                  style="border-collapse: separate;text-indent: initial;">
+                  <thead class="bg-white">
+                      <tr>
+                        <th>Category</th>
+                          <th>Product</th>
+                          <th>Hsn</th>
+                          <th>Quantity</th>
+                          <th>Sale Price</th>
+                          <th>Discount</th>
+                          <th>CGST</th>
+                          <th>SGST</th>
+                          <th>IGST</th>
+                          <th>Total</th>
+                          <th>Action</th>
+                      </tr>
+
+                  </thead>
+                  <tbody>
+                      <ng-container formArrayName="product">
+                          <tr *ngFor="let Product of updatePurchase.get('product')['controls'];let i=index"
+                              [formGroupName]="i">
+                              <td>
+                                  <select class="form-control table_input" id="category"
+                                      (change)="chooseCategory($event.target.value); totalCalculation()"
+                                      formControlName="category" [disabled]="purchase_form.invalid">
+                                      <option selected value="ChooseProduct" disabled>Choose Product</option>
+                                      <option class="disable" *ngFor="let category of getCatagoryData;let i=index"
+                                          [value]="category.cat_id"
+                                          [disabled]="Product.controls.edit.value == false">
+                                          {{category.cat_name}}</option>
+                                  </select>
+                              </td>
+                              <td>
+                                  <select class="form-control table_input" id="prud"
+                                      (change)="chooseProduct(Product, $event.target.value); totalCalculation()"
+                                      formControlName="prud" [disabled]="purchase_form.invalid">
+                                      <option selected value="ChooseProduct" disabled>Choose Product</option>
+                                      <option class="disable" *ngFor="let prod of p_array;let i=index"
+                                          [value]="prod.prod_id"
+                                          [disabled]="Product.controls.edit.value == false">
+                                          {{prod.prod_name}}</option>
+                                  </select>
+                              </td>
+                              <td><input type="text" formControlName="hsn" class="form-control table_input" disabled>
+                              </td>
+                              <td><input type="number" formControlName="qty" id="qty" class="form-control table_input"
+                                      (input)="calc_total(Product.controls); totalCalculation()"
+                                      (keypress)="prevent($event, 'qty')" min="1"
+                                      [readonly]="Product.controls.edit.value == false">
+                              </td>
+                              <td><input type="number" formControlName="price" id="price"
+                                      class="form-control table_input" [readonly]="Product.controls.edit.value == false"></td>
+                              <td><input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
+                                      min="0" id="discount" class="form-control table_input"
+                                      (input)="calc_total(Product.controls); totalCalculation()"
+                                      [readonly]="Product.controls.edit.value == false"></td>
+                              <td><input type="number" formControlName="cgst" class="form-control table_input"
+                                      disabled></td>
+                              <td><input type="number" formControlName="sgst" class="form-control table_input"
+                                      disabled></td>
+                              <td><input type="number" formControlName="igst" class="form-control table_input"
+                                      disabled></td>
+                              <td><input type="number" formControlName="total" class="form-control table_input"
+                                      readonly></td>
+                              <!-- <td>
+                              <button border="none" class="btn btn-primary disable" (click)="submitArray(i)"
+                                  [disabled]="i.invalid"><i class="fas fa-check"></i></button>
+                          </td> -->
+                              <td class="d-flex flex-row">
+                                  <button border="none" class="btn delete_btn disable"
+                                      (click)="deleteRow(i); totalCalculation()"
+                                      [disabled]="updatePurchase.get('product').length == 1"><i
+                                          class="fas fa-times-circle"></i></button>
+                                  <button border="none" class="btn delete_btn disable" formControlName="edit"
+                                      (click)="Edit(Product.controls, i)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                              </td>
+                          </tr>
+                      </ng-container>
+                  </tbody>
+                  <tfoot style="border: none;">
+                      <tr style="border: none;">
+                          <td colspan="2" style="white-space: nowrap; float: left; padding: 2px;"><button
+                                  class="btn btn-primary disable" (click)="add_row()"
+                                  [disabled]="updatePurchase.get('product')['controls'][updatePurchase.get('product')['controls'].length-1].value.category == 'ChooseProduct'">Add
+                                  Row</button>
+                          </td>
+                      </tr>
+                  </tfoot>
+
+              </table>
+
+          </form>
+      </div>
+
+
+  </div>
+
+  <div class="total_cal">
+      <table style="width: 290px; color: black;">
+          <tr>
+              <th style="width: 120px;"></th>
+              <th style="width: 50px;"></th>
+              <th style="width: 120px;"></th>
+          </tr>
+          <tr>
+              <td>Total IGST</td>
+              <td>:</td>
+              <td><input name="t_igst" [(ngModel)]="t_igst" class="total_cal_field" type="text" readonly></td>
+          </tr>
+          <tr>
+              <td>Total SGST</td>
+              <td>:</td>
+              <td><input name="t_sgst" [(ngModel)]="t_sgst" class="total_cal_field" type="text" readonly></td>
+          </tr>
+          <tr>
+              <td>Total CGST</td>
+              <td>:</td>
+              <td><input name="t_cgst" [(ngModel)]="t_cgst" class="total_cal_field" type="text" readonly></td>
+          </tr>
+          <tr>
+              <td>Total Amount</td>
+              <td>:</td>
+              <td><input name="t_amount" [(ngModel)]="t_amount" class="total_cal_field" type="text" readonly></td>
+          </tr>
+      </table>
+  </div>
+
+  <div class="footer_btn">
+      <button class="btn btn-danger mr-2" (click)="invoiceTabclose()">Cancel</button>
+      <button class="btn btn-primary disable" (click)="updateArray()">Submit</button>
+  </div>
+
 </div>
