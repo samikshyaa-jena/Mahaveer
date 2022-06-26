@@ -515,7 +515,7 @@ export class SaleComponent implements OnInit {
 
     this.purchase_form.patchValue({
       invo: saledata.invoice_no,
-      custmer_id: saledata.customerData.id,
+      custmer_id: saledata.customerData.customer_id,
       custmer: saledata.customerData.name,
       p_date: this.datePipe.transform(saledata.sell_date, 'yyyy-MM-dd'),
       amnt: 0,
