@@ -78,9 +78,9 @@ export class SaleAddComponent implements OnInit {
       invo: new FormControl("", [Validators.required]),
       custmer: new FormControl("choose_cname", [Validators.required]),
       p_date: new FormControl(this.today, [Validators.required]),
-      amnt: new FormControl("0"),
-      payMode: new FormControl("choosepaymode"),
-      payStatus: new FormControl("choosepay"),
+      amnt: new FormControl("0", [Validators.required]),
+      payMode: new FormControl("choosepaymode", [Validators.required]),
+      payStatus: new FormControl("choosepay", [Validators.required]),
     });
   }
 

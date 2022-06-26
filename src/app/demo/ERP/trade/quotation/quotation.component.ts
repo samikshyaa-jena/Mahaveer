@@ -90,10 +90,11 @@ export class QuotationComponent implements OnInit {
 
     this.quotation_form = new FormGroup({
       quto: new FormControl("", [Validators.required]),
-      custmer_id: new FormControl(""),
+      custmer_id: new FormControl("", [Validators.required]),
       custmer: new FormControl("", [Validators.required]),
       q_date: new FormControl("", [Validators.required]),
-      priority: new FormControl("", [Validators.required])
+      priority: new FormControl("", [Validators.required]),
+      amnt: new FormControl("0", [Validators.required]),
     });
 
     this.dynamicManufacture = this.fb.group({
@@ -1115,7 +1116,8 @@ export class QuotationComponent implements OnInit {
       "priority": this.quotation_form.get('priority').value,
       "date": this.datePipe.transform(this.quotation_form.get('q_date').value, 'yyyy-MM-dd'),
       "quote_data": quotation_arr,
-      "status": ""
+      "paid_amount": this.quotation_form.get('amnt').value,
+      "status": "QUOTATION"
     };
 
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'

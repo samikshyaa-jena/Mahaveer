@@ -100,9 +100,9 @@ export class SaleComponent implements OnInit {
       custmer_id: new FormControl(""),
       custmer: new FormControl("", [Validators.required]),
       p_date: new FormControl("", [Validators.required]),
-      amnt: new FormControl("0"),
-      payMode: new FormControl("choosepaymode"),
-      payStatus: new FormControl("choosepay"),
+      amnt: new FormControl("0", [Validators.required]),
+      payMode: new FormControl("choosepaymode", [Validators.required]),
+      payStatus: new FormControl("choosepay", [Validators.required]),
     });
   
     this.dynamicManufacture = this.fb.group({

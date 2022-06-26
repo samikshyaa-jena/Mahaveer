@@ -137,7 +137,7 @@
                                         <option selected value="ChooseProduct" disabled>Choose Product</option>
                                         <option class="disable" *ngFor="let category of getCatagoryData;let i=index"
                                             [value]="category.prod_id"
-                                            [disabled]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname'">
+                                            [disabled]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname' || purchase_form.get('payStatus').value == 'choosepay' || purchase_form.get('payMode').value == 'choosepaymode'">
                                             {{category.prod_name}}</option>
                                     </select>
                                 </td>

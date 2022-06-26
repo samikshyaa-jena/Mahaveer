@@ -13,11 +13,11 @@
         </div>
         <form [formGroup]="quotation_form">
             <div class="col-sm-12 px-0 d-flex flex-row">
-                <div class="col-sm-3 ">
+                <div class="col-sm-3 pl-0">
                     <label for="">Quotation Number</label>
                     <input type="text" formControlName="quto" class="form-control">
                 </div>
-                <div class="col-sm-3 pl-0">
+                <div class="col-sm-3 p-0">
                     <label for="">Custmer Name</label>
                     <select class="form-control" formControlName="custmer"
                         (ngModelChange)="vendorType($event); resetProductForm()">
@@ -35,16 +35,20 @@
                     <!-- <input type="date" [max]="today" formControlName="p_date" class="form-control"> -->
                 </div>
 
-                <div class="col-sm-3">
-                <label for="">Priority</label>
-                  <select name="" id="" formControlName="priority" class="form-control">
-                    <option value="choose_quot">Choose Quotation</option>
-                    <option value="LOW">LOW</option>
-                    <option value="MEDIUM">MEDIUM</option>
-                    <option value="HIGH">HIGH</option>
-                  </select>
-                  </div>
-               
+                <div class="col-sm-2">
+                    <label for="">Priority</label>
+                    <select name="" id="" formControlName="priority" class="form-control">
+                        <option value="choose_quot">Choose Quotation</option>
+                        <option value="LOW">LOW</option>
+                        <option value="MEDIUM">MEDIUM</option>
+                        <option value="HIGH">HIGH</option>
+                    </select>
+                </div>
+                <div class="col-sm-1 p-0">
+                    <label for="">Amount</label>
+                    <input type="text" formControlName="amnt" class="form-control">
+                </div>
+
             </div>
         </form>
         <table class="table w-100 mt-5" *ngIf="productformarray.length!=0">
@@ -121,7 +125,7 @@
                                         <option selected value="ChooseProduct" disabled>Choose Product</option>
                                         <option class="disable" *ngFor="let category of getCatagoryData;let i=index"
                                             [value]="category.prod_id"
-                                            [disabled]="quotation_form.invalid || quotation_form.get('custmer').value == 'choose_cname'">
+                                            [disabled]="quotation_form.invalid || quotation_form.get('custmer').value == 'choose_cname' || quotation_form.get('priority').value == 'choose_quot'">
                                             {{category.prod_name}}</option>
                                     </select>
                                 </td>
@@ -217,7 +221,8 @@
 
     <div class="footer_btn">
         <button class="btn btn-danger mr-2" (click)="resetProductForm()">Cancel</button>
-        <button class="btn btn-primary disable" (click)="add_quotation_details()" [disabled]="QuotationForm.get('product')['controls'][QuotationForm.get('product')['controls'].length-1].value.category == 'ChooseProduct'">Submit</button>
+        <button class="btn btn-primary disable" (click)="add_quotation_details()"
+            [disabled]="QuotationForm.get('product')['controls'][QuotationForm.get('product')['controls'].length-1].value.category == 'ChooseProduct'">Submit</button>
     </div>
 
 </div>
