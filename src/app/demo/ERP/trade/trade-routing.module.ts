@@ -8,6 +8,7 @@ import { CreditNoteComponent } from './sale/credit-note/credit-note.component';
 import { SaleComponent } from './sale/sale.component';
 import { StockComponent } from './stock/stock.component';
 import { VendorComponent } from './vendor/vendor.component';
+import { QuotationComponent } from './quotation/quotation.component';
 
 
 const routes: Routes = [
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'sale',
     component: SaleComponent
+  },
+  {
+    path: 'quotation',
+    component: QuotationComponent
   },
   {
     path: 'credit',

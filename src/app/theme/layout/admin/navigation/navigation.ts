@@ -127,6 +127,13 @@ const NavigationItems = [
             type: 'item',
             url: '/v1/trade/credit'
           },
+          {
+            id: 'quotation',
+            title: 'Quotation',
+            type: 'item',
+            url: '/v1/trade/quotation',
+            icon: 'feather icon-users'
+          },
           // {
           //   id: 'debit_sale',
           //   title: 'Debit Note',
@@ -140,6 +147,13 @@ const NavigationItems = [
         title: 'Customer-(Trade)',
         type: 'item',
         url: '/v1/trade/customer',
+        icon: 'feather icon-users'
+      },
+      {
+        id: 'quotation',
+        title: 'Quotation',
+        type: 'item',
+        url: '/v1/trade/quotation',
         icon: 'feather icon-users'
       },
       {

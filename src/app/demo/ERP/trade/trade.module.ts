@@ -15,10 +15,12 @@ import { CreditNoteComponent } from './sale/credit-note/credit-note.component';
 import { PurchaseAddComponent } from './purchase/purchase-add/purchase-add.component';
 import { DebitNoteComponent } from './purchase/debit-note/debit-note.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { QuotationComponent } from './quotation/quotation.component';
+import { QuotationEntryComponent } from './quotation/quotation-entry/quotation-entry.component';
 
 
 @NgModule({
-  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, SaleComponent, CustomerComponent, SaleAddComponent, CreditNoteComponent, PurchaseAddComponent, DebitNoteComponent],
+  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, SaleComponent, CustomerComponent, SaleAddComponent, CreditNoteComponent, PurchaseAddComponent, DebitNoteComponent, QuotationComponent, QuotationEntryComponent],
   imports: [
     CommonModule,
     TradeRoutingModule,

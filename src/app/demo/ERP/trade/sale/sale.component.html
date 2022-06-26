@@ -37,10 +37,9 @@
         </thead>
         <tbody>
           <tr *ngFor="let data of get_purchase_data; let i = index">
-            <td>
-              <u style="color: blue; cursor: pointer"
-                (click)="invoicenumberPopup(data,i)">{{ data.invoice_no
-                }}</u>
+            <td class="invoice_no" title="update">
+                <span (click)="invoicenumberPopup(data,i)">{{ data.invoice_no
+                }}</span>
             </td>
             <td>{{ data.sell_date | date: "dd/MM/yyyy" }}</td>
             <td>{{ data.customerData.name }}</td>

@@ -59,8 +59,15 @@ export class erp_all_api{
 
         trd_get_rawMatData: base_url+'/trade/stock',
         trd_update_purchase_entry: base_url+'/trade/updateProdPurchaseEntry',
+
         // updtPurc: base_url+'/trade/prodPurchaseEntry',
         // trade ends
+
+        //quation start
+
+        fetch_quotation: base_url+'/quotation/fetch',
+        quotation_add: base_url+'/quotation/add',
+        update_quotation: base_url+'/quotation/update',
 
     }
 }
