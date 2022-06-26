@@ -342,7 +342,7 @@ export class QuotationEntryComponent implements OnInit {
 
       var quotation_arr = this.quotationformarray.map((p_array) => {
         return {
-          prod_id: p_array.prud,
+          prod_id: p_array.category,
           igst: p_array.igst,
           cgst: p_array.cgst,
           sgst: p_array.sgst,
@@ -354,6 +354,9 @@ export class QuotationEntryComponent implements OnInit {
       });
 
     }
+
+    console.log(quotation_arr);
+    
 
     this.loader = true;
     console.log(this.quotation_form.get('quto').value,);
