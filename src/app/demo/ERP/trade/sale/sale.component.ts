@@ -30,7 +30,7 @@ export class SaleComponent implements OnInit {
   purchase_tab: boolean;
   gstVal: any;
   control: FormGroup;
-  getCatagoryData: any;
+  getCatagoryData: any = [];
   itemList: any;
   cat_id: any;
   hsn: any;
@@ -68,6 +68,8 @@ export class SaleComponent implements OnInit {
   itemname: any;
   type: any;
   p_array: any = [];
+  itemData2: any = [];
+  productformarray: any = [];
 
   constructor(
     private ErpService: ErpServiceService,
@@ -95,7 +97,8 @@ export class SaleComponent implements OnInit {
 
     this.purchase_form = new FormGroup({
       invo: new FormControl("", [Validators.required]),
-      custmer: new FormControl("choose_cname", [Validators.required]),
+      custmer_id: new FormControl(""),
+      custmer: new FormControl("", [Validators.required]),
       p_date: new FormControl("", [Validators.required]),
       amnt: new FormControl("0"),
       payMode: new FormControl("choosepaymode"),
@@ -122,9 +125,9 @@ export class SaleComponent implements OnInit {
    }
 
    ngOnInit() {
-    this.get_Catagory();
+     this.get_Catagory();
+     this.get_Item();
     this.get_Vendor();
-    this.get_Item();
     this.get_purchase_details();
   }
 
@@ -134,11 +137,15 @@ export class SaleComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.getTradeCat, { headers: headers }).pipe(finalize(() => { })).subscribe(
+    this.ErpService.get_Reqs(erp_all_api.urls.getProduct, { headers: headers }).pipe(finalize(() => { })).subscribe(
       (res: any) => {
-        this.getCatagoryData = res.data;
-        console.log("response is", this.getCatagoryData);
-        console.log("resps", Object.values(this.getCatagoryData));
+        let catData = res.data;
+        for (let i = 0; i < catData.length; i++) {
+          if (catData[i].delete_stat == 0) {
+            this.itemData2.push(catData[i]);
+          }
+        }
+        console.log(this.itemData2);
       },
       (err: any) => {
         console.log(err);
@@ -204,8 +211,15 @@ export class SaleComponent implements OnInit {
       (res: any) => {
         console.log(res, "get item");
 
-        this.itemData = res.data;
-
+        let catData = res.data;
+        for (let i = 0; i < catData.length; i++) {
+          if (catData[i].delete_stat == 0) {
+            this.itemData2.push(catData[i]);
+          }
+        }
+        console.log(this.itemData2);
+        
+        // this.itemData = res.data;
         // this.item_data = res.data.map((val) => {
         //   return { item_name: val.item_name, item_id: val.item_id, gst: val.gst };
         // });
@@ -322,36 +336,36 @@ export class SaleComponent implements OnInit {
   //   this.modalService.dismissAll(updt);
   // }
 
-  update_purchase_details = () => {
-    this.loader = true;
-    var today = new Date();
-    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    const reqBody = {
-      "invoice": this.invoiceNo,
-      "customer_id":this.customerSelectedId,
-      "date": date,
-      "payment_status": "paid",
-      "paid": 0,
-      "method": "cheque",
-      "sell_data": this.purchase_dataArray
-    }
+  // update_purchase_details = () => {
+  //   this.loader = true;
+  //   var today = new Date();
+  //   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  //   const reqBody = {
+  //     "invoice": this.invoiceNo,
+  //     "customer_id":this.customerSelectedId,
+  //     "date": date,
+  //     "payment_status": "paid",
+  //     "paid": 0,
+  //     "method": "cheque",
+  //     "sell_data": this.purchase_dataArray
+  //   }
 
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+  //   let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+  //   let headers = new HttpHeaders();
+  //   headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.trd_updt_sale_entry, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
-      (res: any) => {
-        console.log(res, "get update_purchase_entry");
-        Notiflix.Report.success(res.msg, '', 'Close');
-        this.invoiceTabclose();
-        this.get_purchase_details();
-      },
-      (err: any) => {
-        console.log(err);
-        Notiflix.Report.failure(err.error.msg, '', 'Close');
-      });
-  };
+  //   this.ErpService.post_Reqs(erp_all_api.urls.trd_updt_sale_entry, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+  //     (res: any) => {
+  //       console.log(res, "get update_purchase_entry");
+  //       Notiflix.Report.success(res.msg, '', 'Close');
+  //       this.invoiceTabclose();
+  //       this.get_purchase_details();
+  //     },
+  //     (err: any) => {
+  //       console.log(err);
+  //       Notiflix.Report.failure(err.error.msg, '', 'Close');
+  //     });
+  // };
 
 
 
@@ -501,6 +515,7 @@ export class SaleComponent implements OnInit {
 
     this.purchase_form.patchValue({
       invo: saledata.invoice_no,
+      custmer_id: saledata.customerData.id,
       custmer: saledata.customerData.name,
       p_date: this.datePipe.transform(saledata.sell_date, 'yyyy-MM-dd'),
       amnt: 0,
@@ -516,8 +531,14 @@ export class SaleComponent implements OnInit {
 
    for (let i = 0; i < saledata.sellData.length; i++) {
     this.add_row();
+
+    // if (this.itemData2[i].prod_id == saledata.sellData[i].prod_id) {
+    //   var c_id = this.itemData2[i].cat_id
+    // }
+
     p_form[i].patchValue({
-      category: 'PRODCAT2022033008070703',
+      // category: 'PRODCAT2022033008070703',
+      // category: c_id,
       prud: saledata.sellData[i].prod_id,
       igst: saledata.sellData[i].igst,
       cgst: saledata.sellData[i].cgst,
@@ -529,8 +550,8 @@ export class SaleComponent implements OnInit {
       total: saledata.sellData[i].total,
     });
 
-    this.chooseCategory('PRODCAT2022033008070703');
-    // this.chooseCategory(saledata.sellData[i].cat_id);
+    // this.chooseCategory('PRODCAT2022033008070703');
+    // this.chooseCategory(c_id);
     
    }
 
@@ -890,15 +911,15 @@ export class SaleComponent implements OnInit {
     productdata(): FormGroup {
       return this.fb.group({
   
-        category: new FormControl('', [Validators.required]),
-        prud: new FormControl('', [Validators.required]),
+        // category: new FormControl('Choosecat', [Validators.required]),
+        prud: new FormControl('ChooseProduct', [Validators.required]),
         igst: new FormControl('', [Validators.required]),
         cgst: new FormControl('', [Validators.required]),
         sgst: new FormControl('', [Validators.required]),
         hsn: new FormControl(''),
-        price: new FormControl('', [Validators.required]),
-        qty: new FormControl('', [Validators.required]),
-        discount: new FormControl('', [Validators.required]),
+        price: new FormControl('0', [Validators.required]),
+        qty: new FormControl('1', [Validators.required]),
+        discount: new FormControl('0', [Validators.required]),
         total: new FormControl('', [Validators.required]),
         edit: new FormControl(false)
   
@@ -908,17 +929,34 @@ export class SaleComponent implements OnInit {
     add_row() {
       (<FormArray>this.updatePurchase.get('product')).push(this.productdata())
     }
+    add_row2() {
+      (<FormArray>this.updatePurchase.get('product')).push(this.productdata())
+
+      var p_form = this.updatePurchase.get('product')['controls'];
+      var l: number = (p_form.length) - 1;
+      console.log(l);
+      
+      p_form[l].controls.edit.patchValue(true);
+    }
     deleteRow(i) {
       (<FormArray>this.updatePurchase.get('product')).removeAt(i)
     }
 
-    chooseCategory(item) {
-      for (let i = 0; i < this.itemData.length; i++) {
-        if (this.itemData[i].cat_id == item) {
-          this.p_array[i] = this.itemData[i];
-        }
-      }
-    }
+    // chooseCategory(item) {
+
+    //   console.log(item);
+
+    //   this.p_array = [];
+      
+    //   for (let i = 0; i < this.itemData2.length; i++) {
+    //     if (this.itemData2[i].cat_id == item) {
+    //       this.p_array.push(this.itemData2[i]);
+    //     }
+    //   }
+
+    //   console.log(this.p_array);
+      
+    // }
 
 
     chooseProduct(form_cont, item) {
@@ -926,7 +964,7 @@ export class SaleComponent implements OnInit {
       console.log(item);
       console.log(form_cont);
       console.log(this.purchase_form);
-      console.log(this.itemData);
+      console.log(this.itemData2);
   
         let hsn;
         let gst;
@@ -934,19 +972,19 @@ export class SaleComponent implements OnInit {
         let gstvalue;
         let mrp;
   
-        for (let i = 0; i < this.itemData.length; i++) {
-          if (this.itemData[i].prod_id == item) {
-            GST = parseInt(this.itemData[i].gst);
-            hsn = this.itemData[i].hsn;
+        for (let i = 0; i < this.itemData2.length; i++) {
+          if (this.itemData2[i].prod_id == item) {
+            GST = parseInt(this.itemData2[i].gst);
+            hsn = this.itemData2[i].hsn;
   
-            if (this.itemData[i].mrp) {
-              mrp = this.itemData[i].mrp;
+            if (this.itemData2[i].mrp) {
+              mrp = this.itemData2[i].mrp;
               gst = mrp * (GST / 100);
             } else {
-              mrp = this.itemData[i].price;
+              mrp = this.itemData2[i].price;
               gst = mrp * (GST / 100);
             }
-            this.itemname = this.itemData[i].prod_name;
+            this.itemname = this.itemData2[i].prod_name;
   
             if (this.type == 'Intra State') {
               gstvalue = gst / 2;
@@ -1048,6 +1086,68 @@ export class SaleComponent implements OnInit {
           console.log(p_form);
           this.totalCalculation()
         }
+
+        update_purchase_details = () => {
+
+          this.productformarray = [];
+          var p_form = this.updatePurchase.get('product')['controls'];
+          console.log(p_form);
+      
+          for (let i = 0; i < p_form.length; i++) {
+            console.log(p_form[i].value);
+            this.productformarray.push(p_form[i].value)
+          }
+      
+          if (this.productformarray) {
+      
+            var product_arr = this.productformarray.map((p_array) => {
+              return {
+                prod_id: p_array.prud,
+                igst: p_array.igst,
+                cgst: p_array.cgst,
+                sgst: p_array.sgst,
+                price: p_array.price,
+                qty: p_array.qty,
+                discount: p_array.discount,
+                total: p_array.total
+              }
+            });
+      
+          }
+      
+          this.loader = true;
+          console.log(this.purchase_form.get('invo').value,);
+          console.log(this.productformarray);
+          const reqBody = {
+            "invoice": this.purchase_form.get('invo').value,
+            "customer_id": this.purchase_form.get('custmer_id').value,
+            // "type": "rawmaterial",
+            "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
+            "sell_data": product_arr,
+            "payment_status": this.purchase_form.get('payStatus').value,
+            "method": this.purchase_form.get('payMode').value,
+            "paid_amount": this.purchase_form.get('amnt').value
+      
+          }
+      
+          let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+          let headers = new HttpHeaders();
+          headers = headers.set('auth-token', auth_token);
+      
+          this.ErpService.post_Reqs(erp_all_api.urls.trd_updt_sale_entry, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+            (res: any) => {
+              Notiflix.Report.success('SuccessFully Added', '', 'Close');
+              console.log(res, "get item");
+              // this.get_purchase_details.emit();
+              this.purchase_form.reset();
+              this.invoiceTabclose();
+            },
+            (err: any) => {
+              console.log(err);
+              console.log(err.error.msg);
+              Notiflix.Report.failure(err.error.msg, '', 'Close');
+            });
+        };
 }
 
 function gst_rev(original_price: any, gst: any) {

@@ -385,6 +385,7 @@
               </div>
               <div class="col-sm-3 pl-0">
                   <label for="">Custmer Name</label>
+                  <input type="hidden" formControlName="custmer_id" class="form-control">
                   <input type="text" formControlName="custmer" class="form-control" readonly>
 
               </div>
@@ -435,7 +436,7 @@
                   style="border-collapse: separate;text-indent: initial;">
                   <thead class="bg-white">
                       <tr>
-                        <th>Category</th>
+                        <!-- <th>Category</th> -->
                           <th>Product</th>
                           <th>Hsn</th>
                           <th>Quantity</th>
@@ -453,23 +454,23 @@
                       <ng-container formArrayName="product">
                           <tr *ngFor="let Product of updatePurchase.get('product')['controls'];let i=index"
                               [formGroupName]="i">
-                              <td>
+                              <!-- <td>
                                   <select class="form-control table_input" id="category"
                                       (change)="chooseCategory($event.target.value); totalCalculation()"
                                       formControlName="category" [disabled]="purchase_form.invalid">
-                                      <option selected value="ChooseProduct" disabled>Choose Product</option>
+                                      <option selected value="Choosecat" disabled>Choose Category</option>
                                       <option class="disable" *ngFor="let category of getCatagoryData;let i=index"
                                           [value]="category.cat_id"
                                           [disabled]="Product.controls.edit.value == false">
                                           {{category.cat_name}}</option>
                                   </select>
-                              </td>
+                              </td> -->
                               <td>
                                   <select class="form-control table_input" id="prud"
                                       (change)="chooseProduct(Product, $event.target.value); totalCalculation()"
                                       formControlName="prud" [disabled]="purchase_form.invalid">
                                       <option selected value="ChooseProduct" disabled>Choose Product</option>
-                                      <option class="disable" *ngFor="let prod of p_array;let i=index"
+                                      <option class="disable" *ngFor="let prod of itemData2;let i=index"
                                           [value]="prod.prod_id"
                                           [disabled]="Product.controls.edit.value == false">
                                           {{prod.prod_name}}</option>
@@ -480,14 +481,14 @@
                               <td><input type="number" formControlName="qty" id="qty" class="form-control table_input"
                                       (input)="calc_total(Product.controls); totalCalculation()"
                                       (keypress)="prevent($event, 'qty')" min="1"
-                                      [readonly]="Product.controls.edit.value == false">
+                                      [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'">
                               </td>
                               <td><input type="number" formControlName="price" id="price"
-                                      class="form-control table_input" [readonly]="Product.controls.edit.value == false"></td>
+                                      class="form-control table_input" [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'"></td>
                               <td><input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
                                       min="0" id="discount" class="form-control table_input"
                                       (input)="calc_total(Product.controls); totalCalculation()"
-                                      [readonly]="Product.controls.edit.value == false"></td>
+                                      [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'"></td>
                               <td><input type="number" formControlName="cgst" class="form-control table_input"
                                       disabled></td>
                               <td><input type="number" formControlName="sgst" class="form-control table_input"
@@ -514,8 +515,8 @@
                   <tfoot style="border: none;">
                       <tr style="border: none;">
                           <td colspan="2" style="white-space: nowrap; float: left; padding: 2px;"><button
-                                  class="btn btn-primary disable" (click)="add_row()"
-                                  [disabled]="updatePurchase.get('product')['controls'][updatePurchase.get('product')['controls'].length-1].value.category == 'ChooseProduct'">Add
+                                  class="btn btn-primary disable" (click)="add_row2()"
+                                  [disabled]="updatePurchase.get('product')['controls'][updatePurchase.get('product')['controls'].length-1].value.prud == 'ChooseProduct'">Add
                                   Row</button>
                           </td>
                       </tr>
@@ -561,7 +562,7 @@
 
   <div class="footer_btn">
       <button class="btn btn-danger mr-2" (click)="invoiceTabclose()">Cancel</button>
-      <button class="btn btn-primary disable" (click)="updateArray()">Submit</button>
+      <button class="btn btn-primary disable" [disabled]="updatePurchase.get('product')['controls'][updatePurchase.get('product')['controls'].length-1].value.prud == 'ChooseProduct'" (click)="update_purchase_details()">Submit</button>
   </div>
 
 </div>
