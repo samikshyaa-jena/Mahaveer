@@ -70,6 +70,7 @@ export class QuotationComponent implements OnInit {
   // p_array: any = [];
   itemData2: any = [];
   quotationformarray: any = [];
+  pri_sta: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -104,10 +105,18 @@ export class QuotationComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(sessionStorage.getItem('priority'), typeof(sessionStorage.getItem('priority')));
+
+    this.pri_sta = sessionStorage.getItem('priority');
+    
     this.get_Catagory();
     this.get_Item();
     this.get_Vendor();
     this.get_purchase_details();
+  }
+
+  ngOnDestroy(){
+    sessionStorage.removeItem('priority')
   }
 
   get_Catagory = () => {
@@ -316,7 +325,20 @@ export class QuotationComponent implements OnInit {
       (res: any) => {
         console.log(res);
 
-        this.get_purchase_data = res.data;
+        if (this.pri_sta === 'true') {
+
+          this.get_purchase_data = res.data;
+          
+        } else {
+          let p_data = res.data;
+          this.get_purchase_data = p_data.filter((e) => {
+            return e.priority == 'HIGH';
+          });          
+        }
+        
+        console.log(this.get_purchase_data);
+
+
         let totaldata = []
         let totalIgst = []
         let totalCgst = []
@@ -455,6 +477,7 @@ export class QuotationComponent implements OnInit {
   back() {
     console.log('hii');
     this.purchase_tab = false;
+    this.get_purchase_details();
   }
 
   // invoice popup open
@@ -501,6 +524,7 @@ export class QuotationComponent implements OnInit {
   quotationTabclose() {
     this.purchase_tab = false;
     this.invoice = false;
+    this.get_purchase_details();
   }
 
   productdata(): FormGroup {

@@ -8,6 +8,10 @@ import { ErpServiceService } from '../../erp-service.service';
 import { erp_all_api } from '../../erpAllApi';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import * as pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 @Component({
   selector: 'app-vendor',
   templateUrl: './vendor.component.html',
@@ -198,5 +202,185 @@ export class VendorComponent implements OnInit {
         console.log(err);
           Notiflix.Report.failure(err.error.msg, '', 'Close');(err.msg);
       });
+  }
+
+  action(row, type) {
+
+
+    console.log(row);
+    console.log(type);
+
+    var docDefinition = {
+      pageSize: 'A4',
+      pageMargins: [50, 0, 0, 0],
+      content: [
+
+        {
+          columns: [{
+            margin: [0, 20, 0, 0],
+            table: {
+              widths: [490],
+              heights: [30],
+              color: '#ddd',
+              body: [
+                [{
+                  text: 'Induslnd Bank',
+                  bold: true,
+                  fontSize: 34,
+                  color: '#8c2626',
+                  alignment: 'center',
+                  italics: true,
+                  margin: [0, 8, 0, 0],
+                  border: [false, false, false, false]
+                }],
+              ]
+            }
+          }]
+        },
+        {
+
+          columns: [{
+            canvas: [{
+              type: 'polyline',
+              lineWidth: 2,
+              color: 'blue',
+              lineColor: 'red',
+              points: [{
+                x: 0,
+                y: 30
+              }, {
+                x: 500,
+                y: 30
+              }]
+            }]
+          }]
+        }, {
+          columns: [{
+            margin: [0, 20, 0, 0],
+            table: {
+              widths: [490],
+              heights: [30],
+              color: '#ddd',
+              body: [
+                [{
+                  text: 'AEPS MINISTATEMENT',
+                  bold: true,
+                  fontSize: 14,
+                  alignment: 'center',
+                  margin: [0, 8, 0, 0]
+                }],
+              ]
+            }
+          }]
+        }, {
+          columns: [{
+            margin: [0, 20, 0, 0],
+            table: {
+              widths: [490],
+              heights: [10, 10],
+              border: [false, false, false, false],
+
+              body: [
+                [{
+                  text: 'Date : ' + '3456789' +
+                    "Time : " + 'ertyuio',
+                  fontSize: 12,
+                  // alignment: 'center',
+                  border: [false, false, false, false]
+                }],
+                [{
+                  text: 'Shop Name : ' + 'iServeU Tech',
+                  fontSize: 12,
+                  // alignment: 'center',
+                  border: [false, false, false, false]
+                }]
+              ]
+            }
+          }]
+        },
+        {
+          columns: [{
+            margin: [0, 20, 0, 0],
+            table: {
+              widths: [490],
+              heights: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 20, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+              border: [false, false, false, false],
+              body: [
+
+                [{
+                  text: 'Reference No. : ' + 'rthjkl',
+                  fontSize: 12,
+                  border: [false, false, false, false]
+                }],
+                [{
+                  text: 'Txn ID : ' + 'ertghjkl',
+                  fontSize: 12,
+                  border: [false, false, false, false]
+                }]               
+
+              ]
+            }
+          }]
+        }, {
+          columns: [{
+            text: "Note : Please do not pay any charge/fee for this txn",
+            bold: true,
+            fontSize: 18,
+            italics: true
+          }]
+        },
+        {
+          columns: [{
+            margin: [0, 20, 0, 0],
+            table: {
+              widths: [490],
+              heights: [30],
+              color: '#ddd',
+              body: [
+                [{
+                  text: 'Customer Copy',
+                  fontSize: 12,
+                  alignment: 'center',
+                  margin: [0, 8, 0, 0]
+                }],
+              ]
+            }
+          }]
+        }
+      ],
+
+      styles: {
+        status: {
+          margin: [0, 30, 0, 0]
+        },
+        tableExample: {
+          margin: [0, 30, 0, 0]
+        },
+        header: {
+          margin: [0, 5, 0, 0],
+          fontSize: 15,
+          bold: true
+        },
+        bigger: {
+          fontSize: 10,
+          italics: true,
+        },
+        footer: {
+          margin: [420, 0, 0, 4],
+          fontSize: 13,
+          bold: true
+        }
+
+      }
+    }
+
+    if (type == 'download') {
+
+      pdfMake.createPdf(docDefinition).download('Receipt-');
+
+    } else {
+      pdfMake.createPdf(docDefinition).print();
+    }
+
   }
 }

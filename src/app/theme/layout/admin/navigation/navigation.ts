@@ -153,7 +153,8 @@ const NavigationItems = [
         id: 'quotation',
         title: 'Quotation',
         type: 'item',
-        url: '/v1/trade/quotation',
+        // url: '/v1/trade/quotation',
+        pri_sta: true,
         icon: 'feather icon-users'
       },
       {

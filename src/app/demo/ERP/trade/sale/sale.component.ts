@@ -860,6 +860,7 @@ export class SaleComponent implements OnInit {
   back() {
     console.log('hii');
     this.purchase_tab = false;
+    this.get_purchase_details();
   }
 
     // invoice popup open
@@ -906,6 +907,7 @@ export class SaleComponent implements OnInit {
     invoiceTabclose(){
       this.purchase_tab = false;
       this.invoice = false;
+      this.get_purchase_details();
     }
 
     productdata(): FormGroup {

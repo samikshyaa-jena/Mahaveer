@@ -1,5 +1,5 @@
 <ng-container *ngIf="!item.hidden">
-  <li [ngClass]="item.classes" *ngIf="item.url && !item.external" [routerLinkActive]="['active']">
+  <li [ngClass]="item.classes" *ngIf="item.url && !item.external && !item.pri_sta" [routerLinkActive]="['active']">
     <a class="nav-link" [target]="item.target ? '_blank' : '_self'" [routerLink]="[item.url]" (click)="closeOtherMenu($event)">
       <ng-container *ngTemplateOutlet="itemIcon"></ng-container>
       <span class="pcoded-mtext" *ngIf="item.icon; else directTitle">{{ item.title }}</span>
@@ -9,8 +9,18 @@
       <ng-container *ngTemplateOutlet="itemBadge"></ng-container>
     </a>
   </li>
-  <li [ngClass]="item.classes" *ngIf="item.url && item.external">
+  <li [ngClass]="item.classes" *ngIf="item.url && item.external && !item.pri_sta">
     <a [target]="item.target ? '_blank' : '_self'" [href]="item.url">
+      <ng-container *ngTemplateOutlet="itemIcon"></ng-container>
+      <span class="pcoded-mtext" *ngIf="item.icon; else directTitle">{{ item.title }}</span>
+      <ng-template #directTitle>
+        {{item.title}}
+      </ng-template>
+      <ng-container *ngTemplateOutlet="itemBadge"></ng-container>
+    </a>
+  </li>
+  <li [ngClass]="item.classes" *ngIf="!item.url && item.pri_sta">
+    <a [target]="item.target ? '_blank' : '_self'" (click)="sendPriority('true')" routerLink="/v1/trade/quotation">
       <ng-container *ngTemplateOutlet="itemIcon"></ng-container>
       <span class="pcoded-mtext" *ngIf="item.icon; else directTitle">{{ item.title }}</span>
       <ng-template #directTitle>
