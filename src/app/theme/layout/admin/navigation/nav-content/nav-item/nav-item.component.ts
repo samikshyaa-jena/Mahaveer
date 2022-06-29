@@ -26,6 +26,11 @@ export class NavItemComponent implements OnInit {
     sessionStorage.setItem('priority', 'true')
     
   }
+  sendPriority2(evt){
+    console.log(evt);
+    sessionStorage.setItem('priority', 'false')
+    
+  }
 
   closeOtherMenu(event) {
     if (this.nextConfig['layout'] === 'vertical') {

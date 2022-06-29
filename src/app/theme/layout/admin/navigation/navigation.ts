@@ -128,10 +128,11 @@ const NavigationItems = [
             url: '/v1/trade/credit'
           },
           {
-            id: 'quotation',
+            id: 's_quotation',
             title: 'Quotation',
             type: 'item',
-            url: '/v1/trade/quotation',
+            // url: '/v1/trade/sale-quotation',
+            pri_sta2: true,
             icon: 'feather icon-users'
           },
           // {

@@ -559,10 +559,10 @@ export class SaleAddComponent implements OnInit {
   }
 
   prevent(e, type) {
-    console.log(e);
+    console.log(e.target.value);
 
     if (type == 'qty') {
-      if (e.key > '0') {
+      if (e.target.value > 0) {
         return e.keyCode >= 48 && e.charCode <= 57;
       } else {
         return e.keyCode > 48 && e.charCode <= 57;

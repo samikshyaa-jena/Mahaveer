@@ -115,9 +115,9 @@ export class QuotationComponent implements OnInit {
     this.get_purchase_details();
   }
 
-  ngOnDestroy(){
-    sessionStorage.removeItem('priority')
-  }
+  // ngOnDestroy(){
+  //   sessionStorage.removeItem('priority')
+  // }
 
   get_Catagory = () => {
 
@@ -500,7 +500,7 @@ export class QuotationComponent implements OnInit {
     console.log(e);
 
     if (type == 'qty') {
-      if (e.key > '0') {
+      if (e.target.value > 0) {
         return e.keyCode >= 48 && e.charCode <= 57;
       } else {
         return e.keyCode > 48 && e.charCode <= 57;

@@ -45,6 +45,10 @@ const routes: Routes = [
     component: QuotationComponent
   },
   {
+    path: 'sale-quotation',
+    component: QuotationComponent
+  },
+  {
     path: 'credit',
     component: CreditNoteComponent
   },

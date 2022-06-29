@@ -29,6 +29,16 @@
       <ng-container *ngTemplateOutlet="itemBadge"></ng-container>
     </a>
   </li>
+  <li [ngClass]="item.classes" *ngIf="!item.url && item.pri_sta2">
+    <a [target]="item.target ? '_blank' : '_self'" (click)="sendPriority2('false')" routerLink="/v1/trade/sale-quotation">
+      <ng-container *ngTemplateOutlet="itemIcon"></ng-container>
+      <span class="pcoded-mtext" *ngIf="item.icon; else directTitle">{{ item.title }}</span>
+      <ng-template #directTitle>
+        {{item.title}}
+      </ng-template>
+      <ng-container *ngTemplateOutlet="itemBadge"></ng-container>
+    </a>
+  </li>
   <ng-template #itemIcon>
     <span *ngIf="item.icon" class="pcoded-micon"><i class="feather" [ngClass]="item.icon"></i></span>
   </ng-template>
