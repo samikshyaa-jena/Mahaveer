@@ -169,6 +169,11 @@ export class SaleAddComponent implements OnInit {
   }
   chooseCategory(form_cont, item) {
 
+    form_cont.patchValue({
+      discount: 0,
+      qty: 1,
+  });
+
     console.log(item);
     console.log(form_cont);
     console.log(this.purchase_form);
@@ -337,26 +342,50 @@ export class SaleAddComponent implements OnInit {
 
   calc_total(form_cont) {
 
-    // console.log(this.productForm.value);
+    let prc: number = form_cont.price.value;
+    let qt: number = form_cont.qty.value;
+    let discnt: number = form_cont.discount.value;
+    let item = form_cont.category.value;
 
-    let prc: any = form_cont.price.value;
-    let qt: any = form_cont.qty.value;
-    let discnt: any = form_cont.discount.value;
-    let igst: any = form_cont.igst.value;
-    let sgst: any = form_cont.sgst.value;
-    let cgst: any = form_cont.cgst.value;
-    // let sum = 0
-    let total = 0;
-    let total_igst = 0;
-    let total_cgst = 0;
-    let total_sgst = 0;
+    let gst: number;
+    let GST: number;
+    let igst: number;
+    let sgst: number;
+    let cgst: number;
+
+    for (let i = 0; i < this.getCatagoryData.length; i++) {
+      if (this.getCatagoryData[i].prod_id == item) {
+
+        GST = parseInt(this.getCatagoryData[i].gst);
+        gst = prc * (GST / 100);
+
+        if (this.type == 'Intra State') {
+          igst = 0;
+          sgst = gst / 2;
+          cgst = gst / 2;
+        }
+        else {
+          igst = gst;
+          sgst = 0;
+          cgst = 0;
+        }
+      }
+    }
+
+    console.log(form_cont);
     // let gstTotal = (igst + cgst + sgst) / 100;
-    if (qt && prc) {
+
+    let total: number = 0;
+    let total_igst: number = 0;
+    let total_cgst: number = 0;
+    let total_sgst: number = 0;
+
+    if (qt && prc && gst) {
 
       total_igst = igst * qt;
       total_cgst = cgst * qt;
       total_sgst = sgst * qt;
-      let gstTotal = (total_igst + total_cgst + total_sgst);
+      let gstTotal: number = (total_igst + total_cgst + total_sgst);
 
       if (discnt) {
         total = gstTotal + ((prc * qt) - discnt);
@@ -364,23 +393,13 @@ export class SaleAddComponent implements OnInit {
         total = gstTotal + ((prc * qt) - 0);
       }
 
+      form_cont.total.patchValue(total);
+      form_cont.igst.patchValue(total_igst);
+      form_cont.cgst.patchValue(total_cgst);
+      form_cont.sgst.patchValue(total_sgst);
+      console.log(form_cont);
     }
-    // if (qt != null) {
-    //   if (prc != null) {
-    //     if (discnt != null) {
-    //       sum = sum + ((prc * qt) - discnt);
-    //       total = sum + (sum * gstTotal);
-    //     } else {
-    //       sum = sum + ((prc * qt) - 0);
-    //       total = sum + (sum * gstTotal);
-    //     }
-    //   }
-    // }
-    form_cont.total.patchValue(total);
-    form_cont.igst.patchValue(total_igst);
-    form_cont.cgst.patchValue(total_cgst);
-    form_cont.sgst.patchValue(total_sgst);
-    console.log(form_cont);
+
   }
 
   // submitArray() {

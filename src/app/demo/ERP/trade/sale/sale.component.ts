@@ -39,7 +39,7 @@ export class SaleComponent implements OnInit {
   Item_name: any;
   formArrayValue: any;
   invoice: boolean;
-  modal1: boolean=false;
+  modal1: boolean = false;
   popupData: any = [];
   x: boolean;
   y: boolean;
@@ -54,7 +54,7 @@ export class SaleComponent implements OnInit {
   updateData: any;
   invoiceNo: any;
   vendData: any;
-  dummy: any =  [];
+  dummy: any = [];
   customerSelectedId: any;
   cattName: any;
   proddName: any;
@@ -80,7 +80,7 @@ export class SaleComponent implements OnInit {
     private fb: FormBuilder,
     public saleService: SaleSrviceService,
     private datePipe: DatePipe,
-  ) { 
+  ) {
     // this.purchase_form = new FormGroup({
     //   invo: new FormControl("", [Validators.required]),
     //   vendor: new FormControl("", [Validators.required]),
@@ -104,29 +104,29 @@ export class SaleComponent implements OnInit {
       payMode: new FormControl("choosepaymode", [Validators.required]),
       payStatus: new FormControl("choosepay", [Validators.required]),
     });
-  
+
     this.dynamicManufacture = this.fb.group({
       manufacture: this.fb.array([])
     });
 
-  //   this.updatePurchase = new FormGroup({
-  //     catagory: new FormControl(""),
-  //     prod_id: new FormControl(""),
-  //     hsn: new FormControl(""),
-  //     price: new FormControl(""),
-  //     qty: new FormControl(""),
-  //     // unit: new FormControl(""),
-  //     discount: new FormControl(""),
-  //     cgst: new FormControl(""),
-  //     sgst: new FormControl(""),
-  //     igst: new FormControl(""),
-  //     total: new FormControl(""),
-  //   });
-   }
+    //   this.updatePurchase = new FormGroup({
+    //     catagory: new FormControl(""),
+    //     prod_id: new FormControl(""),
+    //     hsn: new FormControl(""),
+    //     price: new FormControl(""),
+    //     qty: new FormControl(""),
+    //     // unit: new FormControl(""),
+    //     discount: new FormControl(""),
+    //     cgst: new FormControl(""),
+    //     sgst: new FormControl(""),
+    //     igst: new FormControl(""),
+    //     total: new FormControl(""),
+    //   });
+  }
 
-   ngOnInit() {
-     this.get_Catagory();
-     this.get_Item();
+  ngOnInit() {
+    this.get_Catagory();
+    this.get_Item();
     this.get_Vendor();
     this.get_purchase_details();
   }
@@ -218,7 +218,7 @@ export class SaleComponent implements OnInit {
           }
         }
         console.log(this.itemData2);
-        
+
         // this.itemData = res.data;
         // this.item_data = res.data.map((val) => {
         //   return { item_name: val.item_name, item_id: val.item_id, gst: val.gst };
@@ -302,10 +302,10 @@ export class SaleComponent implements OnInit {
       let sgstBarri = this.updateData[i].sgst;
       let priceBarri = this.updateData[i].price;
       let qtyBarri = this.updateData[i].quantity;
-      priceBarri = priceBarri*qtyBarri;
-      igstVal = (igstBarri/100)*priceBarri;
-      sgstVal = (sgstBarri/100)*priceBarri;
-      cgstVal = (cgstBarri/100)*priceBarri;
+      priceBarri = priceBarri * qtyBarri;
+      igstVal = (igstBarri / 100) * priceBarri;
+      sgstVal = (sgstBarri / 100) * priceBarri;
+      cgstVal = (cgstBarri / 100) * priceBarri;
       this.updateData[i].igstVal = igstVal;
       this.updateData[i].sgstVal = sgstVal;
       this.updateData[i].cgstVal = cgstVal;
@@ -471,7 +471,8 @@ export class SaleComponent implements OnInit {
 
   };
 
-  add_purchase_details = () => {debugger;
+  add_purchase_details = () => {
+    debugger;
     this.loader = true;
     console.log(this.purchase_data[0].price);
     const reqBody = {
@@ -505,13 +506,13 @@ export class SaleComponent implements OnInit {
 
   };
 
-  invoicenumberPopup(saledata,index) {
+  invoicenumberPopup(saledata, index) {
     // console.log(c, "customer data................");
     // console.log(s, "sale data................");
     // this.vendData = c;
     console.log(saledata);
 
-    this.type = saledata.customerData.type
+    this.type = saledata.customerData.type;
 
     this.purchase_form.patchValue({
       invo: saledata.invoice_no,
@@ -522,42 +523,42 @@ export class SaleComponent implements OnInit {
       payMode: saledata.method,
       payStatus: saledata.payment_status
     });
-    
+
     console.log(index);
     this.invoiceTabopen();
-  //  this.customerSelectedId=this.vendor_data.data[i].customer_id
+    //  this.customerSelectedId=this.vendor_data.data[i].customer_id
 
-  var p_form = this.updatePurchase.get('product')['controls'];
+    var p_form = this.updatePurchase.get('product')['controls'];
 
-   for (let i = 0; i < saledata.sellData.length; i++) {
-    this.add_row();
+    for (let i = 0; i < saledata.sellData.length; i++) {
+      this.add_row();
 
-    // if (this.itemData2[i].prod_id == saledata.sellData[i].prod_id) {
-    //   var c_id = this.itemData2[i].cat_id
-    // }
+      // if (this.itemData2[i].prod_id == saledata.sellData[i].prod_id) {
+      //   var c_id = this.itemData2[i].cat_id
+      // }
 
-    p_form[i].patchValue({
-      // category: 'PRODCAT2022033008070703',
-      // category: c_id,
-      prud: saledata.sellData[i].prod_id,
-      igst: saledata.sellData[i].igst,
-      cgst: saledata.sellData[i].cgst,
-      sgst: saledata.sellData[i].sgst,
-      hsn: saledata.sellData[i].hsn,
-      price: saledata.sellData[i].price,
-      qty: saledata.sellData[i].quantity,
-      discount: saledata.sellData[i].discount,
-      total: saledata.sellData[i].total,
-    });
+      p_form[i].patchValue({
+        // category: 'PRODCAT2022033008070703',
+        // category: c_id,
+        prud: saledata.sellData[i].prod_id,
+        igst: saledata.sellData[i].igst,
+        cgst: saledata.sellData[i].cgst,
+        sgst: saledata.sellData[i].sgst,
+        hsn: saledata.sellData[i].hsn,
+        price: saledata.sellData[i].price,
+        qty: saledata.sellData[i].quantity,
+        discount: saledata.sellData[i].discount,
+        total: saledata.sellData[i].total,
+      });
 
-    // this.chooseCategory('PRODCAT2022033008070703');
-    // this.chooseCategory(c_id);
-    
-   }
+      // this.chooseCategory('PRODCAT2022033008070703');
+      // this.chooseCategory(c_id);
 
-   
+    }
 
-   this.totalCalculation();
+
+
+    this.totalCalculation();
 
 
     // console.log( );
@@ -824,7 +825,7 @@ export class SaleComponent implements OnInit {
     // console.log(this.dummy);
     // this.popupData = this.dummy;
     // console.log(this.popupData);
-    this.saleService.sendData(this.vendData,this.popupData,this.invoiceNo);
+    this.saleService.sendData(this.vendData, this.popupData, this.invoiceNo);
     // this.loader = false;
   }
 
@@ -863,293 +864,320 @@ export class SaleComponent implements OnInit {
     this.get_purchase_details();
   }
 
-    // invoice popup open
-    openInvoice = (content, ino) =>{
-      this.router.navigate(['/v2/Erpmain/trade/invoice']);
-    }
-    // invoice popup close
-    closeInvoice(content) {
-      this.modalService.dismissAll(content);
-    }
-    // print invoice
-    printInvoice = () =>{
-      window.print();
-      console.log('hi');
-      this.closeInvoice('content');
+  // invoice popup open
+  openInvoice = (content, ino) => {
+    this.router.navigate(['/v2/Erpmain/trade/invoice']);
+  }
+  // invoice popup close
+  closeInvoice(content) {
+    this.modalService.dismissAll(content);
+  }
+  // print invoice
+  printInvoice = () => {
+    window.print();
+    console.log('hi');
+    this.closeInvoice('content');
 
-    }
+  }
 
-    prevent(e, type) {
-      console.log(e);
-  
-      if (type == 'qty') {
-        if (e.target.value > 0) {
-          return e.keyCode >= 48 && e.charCode <= 57;
-        } else {
-          return e.keyCode > 48 && e.charCode <= 57;
-        }
-      }
-      else if (type == 'dis' || type == 'prc') {
+  prevent(e, type) {
+    console.log(e);
+
+    if (type == 'qty') {
+      if (e.target.value > 0) {
         return e.keyCode >= 48 && e.charCode <= 57;
+      } else {
+        return e.keyCode > 48 && e.charCode <= 57;
       }
     }
-
-    open_modal2(){
-      this.modal3 = true;
+    else if (type == 'dis' || type == 'prc') {
+      return e.keyCode >= 48 && e.charCode <= 57;
     }
-    closeUpdateForm(){
-      this.modal3 = false;
-    }
-    invoiceTabopen(){
-      this.purchase_tab = false;
-      this.invoice = true;
-    }
-    invoiceTabclose(){
-      this.purchase_tab = false;
-      this.invoice = false;
-      this.get_purchase_details();
-    }
+  }
 
-    productdata(): FormGroup {
-      return this.fb.group({
-  
-        // category: new FormControl('Choosecat', [Validators.required]),
-        prud: new FormControl('ChooseProduct', [Validators.required]),
-        igst: new FormControl('', [Validators.required]),
-        cgst: new FormControl('', [Validators.required]),
-        sgst: new FormControl('', [Validators.required]),
-        hsn: new FormControl(''),
-        price: new FormControl('0', [Validators.required]),
-        qty: new FormControl('1', [Validators.required]),
-        discount: new FormControl('0', [Validators.required]),
-        total: new FormControl('', [Validators.required]),
-        edit: new FormControl(false)
-  
-      })
-    }
-  
-    add_row() {
-      (<FormArray>this.updatePurchase.get('product')).push(this.productdata())
-    }
-    add_row2() {
-      (<FormArray>this.updatePurchase.get('product')).push(this.productdata())
+  open_modal2() {
+    this.modal3 = true;
+  }
+  closeUpdateForm() {
+    this.modal3 = false;
+  }
+  invoiceTabopen() {
+    this.purchase_tab = false;
+    this.invoice = true;
+  }
+  invoiceTabclose() {
+    this.purchase_tab = false;
+    this.invoice = false;
+    this.get_purchase_details();
+  }
 
-      var p_form = this.updatePurchase.get('product')['controls'];
-      var l: number = (p_form.length) - 1;
-      console.log(l);
-      
-      p_form[l].controls.edit.patchValue(true);
-    }
-    deleteRow(i) {
-      (<FormArray>this.updatePurchase.get('product')).removeAt(i)
-    }
+  productdata(): FormGroup {
+    return this.fb.group({
 
-    // chooseCategory(item) {
+      // category: new FormControl('Choosecat', [Validators.required]),
+      prud: new FormControl('ChooseProduct', [Validators.required]),
+      igst: new FormControl('', [Validators.required]),
+      cgst: new FormControl('', [Validators.required]),
+      sgst: new FormControl('', [Validators.required]),
+      hsn: new FormControl(''),
+      price: new FormControl('0', [Validators.required]),
+      qty: new FormControl('1', [Validators.required]),
+      discount: new FormControl('0', [Validators.required]),
+      total: new FormControl('', [Validators.required]),
+      edit: new FormControl(false)
 
-    //   console.log(item);
+    })
+  }
 
-    //   this.p_array = [];
-      
-    //   for (let i = 0; i < this.itemData2.length; i++) {
-    //     if (this.itemData2[i].cat_id == item) {
-    //       this.p_array.push(this.itemData2[i]);
-    //     }
-    //   }
+  add_row() {
+    (<FormArray>this.updatePurchase.get('product')).push(this.productdata())
+  }
+  add_row2() {
+    (<FormArray>this.updatePurchase.get('product')).push(this.productdata())
 
-    //   console.log(this.p_array);
-      
-    // }
+    var p_form = this.updatePurchase.get('product')['controls'];
+    var l: number = (p_form.length) - 1;
+    console.log(l);
+
+    p_form[l].controls.edit.patchValue(true);
+  }
+  deleteRow(i) {
+    (<FormArray>this.updatePurchase.get('product')).removeAt(i)
+  }
+
+  // chooseCategory(item) {
+
+  //   console.log(item);
+
+  //   this.p_array = [];
+
+  //   for (let i = 0; i < this.itemData2.length; i++) {
+  //     if (this.itemData2[i].cat_id == item) {
+  //       this.p_array.push(this.itemData2[i]);
+  //     }
+  //   }
+
+  //   console.log(this.p_array);
+
+  // }
 
 
-    chooseProduct(form_cont, item) {
+  chooseProduct(form_cont, item) {
 
-      console.log(item);
-      console.log(form_cont);
-      console.log(this.purchase_form);
-      console.log(this.itemData2);
-  
-        let hsn;
-        let gst;
-        let GST;
-        let gstvalue;
-        let mrp;
-  
-        for (let i = 0; i < this.itemData2.length; i++) {
-          if (this.itemData2[i].prod_id == item) {
-            GST = parseInt(this.itemData2[i].gst);
-            hsn = this.itemData2[i].hsn;
-  
-            if (this.itemData2[i].mrp) {
-              mrp = this.itemData2[i].mrp;
-              gst = mrp * (GST / 100);
-            } else {
-              mrp = this.itemData2[i].price;
-              gst = mrp * (GST / 100);
-            }
-            this.itemname = this.itemData2[i].prod_name;
-  
-            if (this.type == 'Intra State') {
-              gstvalue = gst / 2;
-              form_cont.patchValue({
-                igst: 0,
-                hsn: hsn,
-                cgst: gstvalue,
-                sgst: gstvalue,
-                price: mrp
-              });
-            }
-            else {
-              gstvalue = gst
-              form_cont.patchValue({
-                igst: gstvalue,
-                hsn: hsn,
-                cgst: 0,
-                sgst: 0,
-                price: mrp
-              });
-            }
-          }
-        }
-  
-      this.calc_total(form_cont.controls);
-    }
+    form_cont.patchValue({
+      discount: 0,
+      qty: 1,
+  });
 
-      calc_total(form_cont) {
-
-        console.log(form_cont);
-    
-        let prc: number = form_cont.price.value;
-        let qt: number = form_cont.qty.value;
-        let discnt: number = form_cont.discount.value;
-        let igst: number = form_cont.igst.value;
-        let sgst: number = form_cont.sgst.value;
-        let cgst: number = form_cont.cgst.value;
-        // let sum = 0
-        let total = 0;
-        let total_igst = 0;
-        let total_cgst = 0;
-        let total_sgst = 0;
-        // let gstTotal = (igst + cgst + sgst) / 100;
-        if (qt && prc) {
-    
-          total_igst = igst * qt;
-          total_cgst = cgst * qt;
-          total_sgst = sgst * qt;
-          let gstTotal = (total_igst + total_cgst + total_sgst);
-    
-          if (discnt) {
-            total = gstTotal + ((prc * qt) - discnt);
-          } else {
-            total = gstTotal + ((prc * qt) - 0);
-          }
-    
-        }
-
-        form_cont.total.patchValue(total);
-    form_cont.igst.patchValue(total_igst);
-    form_cont.cgst.patchValue(total_cgst);
-    form_cont.sgst.patchValue(total_sgst);
+    console.log(item);
     console.log(form_cont);
-        
+    console.log(this.purchase_form);
+    console.log(this.itemData2);
 
+    let hsn: number;
+    let gst: number;
+    let GST: number;
+    let gstvalue: number;
+    let mrp: number;
+
+    for (let i = 0; i < this.itemData2.length; i++) {
+      if (this.itemData2[i].prod_id == item) {
+        GST = parseInt(this.itemData2[i].gst);
+        hsn = this.itemData2[i].hsn;
+
+        if (this.itemData2[i].mrp) {
+          mrp = this.itemData2[i].mrp;
+          gst = mrp * (GST / 100);
+        } else {
+          mrp = this.itemData2[i].price;
+          gst = mrp * (GST / 100);
+        }
+        this.itemname = this.itemData2[i].prod_name;
+
+        if (this.type == 'Intra State') {
+          gstvalue = gst / 2;
+          form_cont.patchValue({
+            igst: 0,
+            hsn: hsn,
+            cgst: gstvalue,
+            sgst: gstvalue,
+            price: mrp
+          });
+        }
+        else {
+          gstvalue = gst
+          form_cont.patchValue({
+            igst: gstvalue,
+            hsn: hsn,
+            cgst: 0,
+            sgst: 0,
+            price: mrp
+          });
+        }
+      }
+    }
+
+    this.calc_total(form_cont.controls);
+  }
+
+  calc_total(form_cont) {
+
+    let prc: number = form_cont.price.value;
+    let qt: number = form_cont.qty.value;
+    let discnt: number = form_cont.discount.value;
+    let item = form_cont.prud.value;
+
+    let gst: number;
+    let GST: number;
+    let igst: number;
+    let sgst: number;
+    let cgst: number;
+
+    for (let i = 0; i < this.itemData2.length; i++) {
+      if (this.itemData2[i].prod_id == item) {
+
+        GST = parseInt(this.itemData2[i].gst);
+        gst = prc * (GST / 100);
+
+        if (this.type == 'Intra State') {
+          igst = 0;
+          sgst = gst / 2;
+          cgst = gst / 2;
+        }
+        else {
+          igst = gst;
+          sgst = 0;
+          cgst = 0;
+        }
+      }
+    }
+
+    console.log(form_cont);
+    // let gstTotal = (igst + cgst + sgst) / 100;
+
+    let total: number = 0;
+    let total_igst: number = 0;
+    let total_cgst: number = 0;
+    let total_sgst: number = 0;
+
+    if (qt && prc && gst) {
+
+      total_igst = igst * qt;
+      total_cgst = cgst * qt;
+      total_sgst = sgst * qt;
+      let gstTotal: number = (total_igst + total_cgst + total_sgst);
+
+      if (discnt) {
+        total = gstTotal + ((prc * qt) - discnt);
+      } else {
+        total = gstTotal + ((prc * qt) - 0);
       }
 
+      form_cont.total.patchValue(total);
+      form_cont.igst.patchValue(total_igst);
+      form_cont.cgst.patchValue(total_cgst);
+      form_cont.sgst.patchValue(total_sgst);
+      console.log(form_cont);
+    }
 
-        totalCalculation() {
+  }
 
-          var pform = this.updatePurchase.get('product')['controls'];
-      
-          this.t_igst = 0;
-          this.t_sgst = 0;
-          this.t_cgst = 0;
-          this.t_amount = 0;
-      
-          for (let i = 0; i < pform.length; i++) {
-            this.t_igst = this.t_igst + pform[i].value.igst;
-            this.t_sgst = this.t_sgst + pform[i].value.sgst;
-            this.t_cgst = this.t_cgst + pform[i].value.cgst;
-            this.t_amount = this.t_amount + pform[i].value.total;
-          }
-      
+
+  totalCalculation() {
+
+    var pform = this.updatePurchase.get('product')['controls'];
+
+    this.t_igst = 0;
+    this.t_sgst = 0;
+    this.t_cgst = 0;
+    this.t_amount = 0;
+
+    for (let i = 0; i < pform.length; i++) {
+      this.t_igst = this.t_igst + pform[i].value.igst;
+      this.t_sgst = this.t_sgst + pform[i].value.sgst;
+      this.t_cgst = this.t_cgst + pform[i].value.cgst;
+      this.t_amount = this.t_amount + pform[i].value.total;
+    }
+
+  }
+  Edit(pform, i) {
+
+    console.log(pform);
+    console.log(pform.edit.value);
+    pform.edit.value = true;
+
+
+  }
+
+  resetProductForm() {
+    var p_form = this.updatePurchase.get('product')['controls'];
+    console.log(p_form);
+    p_form.splice(0, p_form.length);
+    console.log(p_form);
+    this.totalCalculation()
+  }
+
+  update_purchase_details = () => {
+
+    this.productformarray = [];
+    var p_form = this.updatePurchase.get('product')['controls'];
+    console.log(p_form);
+
+    for (let i = 0; i < p_form.length; i++) {
+      console.log(p_form[i].value);
+      this.productformarray.push(p_form[i].value)
+    }
+
+    if (this.productformarray) {
+
+      var product_arr = this.productformarray.map((p_array) => {
+        return {
+          prod_id: p_array.prud,
+          igst: p_array.igst,
+          cgst: p_array.cgst,
+          sgst: p_array.sgst,
+          price: p_array.price,
+          qty: p_array.qty,
+          discount: p_array.discount,
+          total: p_array.total
         }
-        Edit(pform,i){
+      });
 
-         console.log( pform);
-         console.log( pform.edit.value);
-         pform.edit.value = true;
-         
+    }
 
-        }
+    this.loader = true;
+    console.log(this.purchase_form.get('invo').value,);
+    console.log(this.productformarray);
+    const reqBody = {
+      "invoice": this.purchase_form.get('invo').value,
+      "customer_id": this.purchase_form.get('custmer_id').value,
+      // "type": "rawmaterial",
+      "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
+      "sell_data": product_arr,
+      "payment_status": this.purchase_form.get('payStatus').value,
+      "method": this.purchase_form.get('payMode').value,
+      "paid_amount": this.purchase_form.get('amnt').value
 
-        resetProductForm() {
-          var p_form = this.updatePurchase.get('product')['controls'];
-          console.log(p_form);
-          p_form.splice(0, p_form.length);
-          console.log(p_form);
-          this.totalCalculation()
-        }
+    }
 
-        update_purchase_details = () => {
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
 
-          this.productformarray = [];
-          var p_form = this.updatePurchase.get('product')['controls'];
-          console.log(p_form);
-      
-          for (let i = 0; i < p_form.length; i++) {
-            console.log(p_form[i].value);
-            this.productformarray.push(p_form[i].value)
-          }
-      
-          if (this.productformarray) {
-      
-            var product_arr = this.productformarray.map((p_array) => {
-              return {
-                prod_id: p_array.prud,
-                igst: p_array.igst,
-                cgst: p_array.cgst,
-                sgst: p_array.sgst,
-                price: p_array.price,
-                qty: p_array.qty,
-                discount: p_array.discount,
-                total: p_array.total
-              }
-            });
-      
-          }
-      
-          this.loader = true;
-          console.log(this.purchase_form.get('invo').value,);
-          console.log(this.productformarray);
-          const reqBody = {
-            "invoice": this.purchase_form.get('invo').value,
-            "customer_id": this.purchase_form.get('custmer_id').value,
-            // "type": "rawmaterial",
-            "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
-            "sell_data": product_arr,
-            "payment_status": this.purchase_form.get('payStatus').value,
-            "method": this.purchase_form.get('payMode').value,
-            "paid_amount": this.purchase_form.get('amnt').value
-      
-          }
-      
-          let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-          let headers = new HttpHeaders();
-          headers = headers.set('auth-token', auth_token);
-      
-          this.ErpService.post_Reqs(erp_all_api.urls.trd_updt_sale_entry, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
-            (res: any) => {
-              Notiflix.Report.success('SuccessFully Added', '', 'Close');
-              console.log(res, "get item");
-              // this.get_purchase_details.emit();
-              this.purchase_form.reset();
-              this.invoiceTabclose();
-            },
-            (err: any) => {
-              console.log(err);
-              console.log(err.error.msg);
-              Notiflix.Report.failure(err.error.msg, '', 'Close');
-            });
-        };
+    this.ErpService.post_Reqs(erp_all_api.urls.trd_updt_sale_entry, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        Notiflix.Report.success('SuccessFully Added', '', 'Close');
+        console.log(res, "get item");
+        // this.get_purchase_details.emit();
+        this.purchase_form.reset();
+        this.invoiceTabclose();
+      },
+      (err: any) => {
+        console.log(err);
+        console.log(err.error.msg);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+      });
+  };
 }
 
 function gst_rev(original_price: any, gst: any) {
