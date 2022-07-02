@@ -755,7 +755,7 @@ export class QuotationComponent implements OnInit {
 
     const reqBody = {
       "quotation_no": this.quotation_form.get('quto').value,
-      "customer_id": this.quotation_form.get('custmer').value,
+      "customer_id": this.quotation_form.get('custmer_id').value,
       "priority": this.quotation_form.get('priority').value,
       "date": this.datePipe.transform(this.quotation_form.get('q_date').value, 'yyyy-MM-dd'),
       "quote_data": quotation_arr,
