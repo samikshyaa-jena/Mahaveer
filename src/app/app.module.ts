@@ -76,6 +76,7 @@ const fireBaseConfig = {
     ToggleFullScreenDirective,
     ErrorComponent,
     DepositslipComponent,
+    
 
     //AepsComponent
   ],

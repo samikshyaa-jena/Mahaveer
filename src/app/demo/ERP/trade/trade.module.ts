@@ -17,10 +17,13 @@ import { DebitNoteComponent } from './purchase/debit-note/debit-note.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { QuotationComponent } from './quotation/quotation.component';
 import { QuotationEntryComponent } from './quotation/quotation-entry/quotation-entry.component';
+// import { InvoiceComponent } from '../invoice/invoice.component';
+import { InvoiceComponent } from '../../../theme/shared/invoice/invoice.component';
+
 
 
 @NgModule({
-  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, SaleComponent, CustomerComponent, SaleAddComponent, CreditNoteComponent, PurchaseAddComponent, DebitNoteComponent, QuotationComponent, QuotationEntryComponent],
+  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, SaleComponent, CustomerComponent, SaleAddComponent, CreditNoteComponent, PurchaseAddComponent, DebitNoteComponent, QuotationComponent, QuotationEntryComponent, InvoiceComponent],
   imports: [
     CommonModule,
     TradeRoutingModule,
@@ -28,7 +31,7 @@ import { QuotationEntryComponent } from './quotation/quotation-entry/quotation-e
     FormsModule,
     NgbModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule,
+    OwlNativeDateTimeModule,    
   ]
 })
 export class TradeModule { }

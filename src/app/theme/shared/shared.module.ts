@@ -18,6 +18,7 @@ import { ValidBeneNameDirective } from './directives/valid-bene-name.directive';
 import { ValidAccountNumberDirective } from './directives/valid-acc-number.directive';
 import { ValidIfscDirective } from './directives/valid-ifsc.directive';
 import { ValidOTPFieldDirective } from './directives/valid-otp-field.directive';
+// import { InvoiceComponent } from './invoice/invoice.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -70,7 +71,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ValidAmountDirective,
     ValidBeneNameDirective,
     ValidOTPFieldDirective,
-    ValidAccountNumberDirective
+    ValidAccountNumberDirective,
+    // InvoiceComponent
   ],
   providers: [
     {

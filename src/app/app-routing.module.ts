@@ -31,6 +31,10 @@ const routes: Routes = [
         path: 'trade',
         loadChildren: () => import('./demo/ERP/trade/trade.module').then(module => module.TradeModule)
       },
+      // {
+      //   path: 'invoice',
+      //   loadChildren: () => import('../app/theme/shared/invoice/invoice.component').then(c => c.InvoiceComponent)
+      // },
 
       // erp path ends
       // {
