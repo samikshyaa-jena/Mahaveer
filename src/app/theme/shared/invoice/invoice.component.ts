@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import html2canvas from 'html2canvas';
-// import * as jsPDF from 'jspdf';  
-// import { DomSanitizer } from '@angular/platform-browser'; 
+import { jsPDF } from 'jspdf'; 
 
 @Component({
   selector: 'app-invoice',
@@ -22,21 +21,23 @@ export class InvoiceComponent implements OnInit {
   ngOnInit() {
   }
 
-  print(){
-    // this.download = true;
-    html2canvas(this.screen.nativeElement).then(canvas => {
-      this.canvas.nativeElement.src = canvas.toDataURL();
+    print(){
 
-      // const doc = new jsPDF();  
-      // const base64ImgString = canvas.toDataURL("image/png");  
-      // doc.addImage(base64ImgString, 15, 40, 50, 50);  
-      // this.filePreview = 'data:image/png' + ';base64,' + base64ImgString;  
-      // doc.save('TestPDF')  ;
-      this.downloadLink.nativeElement.href = canvas.toDataURL("image/png");
-      this.downloadLink.nativeElement.download = "My-QR-Code.png";
-      this.downloadLink.nativeElement.click();
-      // this.download = false;
-    });
-  }
+      var data = document.getElementById('print');  
+      html2canvas(data).then(canvas => {  
+        // Few necessary setting options  
+        var imgWidth = 208;  
+        var pageHeight = 295;  
+        var imgHeight = canvas.height * imgWidth / canvas.width;  
+        var heightLeft = imgHeight;  
+        const contentDataURL = canvas.toDataURL('image/png');  
+        let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF  
+        var position = 0;  
+        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);  
+        pdf.save('Ministatement.pdf'); // Generated PDF
+  
+      });
+  
+    }
 
 }
