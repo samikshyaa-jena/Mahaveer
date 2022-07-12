@@ -11,56 +11,64 @@
 
 <app-sale-add *ngIf="purchase_tab && !invoice" (get_purchase_details)="get_purchase_details()" (BackTab)="back()">
 </app-sale-add>
-<div class="container card" style="padding: 15px" *ngIf="!purchase_tab && !invoice">
-  <!-- <div class="card"> -->
-  <!-- <div> -->
-  <div class="mt-3">
-    <button class="btn btn-primary mb-3 mt-2" (click)="purchase_entry()">
-      Sale Entry
-    </button>
-  </div>
-  <div class="prod_table px-0 py-0 mx-0 my-0">
-    <div class="table-responsive px-0 py-0 mx-0 my-0">
-      <table class="table v-middle nowrap">
-        <thead class="table-secondary">
-          <tr>
-            <th class="border-top-0">Invoice</th>
-            <th class="border-top-0">Date</th>
-            <th class="border-top-0">Customer</th>
-            <th class="border-top-0">GSTN</th>
-            <th class="border-top-0">CGST</th>
-            <th class="border-top-0">SGST</th>
-            <th class="border-top-0">IGST</th>
-            <th class="border-top-0">Total</th>
-            <!-- <th class="border-top-0">Action</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of get_purchase_data; let i = index">
-            <td class="invoice_no" title="update">
-                <span (click)="invoicenumberPopup(data,i)">{{ data.invoice_no
-                }}</span>
-            </td>
-            <td>{{ data.sell_date | date: "dd/MM/yyyy" }}</td>
-            <td>{{ data.customerData.name }}</td>
-            <td>{{ data.customerData.gstn }}</td>
-            <td>{{ data.totalcgst }}</td>
-            <td>{{ data.totalsgst }}</td>
-            <td>{{ data.totaligst }}</td>
-            <td>{{ data.totalsum }}</td>
-            <!-- <td>
-                  <span title="View Invoice" style="cursor: pointer;" (click)="openInvoice(content,data.invoice_no)">
-                    <i class="fa fa-print" aria-hidden="true"></i>
-                  </span>
-                </td> -->
-          </tr>
-        </tbody>
-      </table>
+<div class="invoiceTab" *ngIf = "!pdf">
+  <div class="container card" style="padding: 15px" *ngIf="!purchase_tab && !invoice">
+    <!-- <div class="card"> -->
+    <!-- <div> -->
+    <div class="mt-3">
+      <button class="btn btn-primary mb-3 mt-2" (click)="purchase_entry()">
+        Sale Entry
+      </button>
     </div>
+    <div class="prod_table px-0 py-0 mx-0 my-0">
+      <div class="table-responsive px-0 py-0 mx-0 my-0">
+        <table class="table v-middle nowrap">
+          <thead class="table-secondary">
+            <tr>
+              <th class="border-top-0">Invoice</th>
+              <th class="border-top-0">Date</th>
+              <th class="border-top-0">Customer</th>
+              <th class="border-top-0">GSTN</th>
+              <th class="border-top-0">CGST</th>
+              <th class="border-top-0">SGST</th>
+              <th class="border-top-0">IGST</th>
+              <th class="border-top-0">Total</th>
+              <th class="border-top-0">Print</th>
+              <!-- <th class="border-top-0">Action</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of get_purchase_data; let i = index">
+              <td class="invoice_no" title="update">
+                  <span (click)="invoicenumberPopup(data,i)">{{ data.invoice_no
+                  }}</span>
+              </td>
+              <td>{{ data.sell_date | date: "dd/MM/yyyy" }}</td>
+              <td>{{ data.customerData.name }}</td>
+              <td>{{ data.customerData.gstn }}</td>
+              <td>{{ data.totalcgst }}</td>
+              <td>{{ data.totalsgst }}</td>
+              <td>{{ data.totaligst }}</td>
+              <td>{{ data.totalsum }}</td>
+              <td><span title="View Invoice" style="cursor: pointer;" (click)="generateInvoice(data.invoice_no)"><i class="fa fa-print" aria-hidden="true"></i></span></td>
+              <!-- <td>
+                    <span title="View Invoice" style="cursor: pointer;" (click)="openInvoice(content,data.invoice_no)">
+                      <i class="fa fa-print" aria-hidden="true"></i>
+                    </span>
+                  </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
   </div>
-  <!-- </div> -->
-  <!-- </div> -->
 </div>
+<div class="genPdfSectio" *ngIf = "pdf">
+  <app-invoice (newItemEvent)="hidePdf($event)" [invoiceData]="pdfData"></app-invoice>
+</div>
+
 
 <!-- <div id="myModal2" class="modal2 px-5" *ngIf="invoice && !purchase_tab"> -->
 <!-- <div class="card p-1" *ngIf="invoice && !purchase_tab"> -->

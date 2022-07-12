@@ -9,7 +9,7 @@ import { SaleComponent } from './sale/sale.component';
 import { StockComponent } from './stock/stock.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { QuotationComponent } from './quotation/quotation.component';
-import { InvoiceComponent } from '../../../theme/shared/invoice/invoice.component';
+// import { InvoiceComponent } from '../../../theme/shared/invoice/invoice.component';
 // import { InvoiceComponent } from 'src/app/theme/shared/invoice/invoice.component';
 
 
@@ -54,10 +54,10 @@ const routes: Routes = [
     path: 'credit',
     component: CreditNoteComponent
   },
-  {
-    path: 'invoice',
-    component: InvoiceComponent
-  },
+  // {
+  //   path: 'invoice',
+  //   component: InvoiceComponent
+  // },
 ];
 
 @NgModule({

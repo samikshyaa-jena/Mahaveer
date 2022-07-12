@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf'; 
 
@@ -13,15 +13,25 @@ export class InvoiceComponent implements OnInit {
   @ViewChild("canvas", { static: false }) canvas: ElementRef;
   @ViewChild("downloadLink", { static: false }) downloadLink: ElementRef;
   filePreview: string;
+  @Output() newItemEvent = new EventEmitter<boolean>();
+  @Input() invoiceData: any;
 
   constructor(
     // private sanitizer: DomSanitizer
     ) { }
 
   ngOnInit() {
+    console.log(this.invoiceData);
+    
+  }
+  reverse = () =>{
+    this.newItemEvent.emit(true);
   }
 
     print(){
+      let dt = Date.now(); 
+      console.log(dt);
+      
 
       var data = document.getElementById('print');  
       html2canvas(data).then(canvas => {  
@@ -34,7 +44,7 @@ export class InvoiceComponent implements OnInit {
         let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF  
         var position = 0;  
         pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);  
-        pdf.save('Ministatement.pdf'); // Generated PDF
+        pdf.save('invoice'+dt+'.pdf'); // Generated PDF
   
       });
   

@@ -70,6 +70,8 @@ export class SaleComponent implements OnInit {
   p_array: any = [];
   itemData2: any = [];
   productformarray: any = [];
+  pdf: boolean = false;
+  pdfData: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -864,6 +866,21 @@ export class SaleComponent implements OnInit {
     this.get_purchase_details();
   }
 
+  generateInvoice = (e: any) => {
+    console.log(this.get_purchase_data);
+    this.pdfData = this.get_purchase_data.filter((x) => {
+      return x.invoice_no == e;
+    });
+    console.log(this.pdfData);
+    this.pdf = true;
+  }
+  hidePdf = (e: any) => {
+    if (e) {
+      this.pdf = false;
+    }
+
+  }
+
   // invoice popup open
   openInvoice = (content, ino) => {
     this.router.navigate(['/v2/Erpmain/trade/invoice']);
@@ -967,7 +984,7 @@ export class SaleComponent implements OnInit {
     form_cont.patchValue({
       discount: 0,
       qty: 1,
-  });
+    });
 
     console.log(item);
     console.log(form_cont);
