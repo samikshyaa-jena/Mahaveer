@@ -27,6 +27,7 @@ export class erp_all_api{
         trade_create_customer:base_url+'/trade/createCustomer',
         trade_update_customer:base_url+'/trade/updateCustomer',
         debit_note:base_url+'/common/debitNote',
+        get_profuct_req:base_url+'/manufacture/getProductRequirement',
 
         // manufaturing ends
 

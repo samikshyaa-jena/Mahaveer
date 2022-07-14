@@ -22,6 +22,8 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.invoiceData);
+    this.invoiceData = this.invoiceData[0];
+    console.log(this.invoiceData);
     
   }
   reverse = () =>{

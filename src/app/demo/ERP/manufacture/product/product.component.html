@@ -8,12 +8,12 @@
     </div>
 </div>
 <!-- Loader Ends -->
-<div class="container">
-    <div class="prod_table" *ngIf='!showAddProd && !prod_table'>
-        <div style="float: right; margin-top: 10px;">
+<div class="container card p-3">
+    <div class="prod_table" *ngIf='prod_table && !req_entry'>
+        <div style="float: right; margin: 10px 0;">
+            <button class="btn btn-primary mr-2" (click)="reqEntry()">Requirement Entry</button>
             <button class="btn btn-primary" (click)="showAddProduct()">Add Product</button>
         </div>
-        <div class="table-responsive">
             <table class="table v-middle nowrap">
                 <thead>
                     <tr>
@@ -22,29 +22,34 @@
                         <th class="border-top-0">Low Stock</th>
                         <th class="border-top-0">Unit</th>
                         <th class="border-top-0">Action</th>
-                        <th class="border-top-0">Requirements</th>
+                        <th class="border-top-0 text-center">Requirements</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let data of getProductData; let i = index">
-                        <td>{{getProductData[i].prod_name}}</td>
-                        <td>{{getProductData[i].gst}}</td>
-                        <td>{{getProductData[i].min_stock}}</td>
-                        <td>{{getProductData[i].unit}}</td>
+                        <td>{{data.prod_name}}</td>
+                        <td>{{data.gst}}</td>
+                        <td>{{data.min_stock}}</td>
+                        <td>{{data.unit}}</td>
                         <td>
-                            <span style="cursor: pointer;"><i class="fa fa-edit" aria-hidden="true" (click)="product_edit_popup_open(content,i)"></i>
+                            <span style="cursor: pointer;"><i class="fa fa-edit" aria-hidden="true"
+                                    (click)="product_edit_popup_open(content,i)"></i>
                             </span>
-                            <span class="mx-2" style="cursor: pointer;"><i class="fa fa-trash"
-                                    aria-hidden="true" (click)="delete_Product(i)"></i></span>
+                            <span class="mx-2" style="cursor: pointer;"><i class="fa fa-trash" aria-hidden="true"
+                                    (click)="delete_Product(i)"></i></span>
                         </td>
-                        <td><span style="cursor: pointer;" (click)="openUpdateProductPage(i)"><i class="fa fa-cog"></i></span></td>
+                        <td class="text-center"><span style="cursor: pointer;" (click)="openUpdateProductPage(i)"><i
+                                    class="fa fa-cog"></i></span></td>
                     </tr>
                 </tbody>
             </table>
-        </div>
 
     </div>
-    <div class="add_prod" *ngIf='showAddProd && !prod_table'>
+
+    <app-req-entry class="add_prod" *ngIf='!prod_table && req_entry' (BackTab)="back()"></app-req-entry>
+
+
+    <div class="add_prod card p-3" *ngIf='!prod_table && !req_entry'>
         <div class="modal_head">
             <div class="modal_body">
                 <div class="addProductForm">
@@ -64,10 +69,15 @@
                         <input type="text" class="form-control inp_tag" formControlName="min_stk">
                         <label class="lab_tag" for="">Unit:</label>
                         <input type="text" class="form-control inp_tag" formControlName="unit">
+                        <label class="lab_tag" for="">Mrp:</label>
+                        <input type="text" class="form-control inp_tag" formControlName="mrp">
+                        <label class="lab_tag" for="">Hsn:</label>
+                        <input type="text" class="form-control inp_tag" formControlName="hsn">
+
                         <div class="btns my-3" style="float: right;">
-                            <button class="btn btn-primary" type="submit" [disabled]="!addProductForm.valid"  (click)="add_Product()">Add</button>
-                            <button class="btn btn-warning" type="reset"
-                                (click)="hideAddProduct()">Cancel</button>
+                            <button class="btn btn-primary mr-2" type="submit" [disabled]="!addProductForm.valid"
+                                (click)="add_Product()">Add</button>
+                            <button class="btn btn-warning" type="reset" (click)="back()">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -75,19 +85,22 @@
         </div>
     </div>
 
-    <div class="cata_act" *ngIf='!showAddProd && prod_table'>
+
+    <app-req-edit class="add_prod" *ngIf='prod_table && req_entry' [getProductData]="getProductData2"
+        (BackTab)="back()"></app-req-edit>
+
+
+    <!-- <div class="cata_act" *ngIf='!showAddProd && prod_table'>
             <div class="table-responsive" *ngIf='!show'>
                 <table class="table v-middle nowrap">
                     <thead>
                         <tr>
-                            <!-- <th class="border-top-0">#</th> -->
                             <th class="border-top-0">Material</th>
                             <th class="border-top-0">Quantity</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of itemList; let i = index">
-                            <!-- <td>{{i+1}}</td> -->
                             <td>{{itemList[i].item_name}}</td>
                             <td>{{itemList[i].gst}}</td>
                         </tr>
@@ -116,7 +129,7 @@
                     </div>
                 </form>
             </div>
-    </div>
+    </div> -->
 </div>
 
 
@@ -145,6 +158,10 @@
                 <input type="text" class="form-control inp_tag" formControlName="min_stk">
                 <label class="lab_tag" for="">Unit:</label>
                 <input type="text" class="form-control inp_tag" formControlName="unit">
+                <label class="lab_tag" for="">Mrp:</label>
+                <input type="text" class="form-control inp_tag" formControlName="mrp">
+                <label class="lab_tag" for="">Hsn:</label>
+                <input type="text" class="form-control inp_tag" formControlName="hsn">
             </form>
         </div>
     </div>

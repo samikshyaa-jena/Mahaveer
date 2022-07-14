@@ -19,11 +19,14 @@ export class ProductComponent implements OnInit {
   addProductForm: FormGroup;
   editProductForm: FormGroup;
   getProductData: any = [];
-  showAddProd: boolean=false;
   showUpdate: boolean = false;
-  prod_table: boolean;
   loader: boolean;
   prod_id_index: any;
+
+  //showAddProd: boolean=false;
+  prod_table: boolean = true;
+  req_entry: boolean;
+  getProductData2: any = [];
 
   constructor(
     private ErpService: ErpServiceService,
@@ -67,7 +70,7 @@ export class ProductComponent implements OnInit {
     }
 
   hide_add_item = () => {
-    this.showAddProd = false;
+    //showAddProd = false;
     this.prod_table = false;
   }
 
@@ -78,7 +81,8 @@ export class ProductComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.getProduct, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+    // this.ErpService.get_Reqs(erp_all_api.urls.getProduct, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+    this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         console.log(res);
         let prod = res.data;
@@ -184,18 +188,34 @@ export class ProductComponent implements OnInit {
   };
 
   showAddProduct() {
-    this.showAddProd = true;
+    //showAddProd = true;
     this.prod_table = false;
+    this.req_entry = false;
   };
   hideAddProduct() {
-    this.showAddProd = false;
-    this.prod_table = false;
+    //showAddProd = false;
+    this.prod_table = true;
+    this.req_entry = false;
     this.addProductForm.reset();
   };
 
-  openUpdateProductPage = ()=>{
-    this.showAddProd = false;
+  openUpdateProductPage = (i)=>{
+    //showAddProd = false;
     this.prod_table = true;
+    this.req_entry = true;
+    this.getProductData2 = this.getProductData[i];
+  }
+
+  reqEntry(){
+    //showAddProd = false;
+    this.prod_table = false;
+    this.req_entry = true;
+  }
+
+  back(){
+    //showAddProd = false;
+    this.prod_table = true;
+    this.req_entry = false;
   }
 
 }
