@@ -28,6 +28,7 @@ export class ReqEditComponent implements OnInit {
 
   item_form: FormGroup;
   updatemat: FormGroup;
+  rawMat: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -52,6 +53,8 @@ export class ReqEditComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.getRawmaterials();
 
     console.log(this.getProductData);
 
@@ -90,16 +93,34 @@ export class ReqEditComponent implements OnInit {
     
   }
 
+  getRawmaterials(){
+
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.get_Reqs(erp_all_api.urls.get_rawmat, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+      (res: any) =>{
+        console.log(res);
+        this.rawMat = res.data;                
+      },
+      (err: any) =>{
+        console.log(err);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+        
+      });
+
+  }
+
   matdata(): FormGroup {
     return this.fb.group({
 
-      item_id: new FormControl('ChooseProduct', [Validators.required]),
-      item: new FormControl('ChooseProduct', [Validators.required]),
+      item: new FormControl('choose_mat', [Validators.required]),
       gst: new FormControl('', [Validators.required]),
       hsn: new FormControl(''),
       price: new FormControl('0', [Validators.required]),
       qty: new FormControl('1', [Validators.required]),
-      unit: new FormControl('0', [Validators.required]),
+      unit: new FormControl('', [Validators.required]),
       total: new FormControl('', [Validators.required]),
       edit: new FormControl(false)
 
@@ -188,7 +209,7 @@ export class ReqEditComponent implements OnInit {
 
     let prc: number = form_cont.price.value;
     let qt: number = form_cont.qty.value;
-   let item = form_cont.item_id.value;
+   let item = form_cont.item.value;
 
     let gst: number;
     let GST: number;

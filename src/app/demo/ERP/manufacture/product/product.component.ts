@@ -87,7 +87,7 @@ export class ProductComponent implements OnInit {
         console.log(res);
         let prod = res.data;
         for (let i = 0; i < prod.length; i++) {
-          if (prod[i].delete_stat == 0) {
+          if (prod[i].delete_stat == 1) {
             this.getProductData.push(prod[i]);
           }
         }

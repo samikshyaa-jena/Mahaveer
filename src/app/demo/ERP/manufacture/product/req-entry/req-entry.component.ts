@@ -39,6 +39,7 @@ export class ReqEntryComponent implements OnInit {
   t_gst: number;
   t_amount: number;
   getProductData: any;
+  rawMat: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -57,9 +58,8 @@ export class ReqEntryComponent implements OnInit {
     })
 
     this.item_form = new FormGroup({
-      prod_name: new FormControl("", [Validators.required]),
-      prod_id: new FormControl(""),
-      gst: new FormControl("", [Validators.required]),
+      prod_name: new FormControl("choose_prod", [Validators.required]),
+      gst: new FormControl("gst", [Validators.required]),
       stock: new FormControl("", [Validators.required]),
       unit: new FormControl("", [Validators.required]),
       mrp: new FormControl("", [Validators.required]),
@@ -71,6 +71,7 @@ export class ReqEntryComponent implements OnInit {
     this.get_Catagory();
     this.get_proddata();
     this.get_Vendor();
+    this.getRawmaterials();
     this.add_row();
   }
   get_Catagory = () => {
@@ -141,6 +142,25 @@ export class ReqEntryComponent implements OnInit {
       });
   };
 
+  getRawmaterials(){
+
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.get_Reqs(erp_all_api.urls.get_rawmat, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+      (res: any) =>{
+        console.log(res);
+        this.rawMat = res.data;                
+      },
+      (err: any) =>{
+        console.log(err);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+        
+      });
+
+  }
+
   vendorType(e) {
     console.log(e);
     this.getVendorData.forEach(x => {
@@ -150,7 +170,7 @@ export class ReqEntryComponent implements OnInit {
     })
     console.log(this.type);
   }
-  chooseCategory(form_cont, item) {
+  chooseMaterial(form_cont, item) {
 
     form_cont.patchValue({
       discount: 0,
@@ -163,46 +183,23 @@ export class ReqEntryComponent implements OnInit {
     console.log(this.getCatagoryData);
 
     if (item != "ChooseProduct") {
-      let hsn;
       let gst;
       let GST;
-      let gstvalue;
       let mrp;
 
-      for (let i = 0; i < this.getCatagoryData.length; i++) {
-        if (this.getCatagoryData[i].prod_id == item) {
-          GST = parseInt(this.getCatagoryData[i].gst);
-          hsn = this.getCatagoryData[i].hsn;
-
-          if (this.getCatagoryData[i].mrp) {
-            mrp = this.getCatagoryData[i].mrp;
+      for (let i = 0; i < this.rawMat.length; i++) {
+        if (this.rawMat[i].material_id == item) {
+          GST = parseInt(this.rawMat[i].gst);
+            mrp = this.rawMat[i].mrp;
             gst = mrp * (GST / 100);
-          } else {
-            mrp = this.getCatagoryData[i].price;
-            gst = mrp * (GST / 100);
-          }
-          this.itemname = this.getCatagoryData[i].prod_name;
 
-          if (this.type == 'Intra State') {
-            gstvalue = gst / 2;
             form_cont.patchValue({
-              igst: 0,
-              hsn: hsn,
-              cgst: gstvalue,
-              sgst: gstvalue,
-              price: mrp
+              gst: gst,
+              hsn: this.rawMat[i].hsn,
+              price: mrp,
+              unit: this.rawMat[i].unit,
             });
-          }
-          else {
-            gstvalue = gst
-            form_cont.patchValue({
-              igst: gstvalue,
-              hsn: hsn,
-              cgst: 0,
-              sgst: 0,
-              price: mrp
-            });
-          }
+          
         }
       }
 
@@ -221,22 +218,38 @@ export class ReqEntryComponent implements OnInit {
 
     let prc: number = form_cont.price.value;
     let qt: number = form_cont.qty.value;
-   let item = form_cont.item_id.value;
+   let item = form_cont.item.value;
 
     let gst: number;
     let GST: number;
 
-    for (let i = 0; i < this.getProductData.materials_data.length; i++) {
-      if (this.getProductData.materials_data[i].mat_id == item) {
+    for (let i = 0; i < this.rawMat.length; i++) {
+      if (this.rawMat[i].material_id == item) {
 
-        GST = parseInt(this.getProductData.materials_data[i].mat_gst);
+        GST = parseInt(this.rawMat[i].gst);
         gst = prc * (GST / 100);
         console.log(GST);
-        console.log(this.getProductData.materials_data[i].mat_gst);
+        console.log(this.rawMat[i].gst);
         
         console.log(gst);
         
       }
+    }
+
+    console.log(gst);
+
+    let total: number = 0;
+    let total_gst: number = 0;
+
+    if (qt) {
+
+      total_gst = gst * qt;
+      total = total_gst + (prc * qt);
+
+
+      form_cont.total.patchValue(total);
+      form_cont.gst.patchValue(total_gst);
+      console.log(form_cont);
     }
 
   }
@@ -330,15 +343,13 @@ export class ReqEntryComponent implements OnInit {
   matdata(): FormGroup {
     return this.fb.group({
 
-      item_id: new FormControl('ChooseProduct', [Validators.required]),
-      item: new FormControl('ChooseProduct', [Validators.required]),
+      item: new FormControl('choose_mat', [Validators.required]),
       gst: new FormControl('', [Validators.required]),
       hsn: new FormControl(''),
       price: new FormControl('0', [Validators.required]),
       qty: new FormControl('1', [Validators.required]),
-      unit: new FormControl('0', [Validators.required]),
+      unit: new FormControl('unit', [Validators.required]),
       total: new FormControl('', [Validators.required]),
-      edit: new FormControl(false)
 
     })
   }

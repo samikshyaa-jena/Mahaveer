@@ -15,28 +15,43 @@
             <div class="col-sm-12 px-0 d-flex flex-row">
                 <div class="col-sm-2 ">
                     <label for="">Product Name</label>
-                    <input type="text" formControlName="prod_name" class="form-control" readonly>
-                    <input type="hidden" formControlName="prod_id" class="form-control" readonly>
+                    <select formControlName="prod_name" class="form-control">
+                        <option value="choose_prod">Choose Product</option>
+                        <option class="disable" *ngFor="let category of getCatagoryData;let i=index"
+                                            [value]="category.prod_id">
+                                            {{category.prod_name}}</option>
+                    </select>
                 </div>
                 <div class="col-sm-2 pl-0">
                     <label for="">GST</label>                    
-                    <input type="text" formControlName="gst" class="form-control" readonly>  
+                    <select name="" id="" formControlName="gst" class="form-control inp_tag">
+                        <option value="gst" selected disabled>Select gst</option>
+                        <option value="0">0 %</option>
+                        <option value="5">5 %</option>
+                        <option value="12">12 %</option>
+                        <option value="18">18 %</option>
+                        <option value="28">28 %</option>
+                    </select> 
                 </div>
                 <div class="col-sm-2">
                     <label for="">Low Stock</label>
-                    <input type="text" formControlName="stock" class="form-control" readonly>
+                    <input type="number" (keypress)="prevent($event, 'prc')" formControlName="stock" class="form-control">
                 </div>
                 <div class="col-sm-2 ">
                     <label for="">Unit</label>
-                    <input type="text" formControlName="unit" class="form-control" readonly>
+                    <select name="" id="" formControlName="unit" class="form-control inp_tag">
+                        <option value="unit" selected disabled>Select unit</option>
+                        <option value="PCS">PCS</option>
+                        <option value="PKT">PKT</option>
+                    </select>
                 </div>
                 <div class="col-sm-2">
                     <label for="">Mrp</label>
-                    <input type="text" formControlName="mrp" class="form-control" readonly>
+                    <input type="number" (keypress)="prevent($event, 'prc')" formControlName="mrp" class="form-control">
                 </div>
                 <div class="col-sm-2 px-0">
                     <label for="">Hsn</label>
-                    <input type="text" formControlName="hsn" class="form-control" readonly>
+                    <input type="number" (keypress)="prevent($event, 'qty')" formControlName="hsn" class="form-control">
                 </div>
             </div>
         </form>
@@ -72,27 +87,15 @@
                         <ng-container formArrayName="product">
                             <tr *ngFor="let Product of addmat.get('product')['controls'];let i=index"
                                 [formGroupName]="i">
-                                <!-- <td>
-                                    <select class="form-control table_input" id="category"
-                                        (change)="chooseCategory($event.target.value); totalCalculation()"
-                                        formControlName="category" [disabled]="item_form.invalid">
-                                        <option selected value="Choosecat" disabled>Choose Category</option>
-                                        <option class="disable" *ngFor="let category of getCatagoryData;let i=index"
-                                            [value]="category.cat_id"
-                                            [disabled]="Product.controls.edit.value == false">
-                                            {{category.cat_name}}</option>
-                                    </select>
-                                </td> -->
                                 <td>
-                                    <input type="hidden" formControlName="item_id" >
                                     <select class="form-control table_input" id="item"
-                                        (change)="chooseProduct(Product, $event.target.value); totalCalculation()"
+                                        (change)="chooseMaterial(Product, $event.target.value); totalCalculation()"
                                         formControlName="item" [disabled]="item_form.invalid">
-                                        <option selected value="ChooseProduct" disabled>Choose Product</option>
-                                        <option class="disable" *ngFor="let prod of itemData2;let i=index"
-                                            [value]="prod.prod_id"
-                                            [disabled]="Product.controls.edit.value == false">
-                                            {{prod.prod_name}}</option>
+                                        <option value="choose_mat">Choose Material</option>
+                                        <option class="disable" *ngFor="let mat of rawMat;let i=index"
+                                            [value]="mat.material_id"
+                                            [disabled]="item_form.invalid">
+                                            {{mat.item_name}}</option>
                                     </select>
                                 </td>
                                 <td><input type="text" formControlName="hsn" class="form-control table_input" disabled>
@@ -100,11 +103,11 @@
                                 <td><input type="number" formControlName="qty" id="qty" class="form-control table_input"
                                         (input)="calc_total(Product.controls); totalCalculation()"
                                         (keypress)="prevent($event, 'qty')" min="1"
-                                        [readonly]="Product.controls.edit.value == false || Product.controls.item.value == 'ChooseProduct'">
+                                        [readonly]="Product.controls.item.value == 'choose_mat'">
                                 </td>
                                 <td><input type="number" formControlName="price" id="price"
                                     (input)="calc_total(Product.controls); totalCalculation()"
-                                        class="form-control table_input" [readonly]="Product.controls.edit.value == false || Product.controls.item.value == 'ChooseProduct'"></td>
+                                        class="form-control table_input" [readonly]="Product.controls.item.value == 'choose_mat'"></td>
                                 <td><input type="text" formControlName="unit"
                                          id="discount" class="form-control table_input"
                                         readonly></td>
@@ -130,8 +133,8 @@
                     <tfoot style="border: none;">
                         <tr style="border: none;">
                             <td colspan="2" style="white-space: nowrap; float: left; padding: 2px;"><button
-                                    class="btn btn-primary disable" (click)="add_row2()"
-                                    [disabled]="addmat.get('product')['controls'][addmat.get('product')['controls'].length-1].value.item == 'ChooseProduct'">Add
+                                    class="btn btn-primary disable" (click)="add_row()"
+                                    [disabled]="addmat.get('product')['controls'][addmat.get('product')['controls'].length-1].value.item == 'choose_mat'">Add
                                     Row</button>
                             </td>
                         </tr>

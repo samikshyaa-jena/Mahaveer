@@ -57,7 +57,7 @@
                     <thead class="bg-white">
                         <tr>
                           <!-- <th>Category</th> -->
-                            <th>Product</th>
+                            <th>Material</th>
                             <th>Hsn</th>
                             <th>Quantity</th>
                             <th>Sale Price</th>
@@ -72,27 +72,15 @@
                         <ng-container formArrayName="product">
                             <tr *ngFor="let Product of updatemat.get('product')['controls'];let i=index"
                                 [formGroupName]="i">
-                                <!-- <td>
-                                    <select class="form-control table_input" id="category"
-                                        (change)="chooseCategory($event.target.value); totalCalculation()"
-                                        formControlName="category" [disabled]="item_form.invalid">
-                                        <option selected value="Choosecat" disabled>Choose Category</option>
-                                        <option class="disable" *ngFor="let category of getCatagoryData;let i=index"
-                                            [value]="category.cat_id"
-                                            [disabled]="Product.controls.edit.value == false">
-                                            {{category.cat_name}}</option>
-                                    </select>
-                                </td> -->
                                 <td>
-                                    <input type="hidden" formControlName="item_id" >
                                     <select class="form-control table_input" id="item"
                                         (change)="chooseProduct(Product, $event.target.value); totalCalculation()"
                                         formControlName="item" [disabled]="item_form.invalid">
-                                        <option selected value="ChooseProduct" disabled>Choose Product</option>
-                                        <option class="disable" *ngFor="let prod of itemData2;let i=index"
-                                            [value]="prod.prod_id"
+                                        <option value="choose_mat">Choose Material</option>
+                                        <option class="disable" *ngFor="let mat of rawMat;let i=index"
+                                            [value]="mat.material_id"
                                             [disabled]="Product.controls.edit.value == false">
-                                            {{prod.prod_name}}</option>
+                                            {{mat.item_name}}</option>
                                     </select>
                                 </td>
                                 <td><input type="text" formControlName="hsn" class="form-control table_input" disabled>
@@ -131,7 +119,7 @@
                         <tr style="border: none;">
                             <td colspan="2" style="white-space: nowrap; float: left; padding: 2px;"><button
                                     class="btn btn-primary disable" (click)="add_row2()"
-                                    [disabled]="updatemat.get('product')['controls'][updatemat.get('product')['controls'].length-1].value.item == 'ChooseProduct'">Add
+                                    [disabled]="updatemat.get('product')['controls'][updatemat.get('product')['controls'].length-1].value.item == 'choose_mat'">Add
                                     Row</button>
                             </td>
                         </tr>
