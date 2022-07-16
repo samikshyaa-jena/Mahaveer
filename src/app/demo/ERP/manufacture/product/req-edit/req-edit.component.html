@@ -13,12 +13,16 @@
         </div>
         <form [formGroup]="item_form">
             <div class="col-sm-12 px-0 d-flex flex-row">
-                <div class="col-sm-2 ">
+                <div class="col-sm-3">
                     <label for="">Product Name</label>
                     <input type="text" formControlName="prod_name" class="form-control" readonly>
                     <input type="hidden" formControlName="prod_id" class="form-control" readonly>
                 </div>
-                <div class="col-sm-2 pl-0">
+                <div class="col-sm-3">
+                    <label for="">Estimated Time (In days)</label>
+                    <input type="text" formControlName="est_time" class="form-control" readonly>
+                </div>
+                <!-- <div class="col-sm-2 pl-0">
                     <label for="">GST</label>                    
                     <input type="text" formControlName="gst" class="form-control" readonly>  
                 </div>
@@ -37,7 +41,7 @@
                 <div class="col-sm-2 px-0">
                     <label for="">Hsn</label>
                     <input type="text" formControlName="hsn" class="form-control" readonly>
-                </div>
+                </div> -->
             </div>
         </form>
         
@@ -80,7 +84,7 @@
                                         (change)="chooseProduct(Product, $event.target.value); totalCalculation()"
                                         formControlName="item" [disabled]="item_form.invalid">
                                         <option value="choose_mat">Choose Material</option>
-                                        <option class="disable" *ngFor="let mat of rawMat;let i=index"
+                                        <option class="disable" *ngFor="let mat of rawMat"
                                             [value]="mat.material_id"
                                             [disabled]="Product.controls.edit.value == false">
                                             {{mat.item_name}}</option>
@@ -160,7 +164,7 @@
   
     <div class="footer_btn">
         <button class="btn btn-danger mr-2" (click)="previousPage()">Cancel</button>
-        <button class="btn btn-primary disable" [disabled]="updatemat.get('product')['controls'][updatemat.get('product')['controls'].length-1].value.item == 'ChooseProduct'" (click)="update_purchase_details()">Update</button>
+        <button class="btn btn-primary disable" [disabled]="updatemat.get('product')['controls'][updatemat.get('product')['controls'].length-1].value.item == 'choose_mat'" (click)="update_purchase_details()">Update</button>
     </div>
   
   </div>

@@ -22,7 +22,7 @@ export class ReqEntryComponent implements OnInit {
   openmodal: boolean = false
   total_value: number;
   gstVal: number;
-  productformarray: any = [];
+  requirementformarray: any = [];
   loader: boolean;
   getVendorData: any = [];
   productname: any;
@@ -59,11 +59,12 @@ export class ReqEntryComponent implements OnInit {
 
     this.item_form = new FormGroup({
       prod_name: new FormControl("choose_prod", [Validators.required]),
-      gst: new FormControl("gst", [Validators.required]),
-      stock: new FormControl("", [Validators.required]),
-      unit: new FormControl("unit", [Validators.required]),
-      mrp: new FormControl("", [Validators.required]),
-      hsn: new FormControl("", [Validators.required]),
+      est_time: new FormControl("1", [Validators.required]),
+      // gst: new FormControl("gst", [Validators.required]),
+      // stock: new FormControl("", [Validators.required]),
+      // unit: new FormControl("unit", [Validators.required]),
+      // mrp: new FormControl("", [Validators.required]),
+      // hsn: new FormControl("", [Validators.required]),
     });
   }
 
@@ -256,7 +257,7 @@ export class ReqEntryComponent implements OnInit {
 
   delete(i) {
     Notiflix.Report.success('Are you want to delete', '', 'Ok');
-    this.productformarray.splice(i, 1)
+    this.requirementformarray.splice(i, 1)
   }
 
   resetProductForm() {
@@ -275,58 +276,44 @@ export class ReqEntryComponent implements OnInit {
   }
 
 
-  add_purchase_details = () => {
+  add_requirement = () => {
 
-    this.productformarray = [];
+    this.requirementformarray = [];
     var p_form = this.addmat.get('product')['controls'];
     console.log(p_form);
 
     for (let i = 0; i < p_form.length; i++) {
       console.log(p_form[i].value);
-      this.productformarray.push(p_form[i].value)
+      this.requirementformarray.push(p_form[i].value)
     }
 
-    if (this.productformarray) {
+    if (this.requirementformarray) {
 
-      var product_arr = this.productformarray.map((p_array) => {
+      var product_arr = this.requirementformarray.map((p_array) => {
         return {
-          prod_id: p_array.category,
-          igst: p_array.igst,
-          cgst: p_array.cgst,
-          sgst: p_array.sgst,
-          price: p_array.price,
+          mat_id: p_array.item,
           qty: p_array.qty,
-          discount: p_array.discount,
-          total: p_array.total
         }
       });
 
     }
 
     this.loader = true;
-    console.log(this.item_form.get('invo').value,);
-    console.log(this.productformarray);
+    console.log(this.requirementformarray);
     const reqBody = {
-      "invoice": this.item_form.get('invo').value,
-      "customer_id": this.item_form.get('custmer').value,
-      // "type": "rawmaterial",
-      "date": this.datePipe.transform(this.item_form.get('p_date').value, 'yyyy-MM-dd'),
-      "sell_data": product_arr,
-      "payment_status": this.item_form.get('payStatus').value,
-      "method": this.item_form.get('payMode').value,
-      "paid_amount": this.item_form.get('amnt').value
-
+      "prod_id": this.item_form.get('prod_name').value,
+      "targetTime": this.item_form.get('est_time').value + 'D',
+      "requirements": product_arr,
     }
 
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.trd_sale_entry, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.set_prod_req, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');
         console.log(res, "get item");
-        this.get_purchase_details.emit();
         this.item_form.reset();
         this.previousPage();
       },

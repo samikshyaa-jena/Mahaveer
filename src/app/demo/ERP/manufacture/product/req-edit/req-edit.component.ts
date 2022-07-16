@@ -23,7 +23,7 @@ export class ReqEditComponent implements OnInit {
   type: any;
   p_array: any = [];
   itemData2: any = [];
-  productformarray: any = [];
+  requirementformarray: any = [];
   loader: boolean;
 
   item_form: FormGroup;
@@ -44,11 +44,12 @@ export class ReqEditComponent implements OnInit {
     this.item_form = new FormGroup({
       prod_name: new FormControl("", [Validators.required]),
       prod_id: new FormControl(""),
-      gst: new FormControl("", [Validators.required]),
-      stock: new FormControl("", [Validators.required]),
-      unit: new FormControl("", [Validators.required]),
-      mrp: new FormControl("", [Validators.required]),
-      hsn: new FormControl("", [Validators.required]),
+      est_time: new FormControl("1", [Validators.required]),
+      // gst: new FormControl("", [Validators.required]),
+      // stock: new FormControl("", [Validators.required]),
+      // unit: new FormControl("", [Validators.required]),
+      // mrp: new FormControl("", [Validators.required]),
+      // hsn: new FormControl("", [Validators.required]),
     });
   }
 
@@ -61,11 +62,12 @@ export class ReqEditComponent implements OnInit {
     this.item_form.patchValue({
       prod_name: this.getProductData.prod_name,
       prod_id: this.getProductData.prod_id,
-      gst: this.getProductData.gst,
-      stock: this.getProductData.min_stock,
-      unit: this.getProductData.unit,
-      mrp: this.getProductData.price,
-      hsn: this.getProductData.hsn,
+      est_time: this.getProductData.approx_time,
+      // gst: this.getProductData.gst,
+      // stock: this.getProductData.min_stock,
+      // unit: this.getProductData.unit,
+      // mrp: this.getProductData.price,
+      // hsn: this.getProductData.hsn,
     });
 
     var p_form = this.updatemat.get('product')['controls'];
@@ -75,8 +77,7 @@ export class ReqEditComponent implements OnInit {
       this.add_row();
 
       p_form[i].patchValue({
-        item_id: this.getProductData.materials_data[i].mat_id,
-        item: this.getProductData.materials_data[i].item_name,
+        item: this.getProductData.materials_data[i].mat_id,
         gst_rate: this.getProductData.materials_data[i].mat_gst,
         gst: this.getProductData.materials_data[i].mat_gst,
         hsn: this.getProductData.materials_data[i].mat_hsn,
@@ -277,60 +278,46 @@ export class ReqEditComponent implements OnInit {
     this.totalCalculation()
   }
 
-  update_purchase_details = () => {
+  add_requirement = () => {
 
-    this.productformarray = [];
-    var m_form = this.updatemat.get('product')['controls'];
-    console.log(m_form);
-
-    for (let i = 0; i < m_form.length; i++) {
-      console.log(m_form[i].value);
-      this.productformarray.push(m_form[i].value)
+    this.requirementformarray = [];
+    var p_form = this.updatemat.get('product')['controls'];
+    console.log(p_form);
+    
+    for (let i = 0; i < p_form.length; i++) {
+      console.log(p_form[i].value);
+      this.requirementformarray.push(p_form[i].value)
     }
 
-    if (this.productformarray) {
+    if (this.requirementformarray) {
 
-      var product_arr = this.productformarray.map((p_array) => {
+      var product_arr = this.requirementformarray.map((p_array) => {
         return {
-          prod_id: p_array.item,
-          igst: p_array.igst,
-          cgst: p_array.cgst,
-          sgst: p_array.sgst,
-          price: p_array.price,
+          mat_id: p_array.item,
           qty: p_array.qty,
-          discount: p_array.discount,
-          total: p_array.total
         }
       });
 
     }
 
     this.loader = true;
-    console.log(this.item_form.get('invo').value,);
-    console.log(this.productformarray);
+    console.log(this.requirementformarray);
     const reqBody = {
-      "invoice": this.item_form.get('invo').value,
-      "customer_id": this.item_form.get('custmer_id').value,
-      // "type": "rawmaterial",
-      "date": this.datePipe.transform(this.item_form.get('p_date').value, 'yyyy-MM-dd'),
-      "sell_data": product_arr,
-      "payment_status": this.item_form.get('payStatus').value,
-      "method": this.item_form.get('payMode').value,
-      "paid_amount": this.item_form.get('amnt').value
-
+      "prod_id": this.item_form.get('prod_id').value,
+      "targetTime": this.item_form.get('est_time').value + 'D',
+      "requirements": product_arr,
     }
 
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.trd_updt_sale_entry, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.set_prod_req, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');
         console.log(res, "get item");
-        // this.get_purchase_details.emit();
         this.item_form.reset();
-        // this.invoiceTabclose();
+        this.previousPage();
       },
       (err: any) => {
         console.log(err);

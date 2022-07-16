@@ -13,7 +13,7 @@
         </div>
         <form [formGroup]="item_form">
             <div class="col-sm-12 px-0 d-flex flex-row">
-                <div class="col-sm-2 ">
+                <div class="col-sm-3">
                     <label for="">Product Name</label>
                     <select formControlName="prod_name" class="form-control">
                         <option value="choose_prod">Choose Product</option>
@@ -22,7 +22,11 @@
                                             {{category.prod_name}}</option>
                     </select>
                 </div>
-                <div class="col-sm-2 pl-0">
+                <div class="col-sm-3">
+                    <label for="">Estimated Time (In days)</label>
+                    <input type="number" (keypress)="prevent($event, 'qty')" formControlName="est_time" class="form-control">
+                </div>
+                <!-- <div class="col-sm-2 pl-0">
                     <label for="">GST</label>                    
                     <select name="" id="" formControlName="gst" class="form-control inp_tag">
                         <option value="gst" selected disabled>Select gst</option>
@@ -52,7 +56,7 @@
                 <div class="col-sm-2 px-0">
                     <label for="">Hsn</label>
                     <input type="number" (keypress)="prevent($event, 'qty')" formControlName="hsn" class="form-control">
-                </div>
+                </div> -->
             </div>
         </form>
         
@@ -95,9 +99,9 @@
                                         (change)="chooseMaterial(Product, $event.target.value); totalCalculation()"
                                         formControlName="item" [disabled]="item_form.invalid">
                                         <option value="choose_mat">Choose Material</option>
-                                        <option class="disable" *ngFor="let mat of rawMat;let i=index"
+                                        <option class="disable" *ngFor="let mat of rawMat"
                                             [value]="mat.material_id"
-                                            [disabled]="item_form.invalid || item_form.get('prod_name').value == 'choose_prod' || item_form.get('gst').value == 'gst' || item_form.get('unit').value == 'unit'">
+                                            [disabled]="item_form.invalid || item_form.get('prod_name').value == 'choose_prod'">
                                             {{mat.item_name}}</option>
                                     </select>
                                 </td>
@@ -175,7 +179,7 @@
   
     <div class="footer_btn">
         <button class="btn btn-danger mr-2" (click)="previousPage()">Cancel</button>
-        <button class="btn btn-primary disable" [disabled]="addmat.get('product')['controls'][addmat.get('product')['controls'].length-1].value.item == 'ChooseProduct'" (click)="update_purchase_details()">Submit</button>
+        <button class="btn btn-primary disable" [disabled]="addmat.get('product')['controls'][addmat.get('product')['controls'].length-1].value.item == 'choose_mat'" (click)="add_requirement()">Submit</button>
     </div>
   
   </div>
