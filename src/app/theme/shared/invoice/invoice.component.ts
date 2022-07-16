@@ -24,6 +24,15 @@ export class InvoiceComponent implements OnInit {
     console.log(this.invoiceData);
     this.invoiceData = this.invoiceData[0];
     console.log(this.invoiceData);
+
+    for (let i = 0; i < this.invoiceData.sellData.length; i++) {
+      
+      this.invoiceData.sellData.discount = (this.invoiceData.sellData.discount * 100)/this.invoiceData.sellData.price;
+      this.invoiceData.sellData.cgst = (this.invoiceData.sellData.cgst * 100)/this.invoiceData.sellData.price;
+      this.invoiceData.sellData.sgst = (this.invoiceData.sellData.sgst * 100)/this.invoiceData.sellData.price;
+      this.invoiceData.sellData.igst = (this.invoiceData.sellData.igst * 100)/this.invoiceData.sellData.price;
+      
+    }
     
   }
   reverse = () =>{

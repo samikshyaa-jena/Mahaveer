@@ -61,7 +61,7 @@ export class ReqEntryComponent implements OnInit {
       prod_name: new FormControl("choose_prod", [Validators.required]),
       gst: new FormControl("gst", [Validators.required]),
       stock: new FormControl("", [Validators.required]),
-      unit: new FormControl("", [Validators.required]),
+      unit: new FormControl("unit", [Validators.required]),
       mrp: new FormControl("", [Validators.required]),
       hsn: new FormControl("", [Validators.required]),
     });
@@ -195,6 +195,7 @@ export class ReqEntryComponent implements OnInit {
 
             form_cont.patchValue({
               gst: gst,
+              gst_rate: this.rawMat[i].gst,
               hsn: this.rawMat[i].hsn,
               price: mrp,
               unit: this.rawMat[i].unit,
@@ -218,15 +219,14 @@ export class ReqEntryComponent implements OnInit {
 
     let prc: number = form_cont.price.value;
     let qt: number = form_cont.qty.value;
+    let GST: number = form_cont.gst_rate.value;
    let item = form_cont.item.value;
 
     let gst: number;
-    let GST: number;
 
     for (let i = 0; i < this.rawMat.length; i++) {
       if (this.rawMat[i].material_id == item) {
 
-        GST = parseInt(this.rawMat[i].gst);
         gst = prc * (GST / 100);
         console.log(GST);
         console.log(this.rawMat[i].gst);
@@ -344,6 +344,7 @@ export class ReqEntryComponent implements OnInit {
     return this.fb.group({
 
       item: new FormControl('choose_mat', [Validators.required]),
+      gst_rate: new FormControl('', [Validators.required]),
       gst: new FormControl('', [Validators.required]),
       hsn: new FormControl(''),
       price: new FormControl('0', [Validators.required]),

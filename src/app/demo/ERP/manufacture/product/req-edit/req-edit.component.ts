@@ -77,6 +77,7 @@ export class ReqEditComponent implements OnInit {
       p_form[i].patchValue({
         item_id: this.getProductData.materials_data[i].mat_id,
         item: this.getProductData.materials_data[i].item_name,
+        gst_rate: this.getProductData.materials_data[i].mat_gst,
         gst: this.getProductData.materials_data[i].mat_gst,
         hsn: this.getProductData.materials_data[i].mat_hsn,
         price: this.getProductData.materials_data[i].mrp,
@@ -116,6 +117,7 @@ export class ReqEditComponent implements OnInit {
     return this.fb.group({
 
       item: new FormControl('choose_mat', [Validators.required]),
+      gst_rate: new FormControl('', [Validators.required]),
       gst: new FormControl('', [Validators.required]),
       hsn: new FormControl(''),
       price: new FormControl('0', [Validators.required]),
@@ -209,15 +211,14 @@ export class ReqEditComponent implements OnInit {
 
     let prc: number = form_cont.price.value;
     let qt: number = form_cont.qty.value;
+    let GST: number = form_cont.gst_rate.value;
    let item = form_cont.item.value;
 
     let gst: number;
-    let GST: number;
 
     for (let i = 0; i < this.getProductData.materials_data.length; i++) {
       if (this.getProductData.materials_data[i].mat_id == item) {
 
-        GST = parseInt(this.getProductData.materials_data[i].mat_gst);
         gst = prc * (GST / 100);
         console.log(GST);
         console.log(this.getProductData.materials_data[i].mat_gst);

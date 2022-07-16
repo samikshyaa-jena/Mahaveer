@@ -56,15 +56,18 @@
                     style="border-collapse: separate;text-indent: initial;">
                     <thead class="bg-white">
                         <tr>
-                          <!-- <th>Category</th> -->
-                            <th>Material</th>
-                            <th>Hsn</th>
-                            <th>Quantity</th>
-                            <th>Sale Price</th>
-                            <th>Unit</th>
-                            <th>GST</th>
-                            <th>Total</th>
-                            <th>Action</th>
+                            <th rowspan="2">Product</th>
+                            <th rowspan="2">Hsn</th>
+                            <th rowspan="2">Quantity</th>
+                            <th rowspan="2">Sale Price</th>
+                            <th rowspan="2">Unit</th>
+                            <th colspan="2">GST</th>
+                            <th rowspan="2">Total</th>
+                            <th rowspan="2">Action</th>
+                        </tr>
+                        <tr>
+                            <td>Rate(%)</td>
+                            <td>Amount</td>
                         </tr>
   
                     </thead>
@@ -96,6 +99,8 @@
                                 <td><input type="text" formControlName="unit"
                                          id="discount" class="form-control table_input"
                                         readonly></td>
+                                <td><input type="number" formControlName="gst_rate" class="form-control table_input"
+                                        disabled></td>
                                 <td><input type="number" formControlName="gst" class="form-control table_input"
                                         disabled></td>
                                 <td><input type="number" formControlName="total" class="form-control table_input"
