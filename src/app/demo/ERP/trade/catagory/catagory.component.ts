@@ -40,6 +40,8 @@ export class CatagoryComponent implements OnInit {
   collectionSize: [];
   reports: any=[];
   report_length: any;
+  uploadedFiles: any;
+  imgpath: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -378,5 +380,19 @@ export class CatagoryComponent implements OnInit {
     this.cat_data = temp;
     this.report_length = temp.length;
     console.log(this.report_length);
+  }
+
+  onUpload(event) {
+    const file: File = event.target.files[0];
+        if (file) {
+          this.uploadedFiles = file;
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = (e) => {
+            this.imgpath = reader.result
+            document.getElementById('pre_img').setAttribute('src', this.imgpath)
+          }
+    }
+
   }
 }

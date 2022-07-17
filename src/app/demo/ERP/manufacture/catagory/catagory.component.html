@@ -11,7 +11,7 @@
 
 
 
-<div class="container">
+<div class="container card p-3">
   <!-- show_cat_item 1 starts -->
   <div class="cat_table" *ngIf="show_cat_item == 1">
     <div class="row col-sm-12  mt-3">
@@ -21,7 +21,7 @@
           <button class="btn btn-primary" routerLink="/v1/trade/catagory" title="Go To Trade">Trade</button>
         </form>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-3 add_btn">
         <button class="btn btn-primary mr-1" type="button" (click)="show_cat_item = 5">
           Add Item
         </button>

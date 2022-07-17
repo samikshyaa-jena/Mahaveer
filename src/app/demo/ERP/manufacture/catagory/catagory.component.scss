@@ -29,3 +29,10 @@
   display: flex;
   justify-content:space-between;  
 }
+.add_btn{
+  display: flex;
+  flex-direction: row;
+  button{
+    white-space: nowrap;
+  }
+}

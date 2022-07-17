@@ -28,4 +28,37 @@
     display: flex;
     justify-content: space-around;
   }
+  .add_btn{
+    display: flex;
+    flex-direction: row;
+    button{
+      white-space: nowrap;
+    }
+  }
+  .lab_tag{
+    margin-top: 1%;
+}
+
+  .upimg_show{
+    display: flex;
+    align-items: center;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    width: 100%;
+    padding: 1%;
+}
+.upload_label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: royalblue;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    width: 95px;
+    height: 38px;
+    font-size: 14px;
+    margin-right: 10%;
+  }
  

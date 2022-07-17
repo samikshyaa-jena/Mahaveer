@@ -11,7 +11,7 @@
 
 
 
-<div class="container">
+<div class="container card p-3">
 
     <div class="cat_table" *ngIf='show_cat_item==1'>
         <div class="row col-sm-12 mt-3">
@@ -21,7 +21,7 @@
                 <button class="btn btn-primary" routerLink="/v1/manufacture/catagory"
                     title="Go To Manufacture">Manufacture</button>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-3 add_btn">
                 <button class="btn btn-primary mr-1" type="button" (click)="show_cat_item=5">Add Product</button>
                 <button class="btn btn-primary" (click)='show_cat_item=2'>Add Catagory</button>
             </div>
@@ -174,6 +174,16 @@
                 <input type="text" class="form-control inp_tag" formControlName="unit">
                 <label class="lab_tag" for="">Open Stock:</label>
                 <input type="text" class="form-control inp_tag" formControlName="qty">
+                <label class="lab_tag" for="">Upload Image:</label>
+                        <div class="upimg_show">
+                            <input id="img_up" type="file" accept="image/*" style="display: none;"
+                            (change)="onUpload($event)" formControlName="img">
+                            <label for="img_up" class="upload_label"><i class="fas fa-plus"></i>&nbsp;Choose</label>
+                            <div *ngIf="uploadedFiles">
+                                <img id="pre_img" src="" alt="" width="70px"> &nbsp;&nbsp;&nbsp;
+                            <span style="margin-top: 15px;">{{uploadedFiles.name}} &nbsp;&nbsp;&nbsp;</span>
+                            </div>   
+                        </div>
             </form>
         </div>
     </div>

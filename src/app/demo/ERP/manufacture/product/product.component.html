@@ -73,6 +73,16 @@
                         <input type="text" class="form-control inp_tag" formControlName="mrp">
                         <label class="lab_tag" for="">Hsn:</label>
                         <input type="text" class="form-control inp_tag" formControlName="hsn">
+                        <label class="lab_tag" for="">Upload Image:</label>
+                        <div class="upimg_show">
+                            <input id="img_up" type="file" accept="image/*" style="display: none;"
+                            (change)="onUpload($event)" formControlName="img">
+                            <label for="img_up" class="upload_label"><i class="fas fa-plus"></i>&nbsp;Choose</label>
+                            <div *ngIf="uploadedFiles">
+                                <img id="pre_img" src="" alt="" width="70px"> &nbsp;&nbsp;&nbsp;
+                            <span style="margin-top: 15px;">{{uploadedFiles.name}} &nbsp;&nbsp;&nbsp;</span>
+                            </div>   
+                        </div>
 
                         <div class="btns my-3" style="float: right;">
                             <button class="btn btn-primary mr-2" type="submit" [disabled]="!addProductForm.valid"

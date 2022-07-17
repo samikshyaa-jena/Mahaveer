@@ -27,6 +27,8 @@ export class ProductComponent implements OnInit {
   prod_table: boolean = true;
   req_entry: boolean;
   getProductData2: any = [];
+  imgpath: any;
+  uploadedFiles: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -40,6 +42,9 @@ export class ProductComponent implements OnInit {
       gst: new FormControl("",[Validators.required]),
       min_stk: new FormControl("",[Validators.required]),
       unit: new FormControl("",[Validators.required]),
+      hsn: new FormControl("",[Validators.required]),
+      mrp: new FormControl("",[Validators.required]),
+      img: new FormControl("",[Validators.required]),
     });
     this.editProductForm = new FormGroup({
       prod_name: new FormControl("",[Validators.required]),
@@ -87,7 +92,7 @@ export class ProductComponent implements OnInit {
         console.log(res);
         let prod = res.data;
         for (let i = 0; i < prod.length; i++) {
-          if (prod[i].delete_stat == 1) {
+          if (prod[i].delete_stat == 0) {
             this.getProductData.push(prod[i]);
           }
         }
@@ -216,6 +221,20 @@ export class ProductComponent implements OnInit {
     //showAddProd = false;
     this.prod_table = true;
     this.req_entry = false;
+  }
+
+  onUpload(event) {
+    const file: File = event.target.files[0];
+        if (file) {
+          this.uploadedFiles = file;
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = (e) => {
+            this.imgpath = reader.result
+            document.getElementById('pre_img').setAttribute('src', this.imgpath)
+          }
+    }
+
   }
 
 }
