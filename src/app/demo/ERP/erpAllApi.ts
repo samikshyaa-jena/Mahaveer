@@ -30,6 +30,7 @@ export class erp_all_api{
         get_profuct_req:base_url+'/manufacture/getProductRequirement',
         get_rawmat:base_url+'/manufacture/getRawMaterials',
         set_prod_req:base_url+'/manufacture/setProductRequirement',
+        update_prod_req:base_url+'/manufacture/updateProductRequirement',
 
         // manufaturing ends
 

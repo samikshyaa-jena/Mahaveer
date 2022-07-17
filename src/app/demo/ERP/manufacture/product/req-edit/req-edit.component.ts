@@ -305,6 +305,7 @@ export class ReqEditComponent implements OnInit {
     const reqBody = {
       "prod_id": this.item_form.get('prod_id').value,
       "targetTime": this.item_form.get('est_time').value + 'D',
+      "added_by": "",
       "requirements": product_arr,
     }
 
@@ -312,7 +313,7 @@ export class ReqEditComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.set_prod_req, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.update_prod_req, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');
         console.log(res, "get item");
