@@ -334,25 +334,39 @@ export class CatagoryComponent implements OnInit {
     this.cat = event;
   }
   add_item = () => {
+
     this.loader = true;
     let qnt = this.addItemForm.get('qty').value ? parseInt(this.addItemForm.get('qty').value) : 0;
-    const reqBody = {
-      cat_id: this.cat,
-      name: this.addItemForm.get('item_name').value,
-      gst: parseInt(this.addItemForm.get('gst').value),
-      min_stock: parseInt(this.addItemForm.get('min_stk').value),
-      unit: this.addItemForm.get('unit').value,
-      mrp: parseFloat(this.addItemForm.get('mrp').value),
-      hsn: parseInt(this.addItemForm.get('hsn').value),
-      qty: qnt
 
-    }
-    console.log(reqBody);
+    const fd: any = new FormData();
+    fd.append('cat_id', this.cat);
+    fd.append('name', this.addItemForm.get('item_name').value);
+    fd.append('gst', parseInt(this.addItemForm.get('gst').value));
+    fd.append('min_stock', parseInt(this.addItemForm.get('min_stk').value));
+    fd.append('unit', this.addItemForm.get('unit').value);
+    fd.append('mrp', parseFloat(this.addItemForm.get('mrp').value));
+    fd.append('hsn', parseFloat(this.addItemForm.get('hsn').value));
+    fd.append('qty', qnt);
+    fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name);
+
+    
+    // const reqBody = {
+    //   cat_id: this.cat,
+    //   name: this.addItemForm.get('item_name').value,
+    //   gst: parseInt(this.addItemForm.get('gst').value),
+    //   min_stock: parseInt(this.addItemForm.get('min_stk').value),
+    //   unit: this.addItemForm.get('unit').value,
+    //   mrp: parseFloat(this.addItemForm.get('mrp').value),
+    //   hsn: parseInt(this.addItemForm.get('hsn').value),
+    //   qty: qnt
+
+    // }
+    console.log(fd);
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.add_prod, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.add_prod, fd, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log("response is", res);
         Notiflix.Report.success(res.msg, '', 'Close');

@@ -109,19 +109,32 @@ export class ProductComponent implements OnInit {
 
   add_Product = () =>{
     this.loader = true;
-    const reqBody = {
-      prod_name: this.addProductForm.get('prod_name').value,
-      gst: parseInt(this.addProductForm.get('gst').value),
-      min_stock: parseInt(this.addProductForm.get('min_stk').value),
-      unit: this.addProductForm.get('unit').value,
-      price: 0
-    };
+    console.log(this.uploadedFiles);
+
+    // var gst: number = parseInt(this.addProductForm.get('gst').value);
+
+    const fd: any = new FormData();
+    fd.append('prod_name', this.addProductForm.get('prod_name').value);
+    fd.append('gst', parseInt(this.addProductForm.get('gst').value));
+    fd.append('min_stock', parseInt(this.addProductForm.get('min_stk').value));
+    fd.append('unit', this.addProductForm.get('unit').value);
+    fd.append('price', 0);
+    fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name);    
+    
+    // const reqBody = {
+    //   prod_name: this.addProductForm.get('prod_name').value,
+    //   gst: parseInt(this.addProductForm.get('gst').value),
+    //   min_stock: parseInt(this.addProductForm.get('min_stk').value),
+    //   unit: this.addProductForm.get('unit').value,
+    //   price: 0,
+    //   prod_image: fd
+    // };
 
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.addProduct, reqBody, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.addProduct, fd, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         console.log(res);
         Notiflix.Report.success(res.msg, '', 'Close');;
