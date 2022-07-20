@@ -14,7 +14,9 @@ export class InvoiceComponent implements OnInit {
   @ViewChild("downloadLink", { static: false }) downloadLink: ElementRef;
   filePreview: string;
   @Output() newItemEvent = new EventEmitter<boolean>();
+  @Input() invoiceData_heading: any;
   @Input() invoiceData: any;
+  @Input() page: any;
 
   constructor(
     // private sanitizer: DomSanitizer
@@ -25,13 +27,25 @@ export class InvoiceComponent implements OnInit {
     this.invoiceData = this.invoiceData[0];
     console.log(this.invoiceData);
 
-    for (let i = 0; i < this.invoiceData.sellData.length; i++) {
+    if (this.page == 'sale') {
+      for (let i = 0; i < this.invoiceData.sellData.length; i++) {
       
-      this.invoiceData.sellData.discount = (this.invoiceData.sellData.discount * 100)/this.invoiceData.sellData.price;
-      this.invoiceData.sellData.cgst = (this.invoiceData.sellData.cgst * 100)/this.invoiceData.sellData.price;
-      this.invoiceData.sellData.sgst = (this.invoiceData.sellData.sgst * 100)/this.invoiceData.sellData.price;
-      this.invoiceData.sellData.igst = (this.invoiceData.sellData.igst * 100)/this.invoiceData.sellData.price;
+        this.invoiceData.sellData.discount = (this.invoiceData.sellData.discount * 100)/this.invoiceData.sellData.price;
+        this.invoiceData.sellData.cgst = (this.invoiceData.sellData.cgst * 100)/this.invoiceData.sellData.price;
+        this.invoiceData.sellData.sgst = (this.invoiceData.sellData.sgst * 100)/this.invoiceData.sellData.price;
+        this.invoiceData.sellData.igst = (this.invoiceData.sellData.igst * 100)/this.invoiceData.sellData.price;
+        
+      }
+    }
+    if (this.page == 'quotation') {
+      for (let i = 0; i < this.invoiceData.quote_Data.length; i++) {
       
+        this.invoiceData.quote_Data.discount = (this.invoiceData.quote_Data.discount * 100)/this.invoiceData.quote_Data.price;
+        this.invoiceData.quote_Data.cgst = (this.invoiceData.quote_Data.cgst * 100)/this.invoiceData.quote_Data.price;
+        this.invoiceData.quote_Data.sgst = (this.invoiceData.quote_Data.sgst * 100)/this.invoiceData.quote_Data.price;
+        this.invoiceData.quote_Data.igst = (this.invoiceData.quote_Data.igst * 100)/this.invoiceData.quote_Data.price;
+        
+      }
     }
     
   }

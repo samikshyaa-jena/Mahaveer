@@ -69,6 +69,7 @@ export class SaleComponent implements OnInit {
   type: any;
   p_array: any = [];
   itemData2: any = [];
+  prodData_id: any = [];
   productformarray: any = [];
   pdf: boolean = false;
   pdfData: any;
@@ -145,6 +146,7 @@ export class SaleComponent implements OnInit {
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
             this.itemData2.push(catData[i]);
+            this.prodData_id.push(catData[i].prod_id);
           }
         }
         console.log(this.itemData2);
@@ -216,7 +218,7 @@ export class SaleComponent implements OnInit {
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
-            this.itemData2.push(catData[i]);
+            this.itemData2.push(catData[i] && !(this.prodData_id.includes(catData[i].prod_id)));
           }
         }
         console.log(this.itemData2);

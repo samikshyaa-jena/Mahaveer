@@ -21,7 +21,7 @@ import { DatePipe } from '@angular/common';
 export class SaleAddComponent implements OnInit {
 
   getCatagoryData: any = [];
-  itemData: any = [];
+  prodData_id: any = [];
   productForm: FormGroup;
   productformArray: any[]
   openmodal: boolean = false
@@ -103,6 +103,7 @@ export class SaleAddComponent implements OnInit {
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
             this.getCatagoryData.push(catData[i]);
+            this.prodData_id.push(catData[i].prod_id);
           }
         }
         console.log(this.getCatagoryData);
@@ -124,7 +125,7 @@ export class SaleAddComponent implements OnInit {
         // this.getCatagoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
-          if (catData[i].delete_stat == 0) {
+          if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
             this.getCatagoryData.push(catData[i]);
           }
         }

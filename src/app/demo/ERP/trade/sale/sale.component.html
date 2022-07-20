@@ -66,7 +66,7 @@
   </div>
 </div>
 <div class="genPdfSectio" *ngIf = "pdf">
-  <app-invoice (newItemEvent)="hidePdf($event)" [invoiceData]="pdfData"></app-invoice>
+  <app-invoice (newItemEvent)="hidePdf($event)" [page]="'sale'" [invoiceData]="pdfData"></app-invoice>
 </div>
 
 

@@ -71,6 +71,8 @@ export class QuotationComponent implements OnInit {
   itemData2: any = [];
   quotationformarray: any = [];
   pri_sta: any;
+  pdfData: any;
+  pdf: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -702,14 +704,25 @@ export class QuotationComponent implements OnInit {
 
   }
   Edit(pform, i) {
-
     console.log(pform);
     console.log(pform.edit.value);
     pform.edit.value = true;
-
-
   }
 
+  generateInvoice = (e: any) => {
+    console.log(this.get_purchase_data);
+    this.pdfData = this.get_purchase_data.filter((x) => {
+      return x.quotation_no == e;
+    });
+    console.log(this.pdfData);
+    this.pdf = true;
+  }
+
+  hidePdf = (e: any) => {
+    if (e) {
+      this.pdf = false;
+    }
+  }
   resetProductForm() {
     var p_form = this.updateQuotation.get('product')['controls'];
     console.log(p_form);

@@ -18,7 +18,7 @@ import { SaleSrviceService } from '../../sale/sale-srvice.service';
 export class QuotationEntryComponent implements OnInit {
 
   getCatagoryData: any = [];
-  itemData: any = [];
+  prodData_id: any = [];
   QuotationForm: FormGroup;
   quotationformarray: any[]
   openmodal: boolean = false
@@ -87,6 +87,7 @@ export class QuotationEntryComponent implements OnInit {
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
             this.getCatagoryData.push(catData[i]);
+            this.prodData_id.push(catData[i].prod_id);
           }
         }
         console.log(this.getCatagoryData);
@@ -108,7 +109,7 @@ export class QuotationEntryComponent implements OnInit {
         // this.getCatagoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
-          if (catData[i].delete_stat == 0) {
+          if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
             this.getCatagoryData.push(catData[i]);
           }
         }

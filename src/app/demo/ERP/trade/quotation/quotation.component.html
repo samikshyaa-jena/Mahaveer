@@ -11,7 +11,7 @@
 
 <app-quotation-entry *ngIf="purchase_tab && !invoice" (get_purchase_details)="get_purchase_details()" (BackTab)="back()">
 </app-quotation-entry>
-<div class="container card" style="padding: 15px" *ngIf="!purchase_tab && !invoice">
+<div class="container card" style="padding: 15px" *ngIf="!purchase_tab && !invoice && !pdf">
   
   <div class="mt-3">
     <button class="btn btn-primary mb-3 mt-2" (click)="purchase_entry()">
@@ -31,6 +31,7 @@
             <th class="border-top-0">SGST</th>
             <th class="border-top-0">IGST</th>
             <th class="border-top-0">Total</th>
+            <th class="border-top-0">Print</th>
           </tr>
         </thead>
         <tbody>
@@ -46,6 +47,7 @@
             <td>{{ data.totalsgst }}</td>
             <td>{{ data.totaligst }}</td>
             <td>{{ data.totalsum }}</td>
+            <td><span title="View Invoice" style="cursor: pointer;" (click)="generateInvoice(data.quotation_no)"><i class="fa fa-print" aria-hidden="true"></i></span></td>
           </tr>
         </tbody>
       </table>
@@ -217,3 +219,7 @@
   </div>
 
 </div>
+
+<div class="genPdfSectio" *ngIf = "pdf">
+    <app-invoice (newItemEvent)="hidePdf($event)"  [page]="'quotation'" [invoiceData]="pdfData"></app-invoice>
+  </div>

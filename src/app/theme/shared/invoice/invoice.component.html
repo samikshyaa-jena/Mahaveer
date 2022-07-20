@@ -23,10 +23,16 @@
                 <td class="t_text2">GSTIN: <span class="t_text3">{{invoiceData.customerData.gstn}}</span></td>
                 <td class="t_text2">Id Type: </td>
             </tr>
-            <tr>
+            <tr *ngIf="page == 'sale'">
                 <td class="t_text2">Invoice No: {{invoiceData.invoice_no}}</td>
                 <td class="t_text2">Date: {{invoiceData.sell_date | date}}</td>
                 <td class="t_text2">Payment Mode: {{invoiceData.method}}</td>
+                <td class="t_text2">Id NUmber: {{invoiceData.customerData.id}}</td>
+            </tr>
+            <tr *ngIf="page == 'quotation'">
+                <td class="t_text2">Invoice No: {{invoiceData.quotation_no}}</td>
+                <td class="t_text2">Date: {{invoiceData.quote_date | date}}</td>
+                <td class="t_text2">Priority: {{invoiceData.priority}}</td>
                 <td class="t_text2">Id NUmber: {{invoiceData.customerData.id}}</td>
             </tr>
         </table>
@@ -56,30 +62,53 @@
                 <th class="t_text">Rate</th>
                 <th class="t_text">Amount</th>
             </tr>
-            <tr *ngFor = "let data of invoiceData.sellData; let i=index">
-                <td class="t_text">{{i}}</td>
-                <td class="t_text">{{data.prod_name}}</td>
-                <td class="t_text"><img src="{{data.prod_img}}" alt="prod" style="width: 40px;"></td>
-                <td class="t_text">{{data.hsn}}</td>
-                <td class="t_text">{{data.cgst}}</td>
-                <td class="t_text">{{data.quantity}}</td>
-                <td class="t_text">{{data.cgst}}</td>
-                <td class="t_text">{{data.discount}}</td>
-                <td class="t_text">{{data.discount}}</td>
-                <td class="t_text">{{data.total}}</td>
-                <td class="t_text">{{data.cgst}}</td>
-                <td class="t_text">{{data.cgst}}</td>
-                <td class="t_text">{{data.sgst}}</td>
-                <td class="t_text">{{data.sgst}}</td>
-                <td class="t_text">{{data.igst}}</td>
-                <td class="t_text">{{data.igst}}</td>
-                <td class="t_text">{{invoiceData.total_amount}}</td>
-            </tr>
+            <ng-container *ngIf="page == 'sale'">
+                <tr *ngFor = "let data of invoiceData.sellData; let i=index">
+                    <td class="t_text">{{i}}</td>
+                    <td class="t_text">{{data.prod_name}}</td>
+                    <td class="t_text"><img src="{{data.prod_img}}" alt="prod" style="width: 40px;"></td>
+                    <td class="t_text">{{data.hsn}}</td>
+                    <td class="t_text">{{data.cgst}}</td>
+                    <td class="t_text">{{data.quantity}}</td>
+                    <td class="t_text">{{data.cgst}}</td>
+                    <td class="t_text">{{data.discount}}</td>
+                    <td class="t_text">{{data.discount}}</td>
+                    <td class="t_text">{{data.total}}</td>
+                    <td class="t_text">{{data.cgst}}</td>
+                    <td class="t_text">{{data.cgst}}</td>
+                    <td class="t_text">{{data.sgst}}</td>
+                    <td class="t_text">{{data.sgst}}</td>
+                    <td class="t_text">{{data.igst}}</td>
+                    <td class="t_text">{{data.igst}}</td>
+                    <td class="t_text">{{invoiceData.total_amount}}</td>
+                </tr>
+            </ng-container>
+            <ng-container *ngIf="page == 'quotation'">
+                <tr *ngFor = "let data of invoiceData.quote_Data; let i=index">
+                    <td class="t_text">{{i}}</td>
+                    <td class="t_text">{{data.prod_name}}</td>
+                    <td class="t_text"><img src="{{data.prod_img}}" alt="prod" style="width: 40px;"></td>
+                    <td class="t_text">{{data.hsn}}</td>
+                    <td class="t_text">{{data.cgst}}</td>
+                    <td class="t_text">{{data.quantity}}</td>
+                    <td class="t_text">{{data.cgst}}</td>
+                    <td class="t_text">{{data.discount}}</td>
+                    <td class="t_text">{{data.discount}}</td>
+                    <td class="t_text">{{data.total}}</td>
+                    <td class="t_text">{{data.cgst}}</td>
+                    <td class="t_text">{{data.cgst}}</td>
+                    <td class="t_text">{{data.sgst}}</td>
+                    <td class="t_text">{{data.sgst}}</td>
+                    <td class="t_text">{{data.igst}}</td>
+                    <td class="t_text">{{data.igst}}</td>
+                    <td class="t_text">{{invoiceData.total_amount}}</td>
+                </tr>
+            </ng-container>
             <tr>
                 <td colspan="16" style="visibility: hidden;">efghjkl</td>
             </tr>
             <tr>
-                <td class="t_text" colspan="7">Total</td>
+                <td class="t_text" colspan="8">Total</td>
                 <td class="t_text">{{invoiceData.total_amount}}</td>
                 <td class="t_text"></td>
                 <td class="t_text"></td>
