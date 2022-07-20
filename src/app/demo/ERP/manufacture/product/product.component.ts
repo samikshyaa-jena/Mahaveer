@@ -250,4 +250,9 @@ export class ProductComponent implements OnInit {
 
   }
 
+  prevent(e) {
+    console.log(e);
+      return e.keyCode >= 48 && e.charCode <= 57;
+  }
+
 }

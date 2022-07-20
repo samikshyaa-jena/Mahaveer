@@ -186,9 +186,9 @@
           <option value="28">28 %</option>
         </select>
         <label class="lab_tag" for="">Low Stock:</label>
-        <input type="text" class="form-control inp_tag" formControlName="min_stk" />
+        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk" />
         <label class="lab_tag" for="">HSN:</label>
-        <input type="text" class="form-control inp_tag" formControlName="hsn" />
+        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn" />
         <label class="lab_tag" for="">Unit:</label>
         <input type="text" class="form-control inp_tag" formControlName="unit" />
         <label class="lab_tag" for="">Open Stock:</label>
@@ -256,9 +256,9 @@
           <option value="28">28 %</option>
         </select>
         <label class="lab_tag" for="">Low Stock:</label>
-        <input type="text" class="form-control inp_tag" formControlName="min_stk" />
+        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk" />
         <label class="lab_tag" for="">HSN:</label>
-        <input type="text" class="form-control inp_tag" formControlName="hsn" />
+        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn" />
         <label class="lab_tag" for="">Unit:</label>
         <input type="text" class="form-control inp_tag" formControlName="unit" />
         <!-- <label class="lab_tag" for="">Open Stock:</label>

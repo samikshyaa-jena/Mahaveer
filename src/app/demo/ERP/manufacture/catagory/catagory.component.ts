@@ -379,4 +379,9 @@ export class CatagoryComponent implements OnInit {
     console.log(this.report_length);
   }
 
+  prevent(e) {
+    console.log(e);
+      return e.keyCode >= 48 && e.charCode <= 57;
+  }
+
 }

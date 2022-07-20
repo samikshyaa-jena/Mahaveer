@@ -49,7 +49,7 @@
     <app-req-entry class="add_prod" *ngIf='!prod_table && req_entry' (BackTab)="back()"></app-req-entry>
 
 
-    <div class="add_prod card p-3" *ngIf='!prod_table && !req_entry'>
+    <div class="add_prod" *ngIf='!prod_table && !req_entry'>
         <div class="modal_head">
             <div class="modal_body">
                 <div class="addProductForm">
@@ -66,13 +66,13 @@
                             <option value="28">28 %</option>
                         </select>
                         <label class="lab_tag" for="">Low Stock:</label>
-                        <input type="text" class="form-control inp_tag" formControlName="min_stk">
+                        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
                         <label class="lab_tag" for="">Unit:</label>
                         <input type="text" class="form-control inp_tag" formControlName="unit">
                         <label class="lab_tag" for="">Mrp:</label>
-                        <input type="text" class="form-control inp_tag" formControlName="mrp">
+                        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
                         <label class="lab_tag" for="">Hsn:</label>
-                        <input type="text" class="form-control inp_tag" formControlName="hsn">
+                        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
                         <label class="lab_tag" for="">Upload Image:</label>
                         <div class="upimg_show">
                             <input id="img_up" type="file" accept="image/*" style="display: none;"
@@ -165,13 +165,13 @@
                     <option value="28">28 %</option>
                 </select>
                 <label class="lab_tag" for="">Low Stock:</label>
-                <input type="text" class="form-control inp_tag" formControlName="min_stk">
+                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
                 <label class="lab_tag" for="">Unit:</label>
                 <input type="text" class="form-control inp_tag" formControlName="unit">
                 <label class="lab_tag" for="">Mrp:</label>
-                <input type="text" class="form-control inp_tag" formControlName="mrp">
+                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
                 <label class="lab_tag" for="">Hsn:</label>
-                <input type="text" class="form-control inp_tag" formControlName="hsn">
+                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
             </form>
         </div>
     </div>

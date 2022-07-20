@@ -138,13 +138,8 @@
     </div>
 
     <div class="item" *ngIf='show_cat_item==4 || show_cat_item==5'>
-        <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Trade</h3>
-        <div class="row col-sm-12">
-            <div class="col-sm-12 text-right">
-                <button class="btn btn-primary mr-1" type="submit" (click)="add_item()">Add</button>
-                <button class="btn btn-warning" type="reset" (click)="show_cat_item=1">Back</button>
-            </div>
-        </div>
+        <!-- <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Trade</h3> -->
+        
         <div class="form_div" class="my-3">
             <form [formGroup]="addItemForm" class="my-3">
                 <label class="lab_tag" for="">Category Name:</label>
@@ -165,11 +160,11 @@
                     <option value="28">28 %</option>
                 </select>
                 <label class="lab_tag" for="">Low Stock:</label>
-                <input type="text" class="form-control inp_tag" formControlName="min_stk">
+                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
                 <label class="lab_tag" for="">MRP:</label>
-                <input type="text" class="form-control inp_tag" formControlName="mrp">
+                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
                 <label class="lab_tag" for="">HSN:</label>
-                <input type="text" class="form-control inp_tag" formControlName="hsn">
+                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
                 <label class="lab_tag" for="">Unit:</label>
                 <input type="text" class="form-control inp_tag" formControlName="unit">
                 <label class="lab_tag" for="">Open Stock:</label>
@@ -186,6 +181,10 @@
                         </div>
             </form>
         </div>
+            <div class="col-sm-12 text-right pr-0">
+                <button class="btn btn-primary mr-1" type="submit" (click)="add_item()">Add</button>
+                <button class="btn btn-warning" type="reset" (click)="show_cat_item=1">Back</button>
+            </div>
     </div>
 
 </div>
@@ -239,11 +238,11 @@
                     <option value="28">28 %</option>
                 </select>
                 <label class="lab_tag" for="">Low Stock:</label>
-                <input type="text" class="form-control inp_tag" formControlName="min_stk">
+                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
                 <label class="lab_tag" for="">MRP:</label>
-                <input type="text" class="form-control inp_tag" formControlName="mrp">
+                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
                 <label class="lab_tag" for="">HSN:</label>
-                <input type="text" class="form-control inp_tag" formControlName="hsn">
+                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
                 <label class="lab_tag" for="">Unit:</label>
                 <input type="text" class="form-control inp_tag" formControlName="unit">
                 <!-- <label class="lab_tag" for="">Open Stock:</label>
