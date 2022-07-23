@@ -14,10 +14,11 @@ import { DebitNoteComponent } from './purchase/debit-note/debit-note.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ReqEntryComponent } from './product/req-entry/req-entry.component';
 import { ReqEditComponent } from './product/req-edit/req-edit.component';
+import { AddProductionComponent } from './add-production/add-production.component';
 
 
 @NgModule({
-  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, ProductComponent, PurchaseAddComponent, DebitNoteComponent, ReqEntryComponent, ReqEditComponent],
+  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, ProductComponent, PurchaseAddComponent, DebitNoteComponent, ReqEntryComponent, ReqEditComponent, AddProductionComponent],
   imports: [
     CommonModule,
     ManufactureRoutingModule,

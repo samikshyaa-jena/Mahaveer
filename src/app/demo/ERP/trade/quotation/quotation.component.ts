@@ -73,6 +73,7 @@ export class QuotationComponent implements OnInit {
   pri_sta: any;
   pdfData: any;
   pdf: any;
+  prodData_id: any = [];
 
   constructor(
     private ErpService: ErpServiceService,
@@ -133,6 +134,7 @@ export class QuotationComponent implements OnInit {
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
             this.itemData2.push(catData[i]);
+            this.prodData_id.push(catData[i].prod_id);
           }
         }
         console.log(this.itemData2);
@@ -203,7 +205,7 @@ export class QuotationComponent implements OnInit {
 
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
-          if (catData[i].delete_stat == 0) {
+          if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
             this.itemData2.push(catData[i]);
           }
         }
@@ -395,41 +397,6 @@ export class QuotationComponent implements OnInit {
       (err: any) => {
         console.log(err);
         Notiflix.Report.failure('Something went wrong...', '', 'Close');
-      });
-
-  };
-
-  add_purchase_details = () => {
-    debugger;
-    this.loader = true;
-    console.log(this.purchase_data[0].price);
-    const reqBody = {
-      "invoice": this.quotation_form.get('quto').value,
-      "vendor_id": this.quotation_form.get('vendor').value,
-      "type": 'rawmaterial',
-      "purchase_data": this.purchase_data[0],
-      "date": this.quotation_form.get('q_date').value
-    }
-
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
-
-    this.ErpService.post_Reqs(erp_all_api.urls.trd_sale_entry, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
-      (res: any) => {
-        console.log(res, "get item");
-        Notiflix.Report.success(res.msg, '', 'Close');
-        this.get_purchase_details();
-        this.purchase_tab = false;
-        this.dynamicManufacture.reset();
-        this.quotation_form.reset();
-        this.quotation_form.reset();
-        this.purchase_tab = false;
-        this.back();
-      },
-      (err: any) => {
-        console.log(err);
-        Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
 
   };
@@ -794,6 +761,69 @@ export class QuotationComponent implements OnInit {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
   };
+
+
+  add_purchase_details = () => {
+
+    this.quotationformarray = [];
+    var p_form = this.updateQuotation.get('product')['controls'];
+    console.log(p_form);
+
+    for (let i = 0; i < p_form.length; i++) {
+      console.log(p_form[i].value);
+      this.quotationformarray.push(p_form[i].value)
+    }
+
+    if (this.quotationformarray) {
+
+      var product_arr = this.quotationformarray.map((p_array) => {
+        return {
+          prod_id: p_array.prud,
+          igst: p_array.igst,
+          cgst: p_array.cgst,
+          sgst: p_array.sgst,
+          price: p_array.price,
+          qty: p_array.qty,
+          discount: p_array.discount,
+          total: p_array.total
+        }
+      });
+
+    }
+
+    this.loader = true;
+    console.log(this.quotation_form.get('invo').value,);
+    console.log(this.quotationformarray);
+    const reqBody = {
+      "invoice": this.quotation_form.get('quto').value,
+      "customer_id": this.quotation_form.get('custmer_id').value,
+      "date": this.datePipe.transform(this.quotation_form.get('q_date').value, 'yyyy-MM-dd'),
+      "sell_data": product_arr,
+      "payment_status": '',
+      "method": '',
+      "paid_amount": this.quotation_form.get('amnt').value,
+    }
+
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.post_Reqs(erp_all_api.urls.trd_sale_entry, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        Notiflix.Report.success('SuccessFully Added', '', 'Close');
+        console.log(res, "get item");
+        // this.get_purchase_details.emit();
+        this.quotation_form.reset();
+        this.quotationTabclose();
+      },
+      (err: any) => {
+        console.log(err);
+        console.log(err.error.msg);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+      });
+  };
+
+
 }
 
 

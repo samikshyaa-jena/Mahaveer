@@ -40,6 +40,7 @@ export class ReqEntryComponent implements OnInit {
   t_amount: number;
   getProductData: any;
   rawMat: any;
+  prodData_id: any = [];
 
   constructor(
     private ErpService: ErpServiceService,
@@ -88,6 +89,7 @@ export class ReqEntryComponent implements OnInit {
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
             this.getCatagoryData.push(catData[i]);
+            this.prodData_id.push(catData[i].prod_id);
           }
         }
         console.log(this.getCatagoryData);
@@ -109,7 +111,7 @@ export class ReqEntryComponent implements OnInit {
         // this.getCatagoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
-          if (catData[i].delete_stat == 0) {
+          if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
             this.getCatagoryData.push(catData[i]);
           }
         }

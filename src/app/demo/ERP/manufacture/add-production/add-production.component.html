@@ -1,0 +1,67 @@
+<div class="container card p-3">
+    <div class="prod_table">
+        <div style="float: right; margin: 10px 0;">
+            <button class="btn btn-primary" (click)="showAddProduct()">Add Production</button>
+        </div>
+        <table class="table v-middle nowrap">
+            <thead>
+                <tr>
+                    <th class="border-top-0">Product NAME</th>
+                    <th class="border-top-0">Quantity</th>
+                    <th class="border-top-0">Status</th>
+                    <th class="border-top-0">Entry Time</th>
+                    <th class="border-top-0">Expected Time</th>
+                    <th class="border-top-0 text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of getProductData; let i = index">
+                    <td>{{data.prod_name}}</td>
+                    <td>{{data.qty}}</td>
+                    <td>{{data.status}}</td>
+                    <td>{{data.entry_time | date}}</td>
+                    <td>{{data.expected_time | date}}</td>
+                    <td class="text-center"><span style="cursor: pointer;"><i class="fa fa-cog"></i></span></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<div class="modal2" *ngIf='show_prod'>
+    <div class="css_modal_content2">
+        <form [formGroup]="addProductForm" class="my-3">
+            <div class="mb-2">
+                <div>
+                    <label for="" class="mb-2">Product Name</label>
+                    <select formControlName="prod_name" class="form-control">
+                        <option value="choose_prod">Choose Product</option>
+                        <option class="disable" *ngFor="let category of productCategory;let i=index"
+                            [value]="category.prod_id">
+                            {{category.prod_name}}</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="" class="mb-2">Target Time</label>
+                    <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="target_time"
+                        class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD">
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                </div>
+                <div>
+                    <label for="" class="mb-2">Quantity</label>
+                    <input type="text" (keypress)="prevent_char($event)" (input)="prevent_0($event)" formControlName="qty" class="form-control">
+                    <div class="error_msg" *ngIf="qty_error">{{qty_error}}</div>
+                </div>
+            </div>
+            <div class="btns my-3" style="float: right;">
+                <button class="btn btn-primary disable mr-2" type="submit" [disabled]="!addProductForm.valid || qty_error"
+                    (click)="add_Product()">Add</button>
+                <button class="btn btn-warning" type="reset" (click)="cancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

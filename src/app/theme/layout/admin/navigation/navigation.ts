@@ -159,6 +159,13 @@ const NavigationItems = [
         icon: 'feather icon-users'
       },
       {
+        id: 'add_prod',
+        title: 'Production',
+        type: 'item',
+        url: '/v1/manufacture/addproduct',
+        icon: 'feather icon-users'
+      },
+      {
         id: 'transReport',
         title: 'Transaction Report',
         type: 'collapse',
