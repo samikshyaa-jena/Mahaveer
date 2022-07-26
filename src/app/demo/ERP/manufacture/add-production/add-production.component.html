@@ -17,11 +17,11 @@
             <tbody>
                 <tr *ngFor="let data of getProductData; let i = index">
                     <td>{{data.prod_name}}</td>
-                    <td>{{data.qty}}</td>
-                    <td>{{data.status}}</td>
-                    <td>{{data.entry_time | date}}</td>
+                    <td>{{data.quantity}}</td>
+                    <td>In Progress</td>
+                    <td>{{today | date}}</td>
                     <td>{{data.expected_time | date}}</td>
-                    <td class="text-center"><span style="cursor: pointer;"><i class="fa fa-cog"></i></span></td>
+                    <td class="text-center"><span (click)="editProduct()" style="cursor: pointer;"><i class="fa fa-cog"></i></span></td>
                 </tr>
             </tbody>
         </table>
@@ -32,7 +32,7 @@
 
 
 
-<div class="modal2" *ngIf='show_prod'>
+<div class="modal2" *ngIf='show_prod && !edit_prod'>
     <div class="css_modal_content2">
         <form [formGroup]="addProductForm" class="my-3">
             <div class="mb-2">
@@ -61,6 +61,37 @@
                 <button class="btn btn-primary disable mr-2" type="submit" [disabled]="!addProductForm.valid || qty_error"
                     (click)="add_Product()">Add</button>
                 <button class="btn btn-warning" type="reset" (click)="cancel()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="modal2" *ngIf='!show_prod && edit_prod'>
+    <div class="css_modal_content2">
+        <form [formGroup]="editProductForm" class="my-3">
+            <div class="mb-2">
+                <div>
+                    <input type="hidden" formControlName="prod_id" class="form-control">
+                </div>
+                <div>
+                    <label for="" class="mb-2">Status</label>
+                    <select formControlName="status" class="form-control">
+                        <option value="progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="" class="mb-2">Target Time</label>
+                    <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="target_time"
+                        class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD">
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                </div>
+            </div>
+            <div class="btns my-3" style="float: right;">
+                <button class="btn btn-primary disable mr-2" type="submit" [disabled]="!editProductForm.valid || qty_error"
+                    (click)="updateProduct()">Update</button>
+                <button class="btn btn-warning" type="reset" (click)="cancelEdittab()">Cancel</button>
             </div>
         </form>
     </div>

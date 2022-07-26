@@ -17,7 +17,9 @@ import { DatePipe } from '@angular/common';
 export class AddProductionComponent implements OnInit {
 
   addProductForm: FormGroup;
+  editProductForm: FormGroup;
   show_prod: boolean = false;
+  edit_prod: boolean = false;
   loader: boolean;
   getProductData: any = [];
   productCategory: any = [];
@@ -35,6 +37,11 @@ export class AddProductionComponent implements OnInit {
       target_time: new FormControl("", [Validators.required]),
       qty: new FormControl("", [Validators.required]),
     });
+    this.editProductForm = new FormGroup({
+      prod_id: new FormControl("", [Validators.required]),
+      status: new FormControl("progress", [Validators.required]),
+      target_time: new FormControl("", [Validators.required]),
+    });
   }
 
   ngOnInit(): void {
@@ -48,32 +55,59 @@ export class AddProductionComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.get_product, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
-      (res: any) => {
-        let prodData = res.data;
-
-        for (let i = 0; i < prodData.length; i++) {
-          if (prodData[i].delete_stat == 0) {
-            this.getProductData.push(prodData[i]);
-          }
-          for (let j = 0; j < this.productCategory.length; j++) {
-            if (this.getProductData[i].prod_id == this.productCategory[j].prod_id) {
-              console.log(this.getProductData[i].prod_id);
-
-              this.getProductData[i] = Object.assign(this.getProductData[i],
-                { prod_name: this.productCategory[j].prod_name }
-              );
-            }
+    this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+      (res: any) =>{
+        console.log(res);
+        let prod = res.data;
+        for (let i = 0; i < prod.length; i++) {
+          if (prod[i].delete_stat == 1 && prod[i].materials_data) {
+            this.getProductData.push(prod[i]);
           }
         }
 
+          // for (let j = 0; j < this.getProductData.length; j++) {
+          //   if (this.getProductData[j].approx_time.slice(-1) == 'D') {
+              
+          //   } else {
+              
+          //   }
+            
+          // }
         console.log(this.getProductData);
-
+        
       },
-      (err: any) => {
+      (err: any) =>{
+        console.log(err);
         Notiflix.Report.failure(err.error.msg, '', 'Close');
-
+        
       });
+
+    // this.ErpService.get_Reqs(erp_all_api.urls.get_product, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    //   (res: any) => {
+    //     let prodData = res.data;
+
+    //     for (let i = 0; i < prodData.length; i++) {
+    //       if (prodData[i].delete_stat == 0) {
+    //         this.getProductData.push(prodData[i]);
+    //       }
+    //       for (let j = 0; j < this.productCategory.length; j++) {
+    //         if (this.getProductData[i].prod_id == this.productCategory[j].prod_id) {
+    //           console.log(this.getProductData[i].prod_id);
+
+    //           this.getProductData[i] = Object.assign(this.getProductData[i],
+    //             { prod_name: this.productCategory[j].prod_name }
+    //           );
+    //         }
+    //       }
+    //     }
+
+    //     console.log(this.getProductData);
+
+    //   },
+    //   (err: any) => {
+    //     Notiflix.Report.failure(err.error.msg, '', 'Close');
+
+    //   });
   }
   get_Catagory = () => {
     this.loader = true;
@@ -137,6 +171,7 @@ export class AddProductionComponent implements OnInit {
       (res: any) => {
         Notiflix.Report.success(res, '', 'Close');
         this.cancel();
+        this.get_Product();
       },
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
@@ -147,6 +182,9 @@ export class AddProductionComponent implements OnInit {
 
   showAddProduct() {
     this.show_prod = true;
+  }
+  editProduct() {
+    this.edit_prod = true;
   }
 
   prevent_0(e: any) {
@@ -161,6 +199,10 @@ export class AddProductionComponent implements OnInit {
   cancel(){
     this.show_prod = false;
     this.addProductForm.reset();
+  }
+  cancelEdittab(){
+    this.edit_prod = false;
+    this.editProductForm.reset();
   }
   prevent_char(e: any) {
     console.log(e);   

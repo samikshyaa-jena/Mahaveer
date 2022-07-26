@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf'; 
+import { ToWords } from 'to-words';
 
 @Component({
   selector: 'app-invoice',
@@ -17,15 +18,26 @@ export class InvoiceComponent implements OnInit {
   @Input() invoiceData_heading: any;
   @Input() invoiceData: any;
   @Input() page: any;
+  numWords: any;
+  totalsum: any;
 
   constructor(
     // private sanitizer: DomSanitizer
     ) { }
 
   ngOnInit() {
+
+    this.numWords = new ToWords();    
+ 
+ 
     console.log(this.invoiceData);
     this.invoiceData = this.invoiceData[0];
     console.log(this.invoiceData);
+
+    this.totalsum = this.numWords.convert(this.invoiceData.totalsum, { currency: true });
+
+    console.log(this.totalsum);
+    
 
     if (this.page == 'sale') {
       for (let i = 0; i < this.invoiceData.sellData.length; i++) {

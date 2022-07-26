@@ -66,7 +66,8 @@
                 <tr *ngFor = "let data of invoiceData.sellData; let i=index">
                     <td class="t_text">{{i}}</td>
                     <td class="t_text">{{data.prod_name}}</td>
-                    <td class="t_text"><img src="{{data.prod_img}}" alt="prod" style="width: 40px;"></td>
+                    <td class="t_text"><img src="../../../../assets/images/maintenance/ship.svg" alt="prod" style="width: 40px;"></td>
+                    <!-- <td class="t_text"><img src="{{data.prod_img}}" alt="prod" style="width: 40px;"></td> -->
                     <td class="t_text">{{data.hsn}}</td>
                     <td class="t_text">{{data.cgst}}</td>
                     <td class="t_text">{{data.quantity}}</td>
@@ -80,7 +81,7 @@
                     <td class="t_text">{{data.sgst}}</td>
                     <td class="t_text">{{data.igst}}</td>
                     <td class="t_text">{{data.igst}}</td>
-                    <td class="t_text">{{invoiceData.total_amount}}</td>
+                    <td class="t_text">{{data.total_amount}}</td>
                 </tr>
             </ng-container>
             <ng-container *ngIf="page == 'quotation'">
@@ -101,7 +102,7 @@
                     <td class="t_text">{{data.sgst}}</td>
                     <td class="t_text">{{data.igst}}</td>
                     <td class="t_text">{{data.igst}}</td>
-                    <td class="t_text">{{invoiceData.total_amount}}</td>
+                    <td class="t_text">{{data.total_amount}}</td>
                 </tr>
             </ng-container>
             <tr>
@@ -124,7 +125,7 @@
             <tr>
                 <td class="t_text2" style="width: 50%;">
                     <div>Amount chargable in (words)</div>
-                    <div style="text-transform: uppercase;">one hundered rupee only</div>
+                    <div style="text-transform: uppercase;">{{totalsum}}</div>
                 </td>
                 <td class="t_text">Account No: 234567890 | Holder Name: wertgyhjkl | Bank Name: wertyui | IFSC Code:
                     sdfghjk34567t</td>
