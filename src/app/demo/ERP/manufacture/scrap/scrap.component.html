@@ -1,0 +1,20 @@
+<div class="container card p-3">
+    <div class="prod_table">
+        <table class="table v-middle nowrap">
+            <thead>
+                <tr>
+                    <th style="width: 3%;" class="border-top-0">Scrap</th>
+                    <th style="width: 2%;" class="border-top-0">Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of getscrapData; let i = index">
+                    <td>{{data.type}}</td>
+                    <td>{{data.total_qty}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

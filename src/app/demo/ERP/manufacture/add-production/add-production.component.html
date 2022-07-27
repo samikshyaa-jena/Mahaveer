@@ -70,7 +70,8 @@
 <div class="modal2" *ngIf='!show_prod && edit_prod'>
     <div class="css_modal_content2">
         <form [formGroup]="editProductForm" class="my-3">
-            <div class="mb-2">
+
+            <div class="mb-2" *ngIf="!scrap">
                 <div>
                     <input type="hidden" formControlName="prod_id" class="form-control">
                 </div>
@@ -88,27 +89,33 @@
                     <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                 </div>
             </div>
-            <!-- <div class="mb-2" *ngIf="editProductForm.get('status') == 'completed'">
+
+            <div class="mb-2" *ngIf="scrap">
                 <div>
-                    <input type="hidden" formControlName="prod_id" class="form-control">
+                    <label for="" class="mb-2">Scrap :</label>
+                    <input type="text" class="form-control" (input)="getSc($event)" formControlName="scrap" autocomplete="off"> 
+                    
+                    <div #elasticResDiv class="elasticResDiv" *ngIf="showAutcompleteList===true">        
+                        <ul class="list-group">        
+                          <li class="list-group-item" *ngFor="let data of getscrapData" (click)="selectScrap(data)">        
+                            {{data.type}}</li>        
+                        </ul>        
+                      </div>
+
                 </div>
                 <div>
-                    <label for="" class="mb-2">Status</label>
-                    <select formControlName="status" class="form-control">
-                        <option value="progress">In Progress</option>
-                        <option value="completed">Completed</option>
-                    </select>
+                    <label for="" class="mb-2">Quantity</label>
+                    <input type="text" (keypress)="prevent_char($event)" (input)="prevent_0($event)" formControlName="qty" class="form-control">
                 </div>
                 <div>
-                    <label for="" class="mb-2">Target Time</label>
-                    <input name="dateRange" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" formControlName="target_time"
-                        class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD">
-                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                    <label for="" class="mb-2">Unit</label>
+                    <input type="text" formControlName="unit" class="form-control">
                 </div>
-            </div> -->
+            </div>
+
             <div class="btns my-3" style="float: right;">
                 <button class="btn btn-primary disable mr-2" type="submit" [disabled]="!editProductForm.valid || qty_error"
-                    (click)="updateProduct()">Update</button>
+                    (click)="updateProduct_scrap()">Update</button>
                 <button class="btn btn-warning" type="reset" (click)="cancelEdittab()">Cancel</button>
             </div>
         </form>

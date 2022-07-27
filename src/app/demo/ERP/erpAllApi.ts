@@ -34,6 +34,8 @@ export class erp_all_api{
         get_product:base_url+'/manufacture/productionData',
         add_product:base_url+'/manufacture/productEntry',
         update_product:base_url+'/manufacture/update_productionData',
+        get_scrap:base_url+'/manufacture/fetchscrap',
+        add_scrap:base_url+'/manufacture/addscrap',
 
         // manufaturing ends
 

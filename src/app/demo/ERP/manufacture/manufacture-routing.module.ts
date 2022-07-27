@@ -5,6 +5,7 @@ import { CatagoryComponent } from './catagory/catagory.component';
 import { ProductComponent } from './product/product.component';
 import { DebitNoteComponent } from './purchase/debit-note/debit-note.component';
 import { PurchaseComponent } from './purchase/purchase.component';
+import { ScrapComponent } from './scrap/scrap.component';
 import { StockComponent } from './stock/stock.component';
 import { VendorComponent } from './vendor/vendor.component';
 
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'addproduct',
     component: AddProductionComponent
+  },
+  {
+    path: 'scrap',
+    component: ScrapComponent
   },
 ];
 

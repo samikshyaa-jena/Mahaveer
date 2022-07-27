@@ -28,6 +28,10 @@ export class AddProductionComponent implements OnInit {
   qty_error: any;
   today = new Date();
   date2 = new Date();
+  scrap: boolean;
+  getscrapData: any;
+  showAutcompleteList: boolean;
+  getscrapData2: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -42,6 +46,9 @@ export class AddProductionComponent implements OnInit {
       prod_id: new FormControl("", [Validators.required]),
       status: new FormControl("progress", [Validators.required]),
       target_time: new FormControl("", [Validators.required]),
+      scrap: new FormControl(""),
+      qty: new FormControl(""),
+      unit: new FormControl(""),
     });
   }
 
@@ -184,6 +191,26 @@ export class AddProductionComponent implements OnInit {
       });
 
   };
+  getScrap = () => {
+    this.loader = true;
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.get_Reqs(erp_all_api.urls.get_scrap, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        console.log(res);
+
+        this.getscrapData = res.data;
+        this.getscrapData2 = res.data;
+        
+      },
+      (err: any) => {
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+
+      });
+
+  };
   add_Product = () => {
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
@@ -209,6 +236,31 @@ export class AddProductionComponent implements OnInit {
       });
 
   };
+  addScrap = () => {
+    this.loader = true;
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    const req_body = {
+    "type": this.editProductForm.value.scrap,
+    "qty": this.editProductForm.value.qty,
+    "unit": this.editProductForm.value.unit,
+    "entry_date": this.datePipe.transform(this.today, 'yyyy-MM-dd')
+
+    }
+
+    this.ErpService.post_Reqs(erp_all_api.urls.add_scrap, req_body, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        Notiflix.Report.success(res, '', 'Close');
+        this.cancelEdittab();
+      },
+      (err: any) => {
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+
+      });
+
+  };
 
   showAddProduct() {
     this.show_prod = true;
@@ -225,15 +277,19 @@ export class AddProductionComponent implements OnInit {
       prod_id: row.prod_id,
     });
     // this.editProductForm.value.target_time.setDate(t_date);
+
+    this.getScrap();
   }
 
   chStatus(evt){
     if (evt.target.value == 'completed') {
-
+      this.scrap = true;
       this.editProductForm.patchValue({
         target_time: this.today,
-      });
-      
+      });      
+    }
+    else{
+      this.scrap = false;
     }
   }
 
@@ -283,6 +339,13 @@ export class AddProductionComponent implements OnInit {
 
       });
   }
+
+  updateProduct_scrap(){
+    this.updateProduct();
+    if (this.editProductForm.value.status == 'completed') {      
+      this.addScrap();
+    }
+  }
   cancel(){
     this.show_prod = false;
     this.addProductForm.reset();
@@ -295,6 +358,36 @@ export class AddProductionComponent implements OnInit {
     console.log(e);   
 
       return e.keyCode >= 48 && e.charCode <= 57;
+  }
+
+  getSc(event){
+    if (event.target.value != '') {
+      const val = event.target.value;
+    this.getscrapData = this.getscrapData2;
+    var temp = this.getscrapData.filter(d => {
+      const vals = d.type;
+      console.log(vals);
+      
+      return new RegExp(val, 'gi').test(vals.toString());
+    });
+  
+    this.getscrapData = temp;
+    if (temp && temp != '') {
+      this.showAutcompleteList = true;
+    }
+    else{
+      this.showAutcompleteList = false;
+    }
+  }
+  else{
+    this.showAutcompleteList = false;
+  }
+  }
+
+  selectScrap(obj) {
+    console.log(obj);
+    this.showAutcompleteList = false;
+    this.editProductForm.controls.scrap.setValue(obj.type);
   }
 
 }

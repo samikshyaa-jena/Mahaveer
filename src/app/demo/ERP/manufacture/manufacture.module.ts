@@ -15,10 +15,11 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { ReqEntryComponent } from './product/req-entry/req-entry.component';
 import { ReqEditComponent } from './product/req-edit/req-edit.component';
 import { AddProductionComponent } from './add-production/add-production.component';
+import { ScrapComponent } from './scrap/scrap.component';
 
 
 @NgModule({
-  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, ProductComponent, PurchaseAddComponent, DebitNoteComponent, ReqEntryComponent, ReqEditComponent, AddProductionComponent],
+  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, ProductComponent, PurchaseAddComponent, DebitNoteComponent, ReqEntryComponent, ReqEditComponent, AddProductionComponent, ScrapComponent],
   imports: [
     CommonModule,
     ManufactureRoutingModule,

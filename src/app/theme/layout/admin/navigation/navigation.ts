@@ -103,6 +103,13 @@ const NavigationItems = [
         icon: 'feather icon-shopping-cart'
       },
       {
+        id: 'scrap',
+        title: 'Scrap',
+        type: 'item',
+        url: '/v1/manufacture/scrap',
+        icon: 'feather icon-trash'
+      },
+      {
         id: 'product',
         title: 'Product-(Manuf)',
         type: 'item',
