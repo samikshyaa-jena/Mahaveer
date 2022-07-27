@@ -27,6 +27,7 @@ export class AddProductionComponent implements OnInit {
   product_filterData: any = [];
   qty_error: any;
   today = new Date();
+  date2 = new Date();
 
   constructor(
     private ErpService: ErpServiceService,
@@ -65,14 +66,43 @@ export class AddProductionComponent implements OnInit {
           }
         }
 
-          // for (let j = 0; j < this.getProductData.length; j++) {
-          //   if (this.getProductData[j].approx_time.slice(-1) == 'D') {
-              
-          //   } else {
-              
-          //   }
+          for (let j = 0; j < this.getProductData.length; j++) {
+            var t;
+            var tar_t: any;
+            t = this.getProductData[j].approx_time;
+
+            console.log(this.getProductData[j].approx_time.length);
             
-          // }
+
+            if (t.length == 3) {
+              tar_t = t.charAt(0) + t.charAt(1);              
+            } else {
+              tar_t = t.charAt(0);              
+            }
+
+            var n = parseInt(tar_t);
+
+            console.log(n);
+            
+            this.date2.setDate(this.today.getDate() + n);
+
+            console.log(this.date2);
+            
+
+            if (this.getProductData[j].approx_time.slice(-1) == 'D') {
+              this.getProductData[j] = Object.assign(this.getProductData[j],
+                { tar_date: this.date2.setDate(this.today.getDate() + n) }
+              );
+            } else {
+
+              this.getProductData[j] = Object.assign(this.getProductData[j],
+                { tar_date: this.date2.setMonth(this.today.getMonth() + n) }
+              );
+
+            }
+            
+          }
+
         console.log(this.getProductData);
         
       },
@@ -183,8 +213,44 @@ export class AddProductionComponent implements OnInit {
   showAddProduct() {
     this.show_prod = true;
   }
-  editProduct() {
+  editProduct(row) {
+    
+    var t_date = new Date(row.tar_date);
+    // t_date = this.datePipe.transform(t_date, 'yyyy-MM-dd');
+    console.log(t_date);
+    
     this.edit_prod = true;
+    this.editProductForm.patchValue({
+      target_time: t_date,
+      prod_id: row.prod_id,
+    });
+    // this.editProductForm.value.target_time.setDate(t_date);
+  }
+
+  chStatus(evt){
+    if (evt.target.value == 'completed') {
+
+      this.editProductForm.patchValue({
+        target_time: this.today,
+      });
+      
+    }
+  }
+
+  getScheduledTime(evt){
+    console.log(evt);
+    
+    var d1 = this.datePipe.transform(evt.value, 'yyyy-MM-dd');
+    var d2 = this.datePipe.transform(this.today, 'yyyy-MM-dd');
+
+    console.log(d1, d2);
+    
+
+    if ( this.editProductForm.value.status == 'completed' &&  d1 > d2) {
+      this.editProductForm.patchValue({
+        status: 'progress',
+      });      
+    }
   }
 
   prevent_0(e: any) {
@@ -195,6 +261,27 @@ export class AddProductionComponent implements OnInit {
     } else {
       this.qty_error = null;
     }
+  }
+  updateProduct(){
+    this.loader = true;
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    const req_body = {
+        "prodution_id": this.editProductForm.value.prod_id,
+        "expected_time": this.editProductForm.value.target_time,
+        "status": this.editProductForm.value.status
+    }
+
+    this.ErpService.post_Reqs(erp_all_api.urls.update_product, req_body, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        Notiflix.Report.success('Product updated Successfully', '', 'Close');
+      },
+      (err: any) => {
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+
+      });
   }
   cancel(){
     this.show_prod = false;

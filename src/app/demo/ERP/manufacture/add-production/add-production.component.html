@@ -11,7 +11,7 @@
                     <th class="border-top-0">Status</th>
                     <th class="border-top-0">Entry Time</th>
                     <th class="border-top-0">Expected Time</th>
-                    <th class="border-top-0 text-center">Action</th>
+                    <th class="border-top-0 text-center">Update</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,8 +20,8 @@
                     <td>{{data.quantity}}</td>
                     <td>In Progress</td>
                     <td>{{today | date}}</td>
-                    <td>{{data.expected_time | date}}</td>
-                    <td class="text-center"><span (click)="editProduct()" style="cursor: pointer;"><i class="fa fa-cog"></i></span></td>
+                    <td>{{data.tar_date | date}}</td>
+                    <td class="text-center"><span (click)="editProduct(data)" style="cursor: pointer;"><i class="fa fa-cog"></i></span></td>
                 </tr>
             </tbody>
         </table>
@@ -76,6 +76,24 @@
                 </div>
                 <div>
                     <label for="" class="mb-2">Status</label>
+                    <select formControlName="status" (change)="chStatus($event)" class="form-control">
+                        <option value="progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="" class="mb-2">Target Time</label>
+                    <input name="dateRange" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" formControlName="target_time" (dateTimeChange)="getScheduledTime($event)"
+                        class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD">
+                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                </div>
+            </div>
+            <!-- <div class="mb-2" *ngIf="editProductForm.get('status') == 'completed'">
+                <div>
+                    <input type="hidden" formControlName="prod_id" class="form-control">
+                </div>
+                <div>
+                    <label for="" class="mb-2">Status</label>
                     <select formControlName="status" class="form-control">
                         <option value="progress">In Progress</option>
                         <option value="completed">Completed</option>
@@ -83,11 +101,11 @@
                 </div>
                 <div>
                     <label for="" class="mb-2">Target Time</label>
-                    <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="target_time"
+                    <input name="dateRange" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" formControlName="target_time"
                         class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD">
-                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                 </div>
-            </div>
+            </div> -->
             <div class="btns my-3" style="float: right;">
                 <button class="btn btn-primary disable mr-2" type="submit" [disabled]="!editProductForm.valid || qty_error"
                     (click)="updateProduct()">Update</button>

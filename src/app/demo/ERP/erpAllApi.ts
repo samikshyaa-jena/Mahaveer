@@ -33,6 +33,7 @@ export class erp_all_api{
         update_prod_req:base_url+'/manufacture/updateProductRequirement',
         get_product:base_url+'/manufacture/productionData',
         add_product:base_url+'/manufacture/productEntry',
+        update_product:base_url+'/manufacture/update_productionData',
 
         // manufaturing ends
 
