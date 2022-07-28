@@ -71,6 +71,15 @@ export class AddProductionComponent implements OnInit {
           if (prod[i].delete_stat == 0 ) {
             this.getProductData.push(prod[i]);
           }
+          // for (let j = 0; j < this.productCategory.length; j++) {
+          //   if (this.getProductData[i].prod_id == this.productCategory[j].prod_id) {
+          //     console.log(this.getProductData[i].prod_id);
+
+          //     this.getProductData[i] = Object.assign(this.getProductData[i],
+          //       { production_id: this.productCategory[j].prodution_id }
+          //     );
+          //   }
+          // }
         }
 
         console.log("getProductData==>", this.getProductData);
@@ -276,7 +285,7 @@ export class AddProductionComponent implements OnInit {
     this.edit_prod = true;
     this.editProductForm.patchValue({
       target_time: t_date,
-      prod_id: row.prod_id,
+      prod_id: row.prodution_id,
     });
     // this.editProductForm.value.target_time.setDate(t_date);
 
