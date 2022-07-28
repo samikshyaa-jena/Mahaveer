@@ -1,5 +1,5 @@
-let base_url = 'http://3.109.161.106:3000'
-// let base_url = 'http://localhost:3000'
+// let base_url = 'http://3.109.161.106:3000'
+let base_url = 'http://localhost:3000'
 export class erp_all_api{
     public static urls = {
         // manufaturing strarts

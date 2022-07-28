@@ -17,10 +17,10 @@
             <tbody>
                 <tr *ngFor="let data of getProductData; let i = index">
                     <td>{{data.prod_name}}</td>
-                    <td>{{data.quantity}}</td>
-                    <td>In Progress</td>
+                    <td>{{data.qty}}</td>
+                    <td>{{data.status}}</td>
                     <td>{{today | date}}</td>
-                    <td>{{data.tar_date | date}}</td>
+                    <td>{{data.expected_time | date}}</td>
                     <td class="text-center"><span (click)="editProduct(data)" style="cursor: pointer;"><i class="fa fa-cog"></i></span></td>
                 </tr>
             </tbody>
@@ -71,7 +71,7 @@
     <div class="css_modal_content2">
         <form [formGroup]="editProductForm" class="my-3">
 
-            <div class="mb-2" *ngIf="!scrap">
+            <div class="mb-2">
                 <div>
                     <input type="hidden" formControlName="prod_id" class="form-control">
                 </div>

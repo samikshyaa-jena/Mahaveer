@@ -54,7 +54,7 @@ export class AddProductionComponent implements OnInit {
 
   ngOnInit(): void {
     this.get_Catagory();
-    this.get_proddata();
+    // this.get_proddata();
     this.get_Product();
   }
   get_Product() {
@@ -63,54 +63,57 @@ export class AddProductionComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
+    this.ErpService.get_Reqs(erp_all_api.urls.get_product, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         console.log(res);
         let prod = res.data;
         for (let i = 0; i < prod.length; i++) {
-          if (prod[i].delete_stat == 1 && prod[i].materials_data) {
+          if (prod[i].delete_stat == 0 ) {
             this.getProductData.push(prod[i]);
           }
         }
 
-          for (let j = 0; j < this.getProductData.length; j++) {
-            var t;
-            var tar_t: any;
-            t = this.getProductData[j].approx_time;
+        console.log("getProductData==>", this.getProductData);
+        
 
-            console.log(this.getProductData[j].approx_time.length);
+        //   for (let j = 0; j < this.getProductData.length; j++) {
+        //     var t;
+        //     var tar_t: any;
+        //     t = this.getProductData[j].approx_time;
+
+        //     console.log(this.getProductData[j].approx_time.length);
             
 
-            if (t.length == 3) {
-              tar_t = t.charAt(0) + t.charAt(1);              
-            } else {
-              tar_t = t.charAt(0);              
-            }
+        //     if (t.length == 3) {
+        //       tar_t = t.charAt(0) + t.charAt(1);              
+        //     } else {
+        //       tar_t = t.charAt(0);              
+        //     }
 
-            var n = parseInt(tar_t);
+        //     var n = parseInt(tar_t);
 
-            console.log(n);
+        //     console.log(n);
             
-            this.date2.setDate(this.today.getDate() + n);
+        //     this.date2.setDate(this.today.getDate() + n);
 
-            console.log(this.date2);
+        //     console.log(this.date2);
             
 
-            if (this.getProductData[j].approx_time.slice(-1) == 'D') {
-              this.getProductData[j] = Object.assign(this.getProductData[j],
-                { tar_date: this.date2.setDate(this.today.getDate() + n) }
-              );
-            } else {
+        //     if (this.getProductData[j].approx_time.slice(-1) == 'D') {
+        //       this.getProductData[j] = Object.assign(this.getProductData[j],
+        //         { tar_date: this.date2.setDate(this.today.getDate() + n) }
+        //       );
+        //     } else {
 
-              this.getProductData[j] = Object.assign(this.getProductData[j],
-                { tar_date: this.date2.setMonth(this.today.getMonth() + n) }
-              );
+        //       this.getProductData[j] = Object.assign(this.getProductData[j],
+        //         { tar_date: this.date2.setMonth(this.today.getMonth() + n) }
+        //       );
 
-            }
+        //     }
             
-          }
+        //   }
 
-        console.log(this.getProductData);
+        // console.log(this.getProductData);
         
       },
       (err: any) =>{
@@ -152,11 +155,11 @@ export class AddProductionComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.getProduct, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
-          if (catData[i].delete_stat == 0) {
+          if (catData[i].delete_stat == 0 && catData[i].materials_data.length > 0) {
             this.productCategory.push(catData[i]);
             this.prodData_id.push(catData[i].prod_id);
           }
@@ -169,28 +172,28 @@ export class AddProductionComponent implements OnInit {
       });
 
   };
-  get_proddata = () => {
-    this.loader = true;
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+  // get_proddata = () => {
+  //   this.loader = true;
+  //   let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+  //   let headers = new HttpHeaders();
+  //   headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.get_prod, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
-      (res: any) => {
-        let catData = res.data;
-        for (let i = 0; i < catData.length; i++) {
-          if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
-            this.productCategory.push(catData[i]);
-          }
-        }
-        console.log(this.productCategory);
-      },
-      (err: any) => {
-        Notiflix.Report.failure(err.error.msg, '', 'Close');
+  //   this.ErpService.get_Reqs(erp_all_api.urls.get_prod, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+  //     (res: any) => {
+  //       let catData = res.data;
+  //       for (let i = 0; i < catData.length; i++) {
+  //         if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
+  //           this.productCategory.push(catData[i]);
+  //         }
+  //       }
+  //       console.log(this.productCategory);
+  //     },
+  //     (err: any) => {
+  //       Notiflix.Report.failure(err.error.msg, '', 'Close');
 
-      });
+  //     });
 
-  };
+  // };
   getScrap = () => {
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
