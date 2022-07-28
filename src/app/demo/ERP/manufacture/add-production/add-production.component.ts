@@ -245,13 +245,12 @@ export class AddProductionComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    const req_body = {
+    const req_body = [{
     "type": this.editProductForm.value.scrap,
     "qty": this.editProductForm.value.qty,
     "unit": this.editProductForm.value.unit,
     "entry_date": this.datePipe.transform(this.today, 'yyyy-MM-dd')
-
-    }
+    }]
 
     this.ErpService.post_Reqs(erp_all_api.urls.add_scrap, req_body, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
