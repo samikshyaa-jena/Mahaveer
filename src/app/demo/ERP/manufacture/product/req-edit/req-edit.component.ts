@@ -146,61 +146,89 @@ export class ReqEditComponent implements OnInit {
     (<FormArray>this.updatemat.get('product')).removeAt(i)
   }
 
+  update_purchase_details = () => {
+
+    this.requirementformarray = [];
+    var p_form = this.updatemat.get('product')['controls'];
+    console.log(p_form);
+
+    for (let i = 0; i < p_form.length; i++) {
+      console.log(p_form[i].value);
+      this.requirementformarray.push(p_form[i].value)
+    }
+
+    if (this.requirementformarray) {
+
+      var product_arr = this.requirementformarray.map((p_array) => {
+        return {
+          mat_id: p_array.item,
+          qty: p_array.qty,
+        }
+      });
+
+    }
+
+    this.loader = true;
+    console.log(this.requirementformarray);
+    const reqBody = {
+      "prod_id": this.item_form.get('prod_name').value,
+      "targetTime": this.item_form.get('est_time').value + 'D',
+      "requirements": product_arr,
+    }
+
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.post_Reqs(erp_all_api.urls.update_prod_req, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        Notiflix.Report.success('SuccessFully Added', '', 'Close');
+        console.log(res, "get item");
+        this.item_form.reset();
+        this.previousPage();
+      },
+      (err: any) => {
+        console.log(err);
+        console.log(err.error.msg);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+      });
+  };
+
   
   chooseProduct(form_cont, item) {
 
-    form_cont.patchValue({
-      discount: 0,
-      qty: 1,
-    });
 
     console.log(item);
     console.log(form_cont);
     console.log(this.item_form);
     console.log(this.itemData2);
 
-    let hsn: number;
-    let gst: number;
-    let GST: number;
-    let gstvalue: number;
-    let mrp: number;
+    if (item != "ChooseProduct") {
+      let gst: number;
+      let GST: number;
+      let mrp: number;
 
-    for (let i = 0; i < this.itemData2.length; i++) {
-      if (this.itemData2[i].prod_id == item) {
-        GST = parseInt(this.itemData2[i].gst);
-        hsn = this.itemData2[i].hsn;
+      for (let i = 0; i < this.rawMat.length; i++) {
+        if (this.rawMat[i].material_id == item) {
+          // GST = parseInt(this.rawMat[i].gst);
+          GST = this.rawMat[i].gst;
+            mrp = this.rawMat[i].mrp;
+            gst = mrp * (GST / 100);
 
-        if (this.itemData2[i].mrp) {
-          mrp = this.itemData2[i].mrp;
-          gst = mrp * (GST / 100);
-        } else {
-          mrp = this.itemData2[i].price;
-          gst = mrp * (GST / 100);
-        }
-        this.itemname = this.itemData2[i].prod_name;
-
-        if (this.type == 'Intra State') {
-          gstvalue = gst / 2;
-          form_cont.patchValue({
-            igst: 0,
-            hsn: hsn,
-            cgst: gstvalue,
-            sgst: gstvalue,
-            price: mrp
-          });
-        }
-        else {
-          gstvalue = gst
-          form_cont.patchValue({
-            igst: gstvalue,
-            hsn: hsn,
-            cgst: 0,
-            sgst: 0,
-            price: mrp
-          });
+            form_cont.patchValue({
+              gst: gst,
+              gst_rate: this.rawMat[i].gst,
+              hsn: this.rawMat[i].hsn,
+              price: mrp,
+              unit: this.rawMat[i].unit,
+              qty: 1,
+            });
+          
         }
       }
+
     }
+
 
     this.calc_total(form_cont.controls);
   }
@@ -217,12 +245,12 @@ export class ReqEditComponent implements OnInit {
 
     let gst: number;
 
-    for (let i = 0; i < this.getProductData.materials_data.length; i++) {
-      if (this.getProductData.materials_data[i].mat_id == item) {
+    for (let i = 0; i < this.rawMat.length; i++) {
+      if (this.rawMat[i].material_id == item) {
 
         gst = prc * (GST / 100);
         console.log(GST);
-        console.log(this.getProductData.materials_data[i].mat_gst);
+        console.log(this.rawMat[i].gst);
         
         console.log(gst);
         
