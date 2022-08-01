@@ -20,6 +20,16 @@
     border: 1px solid #888;
     padding: 0;
     border-radius: 5px;
+    width: 350px;
+    height: auto;
+    padding: 1% 2% 0 2%;
+    }
+    .css_modal_content3 {
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+    padding: 0;
+    border-radius: 5px;
     width: 500px;
     height: auto;
     padding: 2%;
@@ -30,4 +40,9 @@
     .error_msg{
         color: red;
         margin-top: 1%;
+    }
+
+    .selSts{
+        border: 1px solid transparent;
+        width: 100px;
     }

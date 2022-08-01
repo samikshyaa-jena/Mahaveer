@@ -51,6 +51,8 @@ export class ProductComponent implements OnInit {
       gst: new FormControl("",[Validators.required]),
       min_stk: new FormControl("",[Validators.required]),
       unit: new FormControl("",[Validators.required]),
+      mrp: new FormControl("",[Validators.required]),
+      hsn: new FormControl("",[Validators.required]),
     });
    }
 
@@ -66,6 +68,8 @@ export class ProductComponent implements OnInit {
         gst: this.getProductData[i].gst,
         min_stk: this.getProductData[i].min_stock,
         unit: this.getProductData[i].unit,
+        mrp: this.getProductData[i].price,
+        hsn: this.getProductData[i].hsn,
       });
       this.modalService.open(content);
     }
@@ -108,7 +112,8 @@ export class ProductComponent implements OnInit {
   };
 
   add_Product = () =>{
-    this.loader = true;
+    // this.loader = true;
+    Notiflix.Loading.standard('Loading...');
     console.log(this.uploadedFiles);
 
     // var gst: number = parseInt(this.addProductForm.get('gst').value);

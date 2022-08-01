@@ -280,6 +280,8 @@ export class ReqEntryComponent implements OnInit {
 
   add_requirement = () => {
 
+    this.loader = true;
+
     this.requirementformarray = [];
     var p_form = this.addmat.get('product')['controls'];
     console.log(p_form);
@@ -300,7 +302,7 @@ export class ReqEntryComponent implements OnInit {
 
     }
 
-    this.loader = true;
+    
     console.log(this.requirementformarray);
     const reqBody = {
       "prod_id": this.item_form.get('prod_name').value,

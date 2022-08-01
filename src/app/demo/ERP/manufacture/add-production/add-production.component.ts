@@ -59,6 +59,7 @@ export class AddProductionComponent implements OnInit {
   }
   get_Product() {
     this.loader = true;
+    this.getProductData = [];
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
@@ -181,28 +182,29 @@ export class AddProductionComponent implements OnInit {
       });
 
   };
-  // get_proddata = () => {
-  //   this.loader = true;
-  //   let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-  //   let headers = new HttpHeaders();
-  //   headers = headers.set('auth-token', auth_token);
+  get_proddata = () => {
+    this.loader = true;
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
 
-  //   this.ErpService.get_Reqs(erp_all_api.urls.get_prod, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
-  //     (res: any) => {
-  //       let catData = res.data;
-  //       for (let i = 0; i < catData.length; i++) {
-  //         if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
-  //           this.productCategory.push(catData[i]);
-  //         }
-  //       }
-  //       console.log(this.productCategory);
-  //     },
-  //     (err: any) => {
-  //       Notiflix.Report.failure(err.error.msg, '', 'Close');
+    this.ErpService.get_Reqs(erp_all_api.urls.get_prod, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        let catData = res.data;
+        for (let i = 0; i < catData.length; i++) {
+          if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
+            this.productCategory.push(catData[i]);
+          }
+        }
+        console.log(this.productCategory);
+      },
+      (err: any) => {
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
 
-  //     });
+      });
 
-  // };
+  };
+ 
   getScrap = () => {
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
@@ -329,21 +331,23 @@ export class AddProductionComponent implements OnInit {
       this.qty_error = null;
     }
   }
-  updateProduct(){
+  updateProduct(status,row){
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
     const req_body = {
-        "prodution_id": this.editProductForm.value.prod_id,
-        "expected_time": this.editProductForm.value.target_time,
-        "status": this.editProductForm.value.status
+        "prodution_id": row.prod_id,
+        "expected_time": this.datePipe.transform(row.expected_time, 'dd-MM-yyyy'),
+        "status": status
     }
 
     this.ErpService.post_Reqs(erp_all_api.urls.update_product, req_body, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        Notiflix.Report.success('Product updated Successfully', '', 'Close');
+        // this.get_Product();
+        this.show_prod = false;
+        this.edit_prod = true;
       },
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
@@ -351,19 +355,19 @@ export class AddProductionComponent implements OnInit {
       });
   }
 
-  updateProduct_scrap(){
-    this.updateProduct();
-    if (this.editProductForm.value.status == 'completed') {      
-      this.addScrap();
-    }
-  }
+  // updateProduct_scrap(){
+  //   this.updateProduct();
+  //   if (this.editProductForm.value.status == 'completed') {      
+  //     this.addScrap();
+  //   }
+  // }
   cancel(){
     this.show_prod = false;
     this.addProductForm.reset();
   }
   cancelEdittab(){
     this.edit_prod = false;
-    this.editProductForm.reset();
+    // this.editProductForm.reset();
   }
   prevent_char(e: any) {
     console.log(e);   

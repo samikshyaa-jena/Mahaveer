@@ -11,17 +11,23 @@
                     <th class="border-top-0">Status</th>
                     <th class="border-top-0">Entry Time</th>
                     <th class="border-top-0">Expected Time</th>
-                    <th class="border-top-0 text-center">Update</th>
+                    <th class="border-top-0 text-center">View</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of getProductData; let i = index">
                     <td>{{data.prod_name}}</td>
                     <td>{{data.qty}}</td>
-                    <td>{{data.status}}</td>
-                    <td>{{today | date}}</td>
+                    <td *ngIf="data.status == 'completed'" style="text-transform: capitalize;">{{data.status}}</td>
+                    <td *ngIf="data.status == 'progress'">
+                        <select (change)="updateProduct($event.target.value,data)" class="selSts">
+                            <option value="progress" selected>In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </td>
+                    <td>{{data.entry_time | date}}</td>
                     <td>{{data.expected_time | date}}</td>
-                    <td class="text-center"><span (click)="editProduct(data)" style="cursor: pointer;"><i class="fa fa-cog"></i></span></td>
+                    <td class="text-center"><span (click)="editProduct(data)" style="cursor: pointer;"><i class="fas fa-eye"></i></span></td>
                 </tr>
             </tbody>
         </table>
@@ -68,6 +74,19 @@
 
 
 <div class="modal2" *ngIf='!show_prod && edit_prod'>
+    <div class="css_modal_content2">
+        <div>Do you want to do Scrap & Consumption ?</div>
+        <div class="btns my-3 d-flex justify-content-center">
+            <button class="btn btn-primary disable mr-2" type="submit"
+                (click)="get_Product(); cancelEdittab()">Cancel</button>
+            <button class="btn btn-warning" type="reset" [routerLink]="['/v1/manufacture/scrapcons']">OK</button>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- <div class="modal2" *ngIf='!show_prod && edit_prod'>
     <div class="css_modal_content2">
         <form [formGroup]="editProductForm" class="my-3">
 
@@ -120,4 +139,4 @@
             </div>
         </form>
     </div>
-</div>
+</div> -->

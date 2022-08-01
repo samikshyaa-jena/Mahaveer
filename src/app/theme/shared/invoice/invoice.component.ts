@@ -13,6 +13,7 @@ export class InvoiceComponent implements OnInit {
   @ViewChild("screen", { static: false }) screen: ElementRef;
   @ViewChild("canvas", { static: false }) canvas: ElementRef;
   @ViewChild("downloadLink", { static: false }) downloadLink: ElementRef;
+
   filePreview: string;
   @Output() newItemEvent = new EventEmitter<boolean>();
   @Input() invoiceData_heading: any;
@@ -47,7 +48,11 @@ export class InvoiceComponent implements OnInit {
         this.invoiceData.sellData.sgst = (this.invoiceData.sellData.sgst * 100)/this.invoiceData.sellData.price;
         this.invoiceData.sellData.igst = (this.invoiceData.sellData.igst * 100)/this.invoiceData.sellData.price;
 
-        this.invoiceData.prod_img = `data:image/jpeg;base64,${this.invoiceData.prod_img}`;
+        // var base64 = this.getBase64Image(document.getElementById("imageid"));
+        // console.log(base64);
+        
+
+        // this.invoiceData.prod_img = `data:image/jpeg;base64,${base64}`;
         
       }
     }
@@ -59,15 +64,41 @@ export class InvoiceComponent implements OnInit {
         this.invoiceData.quote_Data.sgst = (this.invoiceData.quote_Data.sgst * 100)/this.invoiceData.quote_Data.price;
         this.invoiceData.quote_Data.igst = (this.invoiceData.quote_Data.igst * 100)/this.invoiceData.quote_Data.price;
 
-        this.invoiceData.prod_img = `data:image/jpeg;base64,${this.invoiceData.prod_img}`;
+        // this.invoiceData.prod_img = `data:image/jpeg;base64,${this.invoiceData.prod_img}`;
         
       }
     }
     
   }
+
+  getBase64Image(img) {
+    var canvas = document.createElement("canvas");
+    // canvas.width = img.width;
+    // canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    var dataURL = canvas.toDataURL("image/png");
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+  } 
+
   reverse = () =>{
     this.newItemEvent.emit(true);
   }
+  
+
+    // print(){
+
+    //   html2canvas(this.screen.nativeElement).then(canvas => {
+    //     this.canvas.nativeElement.src = canvas.toDataURL();
+    //     this.downloadLink.nativeElement.href = canvas.toDataURL("image/png");
+    //     this.downloadLink.nativeElement.download = "My-QR-Code.png";
+    //     this.downloadLink.nativeElement.click();
+    //   });
+  
+
+    // }
+
+
 
     print(){
       let dt = Date.now(); 
@@ -84,8 +115,11 @@ export class InvoiceComponent implements OnInit {
         const contentDataURL = canvas.toDataURL('image/png');  
         let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF  
         var position = 0;  
-        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);  
-        pdf.save('invoice'+dt+'.pdf'); // Generated PDF
+        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight); 
+        // pdf.save('invoice'+dt+'.pdf'); // Generated PDF
+        // pdf.autoPrint();
+        window.open(pdf.output(), '_blank');
+        // window.print();
   
       });
   
