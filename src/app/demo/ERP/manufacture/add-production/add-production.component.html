@@ -18,8 +18,8 @@
                 <tr *ngFor="let data of getProductData; let i = index">
                     <td>{{data.prod_name}}</td>
                     <td>{{data.qty}}</td>
-                    <td *ngIf="data.status == 'completed'" style="text-transform: capitalize;">{{data.status}}</td>
-                    <td *ngIf="data.status == 'progress'">
+                    <!-- <td *ngIf="data.status == 'completed'" style="text-transform: capitalize;">{{data.status}}</td> -->
+                    <td *ngIf="data.status == 'completed'">
                         <select (change)="updateProduct($event.target.value,data)" class="selSts">
                             <option value="progress" selected>In Progress</option>
                             <option value="completed">Completed</option>

@@ -53,7 +53,7 @@
     "rxjs": "^6.5.2",
     "rxjs-compat": "^6.5.2",
     "screenfull": "^4.2.0",
-    "to-words": "^3.2.0",
+    "to-words": "^3.3.0",
     "toastify-js": "^1.9.3",
     "tslib": "^1.9.0",
     "vex-js": "^4.1.0",
