@@ -1,4 +1,4 @@
-<div class="container card p-3">
+<div class="container card p-3" *ngIf='!scrap_con'>
     <div class="prod_table">
         <div style="float: right; margin: 10px 0;">
             <button class="btn btn-primary" (click)="showAddProduct()">Add Production</button>
@@ -17,17 +17,21 @@
             <tbody>
                 <tr *ngFor="let data of getProductData; let i = index">
                     <td>{{data.prod_name}}</td>
-                    <td>{{data.qty}}</td>
-                    <!-- <td *ngIf="data.status == 'completed'" style="text-transform: capitalize;">{{data.status}}</td> -->
-                    <td *ngIf="data.status == 'completed'">
+                    <td>{{data.quantity}}</td>
+                    <td *ngIf="data.status == 'complete'" style="text-transform: capitalize;">Completed</td>
+                    <td *ngIf="data.status == 'in process'">
                         <select (change)="updateProduct($event.target.value,data)" class="selSts">
-                            <option value="progress" selected>In Progress</option>
-                            <option value="completed">Completed</option>
+                            <option value="in process" selected>In Progress</option>
+                            <option value="complete">Completed</option>
                         </select>
                     </td>
                     <td>{{data.entry_time | date}}</td>
-                    <td>{{data.expected_time | date}}</td>
-                    <td class="text-center"><span (click)="editProduct(data)" style="cursor: pointer;"><i class="fas fa-eye"></i></span></td>
+                    <td>
+                        <input name="dateRange2" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" value="{{data.expected_time | date}}"
+                        class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD" style="width: 230px;">
+                    <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
+                    </td>
+                    <td class="text-center"><span (click)="editProduct(data); edit = false;" style="cursor: pointer;"><i class="fas fa-eye"></i></span></td>
                 </tr>
             </tbody>
         </table>
@@ -35,6 +39,9 @@
     </div>
 
 </div>
+
+
+<app-scrap-consumption *ngIf='scrap_con' (BackTab)="scrap_con=$event" [edit]="edit" [rawmatData]="rawmatData"></app-scrap-consumption>
 
 
 
@@ -79,7 +86,7 @@
         <div class="btns my-3 d-flex justify-content-center">
             <button class="btn btn-primary disable mr-2" type="submit"
                 (click)="get_Product(); cancelEdittab()">Cancel</button>
-            <button class="btn btn-warning" type="reset" [routerLink]="['/v1/manufacture/scrapcons']">OK</button>
+            <button class="btn btn-warning" type="reset" (click)="scrap_con = true; cancelEdittab()">OK</button>
         </div>
 
     </div>

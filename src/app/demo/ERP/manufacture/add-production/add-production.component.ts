@@ -8,6 +8,7 @@ import { ErpServiceService } from '../../erp-service.service';
 import { erp_all_api } from '../../erpAllApi';
 import * as Notiflix from 'notiflix';
 import { DatePipe } from '@angular/common';
+import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'app-add-production',
@@ -32,6 +33,8 @@ export class AddProductionComponent implements OnInit {
   getscrapData: any;
   showAutcompleteList: boolean;
   getscrapData2: any;
+  edit: boolean;
+  rawmatData: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -233,8 +236,8 @@ export class AddProductionComponent implements OnInit {
 
     const req_body = {
       "prod_id": this.addProductForm.value.prod_name,
-      "targetTime": this.datePipe.transform(this.addProductForm.value.target_time, 'dd-MM-yyyy'),
-      "qty": this.addProductForm.value.qty
+      "targetTime": this.datePipe.transform(this.addProductForm.value.target_time, 'MM-dd-yyyy'),
+      "qty": parseInt(this.addProductForm.value.qty)
 
     }
 
@@ -279,19 +282,21 @@ export class AddProductionComponent implements OnInit {
     this.show_prod = true;
   }
   editProduct(row) {
-    
-    var t_date = new Date(row.tar_date);
-    // t_date = this.datePipe.transform(t_date, 'yyyy-MM-dd');
-    console.log(t_date);
-    
+
     this.edit_prod = true;
-    this.editProductForm.patchValue({
-      target_time: t_date,
-      prod_id: row.prodution_id,
-    });
+    this.rawmatData = row;
+    
+    // var t_date = new Date(row.tar_date);
+    // t_date = this.datePipe.transform(t_date, 'yyyy-MM-dd');
+    // console.log(t_date);
+    
+    // this.editProductForm.patchValue({
+    //   target_time: t_date,
+    //   prod_id: row.prodution_id,
+    // });
     // this.editProductForm.value.target_time.setDate(t_date);
 
-    this.getScrap();
+    // this.getScrap();
   }
 
   chStatus(evt){
@@ -332,13 +337,18 @@ export class AddProductionComponent implements OnInit {
     }
   }
   updateProduct(status,row){
+    console.log(row);
+
+    this.edit = true;
+    this.rawmatData = row;
+    
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
     const req_body = {
-        "prodution_id": row.prod_id,
+        "prodution_id": row.production_id,
         "expected_time": this.datePipe.transform(row.expected_time, 'dd-MM-yyyy'),
         "status": status
     }

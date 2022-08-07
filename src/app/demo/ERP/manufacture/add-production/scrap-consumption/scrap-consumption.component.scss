@@ -26,13 +26,13 @@
     align-items: center;
     .left_cnt{
         input{
-            width: 250px;
+            width: 70px;
             height: 30px;
             border-radius: 2px;
             border: 1.5px solid #07abb0;
         }
-        select{
-            width: 70px;
+        .mat_name{
+            width: 250px;
             height: 30px;
             border-radius: 2px;
             border: 1.5px solid lightgray;
@@ -45,6 +45,7 @@
         align-items: center;
         input{
             border: 0;
+            width: 70px;
         }
     }
 }
@@ -74,7 +75,16 @@
     border: 1px solid lightgray;
 }
 
-// .btn-primary{
-//     background: #1888e7;
-//     color: white;
-// }
+.back_btn{
+    font-size: 25px;
+    color: royalblue;
+    padding: 0;
+}
+.tab_inp{
+    border: 0;
+    padding: 0;
+}
+
+.disable:disabled{
+    cursor: not-allowed;
+}
