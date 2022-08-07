@@ -1,0 +1,95 @@
+<div *ngIf="loader"
+    class="spinner-container spinner-container d-flex position-fixed h-100 justify-content-center align-items-center">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+<button type="button" class="btn back_btn" (click)="previousPage()"><i
+        class="fas fa-arrow-alt-circle-left"></i></button>
+
+<div class="card top_bar">
+
+    <div>
+        <span class="mr-2"><i class="fas fa-search"></i></span>
+        <input type="text" placeholder="Search Transactions">
+    </div>
+
+    <div class="top_btn">
+        <button class="btn btn-danger mr-2"><span class="mr-2"><i class="fas fa-plus-circle"></i></span><span>Add
+                Sale</span></button>
+        <button class="btn btn-primary mr-2"><span class="mr-2"><i class="fas fa-plus-circle"></i></span><span>Add
+                Purcheses</span></button>
+        <button class="btn btn-light"><span class="mr-2"><i class="fas fa-plus-circle"></i></span><span>Add
+                More</span></button>
+    </div>
+
+</div>
+
+
+<div class="card main_cnt mb-4">
+
+    <div style="color: black; font-weight: bold; font-size: 20px; margin-left: -1%;">Manufacture</div>
+    <hr style="margin: 1% auto 1.5% -3%; width: 106%;">
+
+    <form class="bar2 mb-4" [formGroup]="addProductForm">
+        <div class="left_cnt">
+            <label for="" style="color: black; font-weight: bold;">Manufactured Quantity</label><br>
+           <div class="d-flex">
+            <div class="mr-2">
+                <input type="text" (keypress)="prevent_char($event)" (input)="prevent_0($event); totalCalculation()" formControlName="qty">
+                    <div class="error_msg" *ngIf="qty_error">{{qty_error}}</div>
+            </div>
+            <select formControlName="prod_name" class="mat_name" (change)="showRawmat($event.target.value)">
+                <option value="choose_prod" disabled>Choose Product</option>
+                <option class="disable" *ngFor="let category of productCategory;let i=index"
+                    [value]="category.prod_id">
+                    {{category.prod_name}}</option>
+            </select>
+           </div>
+        </div>
+
+        <div class="right_cnt">
+                <label class="datee">Date: &nbsp;</label>
+                <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="target_time"
+                        class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD">
+                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+        </div>
+    </form>
+
+    <div><span style="color: black;">Raw Material &nbsp;</span></div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>RAW MATERIAL</th>
+                <th>Quantity</th>
+                <th class="text-right">PRICE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of materialsData; let i = index">
+                <td class="td_v" style="width: 5%;">{{i + 1}}</td>
+                <td class="td_v">{{data.item_name}}</td>
+                <td class="td_v">{{data.qty? data.qty : data.quantity}}</td>
+                <td class="text-right td_v">{{data.mrp}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-end align-items-center mb-4"
+        style="border: 1px solid lightgray;border-top: none; padding: 5px 10px;">
+        <div style="color: black;"><span>TOTAL: &nbsp;</span><span><i
+                    class="fas fa-rupee-sign"></i></span><span>{{total}}</span></div>
+    </div>
+
+</div>
+
+<hr style="margin: 1% auto 1.5% -3%; width: 106%; margin-top: 10%;">
+
+    <div class="d-flex justify-content-end align-items-center">
+        <div>
+            <button class="btn btn-danger mr-2" style="border-radius: 2px;" (click)="previousPage()">Cancel</button>
+            <button class="btn btn-primary disable" style="border-radius: 2px;"(click)="add_Product()" type="submit" [disabled]="!addProductForm.valid || qty_error">Submit</button>
+        </div>
+    </div>

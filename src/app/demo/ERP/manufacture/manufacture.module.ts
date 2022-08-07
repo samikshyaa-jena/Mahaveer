@@ -17,10 +17,11 @@ import { ReqEditComponent } from './product/req-edit/req-edit.component';
 import { AddProductionComponent } from './add-production/add-production.component';
 import { ScrapComponent } from './scrap/scrap.component';
 import { ScrapConsumptionComponent } from './add-production/scrap-consumption/scrap-consumption.component';
+import { ProdEntryComponent } from './add-production/prod-entry/prod-entry.component';
 
 
 @NgModule({
-  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, ProductComponent, PurchaseAddComponent, DebitNoteComponent, ReqEntryComponent, ReqEditComponent, AddProductionComponent, ScrapComponent, ScrapConsumptionComponent],
+  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, ProductComponent, PurchaseAddComponent, DebitNoteComponent, ReqEntryComponent, ReqEditComponent, AddProductionComponent, ScrapComponent, ScrapConsumptionComponent, ProdEntryComponent],
   imports: [
     CommonModule,
     ManufactureRoutingModule,

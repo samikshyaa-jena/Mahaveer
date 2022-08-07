@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddProductionComponent } from './add-production/add-production.component';
+import { ProdEntryComponent } from './add-production/prod-entry/prod-entry.component';
 import { ScrapConsumptionComponent } from './add-production/scrap-consumption/scrap-consumption.component';
 import { CatagoryComponent } from './catagory/catagory.component';
 import { ProductComponent } from './product/product.component';
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'scrapcons',
     component: ScrapConsumptionComponent
+  },
+  {
+    path: 'prodent',
+    component: ProdEntryComponent
   },
 ];
 

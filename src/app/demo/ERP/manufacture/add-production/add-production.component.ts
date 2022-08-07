@@ -244,7 +244,6 @@ export class AddProductionComponent implements OnInit {
     this.ErpService.post_Reqs(erp_all_api.urls.add_product, req_body, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success(res, '', 'Close');
-        this.cancel();
         this.get_Product();
       },
       (err: any) => {
@@ -280,6 +279,7 @@ export class AddProductionComponent implements OnInit {
 
   showAddProduct() {
     this.show_prod = true;
+    this.scrap_con = false;
   }
   editProduct(row) {
 
@@ -371,9 +371,9 @@ export class AddProductionComponent implements OnInit {
   //     this.addScrap();
   //   }
   // }
-  cancel(){
+  showscrapcons(){
+    this.scrap_con = true;
     this.show_prod = false;
-    this.addProductForm.reset();
   }
   cancelEdittab(){
     this.edit_prod = false;
@@ -417,6 +417,7 @@ export class AddProductionComponent implements OnInit {
 
   back(e){
     this.scrap_con = e;
+    this.show_prod = e;
     this.get_Product();
   }
 

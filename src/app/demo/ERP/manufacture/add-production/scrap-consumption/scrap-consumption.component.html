@@ -1,5 +1,5 @@
 <div *ngIf="loader"
-    class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+    class="spinner-container spinner-container d-flex position-fixed h-100 justify-content-center align-items-center">
     <div class="d-flex justify-content-center">
         <div class="spinner-border" role="status">
             <span class="sr-only">Loading...</span>
@@ -79,10 +79,10 @@
         </thead>
         <tbody>
             <tr *ngFor="let data of rawmatData.used_raw_mat_data; let i = index">
-                <td style="width: 5%;">{{i + 1}}</td>
-                <td>{{data.item_name}}</td>
-                <td>{{data.quantity}}</td>
-                <td class="text-right">{{data.mrp}}</td>
+                <td class="td_v" style="width: 5%;">{{i + 1}}</td>
+                <td class="td_v">{{data.item_name}}</td>
+                <td class="td_v">{{data.quantity}}</td>
+                <td class="text-right td_v">{{data.mrp}}</td>
                 <!-- <td class="text-right">fdtyuisjo</td>
                 <td class="text-right">fdtyuisjo</td> -->
             </tr>
@@ -97,7 +97,7 @@
     </div>
 
 
-    <div><span style="color: black;">Scra Data &nbsp;</span></div>
+    <div><span style="color: black;">Scrap Data &nbsp;</span></div>
     <form [formGroup]="scrapForm">
         <table class="table">
             <thead>
@@ -110,15 +110,15 @@
             </thead>
             <tbody>
                 <tr *ngFor="let data of rawmatData.scrap_data; let i = index">
-                    <td style="width: 5%;">{{i + 1}}</td>
-                    <td>{{data.type}}</td>
-                    <td>{{data.qty}}</td>
-                    <td class="text-right">{{data.unit}}</td>
+                    <td class="td_v" style="width: 5%;">{{i + 1}}</td>
+                    <td class="td_v">{{data.type}}</td>
+                    <td class="td_v">{{data.qty}}</td>
+                    <td class="text-right td_v">{{data.unit}}</td>
                 </tr>
                 <ng-container formArrayName="Scrap">
                     <tr *ngFor="let Product of scrapForm.get('Scrap')['controls'];let i=index" [formGroupName]="i">
-                        <td>{{i + 1 + rawmatData.scrap_data.length}}</td>
-                        <td>
+                        <td class="td_v">{{i + 1 + rawmatData.scrap_data.length}}</td>
+                        <td class="td_e">
                             <input type="text" class="tab_inp readonly" (input)="getSc($event,i)"
                                 formControlName="scrap" autocomplete="off"
                                >
@@ -133,9 +133,9 @@
 
                         </td>
                         <!-- <td><input class="tab_inp" type="text" formControlName="scrap" [readonly]="!edit"></td> -->
-                        <td><input class="tab_inp readonly" type="text" (keypress)="prevent_0($event)"
+                        <td class="td_e"><input class="tab_inp readonly" type="text" (keypress)="prevent_0($event)"
                                 formControlName="qty"></td>
-                        <td class="text-right"><input class="tab_inp text-right w-100 readonly" type="text"
+                        <td class="text-right td_e"><input class="tab_inp text-right readonly" type="text"
                                 formControlName="unit">
                         </td>
                         <!-- <input type="hidden" formControlName="edit"> -->
@@ -179,16 +179,16 @@
             </thead>
             <tbody>
                 <tr *ngFor="let data of rawmatData.consumption_data; let i = index">
-                        <td style="width: 5%;">{{i + 1}}</td>
-                        <td>{{data.type}}</td>
-                        <td class="text-right">{{data.cost}}</td>
+                        <td class="td_v" style="width: 5%;">{{i + 1}}</td>
+                        <td class="td_v">{{data.type}}</td>
+                        <td class="text-right td_v">{{data.cost}}</td>
                     </tr>
                 <ng-container formArrayName="Consumption">
                     <tr *ngFor="let Product of consumptionForm.get('Consumption')['controls'];let i=index"
                         [formGroupName]="i">
-                        <td>{{i + 1 + rawmatData.consumption_data.length}}</td>
+                        <td class="td_v">{{i + 1 + rawmatData.consumption_data.length}}</td>
                         <!-- <td><input class="tab_inp readonly" type="text" formControlName="consumption"[readonly]="Product.controls.edit.value == false"></td> -->
-                        <td>
+                        <td class="td_e">
                             <input type="text" class="tab_inp readonly" (input)="getcn($event,i)"
                                 formControlName="consumption" autocomplete="off"
                                >
@@ -201,7 +201,7 @@
                                 </ul>
                             </div>
                         </td>
-                        <td class="text-right"><input class="tab_inp text-right w-100 readonly" type="text"
+                        <td class="text-right td_e"><input class="tab_inp text-right readonly" type="text"
                                 (keypress)="prevent_char($event)"
                                 (input)="calc_total(Product.controls); totalCalculation()" formControlName="cost"
                                ></td>
