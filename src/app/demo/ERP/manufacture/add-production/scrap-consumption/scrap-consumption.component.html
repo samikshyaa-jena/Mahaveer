@@ -1,3 +1,11 @@
+<div *ngIf="loader"
+    class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
 <button type="button" class="btn back_btn" (click)="previousPage()"><i
         class="fas fa-arrow-alt-circle-left"></i></button>
 
@@ -28,8 +36,8 @@
     <div class="bar2 mb-4">
         <div class="left_cnt">
             <label for="" style="color: black; font-weight: bold;">Manufactured Quantity</label><br>
-            <input type="text" value="{{rawmatData.quantity}}" class="mr-2" readonly>
-            <input type="text" value="{{rawmatData.prod_name}}" class="mat_name" readonly>
+            <input type="text" value="{{rawmatData.quantity}}" class="mr-2 readonly" readonly>
+            <input type="text" value="{{rawmatData.prod_name}}" class="mat_name readonly" readonly>
             <!-- <select name="" id="">
                 <option value="a">a</option>
                 <option value="a">a</option>
@@ -42,7 +50,7 @@
         <div class="right_cnt">
             <div class="datee">
                 <label for="">Date: &nbsp;</label>
-                <input type="text" value="{{rawmatData.expected_time | date: 'dd/MM/yyyy'}}" readonly>
+                <input class="readonly" type="text" value="{{rawmatData.expected_time | date: 'dd/MM/yyyy'}}" readonly>
                 <!-- <input type="date"> -->
             </div>
             <!-- <div class="v_line mx-4"></div>
@@ -85,7 +93,7 @@
         <!-- <button class="btn" border="none" style="color: #07abb0; padding-left: 10px;"><span><i class="fas fa-plus"></i>
                 &nbsp; &nbsp;</span><span>Add Row</span></button> -->
         <div style="color: black;"><span>TOTAL: &nbsp;</span><span><i
-                    class="fas fa-rupee-sign"></i></span><span>10,000</span></div>
+                    class="fas fa-rupee-sign"></i></span><span>{{t_rawmat}}</span></div>
     </div>
 
 
@@ -101,16 +109,36 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr *ngFor="let data of rawmatData.scrap_data; let i = index"> -->
+                <tr *ngFor="let data of rawmatData.scrap_data; let i = index">
+                    <td style="width: 5%;">{{i + 1}}</td>
+                    <td>{{data.type}}</td>
+                    <td>{{data.qty}}</td>
+                    <td class="text-right">{{data.unit}}</td>
+                </tr>
                 <ng-container formArrayName="Scrap">
                     <tr *ngFor="let Product of scrapForm.get('Scrap')['controls'];let i=index" [formGroupName]="i">
-                        <td>{{i + 1}}</td>
-                        <td><input class="tab_inp" type="text" formControlName="scrap" [readonly]="!edit"></td>
-                        <td><input class="tab_inp" type="text" (keypress)="prevent_0($event)" formControlName="qty"
-                                [readonly]="!edit"></td>
-                        <td class="text-right"><input class="tab_inp text-right" type="text" formControlName="unit"
-                                [readonly]="!edit">
+                        <td>{{i + 1 + rawmatData.scrap_data.length}}</td>
+                        <td>
+                            <input type="text" class="tab_inp readonly" (input)="getSc($event,i)"
+                                formControlName="scrap" autocomplete="off"
+                               >
+
+                            <div #elasticResDiv class="elasticResDiv" *ngIf="showAutcompleteList===i">
+                                <ul class="list-group">
+                                    <li class="list-group-item" *ngFor="let data of getscrapData"
+                                        (click)="selectScrap(data,Product.controls)">
+                                        {{data.type}}</li>
+                                </ul>
+                            </div>
+
                         </td>
+                        <!-- <td><input class="tab_inp" type="text" formControlName="scrap" [readonly]="!edit"></td> -->
+                        <td><input class="tab_inp readonly" type="text" (keypress)="prevent_0($event)"
+                                formControlName="qty"></td>
+                        <td class="text-right"><input class="tab_inp text-right w-100 readonly" type="text"
+                                formControlName="unit">
+                        </td>
+                        <!-- <input type="hidden" formControlName="edit"> -->
                     </tr>
                 </ng-container>
             </tbody>
@@ -119,7 +147,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4"
         style="border: 1px solid lightgray;border-top: none; padding-right: 10px;">
         <button (click)="add_row()" class="btn disable" border="none" style="color: #07abb0; padding-left: 10px;"
-            [disabled]="!edit"><span><i class="fas fa-plus"></i>
+            [disabled]="!edit || scrapForm.get('Scrap')['controls'][scrapForm.get('Scrap')['controls'].length-1].status == 'INVALID'"><span><i class="fas fa-plus"></i>
                 &nbsp; &nbsp;</span><span>Add Row</span></button>
         <div class="d-flex align-items-center">
             <!-- <div>
@@ -133,8 +161,8 @@
                 </span>
             </div>
             <div class="v_line2 mx-4"></div> -->
-            <div style="color: black;"><span>TOTAL: &nbsp;</span><span><i
-                        class="fas fa-rupee-sign"></i></span><span>10,000</span></div>
+            <!-- <div style="color: black;"><span>TOTAL: &nbsp;</span><span><i
+                        class="fas fa-rupee-sign"></i></span><span>10,000</span></div> -->
         </div>
     </div>
 
@@ -146,18 +174,38 @@
                 <tr>
                     <th style="width: 5%;"></th>
                     <th>Consumption</th>
-                    <th class="text-right">UNIT</th>
+                    <th class="text-right">COST</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- <tr *ngFor="let data of rawmatData.scrap_data; let i = index"> -->
+                <tr *ngFor="let data of rawmatData.consumption_data; let i = index">
+                        <td style="width: 5%;">{{i + 1}}</td>
+                        <td>{{data.type}}</td>
+                        <td class="text-right">{{data.cost}}</td>
+                    </tr>
                 <ng-container formArrayName="Consumption">
                     <tr *ngFor="let Product of consumptionForm.get('Consumption')['controls'];let i=index"
                         [formGroupName]="i">
-                        <td>{{i + 1}}</td>
-                        <td><input class="tab_inp" type="text" formControlName="consumption" [readonly]="!edit"></td>
-                        <td class="text-right"><input class="tab_inp text-right" type="text"
-                                (keypress)="prevent_char($event)" formControlName="cost" [readonly]="!edit"></td>
+                        <td>{{i + 1 + rawmatData.consumption_data.length}}</td>
+                        <!-- <td><input class="tab_inp readonly" type="text" formControlName="consumption"[readonly]="Product.controls.edit.value == false"></td> -->
+                        <td>
+                            <input type="text" class="tab_inp readonly" (input)="getcn($event,i)"
+                                formControlName="consumption" autocomplete="off"
+                               >
+
+                            <div #elasticResDiv2 class="elasticResDiv" *ngIf="showAutcompleteList2===i">
+                                <ul class="list-group">
+                                    <li class="list-group-item" *ngFor="let data of getconsData"
+                                        (click)="selectCons(data,Product.controls)">
+                                        {{data.type}}</li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="text-right"><input class="tab_inp text-right w-100 readonly" type="text"
+                                (keypress)="prevent_char($event)"
+                                (input)="calc_total(Product.controls); totalCalculation()" formControlName="cost"
+                               ></td>
+                        <!-- <input type="hidden" formControlName="edit"> -->
                     </tr>
                 </ng-container>
             </tbody>
@@ -166,7 +214,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4"
         style="border: 1px solid lightgray;border-top: none; padding-right: 10px;">
         <button (click)="add_row2()" class="btn disable" border="none" style="color: #07abb0; padding-left: 10px;"
-            [disabled]="!edit"><span><i class="fas fa-plus"></i>
+            [disabled]="!edit || consumptionForm.get('Consumption')['controls'][consumptionForm.get('Consumption')['controls'].length-1].status == 'INVALID'"><span><i class="fas fa-plus"></i>
                 &nbsp; &nbsp;</span><span>Add Row</span></button>
         <div class="d-flex align-items-center">
             <!-- <div>
@@ -181,7 +229,7 @@
             </div>
             <div class="v_line2 mx-4"></div> -->
             <div style="color: black;"><span>TOTAL: &nbsp;</span><span><i
-                        class="fas fa-rupee-sign"></i></span><span>10,000</span></div>
+                        class="fas fa-rupee-sign"></i></span><span>{{t_cons}}</span></div>
         </div>
     </div>
 
@@ -190,10 +238,10 @@
     <div class="d-flex justify-content-between align-items-center">
         <div style="border: 1px solid #eedfbe; background: #eedfbe; border-radius: 5px; padding: 0.2% 1%;"><span
                 style="color: black;">Total Estimated Cost(Raw Material + Additional Cost) = &nbsp;</span><span><i
-                    class="fas fa-rupee-sign"></i></span><span>12,989</span></div>
+                    class="fas fa-rupee-sign"></i></span><span>{{total}}</span></div>
         <div>
             <button class="btn btn-danger mr-2" style="border-radius: 2px;" (click)="previousPage()">Cancel</button>
-            <button class="btn btn-primary" style="border-radius: 2px;" (click)="previousPage()">Submit</button>
+            <button class="btn btn-primary disable" style="border-radius: 2px;" (click)="addScrap()" [disabled]="!edit || scrapForm.get('Scrap')['controls'][scrapForm.get('Scrap')['controls'].length-1].status == 'INVALID' || consumptionForm.get('Consumption')['controls'][consumptionForm.get('Consumption')['controls'].length-1].status == 'INVALID'">Submit</button>
         </div>
     </div>
 

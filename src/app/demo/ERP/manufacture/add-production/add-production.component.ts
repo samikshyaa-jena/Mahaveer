@@ -8,7 +8,6 @@ import { ErpServiceService } from '../../erp-service.service';
 import { erp_all_api } from '../../erpAllApi';
 import * as Notiflix from 'notiflix';
 import { DatePipe } from '@angular/common';
-import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'app-add-production',
@@ -35,6 +34,7 @@ export class AddProductionComponent implements OnInit {
   getscrapData2: any;
   edit: boolean;
   rawmatData: any;
+  scrap_con: boolean;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -208,26 +208,26 @@ export class AddProductionComponent implements OnInit {
 
   };
  
-  getScrap = () => {
-    this.loader = true;
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+  // getScrap = () => {
+  //   this.loader = true;
+  //   let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+  //   let headers = new HttpHeaders();
+  //   headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.get_scrap, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
-      (res: any) => {
-        console.log(res);
+  //   this.ErpService.get_Reqs(erp_all_api.urls.get_scrap, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+  //     (res: any) => {
+  //       console.log(res);
 
-        this.getscrapData = res.data;
-        this.getscrapData2 = res.data;
+  //       this.getscrapData = res.data;
+  //       this.getscrapData2 = res.data;
         
-      },
-      (err: any) => {
-        Notiflix.Report.failure(err.error.msg, '', 'Close');
+  //     },
+  //     (err: any) => {
+  //       Notiflix.Report.failure(err.error.msg, '', 'Close');
 
-      });
+  //     });
 
-  };
+  // };
   add_Product = () => {
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
@@ -385,34 +385,39 @@ export class AddProductionComponent implements OnInit {
       return e.keyCode >= 48 && e.charCode <= 57;
   }
 
-  getSc(event){
-    if (event.target.value != '') {
-      const val = event.target.value;
-    this.getscrapData = this.getscrapData2;
-    var temp = this.getscrapData.filter(d => {
-      const vals = d.type;
-      console.log(vals);
+  // getSc(event){
+  //   if (event.target.value != '') {
+  //     const val = event.target.value;
+  //   this.getscrapData = this.getscrapData2;
+  //   var temp = this.getscrapData.filter(d => {
+  //     const vals = d.type;
+  //     console.log(vals);
       
-      return new RegExp(val, 'gi').test(vals.toString());
-    });
+  //     return new RegExp(val, 'gi').test(vals.toString());
+  //   });
   
-    this.getscrapData = temp;
-    if (temp && temp != '') {
-      this.showAutcompleteList = true;
-    }
-    else{
-      this.showAutcompleteList = false;
-    }
-  }
-  else{
-    this.showAutcompleteList = false;
-  }
-  }
+  //   this.getscrapData = temp;
+  //   if (temp && temp != '') {
+  //     this.showAutcompleteList = true;
+  //   }
+  //   else{
+  //     this.showAutcompleteList = false;
+  //   }
+  // }
+  // else{
+  //   this.showAutcompleteList = false;
+  // }
+  // }
 
-  selectScrap(obj) {
-    console.log(obj);
-    this.showAutcompleteList = false;
-    this.editProductForm.controls.scrap.setValue(obj.type);
+  // selectScrap(obj) {
+  //   console.log(obj);
+  //   this.showAutcompleteList = false;
+  //   this.editProductForm.controls.scrap.setValue(obj.type);
+  // }
+
+  back(e){
+    this.scrap_con = e;
+    this.get_Product();
   }
 
 }

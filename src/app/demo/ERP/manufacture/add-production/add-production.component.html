@@ -27,11 +27,11 @@
                     </td>
                     <td>{{data.entry_time | date}}</td>
                     <td>
-                        <input name="dateRange2" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" value="{{data.expected_time | date}}"
+                        <input name="dateRange2" [owlDateTimeTrigger]="dt2" [owlDateTime]="dt2" [(ngModel)]="data.expected_time"
                         class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD" style="width: 230px;">
                     <owl-date-time [pickerType]="'calendar'" #dt2></owl-date-time>
                     </td>
-                    <td class="text-center"><span (click)="editProduct(data); edit = false;" style="cursor: pointer;"><i class="fas fa-eye"></i></span></td>
+                    <td class="text-center"><span (click)="editProduct(data); edit = true;" style="cursor: pointer;"><i class="fas fa-eye"></i></span></td>
                 </tr>
             </tbody>
         </table>
@@ -41,7 +41,7 @@
 </div>
 
 
-<app-scrap-consumption *ngIf='scrap_con' (BackTab)="scrap_con=$event" [edit]="edit" [rawmatData]="rawmatData"></app-scrap-consumption>
+<app-scrap-consumption *ngIf='scrap_con' (BackTab)="back($event)" [edit]="edit" [rawmatData]="rawmatData"></app-scrap-consumption>
 
 
 
