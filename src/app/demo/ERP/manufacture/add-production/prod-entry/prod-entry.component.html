@@ -9,7 +9,7 @@
 <button type="button" class="btn back_btn" (click)="previousPage()"><i
         class="fas fa-arrow-alt-circle-left"></i></button>
 
-<div class="card top_bar">
+<!-- <div class="card top_bar">
 
     <div>
         <span class="mr-2"><i class="fas fa-search"></i></span>
@@ -25,7 +25,7 @@
                 More</span></button>
     </div>
 
-</div>
+</div> -->
 
 
 <div class="card main_cnt mb-4">
@@ -35,26 +35,30 @@
 
     <form class="bar2 mb-4" [formGroup]="addProductForm">
         <div class="left_cnt">
-            <label for="" style="color: black; font-weight: bold;">Manufactured Quantity</label><br>
-           <div class="d-flex">
             <div class="mr-2">
-                <input type="text" (keypress)="prevent_char($event)" (input)="prevent_0($event); totalCalculation()" formControlName="qty">
-                    <div class="error_msg" *ngIf="qty_error">{{qty_error}}</div>
+                <label for="">Product</label><br>
+                <select formControlName="prod_name" class="mat_name" (change)="showRawmat($event.target.value)">
+                    <option value="choose_prod" disabled>Choose Product</option>
+                    <option class="disable" *ngFor="let category of productCategory;let i=index"
+                        [value]="category.prod_id">
+                        {{category.prod_name}}</option>
+                </select>
+
             </div>
-            <select formControlName="prod_name" class="mat_name" (change)="showRawmat($event.target.value)">
-                <option value="choose_prod" disabled>Choose Product</option>
-                <option class="disable" *ngFor="let category of productCategory;let i=index"
-                    [value]="category.prod_id">
-                    {{category.prod_name}}</option>
-            </select>
-           </div>
+            <div>
+                <label for="">Quantity</label><br>
+                <input type="text" (keypress)="prevent_char($event)" (input)="prevent_0($event); totalCalculation()"
+                    formControlName="qty">
+                <div class="error_msg" *ngIf="qty_error">{{qty_error}}</div>
+
+            </div>
         </div>
 
         <div class="right_cnt">
-                <label class="datee">Date: &nbsp;</label>
-                <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="target_time"
-                        class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD">
-                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+            <label class="datee">Expected Date: &nbsp;</label>
+            <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="target_time"
+                class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD">
+            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
         </div>
     </form>
 
@@ -87,9 +91,10 @@
 
 <hr style="margin: 1% auto 1.5% -3%; width: 106%; margin-top: 10%;">
 
-    <div class="d-flex justify-content-end align-items-center">
-        <div>
-            <button class="btn btn-danger mr-2" style="border-radius: 2px;" (click)="previousPage()">Cancel</button>
-            <button class="btn btn-primary disable" style="border-radius: 2px;"(click)="add_Product()" type="submit" [disabled]="!addProductForm.valid || qty_error">Submit</button>
-        </div>
+<div class="d-flex justify-content-end align-items-center">
+    <div>
+        <button class="btn btn-danger mr-2" style="border-radius: 2px;" (click)="previousPage()">Cancel</button>
+        <button class="btn btn-primary disable" style="border-radius: 2px;" (click)="add_Product()" type="submit"
+            [disabled]="!addProductForm.valid || qty_error">Submit</button>
     </div>
+</div>

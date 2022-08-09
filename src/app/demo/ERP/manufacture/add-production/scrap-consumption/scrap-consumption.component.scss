@@ -25,6 +25,7 @@
     justify-content: space-between;
     align-items: center;
     .left_cnt{
+        display: flex;
         input{
             width: 70px;
             height: 30px;
@@ -77,7 +78,7 @@
 .td_e{
     padding: 2px;
     border: 1px solid lightgray;
-    background: lightgoldenrodyellow;
+    // background: lightgoldenrodyellow;
 }
 .td_v{
     padding: 5px 7px;

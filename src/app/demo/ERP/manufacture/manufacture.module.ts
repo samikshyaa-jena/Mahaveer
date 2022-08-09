@@ -18,6 +18,7 @@ import { AddProductionComponent } from './add-production/add-production.componen
 import { ScrapComponent } from './scrap/scrap.component';
 import { ScrapConsumptionComponent } from './add-production/scrap-consumption/scrap-consumption.component';
 import { ProdEntryComponent } from './add-production/prod-entry/prod-entry.component';
+import { MatAutocompleteModule, MatIconModule } from "@angular/material";
 
 
 @NgModule({
@@ -29,7 +30,9 @@ import { ProdEntryComponent } from './add-production/prod-entry/prod-entry.compo
     FormsModule,
     NgbModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule,  
+    OwlNativeDateTimeModule,
+    MatAutocompleteModule,
+    MatIconModule,
   ]
 })
 export class ManufactureModule { }
