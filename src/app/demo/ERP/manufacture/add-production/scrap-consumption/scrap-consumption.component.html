@@ -125,7 +125,7 @@
                     <tr *ngFor="let Product of scrapForm.get('Scrap')['controls'];let i=index" [formGroupName]="i">
                         <td class="td_v">{{i + 1 + rawmatData.scrap_data.length}}</td>
                         <td class="td_e">
-                            <input type="text" class="tab_inp readonly"
+                            <input type="text" class="tab_inp readonly" (input)="getSc($event)"
                                 formControlName="scrap" autocomplete="off" matInput [matAutocomplete]="auto">
 
                             <!-- <div #elasticResDiv class="elasticResDiv" *ngIf="showAutcompleteList===i">
@@ -195,7 +195,7 @@
                         <td class="td_v">{{i + 1 + rawmatData.consumption_data.length}}</td>
                         <!-- <td><input class="tab_inp readonly" type="text" formControlName="consumption"[readonly]="Product.controls.edit.value == false"></td> -->
                         <td class="td_e">
-                            <input type="text" class="tab_inp readonly"
+                            <input type="text" class="tab_inp readonly" (input)="getcn($event)"
                                 formControlName="consumption" autocomplete="off"matInput [matAutocomplete]="auto2">
 
                             <!-- <div #elasticResDiv2 class="elasticResDiv" *ngIf="showAutcompleteList2===i">

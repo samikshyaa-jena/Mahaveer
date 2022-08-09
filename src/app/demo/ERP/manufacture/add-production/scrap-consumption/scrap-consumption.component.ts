@@ -21,10 +21,10 @@ export class ScrapConsumptionComponent implements OnInit {
   scrapForm: FormGroup;
   consumptionForm: FormGroup;
   getscrapData: any;
-  // getscrapData2: any;
+  getscrapData2: any;
   loader: boolean;
   getconsData: any;
-  // getconsData2: any;
+  getconsData2: any;
   t_rawmat: number = 0;
   t_cons: number = 0;
   total: number = 0;
@@ -135,7 +135,7 @@ export class ScrapConsumptionComponent implements OnInit {
         console.log(res);
 
         this.getscrapData = res.data;
-        // this.getscrapData2 = res.data;
+        this.getscrapData2 = res.data;
 
         console.log(this.getscrapData);
         // console.log(this.getscrapData2);
@@ -159,7 +159,7 @@ export class ScrapConsumptionComponent implements OnInit {
         console.log(res);
 
         this.getconsData = res.data;
-        // this.getconsData2 = res.data;
+        this.getconsData2 = res.data;
 
         console.log(this.getconsData);
         // console.log(this.getconsData2);
@@ -173,50 +173,50 @@ export class ScrapConsumptionComponent implements OnInit {
 
   };
 
-  // getSc(event) {
-  //   console.log(this.getscrapData2);
+  getSc(event) {
+    console.log(this.getscrapData2);
 
-  //   if (event.target.value != '') {
-  //     const val = event.target.value;
-  //     this.getscrapData = this.getscrapData2;
-  //     var temp = this.getscrapData.filter(d => {
-  //       const vals = d.type;
-  //       console.log(vals);
+    if (event.target.value != '') {
+      const val = event.target.value;
+      this.getscrapData = this.getscrapData2;
+      var temp = this.getscrapData.filter(d => {
+        const vals = d.type;
+        console.log(vals);
 
-  //       return new RegExp(val, 'gi').test(vals.toString());
-  //     });
+        return new RegExp(val, 'gi').test(vals.toString());
+      });
 
-  //     this.getscrapData = temp;
-  //   }
-  // }
+      this.getscrapData = temp;
+    }
+  }
 
-  // selectScrap(obj, form_cont) {
-  //   console.log(obj);
-  //   // this.scrapForm.controls.scrap.setValue(obj.type);
-  //   form_cont.scrap.patchValue(obj.type);
-  // }
-  // getcn(event) {
-  //   console.log(this.getconsData2);
+  selectScrap(obj, form_cont) {
+    console.log(obj);
+    // this.scrapForm.controls.scrap.setValue(obj.type);
+    form_cont.scrap.patchValue(obj.type);
+  }
+  getcn(event) {
+    console.log(this.getconsData2);
 
-  //   if (event.target.value != '') {
-  //     const val = event.target.value;
-  //     this.getconsData = this.getconsData2;
-  //     var temp = this.getconsData.filter(d => {
-  //       const vals = d.type;
-  //       console.log(vals);
+    if (event.target.value != '') {
+      const val = event.target.value;
+      this.getconsData = this.getconsData2;
+      var temp = this.getconsData.filter(d => {
+        const vals = d.type;
+        console.log(vals);
 
-  //       return new RegExp(val, 'gi').test(vals.toString());
-  //     });
+        return new RegExp(val, 'gi').test(vals.toString());
+      });
 
-  //     this.getconsData = temp;
-  //   }
-  // }
+      this.getconsData = temp;
+    }
+  }
 
-  // selectCons(obj, form_cont) {
-  //   console.log(obj);
-  //   // this.scrapForm.controls.scrap.setValue(obj.type);
-  //   form_cont.consumption.patchValue(obj.type);
-  // }
+  selectCons(obj, form_cont) {
+    console.log(obj);
+    // this.scrapForm.controls.scrap.setValue(obj.type);
+    form_cont.consumption.patchValue(obj.type);
+  }
 
   addScrap = () => {
     this.loader = true;
