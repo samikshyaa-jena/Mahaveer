@@ -792,8 +792,8 @@ export class QuotationComponent implements OnInit {
     }
 
     this.loader = true;
-    console.log(this.quotation_form.get('invo').value,);
     console.log(this.quotationformarray);
+    console.log(product_arr);
     const reqBody = {
       "invoice": this.quotation_form.get('quto').value,
       "customer_id": this.quotation_form.get('custmer_id').value,
