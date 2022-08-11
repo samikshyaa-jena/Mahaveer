@@ -331,12 +331,15 @@ export class QuotationComponent implements OnInit {
 
         if (this.pri_sta === 'true') {
 
-          this.get_purchase_data = res.data;
-          
+          let p_data = res.data;
+
+          this.get_purchase_data = p_data.filter((e) => {
+            return e.payment_status == 'QUOTATION';
+          }); 
         } else {
           let p_data = res.data;
           this.get_purchase_data = p_data.filter((e) => {
-            return e.priority == 'HIGH';
+            return (e.priority == 'HIGH' && e.payment_status == 'QUOTATION');
           });          
         }
         
