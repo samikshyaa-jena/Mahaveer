@@ -15,6 +15,7 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CategoryComponent implements OnInit {
 
+  delete_popup: boolean;
   addCategoryForm: FormGroup;
   editItemForm: FormGroup;
   show_cat: boolean;

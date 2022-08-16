@@ -270,6 +270,7 @@ export class CategoryComponent implements OnInit {
       "gst": this.editItemForm.get('gst').value,
       "min_stock": this.editItemForm.get('min_stk').value,
       "unit": this.editItemForm.get('unit').value,
+      "hsn": this.editItemForm.get('hsn').value,
       "mrp": 0,
       // "qty": this.editItemForm.get('qty').value ? parseInt(this.editItemForm.get('qty').value) : 0
     }
