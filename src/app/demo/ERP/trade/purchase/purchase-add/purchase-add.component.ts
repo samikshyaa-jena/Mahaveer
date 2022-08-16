@@ -15,7 +15,7 @@ import { erp_all_api } from '../../../erpAllApi';
 })
 export class PurchaseAddComponent implements OnInit {
 
-  getCatagoryData: any=[];
+  getCategoryData: any=[];
   itemData: any = []; 
   productForm: FormGroup;
   productformArray: any[]
@@ -62,10 +62,10 @@ export class PurchaseAddComponent implements OnInit {
    }
 
    ngOnInit(): void {
-    this.get_Catagory()
+    this.get_Category()
     this.get_Vendor()
   }
-  get_Catagory = () => {
+  get_Category = () => {
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
@@ -73,14 +73,14 @@ export class PurchaseAddComponent implements OnInit {
 
     this.ErpService.get_Reqs(erp_all_api.urls.getTradeCat, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // this.getCatagoryData = res.data;
+        // this.getCategoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
-            this.getCatagoryData.push(catData[i]);
+            this.getCategoryData.push(catData[i]);
           }
         }
-        console.log(this.getCatagoryData);
+        console.log(this.getCategoryData);
       },
       (err: any) => {
         Notiflix.Report.failure(err.msg, '', 'Close');
@@ -122,10 +122,10 @@ export class PurchaseAddComponent implements OnInit {
   chooseCategory(e) {
     console.log(e);
     if (e != "choose") {
-      for (let i = 0; i < this.getCatagoryData.length; i++) {
-        if (this.getCatagoryData[i].cat_id == e) {
-          this.itemData = this.getCatagoryData[i].itemData;
-          this.productname = this.getCatagoryData[i].cat_name
+      for (let i = 0; i < this.getCategoryData.length; i++) {
+        if (this.getCategoryData[i].cat_id == e) {
+          this.itemData = this.getCategoryData[i].itemData;
+          this.productname = this.getCategoryData[i].cat_name
         }
       }
 
@@ -217,11 +217,11 @@ export class PurchaseAddComponent implements OnInit {
     let category
     let value = this.productForm.value
     let duplicatevalue = { ...value }
-    console.log(this.getCatagoryData);
+    console.log(this.getCategoryData);
     this.duplicateproductformarray;
-    for (let i = 0; i < this.getCatagoryData.length; i++) {
-      if (this.getCatagoryData[i].cat_id == this.productForm.value.category) {
-        duplicatevalue.category = this.getCatagoryData[i].cat_name
+    for (let i = 0; i < this.getCategoryData.length; i++) {
+      if (this.getCategoryData[i].cat_id == this.productForm.value.category) {
+        duplicatevalue.category = this.getCategoryData[i].cat_name
       }
     }
     for (let i = 0; i < this.itemData.length; i++) {

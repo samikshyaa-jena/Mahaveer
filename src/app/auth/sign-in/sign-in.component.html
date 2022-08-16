@@ -10,7 +10,7 @@
           <label for="pswd" class="lableTag">Pasword</label>
           <input type="password" class="inpTag form-group" formControlName="password" placeholder="">
           <div class="subBtn">
-            <button type="submit" class="logBtn">login</button>
+            <button type="submit" [disabled]="signInForm.invalid" class="logBtn disable">login</button>
           </div>
         </form>
       </div>

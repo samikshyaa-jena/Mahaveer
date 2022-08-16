@@ -13,12 +13,12 @@
       <div class="col-sm-12 row mt-3">
         <div class="mode_change col-sm-9">
           <form [formGroup]="modeForm">
-            <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture" disabled>Manufacture</button>
+            <button class="btn btn-primary text-white mr-1 disable" title="Manufacture" disabled>Manufacture</button>
             <button class="btn btn-primary" routerLink="/v1/trade/vendor" title="Go To Trade">Trade</button>
           </form>
         </div>
         <div class="col-sm-3">
-            <button class="btn btn-primary" (click)="show_AddVendor()">Add Vendor</button>
+            <button class="btn btn-primary" style="float: right;" (click)="show_AddVendor()">Add Vendor</button>
         </div>
       </div>
         <div class="table-responsive col-sm-12">
@@ -61,7 +61,7 @@
       <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
         <div class="row col-sm-12">
             <div class="col-sm-12 text-right">
-                <button class="btn btn-primary mr-1" type="submit" (click)="add_Vendor()">Add</button>
+                <button class="btn btn-primary mr-1 disable" [disabled]="addVendorForm.invalid" type="submit" (click)="add_Vendor()">Add</button>
                 <button class="btn btn-warning" type="reset" (click)="hide_AddVendor()">Cancel</button>
             </div>
         </div>
@@ -77,7 +77,7 @@
                         <input type="text" class="form-control" formControlName="mob">
                         <label class="lab_tag" for="">Type:</label>
                         <select name="" id="" formControlName="type" class="form-control">
-                            <option value="type" selected disabled>Select Type</option>
+                            <option value="type" disabled>Select Type</option>
                             <option value="Intra State">Intra State</option>
                             <option value="Inter State">Inter State</option>
                         </select>
@@ -120,7 +120,7 @@
                 <input type="text" class="form-control" formControlName="mob">
                 <label class="lab_tag" for="">Type:</label>
                 <select name="" id="" formControlName="type" class="form-control">
-                    <option value="type" selected disabled>Select Type</option>
+                    <option value="type" disabled>Select Type</option>
                     <option value="Intra State">Intra State</option>
                     <option value="Inter State">Inter State</option>
                 </select>
@@ -142,7 +142,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="update_vendor()">Submit</button>
-        <button type="button" class="btn btn-outline-dark" (click)="update_vend_popup_close(content)">Cancel</button>
+        <button type="button" class="btn btn-primary disable" [disabled]="updateVendorForm.invalid" (click)="update_vendor()">Submit</button>
+        <button type="button" class="btn btn-warning" (click)="update_vend_popup_close(content)">Cancel</button>
     </div>
 </ng-template>

@@ -17,7 +17,7 @@ import { SaleSrviceService } from '../../sale/sale-srvice.service';
 })
 export class QuotationEntryComponent implements OnInit {
 
-  getCatagoryData: any = [];
+  getCategoryData: any = [];
   prodData_id: any = [];
   QuotationForm: FormGroup;
   quotationformarray: any[]
@@ -69,12 +69,12 @@ export class QuotationEntryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.get_Catagory();
+    this.get_Category();
     this.get_proddata();
     this.get_Vendor();
     this.add_row();
   }
-  get_Catagory = () => {
+  get_Category = () => {
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
@@ -82,15 +82,15 @@ export class QuotationEntryComponent implements OnInit {
 
     this.ErpService.get_Reqs(erp_all_api.urls.getProduct, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // this.getCatagoryData = res.data;
+        // this.getCategoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
-            this.getCatagoryData.push(catData[i]);
+            this.getCategoryData.push(catData[i]);
             this.prodData_id.push(catData[i].prod_id);
           }
         }
-        console.log(this.getCatagoryData);
+        console.log(this.getCategoryData);
       },
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
@@ -106,14 +106,14 @@ export class QuotationEntryComponent implements OnInit {
 
     this.ErpService.get_Reqs(erp_all_api.urls.get_prod, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // this.getCatagoryData = res.data;
+        // this.getCategoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
-            this.getCatagoryData.push(catData[i]);
+            this.getCategoryData.push(catData[i]);
           }
         }
-        console.log(this.getCatagoryData);
+        console.log(this.getCategoryData);
       },
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
@@ -161,7 +161,7 @@ export class QuotationEntryComponent implements OnInit {
     console.log(item);
     console.log(form_cont);
     console.log(this.quotation_form);
-    console.log(this.getCatagoryData);
+    console.log(this.getCategoryData);
 
     if (item != "ChooseProduct") {
       let hsn;
@@ -170,19 +170,19 @@ export class QuotationEntryComponent implements OnInit {
       let gstvalue;
       let mrp;
 
-      for (let i = 0; i < this.getCatagoryData.length; i++) {
-        if (this.getCatagoryData[i].prod_id == item) {
-          GST = parseInt(this.getCatagoryData[i].gst);
-          hsn = this.getCatagoryData[i].hsn;
+      for (let i = 0; i < this.getCategoryData.length; i++) {
+        if (this.getCategoryData[i].prod_id == item) {
+          GST = parseInt(this.getCategoryData[i].gst);
+          hsn = this.getCategoryData[i].hsn;
 
-          if (this.getCatagoryData[i].mrp) {
-            mrp = this.getCatagoryData[i].mrp;
+          if (this.getCategoryData[i].mrp) {
+            mrp = this.getCategoryData[i].mrp;
             gst = mrp * (GST / 100);
           } else {
-            mrp = this.getCatagoryData[i].price;
+            mrp = this.getCategoryData[i].price;
             gst = mrp * (GST / 100);
           }
-          this.itemname = this.getCatagoryData[i].prod_name;
+          this.itemname = this.getCategoryData[i].prod_name;
 
           if (this.type == 'Intra State') {
             gstvalue = gst / 2;
@@ -229,10 +229,10 @@ export class QuotationEntryComponent implements OnInit {
     let sgst: number;
     let cgst: number;
 
-    for (let i = 0; i < this.getCatagoryData.length; i++) {
-      if (this.getCatagoryData[i].prod_id == item) {
+    for (let i = 0; i < this.getCategoryData.length; i++) {
+      if (this.getCategoryData[i].prod_id == item) {
 
-        GST = parseInt(this.getCatagoryData[i].gst);
+        GST = parseInt(this.getCategoryData[i].gst);
         gst = prc * (GST / 100);
 
         if (this.type == 'Intra State') {
@@ -286,16 +286,16 @@ export class QuotationEntryComponent implements OnInit {
   //   // let value = p_form.value
   //   var p_form = this.QuotationForm.get('product')['controls'];
   //   let duplicatevalue = { ...value }
-  //   console.log(this.getCatagoryData);
+  //   console.log(this.getCategoryData);
   //   this.duplicateproductformarray;
-  //   for (let i = 0; i < this.getCatagoryData.length; i++) {
-  //     if (this.getCatagoryData[i].cat_id == p_form.value.category) {
-  //       duplicatevalue.category = this.getCatagoryData[i].cat_name
+  //   for (let i = 0; i < this.getCategoryData.length; i++) {
+  //     if (this.getCategoryData[i].cat_id == p_form.value.category) {
+  //       duplicatevalue.category = this.getCategoryData[i].cat_name
   //     }
   //   }
-  //   for (let i = 0; i < this.getCatagoryData.length; i++) {
-  //     if (this.getCatagoryData[i].prod_id == p_form.value.prod_id) {
-  //       duplicatevalue.prod_id = this.getCatagoryData[i].prod_name;
+  //   for (let i = 0; i < this.getCategoryData.length; i++) {
+  //     if (this.getCategoryData[i].prod_id == p_form.value.prod_id) {
+  //       duplicatevalue.prod_id = this.getCategoryData[i].prod_name;
   //     }
   //   }
 

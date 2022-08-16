@@ -26,7 +26,7 @@
                     <label for="">Product Name</label>
                     <select formControlName="prod_name" class="form-control">
                         <option value="choose_prod">Choose Product</option>
-                        <option class="disable" *ngFor="let category of getCatagoryData;let i=index"
+                        <option class="disable" *ngFor="let category of getCategoryData;let i=index"
                                             [value]="category.prod_id">
                                             {{category.prod_name}}</option>
                     </select>
@@ -187,7 +187,7 @@
     </div>
   
     <div class="footer_btn">
-        <button class="btn btn-danger mr-2" (click)="previousPage()">Cancel</button>
+        <button class="btn btn-warning mr-2" (click)="previousPage()">Cancel</button>
         <button class="btn btn-primary disable" [disabled]="addmat.get('product')['controls'][addmat.get('product')['controls'].length-1].value.item == 'choose_mat'" (click)="add_requirement()">Submit</button>
     </div>
   

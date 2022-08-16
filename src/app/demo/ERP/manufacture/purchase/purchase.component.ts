@@ -28,7 +28,7 @@ export class PurchaseComponent implements OnInit {
   purchase_tab: boolean;
   gstVal: any;
   control: FormGroup;
-  getCatagoryData: any;
+  getCategoryData: any;
   itemList: any;
   cat_id: any;
   hsn: any;
@@ -89,7 +89,7 @@ export class PurchaseComponent implements OnInit {
       mode: new FormControl("manufcture")
     });
     this.updatePurchase = new FormGroup({
-      catagory: new FormControl(this.cattName),
+      category: new FormControl(this.cattName),
       item_id: new FormControl(""),
       hsn: new FormControl(""),
       price: new FormControl(""),
@@ -116,7 +116,7 @@ export class PurchaseComponent implements OnInit {
    }
 
    ngOnInit() {
-    this.get_Catagory();
+    this.get_Category();
     this.get_Vendor();
     this.get_Item();
     this.get_purchase_details();
@@ -129,17 +129,17 @@ export class PurchaseComponent implements OnInit {
     }
   }
 
-  get_Catagory = () => {
+  get_Category = () => {
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.getCatagory, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.get_Reqs(erp_all_api.urls.getCategory, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        this.getCatagoryData = res.data;
-        console.log("response is", this.getCatagoryData);
-        console.log("resps", Object.values(this.getCatagoryData));
+        this.getCategoryData = res.data;
+        console.log("response is", this.getCategoryData);
+        console.log("resps", Object.values(this.getCategoryData));
       },
       (err: any) => {
         console.log(err);
@@ -283,12 +283,12 @@ export class PurchaseComponent implements OnInit {
 
   chooseCategory(e) {
     console.log(e);
-    console.log(this.getCatagoryData);
+    console.log(this.getCategoryData);
     if (e != "choose") {
-      for (let i = 0; i < this.getCatagoryData.length; i++) {
-        if (this.getCatagoryData[i].cat_id == e) {
-          this.itemData = this.getCatagoryData[i].itemData;
-          this.productname = this.getCatagoryData[i].cat_name
+      for (let i = 0; i < this.getCategoryData.length; i++) {
+        if (this.getCategoryData[i].cat_id == e) {
+          this.itemData = this.getCategoryData[i].itemData;
+          this.productname = this.getCategoryData[i].cat_name
         }
       }
       console.log(this.itemData);
@@ -300,9 +300,9 @@ export class PurchaseComponent implements OnInit {
 
 
   item_list = (e) => {
-    for (let i = 0; i < this.getCatagoryData.length; i++) {
-      if (this.getCatagoryData[i].cat_id == e) {
-        this.itemData = this.getCatagoryData[i].itemData;
+    for (let i = 0; i < this.getCategoryData.length; i++) {
+      if (this.getCategoryData[i].cat_id == e) {
+        this.itemData = this.getCategoryData[i].itemData;
       }
     }
     console.log(this.itemData);
@@ -566,8 +566,8 @@ export class PurchaseComponent implements OnInit {
     let sgstVal = 0;
     this.dummy = [
       {
-        catagory: '',
-        catagoryName: '',
+        category: '',
+        categoryName: '',
         item_id: '',
         itemName: '',
         hsn: '',
@@ -584,8 +584,8 @@ export class PurchaseComponent implements OnInit {
         total: '',
       },
       {
-        catagory: '',
-        catagoryName: '',
+        category: '',
+        categoryName: '',
         item_id: '',
         itemName: '',
         hsn: '',
@@ -602,8 +602,8 @@ export class PurchaseComponent implements OnInit {
         total: '',
       },
       {
-        catagory: '',
-        catagoryName: '',
+        category: '',
+        categoryName: '',
         item_id: '',
         itemName: '',
         hsn: '',
@@ -620,8 +620,8 @@ export class PurchaseComponent implements OnInit {
         total: '',
       },
       {
-        catagory: '',
-        catagoryName: '',
+        category: '',
+        categoryName: '',
         item_id: '',
         itemName: '',
         hsn: '',
@@ -638,8 +638,8 @@ export class PurchaseComponent implements OnInit {
         total: '',
       },
       {
-        catagory: '',
-        catagoryName: '',
+        category: '',
+        categoryName: '',
         item_id: '',
         itemName: '',
         hsn: '',
@@ -656,8 +656,8 @@ export class PurchaseComponent implements OnInit {
         total: '',
       },
       {
-        catagory: '',
-        catagoryName: '',
+        category: '',
+        categoryName: '',
         item_id: '',
         itemName: '',
         hsn: '',
@@ -674,8 +674,8 @@ export class PurchaseComponent implements OnInit {
         total: '',
       },
       {
-        catagory: '',
-        catagoryName: '',
+        category: '',
+        categoryName: '',
         item_id: '',
         itemName: '',
         hsn: '',
@@ -692,8 +692,8 @@ export class PurchaseComponent implements OnInit {
         total: '',
       },
       {
-        catagory: '',
-        catagoryName: '',
+        category: '',
+        categoryName: '',
         item_id: '',
         itemName: '',
         hsn: '',
@@ -710,8 +710,8 @@ export class PurchaseComponent implements OnInit {
         total: '',
       },
       {
-        catagory: '',
-        catagoryName: '',
+        category: '',
+        categoryName: '',
         item_id: '',
         itemName: '',
         hsn: '',
@@ -728,8 +728,8 @@ export class PurchaseComponent implements OnInit {
         total: '',
       },
       {
-        catagory: '',
-        catagoryName: '',
+        category: '',
+        categoryName: '',
         item_id: '',
         itemName: '',
         hsn: '',
@@ -777,8 +777,8 @@ export class PurchaseComponent implements OnInit {
     this.modal = true;
     this.loader = true;
     for (let l = 0; l < this.popupData.length; l++) {
-      this.dummy[l].catagory = this.popupData[l].cat_id;
-      this.dummy[l].catagoryName = this.popupData[l].cat_name;
+      this.dummy[l].category = this.popupData[l].cat_id;
+      this.dummy[l].categoryName = this.popupData[l].cat_name;
       this.dummy[l].item_id = this.popupData[l].item_id;
       this.dummy[l].itemName = this.popupData[l].item_name;
       this.dummy[l].hsn = this.popupData[l].hsn;
@@ -796,13 +796,13 @@ export class PurchaseComponent implements OnInit {
     }
 
     this.dummy =  this.dummy.filter((el) => {
-      return el.catagory !=  '';
+      return el.category !=  '';
     });
     console.log(this.dummy);
     this.popupData = this.dummy;
     console.log(this.popupData);
-    // this.cattName = this.popupData[i].catagoryName;
-    // this.catt_id = this.popupData[i].catagory;
+    // this.cattName = this.popupData[i].categoryName;
+    // this.catt_id = this.popupData[i].category;
     // this.itemmName = this.popupData[i].itemName;
     // this.itemm_id = this.popupData[i].item_id;
     // console.log(this.cattName,this.itemmName,this.catt_id,this.itemm_id);
@@ -813,7 +813,7 @@ export class PurchaseComponent implements OnInit {
   updateArray = () => {
     console.log(this.updatePurchase.value);
     this.popupData[this.gi] = this.updatePurchase.value;
-    this.popupData[this.gi].catagory = this.catt_id;
+    this.popupData[this.gi].category = this.catt_id;
     this.popupData[this.gi].item_id = this.itemm_id;
     console.log(this.popupData, "hhhhhhhhhhhhhhh");
     for (let i = 0; i < this.popupData.length; i++) {
@@ -854,8 +854,8 @@ export class PurchaseComponent implements OnInit {
     this.updateData.totalData = total;
     console.log(this.updateData.total);
     console.log(this.updateData);
-    this.cattName = this.updateData[i].catagoryName;
-    this.catt_id = this.updateData[i].catagory;
+    this.cattName = this.updateData[i].categoryName;
+    this.catt_id = this.updateData[i].category;
     this.itemmName = this.updateData[i].itemName;
     this.itemm_id = this.updateData[i].item_id;
     console.log(this.cattName,this.itemmName,this.catt_id,this.itemm_id);
@@ -867,7 +867,7 @@ export class PurchaseComponent implements OnInit {
 
 
     this.updatePurchase.patchValue({
-      catagory: this.cattName,
+      category: this.cattName,
       item_id: this.itemmName,
       hsn: this.updateData[i].hsn,
       price: this.updateData[i].price,

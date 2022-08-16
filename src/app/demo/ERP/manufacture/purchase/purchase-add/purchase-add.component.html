@@ -81,11 +81,11 @@
             <form [formGroup]="productForm">
                 <div class="row">
                     <div class="col">
-                        <label>Choose Catagory</label>
+                        <label>Choose Category</label>
                         <select class="form-control" (change)="chooseCategory($event.target.value)"
                             formControlName="category">
                             <option selected value="choose">ChooseCategory</option>
-                            <option *ngFor="let category of getCatagoryData;let i=index" [value]="category.cat_id">
+                            <option *ngFor="let category of getCategoryData;let i=index" [value]="category.cat_id">
                                 {{category.cat_name}}</option>
                         </select>
                     </div>

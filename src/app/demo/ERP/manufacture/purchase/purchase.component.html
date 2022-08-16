@@ -22,7 +22,7 @@
           </form>
         </div>
         <div class="col-sm-3">
-          <button class="btn btn-primary" (click)="purchase_entry() ">Purchase Entry</button>
+          <button class="btn btn-primary" style="float: right;" (click)="purchase_entry() ">Purchase Entry</button>
         </div>
       </div>
       <div class="prod_table px-0 py-0 mx-0 my-0">
@@ -72,11 +72,11 @@
   <div class="modal-body">
     <div class="updateVendorForm">
       <form [formGroup]="updatePurchase" class="my-3">
-        <label class="lab_tag" for="">Catagory:</label>
-        <input type="text" class="form-control" formControlName="catagory" readonly>
-        <!-- <select [(ngModel)]="cattName" formControlName="catagory" class="form-control" >
+        <label class="lab_tag" for="">Category:</label>
+        <input type="text" class="form-control" formControlName="category" readonly>
+        <!-- <select [(ngModel)]="cattName" formControlName="category" class="form-control" >
           <option [value]="catt_id">{{cattName}}</option>
-          <option *ngFor="let category of getCatagoryData;let i=index" [value]="category.cat_id">{{category.cat_name}}</option>
+          <option *ngFor="let category of getCategoryData;let i=index" [value]="category.cat_id">{{category.cat_name}}</option>
         </select> -->
         <label class="lab_tag" for="">Item:</label>
         <input type="text" class="form-control" formControlName="item_id" readonly>
@@ -106,8 +106,8 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark mr-1" (click)="updateArray()">Submit</button>
-    <button type="reset" class="btn btn-outline-dark" (click)="closeUpdateForm(updt)">Cancel</button>
+    <button type="button" class="btn btn-primary mr-1" (click)="updateArray()">Submit</button>
+    <button type="reset" class="btn btn-warning" (click)="closeUpdateForm(updt)">Cancel</button>
   </div>
 </ng-template>
 
@@ -123,7 +123,7 @@
        <table class="table table-bordered">
          <thead class="bg-primary">
            <tr>
-             <th scope="col" class="text-white text-center">Catagory</th>
+             <th scope="col" class="text-white text-center">Category</th>
              <th scope="col" class="text-white text-center">Item</th>
              <th scope="col" class="text-white text-center">HSN</th>
              <th scope="col" class="text-white text-center">Pur. Price</th>
@@ -139,7 +139,7 @@
          </thead>
          <tbody class="bg-white">
            <tr *ngFor="let e of popupData; let i = index">
-             <td class="text-center">{{e.catagoryName}}</td>
+             <td class="text-center">{{e.categoryName}}</td>
              <td class="text-center">{{e.itemName}}</td>
              <td class="text-center">{{e.hsn}}</td>
              <td class="text-center">{{e.price}}</td>
@@ -163,7 +163,7 @@
          </tbody>
        </table>
        <div class="btns" style="float: right;">
-         <button type="reset" class="btn btn-danger mr-1" (click)="modal=false">cancel</button>
+         <button type="reset" class="btn btn-warning mr-1" (click)="modal=false">cancel</button>
          <button type="submit" class="btn btn-primary" [disabled]='!enable' (click)="update_purchase_details()">Update</button>
        </div>
       </div>
@@ -213,7 +213,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="update_debit_note()">Submit</button>
-    <button type="reset" class="btn btn-outline-dark" (click)="closeDebitForm(debit)">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="update_debit_note()">Submit</button>
+    <button type="reset" class="btn btn-warning" (click)="closeDebitForm(debit)">Cancel</button>
   </div>
 </ng-template>

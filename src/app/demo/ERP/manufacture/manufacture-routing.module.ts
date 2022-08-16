@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AddProductionComponent } from './add-production/add-production.component';
 import { ProdEntryComponent } from './add-production/prod-entry/prod-entry.component';
 import { ScrapConsumptionComponent } from './add-production/scrap-consumption/scrap-consumption.component';
-import { CatagoryComponent } from './catagory/catagory.component';
+import { CategoryComponent } from './catagory/catagory.component';
 import { ProductComponent } from './product/product.component';
 import { DebitNoteComponent } from './purchase/debit-note/debit-note.component';
 import { PurchaseComponent } from './purchase/purchase.component';
@@ -14,8 +14,8 @@ import { VendorComponent } from './vendor/vendor.component';
 
 const routes: Routes = [
   {
-    path: 'catagory',
-    component: CatagoryComponent
+    path: 'category',
+    component: CategoryComponent
   },
   {
     path: 'product',

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TradeRoutingModule } from './trade-routing.module';
-import { CatagoryComponent } from './catagory/catagory.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { PurchaseComponent } from './purchase/purchase.component';
 import { StockComponent } from './stock/stock.component';
@@ -19,11 +18,12 @@ import { QuotationComponent } from './quotation/quotation.component';
 import { QuotationEntryComponent } from './quotation/quotation-entry/quotation-entry.component';
 // import { InvoiceComponent } from '../invoice/invoice.component';
 import { InvoiceComponent } from '../../../theme/shared/invoice/invoice.component';
+import { CategoryComponent } from './catagory/catagory.component';
 
 
 
 @NgModule({
-  declarations: [CatagoryComponent, VendorComponent, PurchaseComponent, StockComponent, SaleComponent, CustomerComponent, SaleAddComponent, CreditNoteComponent, PurchaseAddComponent, DebitNoteComponent, QuotationComponent, QuotationEntryComponent, InvoiceComponent],
+  declarations: [CategoryComponent, VendorComponent, PurchaseComponent, StockComponent, SaleComponent, CustomerComponent, SaleAddComponent, CreditNoteComponent, PurchaseAddComponent, DebitNoteComponent, QuotationComponent, QuotationEntryComponent, InvoiceComponent],
   imports: [
     CommonModule,
     TradeRoutingModule,

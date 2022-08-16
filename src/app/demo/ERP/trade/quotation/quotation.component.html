@@ -214,7 +214,7 @@
   </div>
 
   <div class="footer_btn">
-      <button class="btn btn-danger mr-2" (click)="quotationTabclose()">Cancel</button>
+      <button class="btn btn-warning mr-2" (click)="quotationTabclose()">Cancel</button>
       <button class="btn btn-primary disable mr-2" [disabled]="updateQuotation.get('product')['controls'][updateQuotation.get('product')['controls'].length-1].value.prud == 'ChooseProduct'" (click)="update_quotation_details()">Update</button>
       <button class="btn btn-primary disable" [disabled]="updateQuotation.get('product')['controls'][updateQuotation.get('product')['controls'].length-1].value.prud == 'ChooseProduct'" (click)="add_purchase_details()">Move to Sale</button>
   </div>

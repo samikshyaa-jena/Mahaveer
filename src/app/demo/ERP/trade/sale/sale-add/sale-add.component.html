@@ -135,7 +135,7 @@
                                         (change)="chooseCategory(Product, $event.target.value); totalCalculation()"
                                         formControlName="category" [disabled]="purchase_form.invalid">
                                         <option selected value="ChooseProduct" disabled>Choose Product</option>
-                                        <option class="disable" *ngFor="let category of getCatagoryData;let i=index"
+                                        <option class="disable" *ngFor="let category of getCategoryData;let i=index"
                                             [value]="category.prod_id"
                                             [disabled]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname' || purchase_form.get('payStatus').value == 'choosepay' || purchase_form.get('payMode').value == 'choosepaymode'">
                                             {{category.prod_name}}</option>
@@ -232,7 +232,7 @@
     </div>
 
     <div class="footer_btn">
-        <button class="btn btn-danger mr-2" (click)="resetProductForm()">Cancel</button>
+        <button class="btn btn-warning mr-2" (click)="resetProductForm()">Cancel</button>
         <button class="btn btn-primary disable" (click)="add_purchase_details()" [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.category == 'ChooseProduct'">Submit</button>
     </div>
 
@@ -245,7 +245,7 @@
 <!-- <div id="myModal2" class="modal2" *ngIf="openmodal">
 
     <div class="card">
-        <div class="card-header text-danger text-right"><span (click)="openmodal=false"
+        <div class="card-header text-warning text-right"><span (click)="openmodal=false"
                 style="cursor: pointer;">X</span>
         </div>
         <div class="card-body">
@@ -256,7 +256,7 @@
                         <select class="form-control" (change)="chooseCategory($event.target.value)"
                             formControlName="category">
                             <option selected value="choose">ChooseCategory</option>
-                            <option *ngFor="let category of getCatagoryData;let i=index" [value]="category.cat_id">
+                            <option *ngFor="let category of getCategoryData;let i=index" [value]="category.cat_id">
                                 {{category.cat_name}}</option>
                         </select>
                     </div>
@@ -307,7 +307,7 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-sm-12 text-right ">
-                        <button type="button" class="btn btn-danger" (click)="submitArray();openmodal=false"
+                        <button type="button" class="btn btn-warning" (click)="submitArray();openmodal=false"
                             [disabled]="productForm.invalid">Submit</button>
                     </div>
                 </div>

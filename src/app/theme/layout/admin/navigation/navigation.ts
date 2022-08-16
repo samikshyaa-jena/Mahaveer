@@ -56,10 +56,10 @@ const NavigationItems = [
     icon: 'feather icon-layers',
     children: [
       {
-        id: 'catagory',
-        title: 'Catagory',
+        id: 'category',
+        title: 'Category',
         type: 'item',
-        url: '/v1/manufacture/catagory',
+        url: '/v1/manufacture/category',
         icon: 'feather icon-link'
       },
       {

@@ -173,7 +173,7 @@
     </div>
 
     <div class="footer_btn">
-        <button class="btn btn-danger mr-2" (click)="previousPage()">Cancel</button>
+        <button class="btn btn-warning mr-2" (click)="previousPage()">Cancel</button>
         <button class="btn btn-primary disable"
             [disabled]="updatemat.get('product')['controls'][updatemat.get('product')['controls'].length-1].value.item == 'choose_mat'"
             (click)="update_purchase_details()">Update</button>

@@ -1,6 +1,6 @@
 let base_url = 'http://3.109.161.106:3000'
 // let base_url = 'http://localhost:3000'
-// let base_url = 'https://a432-45-114-49-105.ngrok.io'
+// let base_url = 'https://a432-/45-114-49-105.ngrok.io'
 export class erp_all_api{
     public static urls = {
         // manufaturing strarts
@@ -9,10 +9,10 @@ export class erp_all_api{
         addProduct: base_url+'/manufacture/addproduct',
         updateProduct: base_url+'/manufacture/updateProduct',
         deleteProduct: base_url+'/manufacture/deleteProduct',
-        getCatagory: base_url+'/manufacture/getCatagory',
-        add_Catagory: base_url+'/manufacture/addCatagory',
-        del_Catagory: base_url+'/manufacture/deleteCatagory',
-        edit_Catagory: base_url+'/manufacture/updateCatagory',
+        getCategory: base_url+'/manufacture/getCatagory',
+        add_Category: base_url+'/manufacture/addCatagory',
+        del_Category: base_url+'/manufacture/deleteCatagory',
+        edit_Category: base_url+'/manufacture/updateCatagory',
         del_item: base_url+'/manufacture/deleteItem',
         edit_item: base_url+'/manufacture/updateItem',
         get_Vendor: base_url+'/manufacture/getVendor',

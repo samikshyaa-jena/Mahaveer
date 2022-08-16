@@ -15,7 +15,7 @@ import * as Notiflix from 'notiflix';
   styleUrls: ['./req-entry.component.scss']
 })
 export class ReqEntryComponent implements OnInit {
-  getCatagoryData: any = [];
+  getCategoryData: any = [];
   itemData: any = [];
   addmat: FormGroup;
   productformArray: any[]
@@ -70,13 +70,13 @@ export class ReqEntryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.get_Catagory();
+    this.get_Category();
     this.get_proddata();
     this.get_Vendor();
     this.getRawmaterials();
     this.add_row();
   }
-  get_Catagory = () => {
+  get_Category = () => {
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
@@ -84,15 +84,15 @@ export class ReqEntryComponent implements OnInit {
 
     this.ErpService.get_Reqs(erp_all_api.urls.getProduct, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // this.getCatagoryData = res.data;
+        // this.getCategoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
-            this.getCatagoryData.push(catData[i]);
+            this.getCategoryData.push(catData[i]);
             this.prodData_id.push(catData[i].prod_id);
           }
         }
-        console.log(this.getCatagoryData);
+        console.log(this.getCategoryData);
       },
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
@@ -108,14 +108,14 @@ export class ReqEntryComponent implements OnInit {
 
     this.ErpService.get_Reqs(erp_all_api.urls.get_prod, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // this.getCatagoryData = res.data;
+        // this.getCategoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
-            this.getCatagoryData.push(catData[i]);
+            this.getCategoryData.push(catData[i]);
           }
         }
-        console.log(this.getCatagoryData);
+        console.log(this.getCategoryData);
       },
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
@@ -183,7 +183,7 @@ export class ReqEntryComponent implements OnInit {
     console.log(item);
     console.log(form_cont);
     console.log(this.item_form);
-    console.log(this.getCatagoryData);
+    console.log(this.getCategoryData);
 
     if (item != "ChooseProduct") {
       let gst;

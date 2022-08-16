@@ -7,7 +7,7 @@
           <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Trade</h3>
             <div class="row col-sm-12">
 
-                <div class="col-sm-12 text-right"><button class="btn btn-success" (click)="openModal()"
+                <div class="col-sm-12 text-right"><button class="btn btn-primary" (click)="openModal()"
                         [disabled]="purchase_form.invalid">Add Product</button></div>
             </div>
             <form [formGroup]="purchase_form">
@@ -68,7 +68,7 @@
             </table>
             <div class="row col-sm-12" *ngIf="productformarray.length!=0">
 
-                <div class="col-sm-12 text-right"><button class="btn btn-success"
+                <div class="col-sm-12 text-right"><button class="btn btn-primary"
                         (click)="add_purchase_details()">Submit</button></div>
             </div>
 
@@ -89,7 +89,7 @@
                         <select class="form-control" (change)="chooseCategory($event.target.value)"
                             formControlName="category">
                             <option selected value="choose">ChooseCategory</option>
-                            <option *ngFor="let category of getCatagoryData;let i=index" [value]="category.cat_id">
+                            <option *ngFor="let category of getCategoryData;let i=index" [value]="category.cat_id">
                                 {{category.cat_name}}</option>
                         </select>
                     </div>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="row mt-4">
                     <div class="col-sm-12 text-right ">
-                        <button type="button" class="btn btn-danger" (click)="submitArray();openmodal=false"
+                        <button type="button" class="btn btn-primary" (click)="submitArray();openmodal=false"
                             [disabled]="productForm.invalid">Submit</button>
                     </div>
                 </div>

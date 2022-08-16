@@ -106,3 +106,6 @@
     padding: 10px;
     outline: 2px solid rgb(52, 194, 194);
 }
+.disable:disabled{
+    cursor: not-allowed;
+}

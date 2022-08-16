@@ -90,7 +90,7 @@
       style="border-collapse: separate;text-indent: initial;">
       <thead class="bg-primary">
         <tr>
-          <th scope="col" class="text-white text-center invoice_fields">Catagory</th>
+          <th scope="col" class="text-white text-center invoice_fields">Category</th>
           <th scope="col" class="text-white text-center invoice_fields">Product</th>
           <th scope="col" class="text-white text-center invoice_fields">HSN</th>
           <th scope="col" class="text-white text-center invoice_fields">Price</th>
@@ -135,7 +135,7 @@
       </tbody>
     </table>
     <div class="btns" style="float: right;">
-      <button type="reset" class="btn btn-danger mr-2" (click)="invoiceTabclose()">cancel</button>
+      <button type="reset" class="btn btn-warning mr-2" (click)="invoiceTabclose()">cancel</button>
       <button type="submit" class="btn btn-primary disable" [disabled]='!enable'
         (click)="update_purchase_details()">Update</button>
     </div>
@@ -238,7 +238,7 @@
   </div>
   <div class="btns col-sm-12 mt-2 mb-2" style="display: flex; justify-content: flex-end;">
     <button type="button" class="btn btn-outline-dark btn-primary" printSectionId="print-me" ngxPrint>Print</button>
-    <button type="button" class="btn btn-outline-dark btn-danger ml-1" (click)="closeInvoice(content)">Close</button>
+    <button type="button" class="btn btn-outline-dark btn-warning ml-1" (click)="closeInvoice(content)">Close</button>
   </div>
 </ng-template> -->
 <!-- invoice modal ends -->
@@ -253,11 +253,11 @@
   <div class="modal-body">
     <div class="updateVendorForm">
       <form [formGroup]="updatePurchase" class="my-3">
-        <label class="lab_tag" for="">Catagory:</label>
-        <input type="text" class="form-control" formControlName="catagory" readonly> -->
-<!-- <select [(ngModel)]="cattName" name="" id="" formControlName="catagory" class="form-control" (change)="chooseCategory($event.target.value)" disabled>
+        <label class="lab_tag" for="">Category:</label>
+        <input type="text" class="form-control" formControlName="category" readonly> -->
+<!-- <select [(ngModel)]="cattName" name="" id="" formControlName="category" class="form-control" (change)="chooseCategory($event.target.value)" disabled>
           <option [value]="catt_id" disabled >{{cattName}}</option>
-          <option *ngFor="let category of getCatagoryData;let i=index" [ngValue]="category.cat_id">
+          <option *ngFor="let category of getCategoryData;let i=index" [ngValue]="category.cat_id">
             {{category.cat_name}}
           </option>
         </select> -->
@@ -295,7 +295,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary mr-2" (click)="updateArray()">Submit</button>
-    <button type="reset" class="btn btn-danger" (click)="closeUpdateForm(updt)">Cancel</button>
+    <button type="reset" class="btn btn-warning" (click)="closeUpdateForm(updt)">Cancel</button>
   </div>
 </ng-template> -->
 
@@ -314,7 +314,7 @@
           style="border-collapse: separate;text-indent: initial;">
           <thead class="bg-white">
             <tr>
-              <th class="popup_field">Catagory</th>
+              <th class="popup_field">Category</th>
               <th class="popup_field">Product</th>
               <th class="popup_field">HSN</th>
               <th class="popup_field">Price</th>
@@ -330,7 +330,7 @@
           </thead>
           <tbody>
             <tr>
-              <td class="popup_field"><input type="text" class="form-control table_input" formControlName="catagory" readonly></td>
+              <td class="popup_field"><input type="text" class="form-control table_input" formControlName="category" readonly></td>
 
               <td class="popup_field">
                 <input type="text" class="form-control table_input" formControlName="prod_id" readonly>
@@ -357,7 +357,7 @@
         </table>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary mr-2" (click)="updateArray()">Submit</button>
-          <button type="reset" class="btn btn-danger" (click)="closeUpdateForm()">Cancel</button>
+          <button type="reset" class="btn btn-warning" (click)="closeUpdateForm()">Cancel</button>
         </div>
 
       </form>
@@ -466,7 +466,7 @@
                                       (change)="chooseCategory($event.target.value); totalCalculation()"
                                       formControlName="category" [disabled]="purchase_form.invalid">
                                       <option selected value="Choosecat" disabled>Choose Category</option>
-                                      <option class="disable" *ngFor="let category of getCatagoryData;let i=index"
+                                      <option class="disable" *ngFor="let category of getCategoryData;let i=index"
                                           [value]="category.cat_id"
                                           [disabled]="Product.controls.edit.value == false">
                                           {{category.cat_name}}</option>
@@ -568,7 +568,7 @@
   </div>
 
   <div class="footer_btn">
-      <button class="btn btn-danger mr-2" (click)="invoiceTabclose()">Cancel</button>
+      <button class="btn btn-warning mr-2" (click)="invoiceTabclose()">Cancel</button>
       <button class="btn btn-primary disable" [disabled]="updatePurchase.get('product')['controls'][updatePurchase.get('product')['controls'].length-1].value.prud == 'ChooseProduct'" (click)="update_purchase_details()">Update</button>
   </div>
 

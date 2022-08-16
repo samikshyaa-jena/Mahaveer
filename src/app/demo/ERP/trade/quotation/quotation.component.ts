@@ -30,7 +30,7 @@ export class QuotationComponent implements OnInit {
   purchase_tab: boolean;
   gstVal: any;
   control: FormGroup;
-  getCatagoryData: any = [];
+  getCategoryData: any = [];
   itemList: any;
   cat_id: any;
   hsn: any;
@@ -112,7 +112,7 @@ export class QuotationComponent implements OnInit {
 
     this.pri_sta = sessionStorage.getItem('priority');
     
-    this.get_Catagory();
+    this.get_Category();
     this.get_Item();
     this.get_Vendor();
     this.get_purchase_details();
@@ -122,7 +122,7 @@ export class QuotationComponent implements OnInit {
   //   sessionStorage.removeItem('priority')
   // }
 
-  get_Catagory = () => {
+  get_Category = () => {
 
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
@@ -273,7 +273,7 @@ export class QuotationComponent implements OnInit {
     this.proddName = this.updateData[i].prod_name;
     this.prodd_id = this.updateData[i].prod_name;
     this.updateQuotation.patchValue({
-      catagory: this.cattName,
+      category: this.cattName,
       prod_id: this.proddName,
       hsn: this.updateData[i].hsn,
       price: this.updateData[i].price,
@@ -288,9 +288,9 @@ export class QuotationComponent implements OnInit {
   };
 
   item_list = (e) => {
-    for (let i = 0; i < this.getCatagoryData.length; i++) {
-      if (this.getCatagoryData[i].cat_id == e) {
-        this.itemData = this.getCatagoryData[i].itemData;
+    for (let i = 0; i < this.getCategoryData.length; i++) {
+      if (this.getCategoryData[i].cat_id == e) {
+        this.itemData = this.getCategoryData[i].itemData;
       }
     }
     console.log(this.itemData);

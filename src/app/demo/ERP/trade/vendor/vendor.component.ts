@@ -35,7 +35,7 @@ export class VendorComponent implements OnInit {
       ven_name: new FormControl("",[Validators.required, Validators.minLength(10)]),
       ven_email: new FormControl("",[Validators.required, Validators.minLength(10)]),
       mob: new FormControl("",[Validators.required, Validators.minLength(10)]),
-      type: new FormControl("",[Validators.required]),
+      type: new FormControl("type",[Validators.required]),
       gst_in: new FormControl("",[Validators.required, Validators.pattern(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/)]),
       add: new FormControl("",[Validators.required, Validators.minLength(10)]),
     });
@@ -43,7 +43,7 @@ export class VendorComponent implements OnInit {
       ven_name: new FormControl("",[Validators.required, Validators.minLength(10)]),
       ven_email: new FormControl("",[Validators.required, Validators.minLength(10)]),
       mob: new FormControl("",[Validators.required, Validators.minLength(10)]),
-      type: new FormControl("",[Validators.required]),
+      type: new FormControl("type",[Validators.required]),
       gst_in: new FormControl("",[Validators.required, Validators.minLength(10)]),
       add: new FormControl("",[Validators.required, Validators.minLength(10)]),
     });

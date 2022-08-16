@@ -30,7 +30,7 @@ export class SaleComponent implements OnInit {
   purchase_tab: boolean;
   gstVal: any;
   control: FormGroup;
-  getCatagoryData: any = [];
+  getCategoryData: any = [];
   itemList: any;
   cat_id: any;
   hsn: any;
@@ -113,7 +113,7 @@ export class SaleComponent implements OnInit {
     });
 
     //   this.updatePurchase = new FormGroup({
-    //     catagory: new FormControl(""),
+    //     category: new FormControl(""),
     //     prod_id: new FormControl(""),
     //     hsn: new FormControl(""),
     //     price: new FormControl(""),
@@ -128,13 +128,13 @@ export class SaleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.get_Catagory();
+    this.get_Category();
     this.get_Item();
     this.get_Vendor();
     this.get_purchase_details();
   }
 
-  get_Catagory = () => {
+  get_Category = () => {
 
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
@@ -243,10 +243,10 @@ export class SaleComponent implements OnInit {
   // chooseCategory(e) {
   //   console.log(e);
   //   if (e != "choose") {
-  //     for (let i = 0; i < this.getCatagoryData.length; i++) {
-  //       if (this.getCatagoryData[i].cat_id == e) {
-  //         this.itemData = this.getCatagoryData[i].itemData;
-  //         this.productname = this.getCatagoryData[i].prod_name
+  //     for (let i = 0; i < this.getCategoryData.length; i++) {
+  //       if (this.getCategoryData[i].cat_id == e) {
+  //         this.itemData = this.getCategoryData[i].itemData;
+  //         this.productname = this.getCategoryData[i].prod_name
   //       }
   //     }
   //     console.log(this.itemData);
@@ -323,7 +323,7 @@ export class SaleComponent implements OnInit {
     this.proddName = this.updateData[i].prod_name;
     this.prodd_id = this.updateData[i].prod_name;
     this.updatePurchase.patchValue({
-      catagory: this.cattName,
+      category: this.cattName,
       prod_id: this.proddName,
       hsn: this.updateData[i].hsn,
       price: this.updateData[i].price,
@@ -375,9 +375,9 @@ export class SaleComponent implements OnInit {
 
 
   item_list = (e) => {
-    for (let i = 0; i < this.getCatagoryData.length; i++) {
-      if (this.getCatagoryData[i].cat_id == e) {
-        this.itemData = this.getCatagoryData[i].itemData;
+    for (let i = 0; i < this.getCategoryData.length; i++) {
+      if (this.getCategoryData[i].cat_id == e) {
+        this.itemData = this.getCategoryData[i].itemData;
       }
     }
     console.log(this.itemData);
@@ -578,8 +578,8 @@ export class SaleComponent implements OnInit {
     // let sgstVal = 0;
     // this.dummy = [
     //   {
-    //     catagory: '',
-    //     catagoryName: '',
+    //     category: '',
+    //     categoryName: '',
     //     item_id: '',
     //     itemName: '',
     //     hsn: '',
@@ -597,8 +597,8 @@ export class SaleComponent implements OnInit {
     //             bill_amount: '',
     //   },
     //   {
-    //     catagory: '',
-    //     catagoryName: '',
+    //     category: '',
+    //     categoryName: '',
     //     item_id: '',
     //     itemName: '',
     //     hsn: '',
@@ -616,8 +616,8 @@ export class SaleComponent implements OnInit {
     //             bill_amount: '',
     //   },
     //   {
-    //     catagory: '',
-    //     catagoryName: '',
+    //     category: '',
+    //     categoryName: '',
     //     item_id: '',
     //     itemName: '',
     //     hsn: '',
@@ -635,8 +635,8 @@ export class SaleComponent implements OnInit {
     //             bill_amount: '',
     //   },
     //   {
-    //     catagory: '',
-    //     catagoryName: '',
+    //     category: '',
+    //     categoryName: '',
     //     item_id: '',
     //     itemName: '',
     //     hsn: '',
@@ -654,8 +654,8 @@ export class SaleComponent implements OnInit {
     //             bill_amount: '',
     //   },
     //   {
-    //     catagory: '',
-    //     catagoryName: '',
+    //     category: '',
+    //     categoryName: '',
     //     item_id: '',
     //     itemName: '',
     //     hsn: '',
@@ -673,8 +673,8 @@ export class SaleComponent implements OnInit {
     //             bill_amount: '',
     //   },
     //   {
-    //     catagory: '',
-    //     catagoryName: '',
+    //     category: '',
+    //     categoryName: '',
     //     item_id: '',
     //     itemName: '',
     //     hsn: '',
@@ -692,8 +692,8 @@ export class SaleComponent implements OnInit {
     //             bill_amount: '',
     //   },
     //   {
-    //     catagory: '',
-    //     catagoryName: '',
+    //     category: '',
+    //     categoryName: '',
     //     item_id: '',
     //     itemName: '',
     //     hsn: '',
@@ -712,8 +712,8 @@ export class SaleComponent implements OnInit {
 
     //   },
     //   {
-    //     catagory: '',
-    //     catagoryName: '',
+    //     category: '',
+    //     categoryName: '',
     //     item_id: '',
     //     itemName: '',
     //     hsn: '',
@@ -732,8 +732,8 @@ export class SaleComponent implements OnInit {
 
     //   },
     //   {
-    //     catagory: '',
-    //     catagoryName: '',
+    //     category: '',
+    //     categoryName: '',
     //     item_id: '',
     //     itemName: '',
     //     hsn: '',
@@ -752,8 +752,8 @@ export class SaleComponent implements OnInit {
 
     //   },
     //   {
-    //     catagory: '',
-    //     catagoryName: '',
+    //     category: '',
+    //     categoryName: '',
     //     item_id: '',
     //     itemName: '',
     //     hsn: '',
@@ -803,7 +803,7 @@ export class SaleComponent implements OnInit {
     // this.purchase_tab = false;
     // this.loader = true;
     // for (let l = 0; l < this.popupData.length; l++) {
-    //   this.dummy[l].catagory = this.popupData[l].cat_id;
+    //   this.dummy[l].category = this.popupData[l].cat_id;
     //   this.dummy[l].cat_name = this.popupData[l].cat_name
     //   this.dummy[l].prod_id = this.popupData[l].prod_id;
     //   this.dummy[l].prod_name = this.popupData[l].prod_name;
@@ -824,7 +824,7 @@ export class SaleComponent implements OnInit {
     // }
 
     // this.dummy =  this.dummy.filter((el) => {
-    //   return el.catagory !=  '';
+    //   return el.category !=  '';
     // });
     // console.log(this.dummy);
     // this.popupData = this.dummy;

@@ -49,6 +49,7 @@ export class SignInComponent implements OnInit {
     this.authService.signUser(AuthApi.url.login, reqbody).subscribe(
         
           (res: any) => {
+           if (res.token) {
             const 
             notify = {
               message: 'Login Successfull',
@@ -57,6 +58,14 @@ export class SignInComponent implements OnInit {
             this.notify(notify);
 
             sessionStorage.setItem('CORE_SESSION', res.token);
+            this.router.navigate(['/v1']);
+           } else {
+            const notify = {
+              message: `Login Failed: ${res.msg}`,
+              status: 'error'
+            };
+            this.notify(notify);
+          }
 
             // this.store.dispatch(new Dashboard.SetUserData({ loggedInUser: this.signInForm.value.username }));
 
@@ -67,7 +76,6 @@ export class SignInComponent implements OnInit {
             // this.appService.observeInternetConn(); // Observe Internet Connection
             // this.appService.autoLogOut();
 
-            this.router.navigate(['/v1']);
 
           },
           (err: any) => {

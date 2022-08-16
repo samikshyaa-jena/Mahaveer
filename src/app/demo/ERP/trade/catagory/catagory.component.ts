@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as Notiflix from 'notiflix';
 import { finalize } from 'rxjs/operators';
@@ -9,19 +9,19 @@ import { erp_all_api } from '../../erpAllApi';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-catagory',
+  selector: 'app-category',
   templateUrl: './catagory.component.html',
   styleUrls: ['./catagory.component.scss']
 })
-export class CatagoryComponent implements OnInit {
+export class CategoryComponent implements OnInit {
 
-  addCatagoryForm: FormGroup;
+  addCategoryForm: FormGroup;
   editItemForm: FormGroup;
   show_cat: boolean;
   loader: boolean;
   show_edit: boolean;
-  addCatagoryData: any;
-  getCatagoryData: any = [];
+  addCategoryData: any;
+  getCategoryData: any = [];
   itemList: any = [];
   cat_id: any;
   show: boolean = false;
@@ -53,36 +53,36 @@ export class CatagoryComponent implements OnInit {
     this.modeForm = new FormGroup({
       mode: new FormControl("Choose Type")
     });
-    this.addCatagoryForm = new FormGroup({
-      cat_name: new FormControl("")
+    this.addCategoryForm = new FormGroup({
+      cat_name: new FormControl("", [Validators.required])
     });
     this.updateCatForm = new FormGroup({
-      cat_name: new FormControl("")
+      cat_name: new FormControl("", [Validators.required])
     });
     this.addItemForm = new FormGroup({
-      category_name: new FormControl("choose a category"),
-      item_name: new FormControl(""),
-      gst: new FormControl(""),
-      min_stk: new FormControl(""),
-      unit: new FormControl(""),
-      hsn: new FormControl(""),
-      qty: new FormControl(""),
-      mrp: new FormControl(""),
+      category_name: new FormControl("choose a category", [Validators.required]),
+      item_name: new FormControl("", [Validators.required]),
+      gst: new FormControl("", [Validators.required]),
+      min_stk: new FormControl("", [Validators.required]),
+      unit: new FormControl("", [Validators.required]),
+      hsn: new FormControl("", [Validators.required]),
+      qty: new FormControl("", [Validators.required]),
+      mrp: new FormControl("", [Validators.required]),
     });
     this.editItemForm = new FormGroup({
-      category_name: new FormControl("choose a category"),
-      item_name: new FormControl(""),
-      gst: new FormControl(""),
-      min_stk: new FormControl(""),
-      unit: new FormControl(""),
-      hsn: new FormControl(""),
-      qty: new FormControl(""),
-      mrp: new FormControl(""),
+      category_name: new FormControl("choose a category", [Validators.required]),
+      item_name: new FormControl("", [Validators.required]),
+      gst: new FormControl("", [Validators.required]),
+      min_stk: new FormControl("", [Validators.required]),
+      unit: new FormControl("", [Validators.required]),
+      hsn: new FormControl("", [Validators.required]),
+      qty: new FormControl("", [Validators.required]),
+      mrp: new FormControl("", [Validators.required]),
     });
    }
 
    ngOnInit() {
-    this.get_Catagory();
+    this.get_Category();
   }
 
   changeType = (e)=>{
@@ -103,6 +103,7 @@ export class CatagoryComponent implements OnInit {
   // edit cat popup close
   cat_edit_popup_close(content) {
     this.modalService.dismissAll(content);
+    this.updateCatForm.reset();
   }
 
   // edit cat popup open
@@ -121,10 +122,11 @@ export class CatagoryComponent implements OnInit {
   // edit cat popup close
   item_edit_popup_close(content1) {
     this.modalService.dismissAll(content1);
+    this.editItemForm.reset();
   }
-  get_Catagory = () => {
+  get_Category = () => {
     this.cat_data.length=0;
-    this.getCatagoryData.length=0;
+    this.getCategoryData.length=0;
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
     let headers = new HttpHeaders();
@@ -135,11 +137,11 @@ export class CatagoryComponent implements OnInit {
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
-            this.getCatagoryData.push(catData[i]);
+            this.getCategoryData.push(catData[i]);
           }
         }
         console.log("response is", catData);
-        this.cat_data = this.getCatagoryData.map((val) => {
+        this.cat_data = this.getCategoryData.map((val) => {
           return { cat_id: val.cat_id, cat_name: val.cat_name, itemData: val.itemData };
         });
         this.reports = this.cat_data;
@@ -151,10 +153,10 @@ export class CatagoryComponent implements OnInit {
       });
 
   };
-  add_Catagory = () => {
+  add_Category = () => {
     this.loader = true;
     const reqBody = {
-      name: this.addCatagoryForm.get("cat_name").value,
+      name: this.addCategoryForm.get("cat_name").value,
     }
     console.log(reqBody);
 
@@ -165,13 +167,13 @@ export class CatagoryComponent implements OnInit {
 
     this.ErpService.post_Reqs(erp_all_api.urls.add_TradeCat, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        console.log("response is", this.addCatagoryData);
+        console.log("response is", this.addCategoryData);
         this.cat_data.length=0;
-        this.getCatagoryData.length=0;
+        this.getCategoryData.length=0;
         this.show_cat_item = 1;
-        this.addCatagoryData = res;
-        this.get_Catagory();
-        this.addCatagoryForm.reset();
+        this.addCategoryData = res;
+        this.get_Category();
+        this.addCategoryForm.reset();
         Notiflix.Report.success(res.msg, '', 'Close');
       },
       (err: any) => {
@@ -181,7 +183,7 @@ export class CatagoryComponent implements OnInit {
 
   };
 
-  del_Catagory = (i) => {
+  del_Category = (i) => {
     this.loader = true;
     const reqBody =
     {
@@ -195,10 +197,10 @@ export class CatagoryComponent implements OnInit {
     this.ErpService.post_Reqs(erp_all_api.urls.del_TradeCat, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success(res.msg, '', 'Close');
-        this.addCatagoryData = res;
-        console.log("response is", this.addCatagoryData);
-        this.getCatagoryData = [];
-        this.get_Catagory();
+        this.addCategoryData = res;
+        console.log("response is", this.addCategoryData);
+        this.getCategoryData = [];
+        this.get_Category();
       },
       (err: any) => {
         console.log(err);
@@ -230,7 +232,7 @@ export class CatagoryComponent implements OnInit {
       });
   };
 
-  edit_Catagory = () => {
+  edit_Category = () => {
     this.loader = true;
     const reqBody =
     {
@@ -245,8 +247,8 @@ export class CatagoryComponent implements OnInit {
     this.ErpService.post_Reqs(erp_all_api.urls.edit_TradeCat, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success(res.msg, '', 'Close');
-        this.getCatagoryData = [];
-        this.get_Catagory();
+        this.getCategoryData = [];
+        this.get_Category();
         this.updateCatForm.reset();
         this.cat_edit_popup_close('content');
 
@@ -285,11 +287,11 @@ export class CatagoryComponent implements OnInit {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
   };
-  showAddCatagory = () => {
+  showAddCategory = () => {
     this.show_cat = true;
     this.show_edit = false
   }
-  backAddCatagory = () => {
+  backAddCategory = () => {
     this.show_cat = false;
     this.show_edit = false;
   }
