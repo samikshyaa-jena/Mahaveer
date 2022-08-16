@@ -79,7 +79,7 @@ export class SignInComponent implements OnInit {
 
           },
           (err: any) => {
-            const errMsg = (err.error.message) ? err.error.message : 'Server Error, Please, try again.';
+            const errMsg = (err.error.msg) ? err.error.msg : 'Server Error, Please, try again.';
             const notify = {
               message: `Login Failed: ${errMsg}`,
               status: 'error'
