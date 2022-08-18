@@ -316,7 +316,15 @@
     }
   
   
-    add_purchase_details = () => {
+    add_purchase_details = (type) => {
+
+      let url;
+
+    if (type == 'add') {
+      url = erp_all_api.urls.trd_purchase_entry;
+    } else {
+      url = erp_all_api.urls.update_purchase_entry;
+    }
   
       this.productformarray = [];
       var p_form = this.productForm.get('product')['controls'];
@@ -363,7 +371,7 @@
       let headers = new HttpHeaders();
       headers = headers.set('auth-token', auth_token);
   
-      this.ErpService.post_Reqs(erp_all_api.urls.trd_purchase_entry, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      this.ErpService.post_Reqs(url, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
         (res: any) => {
           Notiflix.Report.success('SuccessFully Added', '', 'Close');
           console.log(res, "get item");
