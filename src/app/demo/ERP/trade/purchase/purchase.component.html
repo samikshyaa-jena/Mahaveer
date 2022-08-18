@@ -9,7 +9,7 @@
 </div>
 <!-- Loader Ends -->
 <!-- <div class="container"> -->
-<app-purchase-add *ngIf="purchase_tab" (get_purchase_details)="get_purchase_details()" (BackTab)="back()">
+<app-purchase-add *ngIf="purchase_tab" [pur_editData]="purchase_tab2" (get_purchase_details)="get_purchase_details()" (BackTab)="back()">
 </app-purchase-add>
 <div class="container" style="padding:15px" *ngIf='!purchase_tab'>
   <!-- <div class="card"> -->
@@ -44,7 +44,7 @@
             <tbody>
               <tr *ngFor="let data of get_purchase_data; let i = index">
                 <td><u style="color: blue; cursor: pointer;"
-                    (click)="invoicenumberPopup(data.invoice_no,data.purchase_data,data.vendorData)">{{data.invoice_no}}</u></td>
+                    (click)="openUpdateProductPage(i)">{{data.invoice_no}}</u></td>
                 <td>{{data.purchase_date | date: 'dd/MM/yyyy'}}</td>
                 <td>{{data.vendorData.name}}</td>
                 <td>{{data.vendorData.gstn}}</td>

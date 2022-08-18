@@ -57,6 +57,7 @@ export class PurchaseComponent implements OnInit {
   itemmName: any;
   catt_id: any;
   itemm_id: any;
+  purchase_tab2: any = [];
 
   constructor(
     private ErpService: ErpServiceService,
@@ -294,11 +295,16 @@ export class PurchaseComponent implements OnInit {
 
   purchase_entry = () => {
     this.purchase_tab = true;
+    this.purchase_tab2 = null;
   }
   back_table = () => {
     this.purchase_tab = false;
     this.dynamicManufacture.reset();
     this.purchase_form.reset();
+  }
+  openUpdateProductPage = (i)=>{
+    this.purchase_tab = true;
+    this.purchase_tab2 = this.get_purchase_data[i];
   }
 
   get UserFormGroups() {

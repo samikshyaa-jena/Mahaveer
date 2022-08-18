@@ -1,4 +1,4 @@
-  import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+  import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   import { HttpClient, HttpHeaders } from '@angular/common/http';
   import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
   import { Router } from '@angular/router';
@@ -33,7 +33,8 @@
     type: any;
     today = new Date();
   
-    @Output() BackTab = new EventEmitter<boolean>()
+    @Output() BackTab = new EventEmitter<boolean>();
+    @Input() pur_editData: any;
     @Output() get_purchase_details: EventEmitter<any> = new EventEmitter();
     showInps: boolean = false;
   
@@ -67,9 +68,46 @@
     }  
   
     ngOnInit(): void {
+
+      if (this.pur_editData) {
+
+        this.purchase_form.patchValue({
+          invo: this.pur_editData.invoice_no,
+          custmer: this.pur_editData.vendorData.vendor_id,
+          p_date: this.pur_editData.purchase_date,
+        });
+  
+        this.type = this.pur_editData.vendorData.type;
+        
+        var p_form = this.productForm.get('product')['controls'];
+        console.log(p_form);
+  
+        for (let i = 0; i < this.pur_editData.purchase_data.length; i++) {
+          this.add_row();
+  
+          p_form[i].patchValue({
+            category: this.pur_editData.purchase_data[i].cat_id,
+            item: this.pur_editData.purchase_data[i].item_id,
+            igst: this.pur_editData.purchase_data[i].igst,
+            cgst: this.pur_editData.purchase_data[i].cgst,
+            sgst: this.pur_editData.purchase_data[i].sgst,
+            hsn: this.pur_editData.purchase_data[i].hsn,
+            price: this.pur_editData.purchase_data[i].purchase_price,
+            qty: this.pur_editData.purchase_data[i].quantity,
+            discount: this.pur_editData.purchase_data[i].discount,
+            total: this.pur_editData.purchase_data[i].total,
+          });
+          this.calc_total(p_form[i].controls);
+  
+        }
+  
+        this.totalCalculation();
+      }
+      else{
+        this.add_row2();
+      }
       this.get_Category();
       this.get_Vendor();
-      this.add_row();
     }
     get_Category = () => {
       this.loader = true;
@@ -357,13 +395,20 @@
         price: new FormControl('0', [Validators.required]),
         qty: new FormControl('1', [Validators.required]),
         discount: new FormControl('0', [Validators.required]),
-        total: new FormControl('', [Validators.required])
+        total: new FormControl('', [Validators.required]),
+        edit: new FormControl(false)
   
       })
     }
   
     add_row() {
       (<FormArray>this.productForm.get('product')).push(this.productdata())
+    }
+    add_row2() {
+      (<FormArray>this.productForm.get('product')).push(this.productdata())
+      var m_form = this.productForm.get('product')['controls'];
+      var l: number = (m_form.length) - 1;
+      m_form[l].controls.edit.patchValue(true);
     }
     deleteRow(i) {
       (<FormArray>this.productForm.get('product')).removeAt(i)
@@ -385,6 +430,12 @@
         this.t_amount = this.t_amount + pform[i].value.total;
       }
   
+    }
+
+    Edit(pform, i) {
+      console.log(pform);
+      console.log(pform.edit.value);
+      pform.edit.value = true;
     }
   
     prevent(e, type) {

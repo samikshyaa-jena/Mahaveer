@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -34,6 +34,7 @@ export class PurchaseAddComponent implements OnInit {
   today = new Date();
 
   @Output() BackTab = new EventEmitter<boolean>()
+  @Input() pur_editData: any;
   @Output() get_purchase_details: EventEmitter<any> = new EventEmitter();
   showInps: boolean = false;
 
@@ -238,11 +239,11 @@ export class PurchaseAddComponent implements OnInit {
   //   console.log(this.purchase_form.get('invo').value,);
   //   console.log(this.productformarray);
   //   const reqBody = {
-      // "invoice": this.purchase_form.get('invo').value,
-      // "vendor_id": this.purchase_form.get('vendor').value,
-      // "type": "rawmaterial",
-      // "date": this.purchase_form.get('p_date').value,
-      // "purchase_data": this.productformarray
+  // "invoice": this.purchase_form.get('invo').value,
+  // "vendor_id": this.purchase_form.get('vendor').value,
+  // "type": "rawmaterial",
+  // "date": this.purchase_form.get('p_date').value,
+  // "purchase_data": this.productformarray
   //   }
 
   //   let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
@@ -279,9 +280,46 @@ export class PurchaseAddComponent implements OnInit {
   // }
 
   ngOnInit(): void {
+
+    if (this.pur_editData) {
+
+      this.purchase_form.patchValue({
+        invo: this.pur_editData.invoice_no,
+        custmer: this.pur_editData.vendorData.vendor_id,
+        p_date: this.pur_editData.purchase_date,
+      });
+
+      this.type = this.pur_editData.vendorData.type;
+      
+      var p_form = this.productForm.get('product')['controls'];
+      console.log(p_form);
+
+      for (let i = 0; i < this.pur_editData.purchase_data.length; i++) {
+        this.add_row();
+
+        p_form[i].patchValue({
+          category: this.pur_editData.purchase_data[i].cat_id,
+          item: this.pur_editData.purchase_data[i].item_id,
+          igst: this.pur_editData.purchase_data[i].igst,
+          cgst: this.pur_editData.purchase_data[i].cgst,
+          sgst: this.pur_editData.purchase_data[i].sgst,
+          hsn: this.pur_editData.purchase_data[i].hsn,
+          price: this.pur_editData.purchase_data[i].purchase_price,
+          qty: this.pur_editData.purchase_data[i].quantity,
+          discount: this.pur_editData.purchase_data[i].discount,
+          total: this.pur_editData.purchase_data[i].total,
+        });
+        this.calc_total(p_form[i].controls);
+
+      }
+
+      this.totalCalculation();
+    }
+    else{
+      this.add_row2();
+    }
     this.get_Category();
     this.get_Vendor();
-    this.add_row();
   }
   get_Category = () => {
     this.loader = true;
@@ -297,7 +335,7 @@ export class PurchaseAddComponent implements OnInit {
             this.getCategoryData.push(catData[i]);
           }
         }
-       
+
         console.log(this.getCategoryData);
       },
       (err: any) => {
@@ -336,17 +374,17 @@ export class PurchaseAddComponent implements OnInit {
   chooseCategory(form_cont, item) {
     form_cont.patchValue({
       item: 'ChooseProduct',
-  });
+    });
     this.itemData = [];
-        for (let i = 0; i < this.getCategoryData.length; i++) {
-          if (this.getCategoryData[i].cat_id == item) {
-            for (let j = 0; j < this.getCategoryData[i].itemData.length; j++) {
-              if (this.getCategoryData[i].itemData[j].delete_stat == 0) {
-                this.itemData.push(this.getCategoryData[i].itemData[j]);
-              }              
-            }
+    for (let i = 0; i < this.getCategoryData.length; i++) {
+      if (this.getCategoryData[i].cat_id == item) {
+        for (let j = 0; j < this.getCategoryData[i].itemData.length; j++) {
+          if (this.getCategoryData[i].itemData[j].delete_stat == 0) {
+            this.itemData.push(this.getCategoryData[i].itemData[j]);
           }
         }
+      }
+    }
   }
 
   chooseItem(form_cont, item) {
@@ -354,7 +392,7 @@ export class PurchaseAddComponent implements OnInit {
     form_cont.patchValue({
       discount: 0,
       qty: 1,
-  });
+    });
 
     console.log(item);
     console.log(form_cont);
@@ -362,19 +400,19 @@ export class PurchaseAddComponent implements OnInit {
     console.log(this.itemData);
 
     if (item != "ChooseProduct") {
-      let hsn;
-      let gst;
-      let GST;
-      let gstvalue;
-      let mrp;
+      let hsn: any;
+      let gst: number;
+      let GST: number;
+      let gstvalue: number;
+      let mrp: number;
 
       for (let i = 0; i < this.itemData.length; i++) {
         if (this.itemData[i].item_id == item) {
           GST = parseInt(this.itemData[i].gst);
           hsn = this.itemData[i].hsn;
 
-            mrp = form_cont.controls.price.value;
-            gst = mrp * (GST / 100);
+          mrp = form_cont.controls.price.value;
+          gst = mrp * (GST / 100);
           this.itemname = this.itemData[i].item_name;
 
           if (this.type == 'Intra State') {
@@ -524,7 +562,7 @@ export class PurchaseAddComponent implements OnInit {
     console.log(this.purchase_form.get('invo').value,);
     console.log(this.productformarray);
     const reqBody = {
-      
+
       "invoice": this.purchase_form.get('invo').value,
       "vendor_id": this.purchase_form.get('custmer').value,
       "type": "rawmaterial",
@@ -561,7 +599,6 @@ export class PurchaseAddComponent implements OnInit {
 
       category: new FormControl('ChooseProduct', [Validators.required]),
       item: new FormControl('ChooseProduct', [Validators.required]),
-      // prod_id: new FormControl('ChooseItem', [Validators.required]),
       igst: new FormControl('', [Validators.required]),
       cgst: new FormControl('', [Validators.required]),
       sgst: new FormControl('', [Validators.required]),
@@ -569,7 +606,8 @@ export class PurchaseAddComponent implements OnInit {
       price: new FormControl('0', [Validators.required]),
       qty: new FormControl('1', [Validators.required]),
       discount: new FormControl('0', [Validators.required]),
-      total: new FormControl('', [Validators.required])
+      total: new FormControl('', [Validators.required]),
+      edit: new FormControl(false)
 
     })
   }
@@ -577,8 +615,20 @@ export class PurchaseAddComponent implements OnInit {
   add_row() {
     (<FormArray>this.productForm.get('product')).push(this.productdata())
   }
+  add_row2() {
+    (<FormArray>this.productForm.get('product')).push(this.productdata())
+    var m_form = this.productForm.get('product')['controls'];
+    var l: number = (m_form.length) - 1;
+    m_form[l].controls.edit.patchValue(true);
+  }
   deleteRow(i) {
     (<FormArray>this.productForm.get('product')).removeAt(i)
+  }
+
+  Edit(pform, i) {
+    console.log(pform);
+    console.log(pform.edit.value);
+    pform.edit.value = true;
   }
 
   totalCalculation() {

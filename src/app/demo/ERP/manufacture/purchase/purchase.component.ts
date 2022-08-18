@@ -65,6 +65,7 @@ export class PurchaseComponent implements OnInit {
   debitPrice: any;
   debit_invoice_no: any;
   returnData: any =   [];
+  purchase_tab2: any = [];
 
   constructor(
     private ErpService: ErpServiceService,
@@ -148,6 +149,7 @@ export class PurchaseComponent implements OnInit {
 
   purchase_entry = () => {
     this.purchase_tab = true;
+    this.purchase_tab2 = null;
   }
   back_table = () => {
     this.purchase_tab = false;
@@ -553,260 +555,266 @@ export class PurchaseComponent implements OnInit {
       });
   }
 
-  invoicenumberPopup(i, d, v) {
-    console.log(v, "vendor data................");
-    this.vendData = v;
-    this.purchase_dataArray = [];
-    console.log(i);
-    this.invoiceNo = i;
+  // invoicenumberPopup(i, d, v) {
+  //   console.log(v, "vendor data................");
+  //   this.vendData = v;
+  //   this.purchase_dataArray = [];
+  //   console.log(i);
+  //   this.invoiceNo = i;
 
-    let total = 0;
-    let igstVal = 0;
-    let cgstVal = 0;
-    let sgstVal = 0;
-    this.dummy = [
-      {
-        category: '',
-        categoryName: '',
-        item_id: '',
-        itemName: '',
-        hsn: '',
-        price: '',
-        qty: '',
-        unit: '',
-        discount: '',
-        cgst: '',
-        sgst: '',
-        igst: '',
-        cgstVal: '',
-        sgstVal: '',
-        igstVal: '',
-        total: '',
-      },
-      {
-        category: '',
-        categoryName: '',
-        item_id: '',
-        itemName: '',
-        hsn: '',
-        price: '',
-        qty: '',
-        unit: '',
-        discount: '',
-        cgst: '',
-        sgst: '',
-        igst: '',
-        cgstVal: '',
-        sgstVal: '',
-        igstVal: '',
-        total: '',
-      },
-      {
-        category: '',
-        categoryName: '',
-        item_id: '',
-        itemName: '',
-        hsn: '',
-        price: '',
-        qty: '',
-        unit: '',
-        discount: '',
-        cgst: '',
-        sgst: '',
-        igst: '',
-        cgstVal: '',
-        sgstVal: '',
-        igstVal: '',
-        total: '',
-      },
-      {
-        category: '',
-        categoryName: '',
-        item_id: '',
-        itemName: '',
-        hsn: '',
-        price: '',
-        qty: '',
-        unit: '',
-        discount: '',
-        cgst: '',
-        sgst: '',
-        igst: '',
-        cgstVal: '',
-        sgstVal: '',
-        igstVal: '',
-        total: '',
-      },
-      {
-        category: '',
-        categoryName: '',
-        item_id: '',
-        itemName: '',
-        hsn: '',
-        price: '',
-        qty: '',
-        unit: '',
-        discount: '',
-        cgst: '',
-        sgst: '',
-        igst: '',
-        cgstVal: '',
-        sgstVal: '',
-        igstVal: '',
-        total: '',
-      },
-      {
-        category: '',
-        categoryName: '',
-        item_id: '',
-        itemName: '',
-        hsn: '',
-        price: '',
-        qty: '',
-        unit: '',
-        discount: '',
-        cgst: '',
-        sgst: '',
-        igst: '',
-        cgstVal: '',
-        sgstVal: '',
-        igstVal: '',
-        total: '',
-      },
-      {
-        category: '',
-        categoryName: '',
-        item_id: '',
-        itemName: '',
-        hsn: '',
-        price: '',
-        qty: '',
-        unit: '',
-        discount: '',
-        cgst: '',
-        sgst: '',
-        igst: '',
-        cgstVal: '',
-        sgstVal: '',
-        igstVal: '',
-        total: '',
-      },
-      {
-        category: '',
-        categoryName: '',
-        item_id: '',
-        itemName: '',
-        hsn: '',
-        price: '',
-        qty: '',
-        unit: '',
-        discount: '',
-        cgst: '',
-        sgst: '',
-        igst: '',
-        cgstVal: '',
-        sgstVal: '',
-        igstVal: '',
-        total: '',
-      },
-      {
-        category: '',
-        categoryName: '',
-        item_id: '',
-        itemName: '',
-        hsn: '',
-        price: '',
-        qty: '',
-        unit: '',
-        discount: '',
-        cgst: '',
-        sgst: '',
-        igst: '',
-        cgstVal: '',
-        sgstVal: '',
-        igstVal: '',
-        total: '',
-      },
-      {
-        category: '',
-        categoryName: '',
-        item_id: '',
-        itemName: '',
-        hsn: '',
-        price: '',
-        qty: '',
-        unit: '',
-        discount: '',
-        cgst: '',
-        sgst: '',
-        igst: '',
-        cgstVal: '',
-        sgstVal: '',
-        igstVal: '',
-        total: '',
-      },
-    ];
-    this.popupData = d;
-    console.log("pop====.>", this.popupData);
-    for (let i = 0; i < this.popupData.length; i++) {
-      let cgstBarri = this.popupData[i].cgst;
-      let igstBarri = this.popupData[i].igst;
-      let sgstBarri = this.popupData[i].sgst;
-      let priceBarri = this.popupData[i].purchase_price;
-      let qtyBarri = this.popupData[i].quantity;
-      priceBarri = priceBarri*qtyBarri;
-      igstVal = (igstBarri/100)*priceBarri;
-      sgstVal = (sgstBarri/100)*priceBarri;
-      cgstVal = (cgstBarri/100)*priceBarri;
-      this.popupData[i].igstVal = igstVal;
-      this.popupData[i].sgstVal = sgstVal;
-      this.popupData[i].cgstVal = cgstVal;
-    }
-    this.popupData.totalData = total;
+  //   let total = 0;
+  //   let igstVal = 0;
+  //   let cgstVal = 0;
+  //   let sgstVal = 0;
+  //   this.dummy = [
+  //     {
+  //       category: '',
+  //       categoryName: '',
+  //       item_id: '',
+  //       itemName: '',
+  //       hsn: '',
+  //       price: '',
+  //       qty: '',
+  //       unit: '',
+  //       discount: '',
+  //       cgst: '',
+  //       sgst: '',
+  //       igst: '',
+  //       cgstVal: '',
+  //       sgstVal: '',
+  //       igstVal: '',
+  //       total: '',
+  //     },
+  //     {
+  //       category: '',
+  //       categoryName: '',
+  //       item_id: '',
+  //       itemName: '',
+  //       hsn: '',
+  //       price: '',
+  //       qty: '',
+  //       unit: '',
+  //       discount: '',
+  //       cgst: '',
+  //       sgst: '',
+  //       igst: '',
+  //       cgstVal: '',
+  //       sgstVal: '',
+  //       igstVal: '',
+  //       total: '',
+  //     },
+  //     {
+  //       category: '',
+  //       categoryName: '',
+  //       item_id: '',
+  //       itemName: '',
+  //       hsn: '',
+  //       price: '',
+  //       qty: '',
+  //       unit: '',
+  //       discount: '',
+  //       cgst: '',
+  //       sgst: '',
+  //       igst: '',
+  //       cgstVal: '',
+  //       sgstVal: '',
+  //       igstVal: '',
+  //       total: '',
+  //     },
+  //     {
+  //       category: '',
+  //       categoryName: '',
+  //       item_id: '',
+  //       itemName: '',
+  //       hsn: '',
+  //       price: '',
+  //       qty: '',
+  //       unit: '',
+  //       discount: '',
+  //       cgst: '',
+  //       sgst: '',
+  //       igst: '',
+  //       cgstVal: '',
+  //       sgstVal: '',
+  //       igstVal: '',
+  //       total: '',
+  //     },
+  //     {
+  //       category: '',
+  //       categoryName: '',
+  //       item_id: '',
+  //       itemName: '',
+  //       hsn: '',
+  //       price: '',
+  //       qty: '',
+  //       unit: '',
+  //       discount: '',
+  //       cgst: '',
+  //       sgst: '',
+  //       igst: '',
+  //       cgstVal: '',
+  //       sgstVal: '',
+  //       igstVal: '',
+  //       total: '',
+  //     },
+  //     {
+  //       category: '',
+  //       categoryName: '',
+  //       item_id: '',
+  //       itemName: '',
+  //       hsn: '',
+  //       price: '',
+  //       qty: '',
+  //       unit: '',
+  //       discount: '',
+  //       cgst: '',
+  //       sgst: '',
+  //       igst: '',
+  //       cgstVal: '',
+  //       sgstVal: '',
+  //       igstVal: '',
+  //       total: '',
+  //     },
+  //     {
+  //       category: '',
+  //       categoryName: '',
+  //       item_id: '',
+  //       itemName: '',
+  //       hsn: '',
+  //       price: '',
+  //       qty: '',
+  //       unit: '',
+  //       discount: '',
+  //       cgst: '',
+  //       sgst: '',
+  //       igst: '',
+  //       cgstVal: '',
+  //       sgstVal: '',
+  //       igstVal: '',
+  //       total: '',
+  //     },
+  //     {
+  //       category: '',
+  //       categoryName: '',
+  //       item_id: '',
+  //       itemName: '',
+  //       hsn: '',
+  //       price: '',
+  //       qty: '',
+  //       unit: '',
+  //       discount: '',
+  //       cgst: '',
+  //       sgst: '',
+  //       igst: '',
+  //       cgstVal: '',
+  //       sgstVal: '',
+  //       igstVal: '',
+  //       total: '',
+  //     },
+  //     {
+  //       category: '',
+  //       categoryName: '',
+  //       item_id: '',
+  //       itemName: '',
+  //       hsn: '',
+  //       price: '',
+  //       qty: '',
+  //       unit: '',
+  //       discount: '',
+  //       cgst: '',
+  //       sgst: '',
+  //       igst: '',
+  //       cgstVal: '',
+  //       sgstVal: '',
+  //       igstVal: '',
+  //       total: '',
+  //     },
+  //     {
+  //       category: '',
+  //       categoryName: '',
+  //       item_id: '',
+  //       itemName: '',
+  //       hsn: '',
+  //       price: '',
+  //       qty: '',
+  //       unit: '',
+  //       discount: '',
+  //       cgst: '',
+  //       sgst: '',
+  //       igst: '',
+  //       cgstVal: '',
+  //       sgstVal: '',
+  //       igstVal: '',
+  //       total: '',
+  //     },
+  //   ];
+  //   this.popupData = d;
+  //   console.log("pop====.>", this.popupData);
+  //   for (let i = 0; i < this.popupData.length; i++) {
+  //     let cgstBarri = this.popupData[i].cgst;
+  //     let igstBarri = this.popupData[i].igst;
+  //     let sgstBarri = this.popupData[i].sgst;
+  //     let priceBarri = this.popupData[i].purchase_price;
+  //     let qtyBarri = this.popupData[i].quantity;
+  //     priceBarri = priceBarri*qtyBarri;
+  //     igstVal = (igstBarri/100)*priceBarri;
+  //     sgstVal = (sgstBarri/100)*priceBarri;
+  //     cgstVal = (cgstBarri/100)*priceBarri;
+  //     this.popupData[i].igstVal = igstVal;
+  //     this.popupData[i].sgstVal = sgstVal;
+  //     this.popupData[i].cgstVal = cgstVal;
+  //   }
+  //   this.popupData.totalData = total;
 
-    console.log(this.popupData.total);
-    console.log(this.popupData);
-    let allData = this.popupData;
-    this.popupData = [];
-    for (let i = 0; i < allData.length; i++) {
-      if (allData[i].delete_stat == 0) {
-        this.popupData.push(allData[i]);
-      }
-    }
-    console.log(this.popupData);
-    this.modal = true;
-    this.loader = true;
-    for (let l = 0; l < this.popupData.length; l++) {
-      this.dummy[l].category = this.popupData[l].cat_id;
-      this.dummy[l].categoryName = this.popupData[l].cat_name;
-      this.dummy[l].item_id = this.popupData[l].item_id;
-      this.dummy[l].itemName = this.popupData[l].item_name;
-      this.dummy[l].hsn = this.popupData[l].hsn;
-      this.dummy[l].price = this.popupData[l].purchase_price;
-      this.dummy[l].qty = this.popupData[l].quantity;
-      this.dummy[l].unit = this.popupData[l].unit;
-      this.dummy[l].discount = this.popupData[l].discount;
-      this.dummy[l].cgst = this.popupData[l].cgst;
-      this.dummy[l].sgst = this.popupData[l].sgst;
-      this.dummy[l].igst = this.popupData[l].igst;
-      this.dummy[l].cgstVal = this.popupData[l].cgstVal;
-      this.dummy[l].sgstVal = this.popupData[l].sgstVal;
-      this.dummy[l].igstVal = this.popupData[l].igstVal;
-      this.dummy[l].total = this.popupData[l].total;
-    }
+  //   console.log(this.popupData.total);
+  //   console.log(this.popupData);
+  //   let allData = this.popupData;
+  //   this.popupData = [];
+  //   for (let i = 0; i < allData.length; i++) {
+  //     if (allData[i].delete_stat == 0) {
+  //       this.popupData.push(allData[i]);
+  //     }
+  //   }
+  //   console.log(this.popupData);
+  //   this.modal = true;
+  //   this.loader = true;
+  //   for (let l = 0; l < this.popupData.length; l++) {
+  //     this.dummy[l].category = this.popupData[l].cat_id;
+  //     this.dummy[l].categoryName = this.popupData[l].cat_name;
+  //     this.dummy[l].item_id = this.popupData[l].item_id;
+  //     this.dummy[l].itemName = this.popupData[l].item_name;
+  //     this.dummy[l].hsn = this.popupData[l].hsn;
+  //     this.dummy[l].price = this.popupData[l].purchase_price;
+  //     this.dummy[l].qty = this.popupData[l].quantity;
+  //     this.dummy[l].unit = this.popupData[l].unit;
+  //     this.dummy[l].discount = this.popupData[l].discount;
+  //     this.dummy[l].cgst = this.popupData[l].cgst;
+  //     this.dummy[l].sgst = this.popupData[l].sgst;
+  //     this.dummy[l].igst = this.popupData[l].igst;
+  //     this.dummy[l].cgstVal = this.popupData[l].cgstVal;
+  //     this.dummy[l].sgstVal = this.popupData[l].sgstVal;
+  //     this.dummy[l].igstVal = this.popupData[l].igstVal;
+  //     this.dummy[l].total = this.popupData[l].total;
+  //   }
 
-    this.dummy =  this.dummy.filter((el) => {
-      return el.category !=  '';
-    });
-    console.log(this.dummy);
-    this.popupData = this.dummy;
-    console.log(this.popupData);
-    // this.cattName = this.popupData[i].categoryName;
-    // this.catt_id = this.popupData[i].category;
-    // this.itemmName = this.popupData[i].itemName;
-    // this.itemm_id = this.popupData[i].item_id;
-    // console.log(this.cattName,this.itemmName,this.catt_id,this.itemm_id);
-    this.loader = false;
+  //   this.dummy =  this.dummy.filter((el) => {
+  //     return el.category !=  '';
+  //   });
+  //   console.log(this.dummy);
+  //   this.popupData = this.dummy;
+  //   console.log(this.popupData);
+  //   // this.cattName = this.popupData[i].categoryName;
+  //   // this.catt_id = this.popupData[i].category;
+  //   // this.itemmName = this.popupData[i].itemName;
+  //   // this.itemm_id = this.popupData[i].item_id;
+  //   // console.log(this.cattName,this.itemmName,this.catt_id,this.itemm_id);
+  //   this.loader = false;
+  // }
+
+
+  openUpdateProductPage = (i)=>{
+    this.purchase_tab = true;
+    this.purchase_tab2 = this.get_purchase_data[i];
   }
 
 
