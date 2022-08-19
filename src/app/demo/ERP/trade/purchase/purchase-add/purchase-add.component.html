@@ -202,6 +202,7 @@
                             <th style="width: 15%;">Item</th>
                             <th>Hsn</th>
                             <th>Quantity</th>
+                            <th>Unit</th>
                             <th>Sale Price</th>
                             <th>Discount</th>
                             <th>CGST</th>
@@ -243,6 +244,9 @@
                                 <td><input type="number" formControlName="qty" id="qty" class="form-control table_input"
                                         (input)="calc_total(Product.controls); totalCalculation()"
                                         (keypress)="prevent($event, 'qty')" min="1"
+                                        [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
+                                </td>
+                                <td><input type="text" formControlName="unit" id="unit" class="form-control table_input"
                                         [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
                                 </td>
                                 <td><input type="number" formControlName="price" id="price"
@@ -330,9 +334,8 @@
         <button class="btn btn-warning mr-2" (click)="resetProductForm(); previousPage()">Cancel</button>
         <button *ngIf="!pur_editData" class="btn btn-primary disable" (click)="add_purchase_details('add')"
             [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.item == 'ChooseProduct'">Submit</button>
-        <button *ngIf="pur_editData" class="btn btn-primary disable"
+        <button *ngIf="pur_editData" class="btn btn-primary disable" (click)="add_purchase_details('update')"
             [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.item == 'ChooseProduct'">Update</button>
-            <!-- (click)="add_purchase_details('update')" -->
     </div>
 
 </div>

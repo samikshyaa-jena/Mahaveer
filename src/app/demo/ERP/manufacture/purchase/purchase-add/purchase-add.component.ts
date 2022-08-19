@@ -551,7 +551,7 @@ export class PurchaseAddComponent implements OnInit {
 
       var product_arr = this.productformarray.map((p_array) => {
         return {
-          category: p_array.category,
+          catagory: p_array.category,
           item_id: p_array.item,
           hsn: p_array.hsn,
           igst: p_array.igst,

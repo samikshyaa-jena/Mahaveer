@@ -821,7 +821,7 @@ export class PurchaseComponent implements OnInit {
   updateArray = () => {
     console.log(this.updatePurchase.value);
     this.popupData[this.gi] = this.updatePurchase.value;
-    this.popupData[this.gi].category = this.catt_id;
+    this.popupData[this.gi].catagory = this.catt_id;
     this.popupData[this.gi].item_id = this.itemm_id;
     console.log(this.popupData, "hhhhhhhhhhhhhhh");
     for (let i = 0; i < this.popupData.length; i++) {
@@ -862,8 +862,8 @@ export class PurchaseComponent implements OnInit {
     this.updateData.totalData = total;
     console.log(this.updateData.total);
     console.log(this.updateData);
-    this.cattName = this.updateData[i].categoryName;
-    this.catt_id = this.updateData[i].category;
+    this.cattName = this.updateData[i].catagoryName;
+    this.catt_id = this.updateData[i].catagory;
     this.itemmName = this.updateData[i].itemName;
     this.itemm_id = this.updateData[i].item_id;
     console.log(this.cattName,this.itemmName,this.catt_id,this.itemm_id);

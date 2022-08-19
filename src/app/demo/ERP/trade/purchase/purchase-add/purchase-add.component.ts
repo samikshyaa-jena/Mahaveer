@@ -96,6 +96,7 @@
             qty: this.pur_editData.purchase_data[i].quantity,
             discount: this.pur_editData.purchase_data[i].discount,
             total: this.pur_editData.purchase_data[i].total,
+            unit: this.pur_editData.purchase_data[i].unit,
           });
           this.calc_total(p_form[i].controls);
   
@@ -323,7 +324,7 @@
     if (type == 'add') {
       url = erp_all_api.urls.trd_purchase_entry;
     } else {
-      url = erp_all_api.urls.update_purchase_entry;
+      url = erp_all_api.urls.trd_update_purchase_entry;
     }
   
       this.productformarray = [];
@@ -339,8 +340,8 @@
   
         var product_arr = this.productformarray.map((p_array) => {
           return {
-            category: p_array.category,
-            item_id: p_array.item,
+            catagory: p_array.category,
+            prod_id: p_array.item,
             hsn: p_array.hsn,
             igst: p_array.igst,
             cgst: p_array.cgst,
@@ -349,6 +350,7 @@
             qty: p_array.qty,
             discount: p_array.discount,
             total: p_array.total,
+            unit: p_array.unit
           }
         });
   
@@ -361,7 +363,7 @@
         
         "invoice": this.purchase_form.get('invo').value,
         "vendor_id": this.purchase_form.get('custmer').value,
-        "type": "rawmaterial",
+        "type": this.type,
         "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
         "purchase_data": product_arr,
   
@@ -402,6 +404,7 @@
         hsn: new FormControl(''),
         price: new FormControl('0', [Validators.required]),
         qty: new FormControl('1', [Validators.required]),
+        unit: new FormControl('', [Validators.required]),
         discount: new FormControl('0', [Validators.required]),
         total: new FormControl('', [Validators.required]),
         edit: new FormControl(false)
