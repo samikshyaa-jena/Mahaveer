@@ -36,11 +36,11 @@
     <div class="bar2 mb-4">
         <div class="left_cnt">
             <div class="mr-2">
-                <label for="">Product</label><br>
+                <label for="">Product <span class="text-danger">*</span></label><br>
                 <input type="text" value="{{rawmatData.prod_name}}" class="mat_name readonly" readonly>
             </div>
             <div>
-                <label for="">Quantity</label><br>
+                <label for="">Quantity <span class="text-danger">*</span></label><br>
                 <input type="text" value="{{rawmatData.quantity}}" class="readonly" readonly>
             </div>
 
@@ -55,7 +55,7 @@
 
         <div class="right_cnt">
             <div class="datee">
-                <label for="">Expected Date: &nbsp;</label>
+                <label for="">Expected Date: <span class="text-danger">*</span> &nbsp;</label>
                 <input class="readonly" type="text" value="{{rawmatData.expected_time | date: 'dd/MM/yyyy'}}" readonly>
                 <!-- <input type="date"> -->
             </div>

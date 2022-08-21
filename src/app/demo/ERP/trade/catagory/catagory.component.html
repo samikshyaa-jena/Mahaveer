@@ -91,7 +91,7 @@
             <div class="modal_body">
                 <div class="addCategoryForm">
                     <form [formGroup]="addCategoryForm" class="my-3">
-                        <label class="lab_tag" for="">Category Name:</label>
+                        <label class="lab_tag" for="">Category Name: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control inp_tag" formControlName='cat_name'>
 
                     </form>
@@ -142,15 +142,15 @@
         
         <div class="form_div" class="my-3">
             <form [formGroup]="addItemForm" class="my-3">
-                <label class="lab_tag" for="">Category Name:</label>
+                <label class="lab_tag" for="">Category Name:  <span class="text-danger">*</span> <span class="text-danger">*</span><span class="text-danger">*</span></label>
                 <select class="form-control inp_tag" (change)="addItemCategory($event.target.value)"
                     formControlName="category_name">
                     <option disabled selected>Choose a category</option>
                     <option *ngFor="let data of cat_data" [value]="data.cat_id">{{data.cat_name}}</option>
                 </select>
-                <label class="lab_tag" for="">Item Name:</label>
+                <label class="lab_tag" for="">Item Name:  <span class="text-danger">*</span><span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="item_name">
-                <label class="lab_tag" for="">GST:</label>
+                <label class="lab_tag" for="">GST:  <span class="text-danger">*</span><span class="text-danger">*</span></label>
                 <select name="" id="" formControlName="gst" class="form-control inp_tag">
                     <option value="gst" selected disabled>Select gst</option>
                     <option value="0">0 %</option>
@@ -159,15 +159,15 @@
                     <option value="18">18 %</option>
                     <option value="28">28 %</option>
                 </select>
-                <label class="lab_tag" for="">Low Stock:</label>
+                <label class="lab_tag" for="">Low Stock: <span class="text-danger">*</span> <span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
-                <label class="lab_tag" for="">MRP:</label>
+                <label class="lab_tag" for="">MRP: <span class="text-danger">*</span> <span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
-                <label class="lab_tag" for="">HSN:</label>
+                <label class="lab_tag" for="">HSN: <span class="text-danger">*</span> <span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
-                <label class="lab_tag" for="">Unit:</label>
+                <label class="lab_tag" for="">Unit:  <span class="text-danger">*</span><span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="unit">
-                <label class="lab_tag" for="">Open Stock:</label>
+                <label class="lab_tag" for="">Open Stock:  <span class="text-danger">*</span><span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="qty">
                 <label class="lab_tag" for="">Upload Image:</label>
                         <div class="upimg_show">
@@ -182,7 +182,7 @@
             </form>
         </div>
             <div class="col-sm-12 text-right pr-0">
-                <button class="btn btn-primary mr-1" type="submit" (click)="add_item()">Add</button>
+                <button class="btn btn-primary mr-1" type="submit" [disabled]="addItemForm.invalid" (click)="add_item()">Add</button>
                 <button class="btn btn-warning" type="reset" (click)="show_cat_item=1;addItemForm.reset()">Back</button>
             </div>
     </div>
@@ -201,7 +201,7 @@
     <div class="modal-body">
         <div class="updateCatForm">
             <form [formGroup]="updateCatForm" class="my-3">
-                <label class="lab_tag" for="">Category Name:</label>
+                <label class="lab_tag" for="">Category Name: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="cat_name">
             </form>
         </div>
@@ -224,11 +224,11 @@
     <div class="modal-body">
         <div class="editItemForm">
             <form [formGroup]="editItemForm" class="my-3">
-                <label class="lab_tag" for="">Category Name:</label>
+                <label class="lab_tag" for="">Category Name:  <span class="text-danger">*</span><span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="category_name" readonly>
-                <label class="lab_tag" for="">Item Name:</label>
+                <label class="lab_tag" for="">Item Name:  <span class="text-danger">*</span><span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="item_name">
-                <label class="lab_tag" for="">GST:</label>
+                <label class="lab_tag" for="">GST: <span class="text-danger">*</span></label>
                 <select name="" id="" formControlName="gst" class="form-control inp_tag">
                     <option value="gst" selected disabled>Select gst</option>
                     <option value="0">0 %</option>
@@ -237,13 +237,13 @@
                     <option value="18">18 %</option>
                     <option value="28">28 %</option>
                 </select>
-                <label class="lab_tag" for="">Low Stock:</label>
+                <label class="lab_tag" for="">Low Stock:  <span class="text-danger">*</span><span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
-                <label class="lab_tag" for="">MRP:</label>
+                <label class="lab_tag" for="">MRP:  <span class="text-danger">*</span><span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
-                <label class="lab_tag" for="">HSN:</label>
+                <label class="lab_tag" for="">HSN: <span class="text-danger">*</span> <span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
-                <label class="lab_tag" for="">Unit:</label>
+                <label class="lab_tag" for="">Unit: <span class="text-danger">*</span> <span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="unit">
                 <!-- <label class="lab_tag" for="">Open Stock:</label>
                 <input type="text" class="form-control inp_tag" formControlName="qty"> -->

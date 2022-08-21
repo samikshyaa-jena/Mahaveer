@@ -166,11 +166,11 @@
         <form [formGroup]="purchase_form">
             <div class="col-sm-12 px-0 d-flex flex-row">
                 <div class="col-sm-4 ">
-                    <label for="">Invoice Number</label>
+                    <label for="">Invoice Number <span class="text-danger">*</span></label>
                     <input type="text" formControlName="invo" class="form-control">
                 </div>
                 <div class="col-sm-4 pl-0">
-                    <label for="">Vendor Name</label>
+                    <label for="">Vendor Name <span class="text-danger">*</span></label>
                     <select class="form-control" formControlName="custmer"
                         (ngModelChange)="vendorType($event); resetProductForm()">
                         <option value="choose_cname" disabled>Choose</option>
@@ -180,7 +180,7 @@
 
                 </div>
                 <div class="col-sm-4">
-                    <label for="">Purchase Date</label>
+                    <label for="">Purchase Date <span class="text-danger">*</span></label>
                     <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="p_date"
                         class="form-control" [max]="today" readonly="true" placeholder="YYYY-MM-DD">
                     <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
@@ -232,7 +232,7 @@
                                         (change)="chooseItem(Product, $event.target.value); totalCalculation()"
                                         formControlName="item">
                                         <option selected value="ChooseProduct" disabled>Choose Item</option>
-                                        <option class="disable" *ngFor="let item of itemData"
+                                        <option class="disable" *ngFor="let item of DataItem[i]"
                                             [value]="item.item_id" [disabled]="Product.controls.edit.value == false">
                                             {{item.item_name}}</option>
                                     </select>

@@ -166,11 +166,11 @@
         <form [formGroup]="purchase_form">
             <div class="col-sm-12 px-0 d-flex flex-row">
                 <div class="col-sm-4 ">
-                    <label for="">Invoice Number</label>
+                    <label for="">Invoice Number <span class="text-danger">*</span></label>
                     <input type="text" formControlName="invo" class="form-control">
                 </div>
                 <div class="col-sm-4 pl-0">
-                    <label for="">Vendor Name</label>
+                    <label for="">Vendor Name <span class="text-danger">*</span></label>
                     <select class="form-control" formControlName="custmer"
                         (ngModelChange)="vendorType($event); resetProductForm()">
                         <option value="choose_cname" disabled>Choose</option>
@@ -180,7 +180,7 @@
 
                 </div>
                 <div class="col-sm-4">
-                    <label for="">Purchase Date</label>
+                    <label for="">Purchase Date <span class="text-danger">*</span></label>
                     <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="p_date"
                         class="form-control" [max]="today" readonly="true" placeholder="YYYY-MM-DD">
                     <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
@@ -308,22 +308,22 @@
                 <th style="width: 120px;"></th>
             </tr>
             <tr>
-                <td>Total IGST</td>
+                <td>Total IGST <span class="text-danger">*</span></td>
                 <td>:</td>
                 <td><input name="t_igst" [(ngModel)]="t_igst" class="total_cal_field" type="text" readonly></td>
             </tr>
             <tr>
-                <td>Total SGST</td>
+                <td>Total SGST <span class="text-danger">*</span></td>
                 <td>:</td>
                 <td><input name="t_sgst" [(ngModel)]="t_sgst" class="total_cal_field" type="text" readonly></td>
             </tr>
             <tr>
-                <td>Total CGST</td>
+                <td>Total CGST <span class="text-danger">*</span></td>
                 <td>:</td>
                 <td><input name="t_cgst" [(ngModel)]="t_cgst" class="total_cal_field" type="text" readonly></td>
             </tr>
             <tr>
-                <td>Total Amount</td>
+                <td>Total Amount <span class="text-danger">*</span></td>
                 <td>:</td>
                 <td><input name="t_amount" [(ngModel)]="t_amount" class="total_cal_field" type="text" readonly></td>
             </tr>

@@ -9,7 +9,7 @@
 
 <div [ngClass]="debitNote ? 'container' : 'page_color'">
     <div class="debitNoteTable card p-3" *ngIf="debitNote">
-        <div class="row col-sm-12 px-0 py-0 mx-0 mt-4 mb-2">
+        <!-- <div class="row col-sm-12 px-0 py-0 mx-0 mt-4 mb-2">
             <form [formGroup]="filterForm" class="col-sm-12 px-0 py-0 mx-0 my-0">
                 <div class="row col-sm-12">
                     <div class="col-sm-3">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </form>
-        </div>
+        </div> -->
         <div class="tableDiv">
             <div class="top_buttons">
                 <div class="debitBtn">
@@ -166,19 +166,19 @@
                     <div class="col-sm-12" style="display: flex; justify-content: flex-end;">
                         <table cellpadding="2px">
                             <tr class="text_left">
-                                <td>Return No.</td>
+                                <td>Return No. <span class="text-danger">*</span></td>
                                 <td><input type="text" class="inpTag"></td>
                             </tr>
                             <tr class="text_left">
-                                <td>Invoice No.</td>
+                                <td>Invoice No. <span class="text-danger">*</span></td>
                                 <td><input type="text" class="inpTag"></td>
                             </tr>
                             <tr class="text_left">
-                                <td>Invoice Date</td>
+                                <td>Invoice Date <span class="text-danger">*</span></td>
                                 <td><input type="date" class="inpTag"></td>
                             </tr>
                             <tr class="text_left">
-                                <td>Date</td>
+                                <td>Date <span class="text-danger">*</span></td>
                                 <td><input type="date" class="inpTag"></td>
                             </tr>
                         </table>

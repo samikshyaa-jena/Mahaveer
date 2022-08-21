@@ -73,35 +73,35 @@
   <div class="modal-body">
     <div class="updateVendorForm">
       <form [formGroup]="updatePurchase" class="my-3">
-        <label class="lab_tag" for="">Category:</label>
+        <label class="lab_tag" for="">Category: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" formControlName="category" readonly>
         <!-- <select [(ngModel)]="cattName" formControlName="category" class="form-control" >
           <option [value]="catt_id">{{cattName}}</option>
           <option *ngFor="let category of getCategoryData;let i=index" [value]="category.cat_id">{{category.cat_name}}</option>
         </select> -->
-        <label class="lab_tag" for="">Item:</label>
+        <label class="lab_tag" for="">Item: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" formControlName="item_id" readonly>
         <!-- <select [(ngModel)]="itemmName" formControlName="item_id" class="form-control" disabled>
           <option [value]="itemm_id" selected disabled >{{itemmName}}</option>
           <option *ngFor="let item of itemData" [ngValue]="item.item_id">{{item.item_name}}</option>
         </select> -->
-        <label class="lab_tag" for="">HSN:</label>
+        <label class="lab_tag" for="">HSN: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" formControlName="hsn" readonly>
-        <label class="lab_tag" for="">Pur. Price:</label>
+        <label class="lab_tag" for="">Pur. Price: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="price" (input)="calc_total()">
-        <label class="lab_tag" for="">Quantity:</label>
+        <label class="lab_tag" for="">Quantity: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="qty" (input)="calc_total()">
-        <label class="lab_tag" for="">Unit:</label>
+        <label class="lab_tag" for="">Unit: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" formControlName="unit" >
-        <label class="lab_tag" for="">Discount:</label>
+        <label class="lab_tag" for="">Discount: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="discount" (input)="calc_total()">
-        <label class="lab_tag" for="">CGST:</label>
+        <label class="lab_tag" for="">CGST: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="cgst" readonly>
-        <label class="lab_tag" for="">SGST:</label>
+        <label class="lab_tag" for="">SGST: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="sgst" readonly>
-        <label class="lab_tag" for="">IGST:</label>
+        <label class="lab_tag" for="">IGST: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="igst" readonly>
-        <label class="lab_tag" for="">Total:</label>
+        <label class="lab_tag" for="">Total: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="total" readonly>
       </form>
     </div>
@@ -186,29 +186,29 @@
   <div class="modal-body"> 
     <div class="debitNote">
       <form [formGroup]="debitNoteForm" class="my-3">
-        <label class="lab_tag" for="">Vendor:</label>
+        <label class="lab_tag" for="">Vendor: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" formControlName="vendor_id" readonly>
-        <label class="lab_tag" for="">Type:</label>
+        <label class="lab_tag" for="">Type: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" formControlName="type" readonly>
-        <label class="lab_tag" for="">Date:</label>
+        <label class="lab_tag" for="">Date: <span class="text-danger">*</span></label>
         <input type="date" class="form-control" formControlName="date">
-        <label class="lab_tag" for="">Item:</label>
+        <label class="lab_tag" for="">Item: <span class="text-danger">*</span></label>
         <select  formControlName="item_id" class="form-control" (change)="getGst($event.target.value)">
           <option selected disabled value="selectItem">Select Item</option>
           <option *ngFor="let item of filterdItem" [value]="item.item_id">{{item.item_name}}</option>
         </select>
         <!-- <input type="number" class="form-control" formControlName="item_id"> -->
-        <label class="lab_tag" for="">CGST:</label>
+        <label class="lab_tag" for="">CGST: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="cgst" readonly>
-        <label class="lab_tag" for="">SGST:</label>
+        <label class="lab_tag" for="">SGST: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="sgst" readonly>
-        <label class="lab_tag" for="">IGST:</label>
+        <label class="lab_tag" for="">IGST: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="igst" readonly>
-        <label class="lab_tag" for="">Purchase Price:</label>
+        <label class="lab_tag" for="">Purchase Price: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="prc" readonly>
-        <label class="lab_tag" for="">Quantity:</label>
+        <label class="lab_tag" for="">Quantity: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="qty" (input)="calc_debit_price()">
-        <label class="lab_tag" for="">Total:</label>
+        <label class="lab_tag" for="">Total: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="total" readonly>
       </form>
     </div>

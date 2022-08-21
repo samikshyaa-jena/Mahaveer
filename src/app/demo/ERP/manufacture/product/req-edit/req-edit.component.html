@@ -23,7 +23,7 @@
         <form [formGroup]="item_form">
             <div class="col-sm-12 px-0 d-flex flex-row">
                 <div class="col-sm-3">
-                    <label for="">Product Name</label>
+                    <label for="">Product Name <span class="text-danger">*</span></label>
                     <input type="text" formControlName="prod_name" class="form-control" readonly>
                     <input type="hidden" formControlName="prod_id" class="form-control" readonly>
                 </div>

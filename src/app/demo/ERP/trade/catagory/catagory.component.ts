@@ -69,6 +69,7 @@ export class CategoryComponent implements OnInit {
       hsn: new FormControl("", [Validators.required]),
       qty: new FormControl("", [Validators.required]),
       mrp: new FormControl("", [Validators.required]),
+      img: new FormControl(""),
     });
     this.editItemForm = new FormGroup({
       category_name: new FormControl("choose a category", [Validators.required]),

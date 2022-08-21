@@ -8,7 +8,7 @@
     </div>
 </div>
 <!-- Loader Ends -->
-<div class="container">
+<div class="container card p-3">
     <div class="prod_table" *ngIf='!showAddVendor'>
       <div class="col-sm-12 row mt-3">
         <div class="mode_change col-sm-9">
@@ -69,19 +69,19 @@
             <div class="modal_body">
                 <div class="addVendorForm">
                     <form [formGroup]="addVendorForm" class="my-3">
-                        <label class="lab_tag" for="">Name:</label>
+                        <label class="lab_tag" for="">Name: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" formControlName="ven_name">
-                        <label class="lab_tag" for="">Email:</label>
+                        <label class="lab_tag" for="">Email: <span class="text-danger">*</span></label>
                         <input type="email" class="form-control" formControlName="ven_email">
-                        <label class="lab_tag" for="">Mobile No:</label>
+                        <label class="lab_tag" for="">Mobile No: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" formControlName="mob">
-                        <label class="lab_tag" for="">Type:</label>
+                        <label class="lab_tag" for="">Type: <span class="text-danger">*</span></label>
                         <select name="" id="" formControlName="type" class="form-control">
                             <option value="type" disabled>Select Type</option>
                             <option value="Intra State">Intra State</option>
                             <option value="Inter State">Inter State</option>
                         </select>
-                        <label class="lab_tag" for="">GST No:</label>
+                        <label class="lab_tag" for="">GST No: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" maxlength="15" minlength="15" formControlName="gst_in"
                             #gst (input)="gst.value=$event.target.value.toUpperCase()">
                         <div *ngIf="addVendorForm.get('gst_in').hasError('minlength') && addVendorForm.get('gst_in').touched"
@@ -112,19 +112,19 @@
     <div class="modal-body">
         <div class="updateVendorForm">
             <form [formGroup]="updateVendorForm" class="my-3">
-                <label class="lab_tag" for="">Name:</label>
+                <label class="lab_tag" for="">Name: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="ven_name">
-                <label class="lab_tag" for="">Email:</label>
+                <label class="lab_tag" for="">Email: <span class="text-danger">*</span></label>
                 <input type="email" class="form-control" formControlName="ven_email">
-                <label class="lab_tag" for="">Mobile No:</label>
+                <label class="lab_tag" for="">Mobile No: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" formControlName="mob">
-                <label class="lab_tag" for="">Type:</label>
+                <label class="lab_tag" for="">Type: <span class="text-danger">*</span></label>
                 <select name="" id="" formControlName="type" class="form-control">
                     <option value="type" disabled>Select Type</option>
                     <option value="Intra State">Intra State</option>
                     <option value="Inter State">Inter State</option>
                 </select>
-                <label class="lab_tag" for="">GST No:</label>
+                <label class="lab_tag" for="">GST No: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" maxlength="15" minlength="15" formControlName="gst_in" #gst
                     (input)="gst.value=$event.target.value.toUpperCase()" readonly>
                 <div *ngIf="addVendorForm.get('gst_in').hasError('minlength') && addVendorForm.get('gst_in').touched"

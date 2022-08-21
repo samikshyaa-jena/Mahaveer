@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common';
 })
 export class PurchaseAddComponent implements OnInit {
 
+  DataItem: any = [];
   getCategoryData: any = [];
   itemData: any = [];
   productForm: FormGroup;
@@ -310,6 +311,7 @@ export class PurchaseAddComponent implements OnInit {
           total: this.pur_editData.purchase_data[i].total,
         });
         this.calc_total(p_form[i].controls);
+        this.chooseCategory2(this.pur_editData.purchase_data[i].cat_id);
 
       }
 
@@ -385,6 +387,22 @@ export class PurchaseAddComponent implements OnInit {
         }
       }
     }
+    console.log(this.itemData);
+    this.DataItem.push(this.itemData) 
+    console.log(this.DataItem);
+  }
+  chooseCategory2(item) {
+    this.itemData = [];
+    for (let i = 0; i < this.getCategoryData.length; i++) {
+      if (this.getCategoryData[i].cat_id == item) {
+        for (let j = 0; j < this.getCategoryData[i].itemData.length; j++) {
+            this.itemData.push(this.getCategoryData[i].itemData[j]);
+          }
+      }
+    }
+    console.log(this.itemData);
+    this.DataItem.push(this.itemData) 
+    console.log(this.DataItem);
   }
 
   chooseItem(form_cont, item) {
@@ -614,7 +632,7 @@ export class PurchaseAddComponent implements OnInit {
       price: new FormControl('0', [Validators.required]),
       qty: new FormControl('1', [Validators.required]),
       discount: new FormControl('0', [Validators.required]),
-      total: new FormControl('', [Validators.required]),
+      total: new FormControl(0, [Validators.required]),
       edit: new FormControl(false)
 
     })

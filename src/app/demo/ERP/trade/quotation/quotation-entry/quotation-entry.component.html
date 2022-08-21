@@ -14,11 +14,11 @@
         <form [formGroup]="quotation_form">
             <div class="col-sm-12 px-0 d-flex flex-row">
                 <div class="col-sm-3 pl-0">
-                    <label for="">Quotation Number</label>
+                    <label for="">Quotation Number <span class="text-danger">*</span></label>
                     <input type="text" formControlName="quto" class="form-control">
                 </div>
                 <div class="col-sm-3 p-0">
-                    <label for="">Custmer Name</label>
+                    <label for="">Custmer Name <span class="text-danger">*</span></label>
                     <select class="form-control" formControlName="custmer"
                         (ngModelChange)="vendorType($event); resetProductForm()">
                         <option value="choose_cname" disabled>Choose</option>
@@ -28,7 +28,7 @@
 
                 </div>
                 <div class="col-sm-3">
-                    <label for="">Quotation Date</label>
+                    <label for="">Quotation Date <span class="text-danger">*</span></label>
                     <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="q_date"
                         class="form-control" [max]="today" readonly="true" placeholder="YYYY-MM-DD">
                     <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="col-sm-2">
-                    <label for="">Priority</label>
+                    <label for="">Priority <span class="text-danger">*</span></label>
                     <select name="" id="" formControlName="priority" class="form-control">
                         <option value="choose_quot">Choose Quotation</option>
                         <option value="LOW">LOW</option>
@@ -45,7 +45,7 @@
                     </select>
                 </div>
                 <div class="col-sm-1 p-0">
-                    <label for="">Amount</label>
+                    <label for="">Amount <span class="text-danger">*</span></label>
                     <input type="text" formControlName="amnt" class="form-control">
                 </div>
 

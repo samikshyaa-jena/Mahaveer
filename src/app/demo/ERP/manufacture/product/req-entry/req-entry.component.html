@@ -23,7 +23,7 @@
         <form [formGroup]="item_form">
             <div class="col-sm-12 px-0 d-flex flex-row">
                 <div class="col-sm-3">
-                    <label for="">Product Name</label>
+                    <label for="">Product Name <span class="text-danger">*</span></label>
                     <select formControlName="prod_name" class="form-control">
                         <option value="choose_prod">Choose Product</option>
                         <option class="disable" *ngFor="let category of getCategoryData;let i=index"
@@ -32,7 +32,7 @@
                     </select>
                 </div>
                 <div class="col-sm-3">
-                    <label for="">Estimated Time (In days)</label>
+                    <label for="">Estimated Time (In days) <span class="text-danger">*</span></label>
                     <input type="number" (keypress)="prevent($event, 'qty')" formControlName="est_time" class="form-control">
                 </div>
                 <!-- <div class="col-sm-2 pl-0">

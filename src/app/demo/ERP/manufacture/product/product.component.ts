@@ -36,54 +36,54 @@ export class ProductComponent implements OnInit {
     private router: Router,
     config: NgbModalConfig,
     private modalService: NgbModal
-  ) { 
+  ) {
     this.addProductForm = new FormGroup({
-      prod_name: new FormControl("",[Validators.required]),
-      gst: new FormControl("",[Validators.required]),
-      min_stk: new FormControl("",[Validators.required]),
-      unit: new FormControl("",[Validators.required]),
-      hsn: new FormControl("",[Validators.required]),
-      mrp: new FormControl("",[Validators.required]),
-      img: new FormControl("",[Validators.required]),
+      prod_name: new FormControl("", [Validators.required]),
+      gst: new FormControl("", [Validators.required]),
+      min_stk: new FormControl("", [Validators.required]),
+      unit: new FormControl("", [Validators.required]),
+      hsn: new FormControl("", [Validators.required]),
+      mrp: new FormControl("", [Validators.required]),
+      img: new FormControl(""),
     });
     this.editProductForm = new FormGroup({
-      prod_name: new FormControl("",[Validators.required]),
-      gst: new FormControl("",[Validators.required]),
-      min_stk: new FormControl("",[Validators.required]),
-      unit: new FormControl("",[Validators.required]),
-      mrp: new FormControl("",[Validators.required]),
-      hsn: new FormControl("",[Validators.required]),
+      prod_name: new FormControl("", [Validators.required]),
+      gst: new FormControl("", [Validators.required]),
+      min_stk: new FormControl("", [Validators.required]),
+      unit: new FormControl("", [Validators.required]),
+      mrp: new FormControl("", [Validators.required]),
+      hsn: new FormControl("", [Validators.required]),
     });
-   }
+  }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.get_Product();
   }
 
-    // edit cat popup open
-    product_edit_popup_open(content, i) {
-      this.prod_id_index = i;
-      this.editProductForm.patchValue({
-        prod_name: this.getProductData[i].prod_name,
-        gst: this.getProductData[i].gst,
-        min_stk: this.getProductData[i].min_stock,
-        unit: this.getProductData[i].unit,
-        mrp: this.getProductData[i].price,
-        hsn: this.getProductData[i].hsn,
-      });
-      this.modalService.open(content);
-    }
-    // edit cat popup close
-    product_edit_popup_close(content) {
-      this.modalService.dismissAll(content);
-    }
+  // edit cat popup open
+  product_edit_popup_open(content, i) {
+    this.prod_id_index = i;
+    this.editProductForm.patchValue({
+      prod_name: this.getProductData[i].prod_name,
+      gst: this.getProductData[i].gst,
+      min_stk: this.getProductData[i].min_stock,
+      unit: this.getProductData[i].unit,
+      mrp: this.getProductData[i].price,
+      hsn: this.getProductData[i].hsn,
+    });
+    this.modalService.open(content);
+  }
+  // edit cat popup close
+  product_edit_popup_close(content) {
+    this.modalService.dismissAll(content);
+  }
 
   hide_add_item = () => {
     //showAddProd = false;
     this.prod_table = false;
   }
 
-  get_Product = () =>{
+  get_Product = () => {
     this.getProductData = [];
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
@@ -91,8 +91,8 @@ export class ProductComponent implements OnInit {
     headers = headers.set('auth-token', auth_token);
 
     // this.ErpService.get_Reqs(erp_all_api.urls.getProduct, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
-    this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
-      (res: any) =>{
+    this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
         console.log(res);
         let prod = res.data;
         for (let i = 0; i < prod.length; i++) {
@@ -101,31 +101,44 @@ export class ProductComponent implements OnInit {
           }
         }
         console.log(this.getProductData);
-        
+
       },
-      (err: any) =>{
+      (err: any) => {
         console.log(err);
         Notiflix.Report.failure(err.error.msg, '', 'Close');;
-        
+
       });
 
   };
 
-  add_Product = () =>{
+  add_Product = () => {
     // this.loader = true;
     Notiflix.Loading.standard('Loading...');
     console.log(this.uploadedFiles);
 
     // var gst: number = parseInt(this.addProductForm.get('gst').value);
 
-    const fd: any = new FormData();
-    fd.append('prod_name', this.addProductForm.get('prod_name').value);
-    fd.append('gst', parseInt(this.addProductForm.get('gst').value));
-    fd.append('min_stock', parseInt(this.addProductForm.get('min_stk').value));
-    fd.append('unit', this.addProductForm.get('unit').value);
-    fd.append('price', 0);
-    fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name);    
-    
+    var fd: any;
+
+    if (this.uploadedFiles != undefined || this.uploadedFiles != '') {
+      fd = new FormData();
+      fd.append('prod_name', this.addProductForm.get('prod_name').value);
+      fd.append('gst', parseInt(this.addProductForm.get('gst').value));
+      fd.append('min_stock', parseInt(this.addProductForm.get('min_stk').value));
+      fd.append('unit', this.addProductForm.get('unit').value);
+      fd.append('price', 0);
+      fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name);
+    } else {
+      fd = {
+        prod_name: this.addProductForm.get('prod_name').value,
+        gst: parseInt(this.addProductForm.get('gst').value),
+        min_stock: parseInt(this.addProductForm.get('min_stk').value),
+        unit: this.addProductForm.get('unit').value,
+        price: 0,
+        prod_image: ''
+      };
+    }
+
     // const reqBody = {
     //   prod_name: this.addProductForm.get('prod_name').value,
     //   gst: parseInt(this.addProductForm.get('gst').value),
@@ -139,23 +152,23 @@ export class ProductComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.addProduct, fd, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
-      (res: any) =>{
+    this.ErpService.post_Reqs(erp_all_api.urls.addProduct, fd, { headers: headers }).pipe(finalize(() => { Notiflix.Loading.remove(); })).subscribe(
+      (res: any) => {
         console.log(res);
         Notiflix.Report.success(res.msg, '', 'Close');;
         this.getProductData = [];
         this.get_Product();
         this.addProductForm.reset();
-        this.hideAddProduct();        
+        this.hideAddProduct();
       },
-      (err: any) =>{
+      (err: any) => {
         console.log(err);
         Notiflix.Report.failure(err.error.msg, '', 'Close');;
-        
+
       });
 
   };
-  edit_Product = () =>{
+  edit_Product = () => {
     this.loader = true;
     const reqBody = {
       prod_id: this.getProductData[this.prod_id_index].prod_id,
@@ -170,23 +183,23 @@ export class ProductComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.updateProduct, reqBody, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
-      (res: any) =>{
+    this.ErpService.post_Reqs(erp_all_api.urls.updateProduct, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
         console.log(res);
         Notiflix.Report.success(res.msg, '', 'Close');;
         this.editProductForm.reset();
         this.product_edit_popup_close('content');
         this.get_Product();
       },
-      (err: any) =>{
+      (err: any) => {
         console.log(err);
         Notiflix.Report.failure(err.error.msg, '', 'Close');;
-        
+
       });
 
   };
 
-  delete_Product = (i) =>{
+  delete_Product = (i) => {
     this.loader = true;
     const reqBody = {
       "prod_id": this.getProductData[i].prod_id
@@ -196,16 +209,16 @@ export class ProductComponent implements OnInit {
     let headers = new HttpHeaders();
     headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.deleteProduct, reqBody, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
-      (res: any) =>{
+    this.ErpService.post_Reqs(erp_all_api.urls.deleteProduct, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
         console.log(res);
         Notiflix.Report.success(res.msg, '', 'Close');;
-        this.get_Product();       
+        this.get_Product();
       },
-      (err: any) =>{
+      (err: any) => {
         console.log(err);
         Notiflix.Report.failure(err.error.msg, '', 'Close');;
-        
+
       });
 
   };
@@ -222,20 +235,20 @@ export class ProductComponent implements OnInit {
     this.addProductForm.reset();
   };
 
-  openUpdateProductPage = (i)=>{
+  openUpdateProductPage = (i) => {
     //showAddProd = false;
     this.prod_table = true;
     this.req_entry = true;
     this.getProductData2 = this.getProductData[i];
   }
 
-  reqEntry(){
+  reqEntry() {
     //showAddProd = false;
     this.prod_table = false;
     this.req_entry = true;
   }
 
-  back(){
+  back() {
     //showAddProd = false;
     this.prod_table = true;
     this.req_entry = false;
@@ -243,21 +256,21 @@ export class ProductComponent implements OnInit {
 
   onUpload(event) {
     const file: File = event.target.files[0];
-        if (file) {
-          this.uploadedFiles = file;
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = (e) => {
-            this.imgpath = reader.result
-            document.getElementById('pre_img').setAttribute('src', this.imgpath)
-          }
+    if (file) {
+      this.uploadedFiles = file;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        this.imgpath = reader.result
+        document.getElementById('pre_img').setAttribute('src', this.imgpath)
+      }
     }
 
   }
 
   prevent(e) {
     console.log(e);
-      return e.keyCode >= 48 && e.charCode <= 57;
+    return e.keyCode >= 48 && e.charCode <= 57;
   }
 
 }

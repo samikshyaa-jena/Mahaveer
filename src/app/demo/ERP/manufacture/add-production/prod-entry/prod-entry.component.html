@@ -36,7 +36,7 @@
     <form class="bar2 mb-4" [formGroup]="addProductForm">
         <div class="left_cnt">
             <div class="mr-2">
-                <label for="">Product</label><br>
+                <label for="">Product <span class="text-danger">*</span></label><br>
                 <select formControlName="prod_name" class="mat_name" (change)="showRawmat($event.target.value)">
                     <option value="choose_prod" disabled>Choose Product</option>
                     <option class="disable" *ngFor="let category of productCategory;let i=index"
@@ -46,7 +46,7 @@
 
             </div>
             <div>
-                <label for="">Quantity</label><br>
+                <label for="">Quantity <span class="text-danger">*</span></label><br>
                 <input type="text" (keypress)="prevent_char($event)" (input)="prevent_0($event); totalCalculation()"
                     formControlName="qty">
                 <div class="error_msg" *ngIf="qty_error">{{qty_error}}</div>
@@ -55,7 +55,7 @@
         </div>
 
         <div class="right_cnt">
-            <label class="datee">Expected Date: &nbsp;</label>
+            <label class="datee">Expected Date: <span class="text-danger">*</span> &nbsp;</label>
             <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="target_time"
                 class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD">
             <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>

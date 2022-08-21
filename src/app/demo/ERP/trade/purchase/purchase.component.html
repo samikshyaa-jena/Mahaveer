@@ -105,29 +105,29 @@
   <div class="modal-body">
     <div class="updateVendorForm">
       <form [formGroup]="updatePurchase" class="my-3">
-        <label class="lab_tag" for="">Category:</label>
+        <label class="lab_tag" for="">Category: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" formControlName="category" readonly>
 
-        <label class="lab_tag" for="">Item:</label>
+        <label class="lab_tag" for="">Item: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" formControlName="prod_id" readonly>
 
-        <label class="lab_tag" for="">HSN:</label>
+        <label class="lab_tag" for="">HSN: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" formControlName="hsn" readonly>
-        <label class="lab_tag" for="">Pur. Price:</label>
+        <label class="lab_tag" for="">Pur. Price: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="price" (input)="calc_total()">
-        <label class="lab_tag" for="">Quantity:</label>
+        <label class="lab_tag" for="">Quantity: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="qty" (input)="calc_total()">
-        <label class="lab_tag" for="">Unit:</label>
+        <label class="lab_tag" for="">Unit: <span class="text-danger">*</span></label>
         <input type="text" class="form-control" formControlName="unit">
-        <label class="lab_tag" for="">Discount:</label>
+        <label class="lab_tag" for="">Discount: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="discount" (input)="calc_total()">
-        <label class="lab_tag" for="">CGST:</label>
+        <label class="lab_tag" for="">CGST: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="cgst" readonly>
-        <label class="lab_tag" for="">SGST:</label>
+        <label class="lab_tag" for="">SGST: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="sgst" readonly>
-        <label class="lab_tag" for="">IGST:</label>
+        <label class="lab_tag" for="">IGST: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="igst" readonly>
-        <label class="lab_tag" for="">Total:</label>
+        <label class="lab_tag" for="">Total: <span class="text-danger">*</span></label>
         <input type="number" class="form-control" formControlName="total" readonly>
       </form>
     </div>

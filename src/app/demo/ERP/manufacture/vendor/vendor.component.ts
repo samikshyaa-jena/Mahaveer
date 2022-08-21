@@ -36,19 +36,19 @@ export class VendorComponent implements OnInit {
     private modalService: NgbModal
   ) { 
     this.addVendorForm = new FormGroup({
-      ven_name: new FormControl("",[Validators.required, Validators.minLength(10)]),
-      ven_email: new FormControl("",[Validators.required, Validators.minLength(10)]),
+      ven_name: new FormControl("",[Validators.required]),
+      ven_email: new FormControl("",[Validators.required]),
       mob: new FormControl("",[Validators.required, Validators.minLength(10)]),
       type: new FormControl("type",[Validators.required]),
-      gst_in: new FormControl("",[Validators.required, Validators.pattern(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/)]),
+      gst_in: new FormControl("",[Validators.required, Validators.pattern(/^[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[1-9A-Za-z]{1}[Zz]{1}[0-9A-Za-z]{1}?$/)]),
       add: new FormControl("",[Validators.required, Validators.minLength(10)]),
     });
     this.updateVendorForm = new FormGroup({
-      ven_name: new FormControl("",[Validators.required, Validators.minLength(10)]),
-      ven_email: new FormControl("",[Validators.required, Validators.minLength(10)]),
+      ven_name: new FormControl("",[Validators.required]),
+      ven_email: new FormControl("",[Validators.required]),
       mob: new FormControl("",[Validators.required, Validators.minLength(10)]),
       type: new FormControl("type",[Validators.required]),
-      gst_in: new FormControl("",[Validators.required, Validators.minLength(10)]),
+      gst_in: new FormControl("",[Validators.required, Validators.pattern(/^[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[1-9A-Za-z]{1}[Zz]{1}[0-9A-Za-z]{1}?$/)]),
       add: new FormControl("",[Validators.required, Validators.minLength(10)]),
     });
     this.modeForm = new FormGroup({

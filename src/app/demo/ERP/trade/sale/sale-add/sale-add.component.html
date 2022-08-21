@@ -14,11 +14,11 @@
         <form [formGroup]="purchase_form">
             <div class="col-sm-12 px-0 d-flex flex-row">
                 <div class="col-sm-2 ">
-                    <label for="">Invoice Number</label>
+                    <label for="">Invoice Number <span class="text-danger">*</span></label>
                     <input type="text" formControlName="invo" class="form-control">
                 </div>
                 <div class="col-sm-3 pl-0">
-                    <label for="">Custmer Name</label>
+                    <label for="">Custmer Name <span class="text-danger">*</span></label>
                     <select class="form-control" formControlName="custmer"
                         (ngModelChange)="vendorType($event); resetProductForm()">
                         <option value="choose_cname" disabled>Choose</option>
@@ -28,7 +28,7 @@
 
                 </div>
                 <div class="col-sm-2">
-                    <label for="">Purchase Date</label>
+                    <label for="">Purchase Date <span class="text-danger">*</span></label>
                     <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="p_date"
                         class="form-control" [max]="today" readonly="true" placeholder="YYYY-MM-DD">
                     <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
@@ -36,7 +36,7 @@
                 </div>
                 <!-- <ng-template *ngIf="showInps"> -->
                 <div class="col-sm-2 ">
-                    <label for="">Payment Status</label>
+                    <label for="">Payment Status <span class="text-danger">*</span></label>
                     <!-- <input type="text" formControlName="payStatus" class="form-control" readonly> -->
                     <select formControlName="payStatus" class="form-control">
                         <option value="choosepay" disabled>Choose Payment Status</option>
@@ -46,7 +46,7 @@
                     </select>
                 </div>
                 <div class="col-sm-2">
-                    <label for="">Payment Mode</label>
+                    <label for="">Payment Mode <span class="text-danger">*</span></label>
                     <!-- <input type="text" formControlName="payMode" class="form-control" readonly> -->
                     <select formControlName="payMode" class="form-control">
                         <option value="choosepaymode" disabled>Choose Payment Mode</option>
@@ -57,7 +57,7 @@
                     </select>
                 </div>
                 <div class="col-sm-1 px-0">
-                    <label for="">Amount</label>
+                    <label for="">Amount <span class="text-danger">*</span></label>
                     <input type="text" formControlName="amnt" class="form-control">
                 </div>
                 <!-- </ng-template> -->

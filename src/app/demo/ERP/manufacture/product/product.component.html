@@ -54,9 +54,9 @@
             <div class="modal_body">
                 <div class="addProductForm">
                     <form [formGroup]="addProductForm" class="my-3">
-                        <label class="lab_tag" for="">Product Name:</label>
+                        <label class="lab_tag" for="">Product Name: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control inp_tag" formControlName="prod_name">
-                        <label class="lab_tag" for="">GST:</label>
+                        <label class="lab_tag" for="">GST: <span class="text-danger">*</span></label>
                         <select name="" id="" formControlName="gst" class="form-control inp_tag">
                             <option value="gst" selected disabled>Select gst</option>
                             <option value="0">0 %</option>
@@ -65,13 +65,13 @@
                             <option value="18">18 %</option>
                             <option value="28">28 %</option>
                         </select>
-                        <label class="lab_tag" for="">Low Stock:</label>
+                        <label class="lab_tag" for="">Low Stock: <span class="text-danger">*</span></label>
                         <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
-                        <label class="lab_tag" for="">Unit:</label>
+                        <label class="lab_tag" for="">Unit: <span class="text-danger">*</span></label>
                         <input type="text" class="form-control inp_tag" formControlName="unit">
-                        <label class="lab_tag" for="">Mrp:</label>
+                        <label class="lab_tag" for="">Mrp: <span class="text-danger">*</span></label>
                         <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
-                        <label class="lab_tag" for="">Hsn:</label>
+                        <label class="lab_tag" for="">Hsn: <span class="text-danger">*</span></label>
                         <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
                         <label class="lab_tag" for="">Upload Image:</label>
                         <div class="upimg_show">
@@ -153,9 +153,9 @@
     <div class="modal-body">
         <div class="editProductForm">
             <form [formGroup]="editProductForm" class="my-3">
-                <label class="lab_tag" for="">Product Name:</label>
+                <label class="lab_tag" for="">Product Name: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="prod_name">
-                <label class="lab_tag" for="">GST:</label>
+                <label class="lab_tag" for="">GST: <span class="text-danger">*</span></label>
                 <select name="" id="" formControlName="gst" class="form-control inp_tag">
                     <option value="gst" selected disabled>Select gst</option>
                     <option value="0">0 %</option>
@@ -164,13 +164,13 @@
                     <option value="18">18 %</option>
                     <option value="28">28 %</option>
                 </select>
-                <label class="lab_tag" for="">Low Stock:</label>
+                <label class="lab_tag" for="">Low Stock: <span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
-                <label class="lab_tag" for="">Unit:</label>
+                <label class="lab_tag" for="">Unit: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="unit">
-                <label class="lab_tag" for="">Mrp:</label>
+                <label class="lab_tag" for="">Mrp: <span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
-                <label class="lab_tag" for="">Hsn:</label>
+                <label class="lab_tag" for="">Hsn: <span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
             </form>
         </div>

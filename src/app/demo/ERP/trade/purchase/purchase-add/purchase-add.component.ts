@@ -406,7 +406,7 @@
         qty: new FormControl('1', [Validators.required]),
         unit: new FormControl('', [Validators.required]),
         discount: new FormControl('0', [Validators.required]),
-        total: new FormControl('', [Validators.required]),
+        total: new FormControl(0, [Validators.required]),
         edit: new FormControl(false)
   
       })

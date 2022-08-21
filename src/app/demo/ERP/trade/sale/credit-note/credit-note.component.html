@@ -9,7 +9,7 @@
 
 <div [ngClass]="debitNote ? 'container' : 'page_color'">
     <div class="debitNoteTable" *ngIf="debitNote">
-        <div class="row col-sm-12 px-0 py-0 mx-0 mt-4 mb-2">
+        <!-- <div class="row col-sm-12 px-0 py-0 mx-0 mt-4 mb-2">
             <form [formGroup]="filterForm" class="col-sm-12 px-0 py-0 mx-0 my-0">
                 <div class="row col-sm-12">
                     <div class="col-sm-3">
@@ -28,21 +28,13 @@
                             class="form-control" placeholder="To Date">
                     </div>
                     <div class="col-sm-3">
-                        <!-- <select id="" formControlName="firm" class="form-control">
-                            <option value="Choose Firm" selected disabled>Choose Firm</option>
-                            <option [value]="f" *ngFor="let f of firmList">{{f}}</option>
-                        </select> -->
                     </div>
                 </div>
             </form>
-        </div>
+        </div> -->
         <div class="tableDiv">
             <div class="top_buttons">
                 <div class="debitBtn">
-                    <!-- <form [formGroup]="modeForm">
-                        <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture" disabled>Manufacture</button>
-                        <button class="btn btn-primary" routerLink="/v1/trade/trade_debit" title="Go To Trade">Trade</button>
-                      </form> -->
                 </div>
                 <div class="debitBtn">
                     <button class="btn btn-primary" (click)="toggleDiv(1)">Add Credit Note</button>
