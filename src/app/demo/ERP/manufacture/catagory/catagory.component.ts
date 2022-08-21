@@ -154,7 +154,7 @@ export class CategoryComponent implements OnInit {
   add_Category = () => {
     this.loader = true;
     const reqBody = {
-      name: this.addCategoryForm.get("cat_name").value,
+      name: this.addCategoryForm.get("cat_name").value.trim(),
     }
     console.log(reqBody);
 
@@ -344,7 +344,7 @@ export class CategoryComponent implements OnInit {
     let qnt = this.addItemForm.get('qty').value ? parseInt(this.addItemForm.get('qty').value) : 0;
     const reqBody = {
       cat_id: this.cat,
-      name: this.addItemForm.get('item_name').value,
+      name: this.addItemForm.get('item_name').value.trim(),
       gst: parseInt(this.addItemForm.get('gst').value),
       min_stock: parseInt(this.addItemForm.get('min_stk').value),
       unit: this.addItemForm.get('unit').value,
