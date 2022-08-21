@@ -221,7 +221,7 @@
                                         (change)="chooseCategory(Product, $event.target.value)"
                                         formControlName="category">
                                         <option selected value="ChooseProduct" disabled>Choose Category</option>
-                                        <option class="disable" *ngFor="let category of getCategoryData;let i=index"
+                                        <option class="disable" *ngFor="let category of getCategoryData"
                                             [value]="category.cat_id"
                                             [disabled]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname' || Product.controls.edit.value == false">
                                             {{category.cat_name}}</option>
@@ -232,11 +232,24 @@
                                         (change)="chooseItem(Product, $event.target.value); totalCalculation()"
                                         formControlName="item">
                                         <option selected value="ChooseProduct" disabled>Choose Item</option>
-                                        <option class="disable" *ngFor="let item of itemData;let i=index"
+                                        <option class="disable" *ngFor="let item of itemData"
                                             [value]="item.item_id" [disabled]="Product.controls.edit.value == false">
                                             {{item.item_name}}</option>
                                     </select>
                                 </td>
+
+                                <!-- <td>
+                                    <select class="form-control table_input" id="item"
+                                        (change)="chooseItem(Product, $event.target.value); totalCalculation()"
+                                        formControlName="item">
+                                        <option selected value="ChooseProduct" disabled>Choose Item</option>
+                                        <option class="disable" *ngFor="let category of getCategoryData"[value]="item.item_id" [disabled]="Product.controls.edit.value == false">
+                                        <ng-container *ngFor="let item of category.itemData">
+                                            {{item.item_name}}
+                                        </ng-container>
+                                        </option>
+                                    </select>
+                                </td> -->
 
                                 <td><input type="text" formControlName="hsn" class="form-control table_input" disabled>
                                 </td>
