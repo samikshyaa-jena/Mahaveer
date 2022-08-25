@@ -62,3 +62,46 @@
     margin-right: 10%;
   }
  
+  //modal start
+.mymodal1 {
+  display: flex;
+  position: fixed;
+  z-index: 99999;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.mymodal_cnt {
+  background-color: #fefefe;
+  margin: auto;
+  border: 1px solid #888;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 7px;
+  width: auto;
+}
+.modal_btn {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 4%;
+  .btn-info {
+      background-color: #25CCCE;
+  }
+  // .btn-secondary {
+  //     background-color: #BFBFBF;
+  // }
+  button {
+      border-radius: 5px;
+      padding: 7px 17px;
+  }
+}

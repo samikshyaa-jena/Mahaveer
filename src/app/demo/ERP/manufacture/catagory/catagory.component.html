@@ -14,14 +14,15 @@
 <div class="container card p-3">
   <!-- show_cat_item 1 starts -->
   <div class="cat_table" *ngIf="show_cat_item == 1">
-    <div class="row col-sm-12  mt-3">
-      <div class="mode_change col-sm-9">
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <div>
         <form [formGroup]="modeForm">
-          <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture" disabled>Manufacture</button>
+          <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture"
+            disabled>Manufacture</button>
           <button class="btn btn-primary" routerLink="/v1/trade/category" title="Go To Trade">Trade</button>
         </form>
       </div>
-      <div class="col-sm-3 add_btn">
+      <div class="add_btn">
         <button class="btn btn-primary mr-1" type="button" (click)="show_cat_item = 5">
           Add Item
         </button>
@@ -31,10 +32,10 @@
       </div>
     </div>
     <!-- <div class="card"> -->
-      <!-- <div class="card-body card_box"> -->
+    <!-- <div class="card-body card_box"> -->
     <div class="table-responsive glob_tab">
       <div class="flexbox mt-3">
-        <div><input type="text"  (keyup)="updateFilter($event)"   placeholder="search" class="form-control mr-5"></div>
+        <div><input type="text" (keyup)="updateFilter($event)" placeholder="search" class="form-control mr-5"></div>
       </div>
       <table class="table v-middle nowrap">
         <thead>
@@ -55,45 +56,39 @@
               <span style="cursor: pointer"><i class="fa fa-edit" aria-hidden="true"
                   (click)="cat_edit_popup_open(content, i)"></i>
               </span>
-              <span class="mx-2" style="cursor: pointer" (click)="delete_popup=true;delete_item=i"><i class="fa fa-trash"
-                  aria-hidden="true"></i></span>
+              <span class="mx-2" style="cursor: pointer" (click)="item_delete_popup_open(delete_popup, i)"><i
+                  class="fa fa-trash" aria-hidden="true"></i></span>
             </td>
           </tr>
         </tbody>
 
 
       </table>
-      <div class="flexboxpagination col-sm-12">
+      <div class="flexboxpagination d-flex justify-content-between align-items-center">
         <div>
           <select class="form-control" [(ngModel)]="pageSize">
             <option [ngValue]="5">5 items per page</option>
             <option [ngValue]="10">10 items per page</option>
             <option [ngValue]="15">15 items per page</option>
-        </select>
+          </select>
         </div>
 
         <div *ngIf="cat_data.length > pageSize">
-          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"></ngb-pagination>
+          <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize">
+          </ngb-pagination>
         </div>
 
+      </div>
     </div>
-    </div>
-  <!-- </div> -->
-<!-- </div> -->
-</div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </div>
   <!-- show_cat_item 1 ends -->
 
   <!-- show_cat_item 2 starts -->
   <div class="add_prod" *ngIf="show_cat_item == 2">
-    <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
-    <div class="btns my-3" style="float: right">
-      <button class="btn btn-primary mr-1 disable" [disabled]="addCategoryForm.invalid || addCategoryForm.value.cat_name.trim() ==''" (click)="add_Category()">
-        Add
-      </button>
-      <button class="btn btn-warning" type="reset" (click)="show_cat_item = 1;addCategoryForm.reset()">
-        Cancel
-      </button>
-    </div>
+    <!-- <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Manufacture</h3> -->
+
     <div class="modal_head">
       <div class="modal_body">
         <div class="addCategoryForm">
@@ -104,12 +99,21 @@
         </div>
       </div>
     </div>
+    <div class="btns my-3" style="float: right">
+      <button class="btn btn-primary mr-1 disable"
+        [disabled]="addCategoryForm.invalid || addCategoryForm.value.cat_name.trim() ==''" (click)="add_Category()">
+        Add
+      </button>
+      <button class="btn btn-warning" type="reset" (click)="show_cat_item = 1;addCategoryForm.reset()">
+        Cancel
+      </button>
+    </div>
   </div>
   <!-- show_cat_item 2 ends -->
 
   <!-- show_cat_item 3 starts -->
   <div class="table-responsive" *ngIf="show_cat_item == 3">
-    <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+    <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Manufacture</h3>
     <div class="btns my-3" style="float: right">
       <button class="btn btn-warning mr-1" type="reset" (click)="show_cat_item = 1">
         Back
@@ -141,7 +145,7 @@
                 (click)="item_edit_popup_open(content1, i)"></i>
             </span>
             <span class="mx-2" style="cursor: pointer"><i class="fa fa-trash" aria-hidden="true"
-                (click)="delete_popup=true;delete_item=i"></i></span>
+                (click)="item_delete_popup_open(delete_popup, i)"></i></span>
           </td>
         </tr>
       </tbody>
@@ -149,21 +153,12 @@
     </table>
 
   </div>
- <!-- show_cat_item 3 ends -->
+  <!-- show_cat_item 3 ends -->
 
   <!-- show_cat_item 4&5 starts -->
   <div class="item" *ngIf="show_cat_item == 4 || show_cat_item == 5">
-    <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
-    <div class="row col-sm-12">
-      <div class="col-sm-12 text-right">
-        <button class="btn btn-primary mr-1" [disabled]="addItemForm.invalid" type="submit" (click)="add_item()">
-          Add
-        </button>
-        <button class="btn btn-warning" type="reset" (click)="show_cat_item = 1;addItemForm.reset()">
-          Back
-        </button>
-      </div>
-    </div>
+    <!-- <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3> -->
+
     <div class="form_div" class="my-3">
       <form [formGroup]="addItemForm" class="my-3">
         <label class="lab_tag" for="">CategoryName: <span class="text-danger">*</span></label>
@@ -194,6 +189,14 @@
         <label class="lab_tag" for="">Open Stock: <span class="text-danger">*</span></label>
         <input type="text" class="form-control inp_tag" formControlName="qty" />
       </form>
+    </div>
+    <div class="d-flex justify-content-end align-items-center">
+      <button class="btn btn-primary mr-1" [disabled]="addItemForm.invalid" type="submit" (click)="add_item()">
+        Add
+      </button>
+      <button class="btn btn-warning" type="reset" (click)="show_cat_item = 1;addItemForm.reset()">
+        Cancel
+      </button>
     </div>
   </div>
   <!-- show_cat_item 4&5 endds -->
@@ -277,8 +280,18 @@
 </ng-template>
 <!-- edit item modal starts -->
 
-
-<div class="mymodal1" *ngIf="delete_popup == true">
+<ng-template #delete_popup let-c="close" let-d="dismiss">
+  <div class="modal-body">
+    <p style="font-size: 18px;">Are you sure you want to delete the item ?</p>
+  </div>
+  <div class="modal-footer">
+    <button border="none" (click)="deletePopup(delete_popup)" class="btn btn-primary mr-2">Cancel</button>
+    <button border="none" (click)="del_Category()" class="btn btn-warning" *ngIf="show_cat_item == 1">Delete</button>
+    <button border="none" (click)="del_item();deletePopup(delete_popup)" class="btn btn-warning"
+      *ngIf="show_cat_item == 3">Delete</button>
+  </div>
+</ng-template>
+<!-- <div class="mymodal1" *ngIf="delete_popup == true">
   <div class="mymodal_cnt">
     <p class="my-3">Are you sure you want to delete the item ?</p>
       <div class="modal_btn">
@@ -287,4 +300,4 @@
         <button border="none" (click)="delete_popup=false" class="btn btn-primary">Cancel</button>
     </div>
   </div>
-</div>
+</div> -->

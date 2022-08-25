@@ -9,20 +9,19 @@
 </div>
 <!-- Loader Ends -->
 <div class="container card p-3">
-    <div class="prod_table" *ngIf='!showAddVendor'>
-      <div class="col-sm-12 row mt-3">
-        <div class="mode_change col-sm-9">
-          <form [formGroup]="modeForm">
-            <button class="btn btn-primary text-white mr-1 disable" title="Manufacture" disabled>Manufacture</button>
-            <button class="btn btn-primary" routerLink="/v1/trade/vendor" title="Go To Trade">Trade</button>
-          </form>
+    <div *ngIf='!showAddVendor'>
+        <div class="d-flex justify-content-between align-items-center">
+            <form [formGroup]="modeForm">
+                <button class="btn btn-primary text-white mr-1 disable" title="Manufacture"
+                    disabled>Manufacture</button>
+                <button class="btn btn-primary" routerLink="/v1/trade/vendor" title="Go To Trade">Trade</button>
+            </form>
+            <div>
+                <button class="btn btn-primary" style="float: right;" (click)="show_AddVendor()">Add Vendor</button>
+            </div>
         </div>
-        <div class="col-sm-3">
-            <button class="btn btn-primary" style="float: right;" (click)="show_AddVendor()">Add Vendor</button>
-        </div>
-      </div>
-        <div class="table-responsive col-sm-12">
-          <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+        <div>
+            <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Manufacture</h3>
             <table class="table v-middle nowrap">
                 <thead>
                     <tr>
@@ -43,28 +42,21 @@
                         <td>{{getVendorData[i].type}}</td>
                         <td>{{getVendorData[i].gstn}}</td>
                         <td>{{getVendorData[i].address}}</td>
-                        <td>
-                            <div class="row">
-                                <span style="cursor: pointer;"><i class="fa fa-edit" aria-hidden="true"
+                        <td class="d-flex">
+                            <span style="cursor: pointer;"><i class="fa fa-edit" aria-hidden="true"
                                     (click)="update_vend_popup_open(content,i)"></i></span>
-                            <span class="mx-2" style="cursor: pointer;" (click)="delete_vendor(i)"><i
+                            <span class="mx-2" style="cursor: pointer;" (click)="item_delete_popup_open(delete_popup, i)"><i
                                     class="fa fa-trash" aria-hidden="true"></i></span>
-                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
     </div>
+
     <div class="add_vendor" *ngIf='showAddVendor'>
-      <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
-        <div class="row col-sm-12">
-            <div class="col-sm-12 text-right">
-                <button class="btn btn-primary mr-1 disable" [disabled]="addVendorForm.invalid" type="submit" (click)="add_Vendor()">Add</button>
-                <button class="btn btn-warning" type="reset" (click)="hide_AddVendor()">Cancel</button>
-            </div>
-        </div>
+        <!-- <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Manufacture</h3> -->
+
         <div class="modal_head">
             <div class="modal_body">
                 <div class="addVendorForm">
@@ -98,6 +90,11 @@
                     </form>
                 </div>
             </div>
+        </div>
+        <div class="d-flex justify-content-end align-items-center">
+            <button class="btn btn-primary mr-1 disable" [disabled]="addVendorForm.invalid" type="submit"
+                (click)="add_Vendor()">Add</button>
+            <button class="btn btn-warning" type="reset" (click)="hide_AddVendor()">Cancel</button>
         </div>
     </div>
 </div>
@@ -142,7 +139,18 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary disable" [disabled]="updateVendorForm.invalid" (click)="update_vendor()">Submit</button>
+        <button type="button" class="btn btn-primary disable" [disabled]="updateVendorForm.invalid"
+            (click)="update_vendor()">Submit</button>
         <button type="button" class="btn btn-warning" (click)="update_vend_popup_close(content)">Cancel</button>
     </div>
 </ng-template>
+
+<ng-template #delete_popup let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <p style="font-size: 18px;">Are you sure you want to delete the item ?</p>
+    </div>
+    <div class="modal-footer">
+      <button border="none" (click)="deletePopup(delete_popup)" class="btn btn-primary mr-2">Cancel</button>
+      <button border="none" (click)="delete_vendor();deletePopup(delete_popup)" class="btn btn-warning">Delete</button>
+    </div>
+  </ng-template>

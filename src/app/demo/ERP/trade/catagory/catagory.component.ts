@@ -43,6 +43,7 @@ export class CategoryComponent implements OnInit {
   report_length: any;
   uploadedFiles: any;
   imgpath: any;
+  delete_item: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -106,6 +107,15 @@ export class CategoryComponent implements OnInit {
   cat_edit_popup_close(content) {
     this.modalService.dismissAll(content);
     this.updateCatForm.reset();
+  }
+
+  item_delete_popup_open(content1, i) {
+    this.delete_item=i;
+    this.modalService.open(content1);
+  }
+
+  deletePopup(content1) {
+    this.modalService.dismissAll(content1);
   }
 
   // edit cat popup open
@@ -185,8 +195,9 @@ export class CategoryComponent implements OnInit {
 
   };
 
-  del_Category = (i) => {
+  del_Category = () => {
     this.loader = true;
+    var i = this.delete_item;
     const reqBody =
     {
       "cat_id": this.cat_data[i].cat_id
@@ -210,8 +221,9 @@ export class CategoryComponent implements OnInit {
       });
   };
 
-  del_item = (i) => {
+  del_item = () => {
     this.loader = true;
+    var i = this.delete_item;
     const reqBody =
     {
       "prod_id": this.itemList[i].prod_id

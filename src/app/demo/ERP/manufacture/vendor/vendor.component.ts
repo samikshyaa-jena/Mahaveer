@@ -27,6 +27,7 @@ export class VendorComponent implements OnInit {
   addVendorData: any;
   vendIndex: any;
   modeForm: FormGroup;
+  delete_item: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -183,8 +184,18 @@ export class VendorComponent implements OnInit {
       });
   }
 
-  delete_vendor = (i) =>{
+  item_delete_popup_open(content1, i) {
+    this.delete_item=i;
+    this.modalService.open(content1);
+  }
+
+  deletePopup(content1) {
+    this.modalService.dismissAll(content1);
+  }
+
+  delete_vendor = () =>{
     this.loader = true;
+    var i = this.delete_item;
     const reqBody = {
     vendor_id: this.getVendorData[i].vendor_id,
     };

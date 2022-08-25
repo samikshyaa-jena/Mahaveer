@@ -7,8 +7,8 @@
     </div>
 </div>
 
-<div [ngClass]="debitNote ? 'container' : 'page_color'">
-    <div class="debitNoteTable card p-3" *ngIf="debitNote">
+<div class="debitNoteTable card p-3">
+    <div *ngIf="debitNote">
         <!-- <div class="row col-sm-12 px-0 py-0 mx-0 mt-4 mb-2">
             <form [formGroup]="filterForm" class="col-sm-12 px-0 py-0 mx-0 my-0">
                 <div class="row col-sm-12">
@@ -36,16 +36,13 @@
                 </div>
             </form>
         </div> -->
-        <div class="tableDiv">
-            <div class="top_buttons">
-                <div class="debitBtn">
+            <div class="d-flex justify-content-between align-items-center">
                     <form [formGroup]="modeForm">
                         <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture"
                             disabled>Manufacture</button>
                         <button class="btn btn-primary" routerLink="/v1/trade/trade_debit"
                             title="Go To Trade">Trade</button>
                     </form>
-                </div>
                 <div class="debitBtn">
                     <button class="btn btn-primary" (click)="toggleDiv(1)">Add Debit Note</button>
                 </div>
@@ -82,7 +79,6 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
     </div>
     <div class="debitNotePage" *ngIf="!debitNote">
         <!-- <div class="debitNote_div">
@@ -152,21 +148,18 @@
         <h3>Debit Note</h3>
     </div> -->
 
-        <button border="none" class="btn back_btn" (click)="debitNote=true"><i
+        <button border="none" class="btn back_btn p-0" (click)="debitNote=true"><i
                 class="fas fa-arrow-alt-circle-left"></i></button>
-        <div class="formDiv row col-sm-12 mt-2">
-            <form [formGroup]="userForm" class="col-sm-12 row px-0 py-0 mx-0 my-0">
-                <div class="col-sm-12 row px-0 py-0 mx-0 my-0">
-                    <div class="leftInps col-sm-4 text-lext px-0 py-0 mx-0 my-0">
-                        <div class="col-sm-12">
+        <div>
+            <form [formGroup]="userForm">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
                             <select class="form-control" formControlName="choose_vender">
                                 <option value="ch_vender" disabled>Choose Vendor</option>
                                 <option *ngFor="let vender of vendor_data" value="vender.name">{{vender.name}}</option>
                             </select>
-                        </div>
                     </div>
-                    <div class="rightInps col-sm-8 text-right px-0 py-0 mx-0 my-0">
-                        <div class="col-sm-12" style="display: flex; justify-content: flex-end;">
+                    <div>
                             <table cellpadding="2px">
                                 <tr class="text_left">
                                     <td>Return No.</td>
@@ -185,7 +178,6 @@
                                     <td><input type="date" class="inpTag"></td>
                                 </tr>
                             </table>
-                        </div>
                     </div>
                 </div>
                 <div class="col-sm-12 row px-0 py-0 mx-0 mt-3">
@@ -263,27 +255,27 @@
                         </tfoot>
                     </table>
                 </div>
-                <div class="col-sm-12 row px-0 py-0 mx-0 mt-3">
-                    <div class="col-sm-8">
-                        <div class="col-sm-12 row">
-                            <div class="col-sm-4">
-                                <input type="text" placeholder="Transport Name" class="form-control mt-3">
-                                <input type="text" placeholder="Vehicle Number" class="form-control mt-3">
-                                <input type="text" placeholder="Delivery Date" class="form-control mt-3">
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="w_30">
+                                <input type="text" placeholder="Transport Name" class="form-control">
+                                <input type="text" placeholder="Vehicle Number" class="form-control mt-1">
+                                <input type="text" placeholder="Delivery Date" class="form-control mt-1">
                             </div>
-                            <div class="col-sm-4">
-                                <input type="text" placeholder="Delivery Location" class="form-control mt-3">
+                            <div class="w_30">
+                                <input type="text" placeholder="Delivery Location" class="form-control">
                             </div>
-                            <div class="col-sm-4">
-                                <select name="" id="" class="form-control mt-3">
+                            <div class="w_30">
+                                <select name="" id="" class="form-control">
                                     <option value="" selected disabled>Payment Mode</option>
                                 </select>
-                                <input type="text" placeholder="Add Description" class="form-control mt-3">
+                                <input type="text" placeholder="Add Description" class="form-control mt-1">
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
-                        <div class="col-sm-12 mt-3" style="display: flex; justify-content: flex-end;">
+                    <div>
+                        <div>
                             <table>
                                 <tr>
                                     <td>GST</td>

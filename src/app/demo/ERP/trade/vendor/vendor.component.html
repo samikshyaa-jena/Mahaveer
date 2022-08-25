@@ -46,7 +46,7 @@
                         <td>
                             <span style="cursor: pointer;"><i class="fa fa-edit" aria-hidden="true"
                                     (click)="update_vend_popup_open(content,i)"></i></span>
-                            <span class="mx-2" style="cursor: pointer;" (click)="delete_vendor(i)"><i
+                            <span class="mx-2" style="cursor: pointer;" (click)="item_delete_popup_open(delete_popup, i)"><i
                                     class="fa fa-trash" aria-hidden="true"></i></span>
                         </td>
                     </tr>
@@ -56,13 +56,8 @@
 
     </div>
     <div class="add_vendor" *ngIf='showAddVendor'>
-      <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Trade</h3>
-        <div class="row col-sm-12">
-            <div class="col-sm-12 text-right">
-                <button class="btn btn-primary mr-1 disable" [disabled]="addVendorForm.invalid" type="submit" (click)="add_Vendor()">Add</button>
-                <button class="btn btn-warning" type="reset" (click)="hide_AddVendor()">Cancel</button>
-            </div>
-        </div>
+      <!-- <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Trade</h3> -->
+        
         <div class="modal_head">
             <div class="modal_body">
                 <div class="addVendorForm">
@@ -97,6 +92,10 @@
                 </div>
             </div>
         </div>
+        <div class="d-flex justify-content-end align-items-center">
+            <button class="btn btn-primary mr-1 disable" [disabled]="addVendorForm.invalid" type="submit" (click)="add_Vendor()">Add</button>
+            <button class="btn btn-warning" type="reset" (click)="hide_AddVendor()">Cancel</button>
+    </div>
     </div>
 </div>
 <!-- modal starts -->
@@ -144,3 +143,13 @@
         <button type="button" class="btn btn-warning" (click)="update_vend_popup_close(content)">Cancel</button>
     </div>
 </ng-template>
+
+<ng-template #delete_popup let-c="close" let-d="dismiss">
+    <div class="modal-body">
+      <p style="font-size: 18px;">Are you sure you want to delete the item ?</p>
+    </div>
+    <div class="modal-footer">
+      <button border="none" (click)="deletePopup(delete_popup)" class="btn btn-primary mr-2">Cancel</button>
+      <button border="none" (click)="delete_vendor();deletePopup(delete_popup)" class="btn btn-warning">Delete</button>
+    </div>
+  </ng-template>

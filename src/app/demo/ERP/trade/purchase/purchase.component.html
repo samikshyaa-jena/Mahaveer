@@ -14,20 +14,18 @@
 <div class="container card p-3" style="padding:15px" *ngIf='!purchase_tab'>
   <!-- <div class="card"> -->
     <!-- <div> -->
-      <div class="row col-sm-12 mb-3 mt-3">
-        <div class="mode_change col-sm-9">
+      <div class="d-flex justify-content-between align-items-center">
           <form [formGroup]="modeForm">
             <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Trade" disabled>Trade</button>
             <button class="btn btn-primary" routerLink="/v1/manufacture/purchase" title="Go To Manufacture">Manufacture</button>
           </form>
-        </div>
-        <div class="col-sm-3">
+        <div>
           <button class="btn btn-primary" style="float: right;" (click)="purchase_entry() ">Purchase Entry</button>
         </div>
       </div>
       <div class="prod_table px-0 py-0 mx-0 my-0">
         <div class="table-responsive px-0 py-0 mx-0 my-0">
-          <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Trade</h3>
+          <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Trade</h3>
           <table class="table v-middle nowrap">
             <thead class="table-secondary">
               <tr>

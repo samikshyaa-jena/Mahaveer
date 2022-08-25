@@ -117,10 +117,17 @@ export class CategoryComponent implements OnInit {
     });
     this.modalService.open(content1);
   }
+  item_delete_popup_open(content1, i) {
+    this.delete_item=i;
+    this.modalService.open(content1);
+  }
   // edit cat popup close
   item_edit_popup_close(content1) {
     this.modalService.dismissAll(content1);
     this.editItemForm.reset();
+  }
+  deletePopup(content1) {
+    this.modalService.dismissAll(content1);
   }
   get_Category = () => {
     this.cat_data.length=0;
