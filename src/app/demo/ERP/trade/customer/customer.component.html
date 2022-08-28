@@ -68,7 +68,7 @@
                             <option value="Intra State">Intra State</option>
                             <option value="Inter State">Inter State</option>
                         </select>
-                        <label class="lab_tag" for="">GST No:  <span class="text-danger">*</span><span class="text-danger">*</span></label>
+                        <label class="lab_tag" for="">GST No:  <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" maxlength="15" minlength="15" formControlName="gst_in"
                             #gst (input)="gst.value=$event.target.value.toUpperCase()">
                         <div *ngIf="addVendorForm.get('gst_in').hasError('minlength') && addVendorForm.get('gst_in').touched"
@@ -87,8 +87,8 @@
             </div>
         </div>
             <div class="col-sm-12 text-right p-0 mt-3">
-                <button class="btn btn-primary mr-1" type="submit" (click)="add_Vendor()">Add</button>
-                <button class="btn btn-warning" type="reset" (click)="hide_AddVendor()">Cancel</button>
+                <button class="btn btn-warning mr-1" type="reset" (click)="hide_AddVendor()">Cancel</button>
+                <button class="btn btn-primary" type="submit" [disabled]="addVendorForm.invalid" (click)="add_Vendor()">Add</button>
             </div>
     </div>
 </div>
@@ -134,7 +134,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="update_vendor()">Submit</button>
         <button type="button" class="btn btn-warning" (click)="update_vend_popup_close(content)">Cancel</button>
+        <button type="button" class="btn btn-primary" [disabled]="updateVendorForm.invalid" (click)="update_vendor()">Submit</button>
     </div>
 </ng-template>
