@@ -9,14 +9,15 @@
 </div>
 <!-- Loader Ends -->
 <div class="container">
-  <div class="mode_change col-sm-12 mt-3">
-    <form [formGroup]="modeForm">
-      <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture" disabled>Manufacture</button>
-      <button class="btn btn-primary" routerLink="/v1/trade/stock" title="Go To Manufacture">Trade</button>
-    </form>
-  </div>
+    <div class="mode_change col-sm-12 mt-3 p-0">
+        <form [formGroup]="modeForm">
+            <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture"
+                disabled>Manufacture</button>
+            <button class="btn btn-primary" routerLink="/v1/trade/stock" title="Go To Manufacture">Trade</button>
+        </form>
+    </div>
     <div class="table-responsive">
-      <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
+        <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Manufacture</h3>
         <table class="table v-middle nowrap">
             <thead>
                 <tr>
@@ -29,8 +30,8 @@
             </thead>
             <tbody>
                 <tr *ngFor="let data of stockData; let i = index">
-                    <td><u style="color: blue; cursor: pointer;" (click)="stockTablePopup(data.ItemHistory)">
-                        {{data.item_name}}</u>
+                    <td><u style="color: blue; cursor: pointer;" (click)="stockTablePopup(data.ItemHistory, content2)">
+                            {{data.item_name}}</u>
                     </td>
                     <td>{{data.total_qty}}</td>
                     <td>{{data.total_price}}</td>
@@ -52,29 +53,36 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="close(content)">Submit</button>
-      <button type="button" class="btn btn-outline-dark" (click)="close(content)">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="close(content)">Cancel</button>
     </div>
-  </ng-template>
-  <!-- popup btn starts -->
+</ng-template>
+<!-- popup btn starts -->
 
-  <div id="myModal2" class="modal2 px-5 ml-5" *ngIf="stk_modal" (click)="stk_modal=false">
-    <table class="table table-bordered">
-        <thead class="bg-primary">
-            <tr>
-                <th scope="col" class="text-white text-center">Invoice No.</th>
-                <th scope="col" class="text-white text-center">Price</th>
-                <th scope="col" class="text-white text-center">Quantity</th>
-            </tr>
-        </thead>
-        <tbody class="bg-white">
-            <tr *ngFor="let e of stockPopupData; let i = index">
-                <td class="text-center">{{e.invoice_no}}</td>
-                <td class="text-center">{{e.price}}</td>
-                <td class="text-center">{{e.qty}}</td>
+<!-- <div id="myModal2" class="modal2" *ngIf="stk_modal"> -->
+    <!-- <button class="btn btn-danger text-right" (click)="stk_modal=false"><i class="fas fa-times-circle"></i></button> -->
+<ng-template #content2 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <div class="w-100 text-right"><i class="fa fa-times-circle" aria-hidden="true" (click)="close('content2')"></i></div>
+    </div>
+    <div class="modal-body">
+        <table class="table table-bordered">
+            <thead class="bg-primary">
+                <tr>
+                    <th scope="col" class="text-white text-center">Invoice No.</th>
+                    <th scope="col" class="text-white text-center">Price</th>
+                    <th scope="col" class="text-white text-center">Quantity</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr *ngFor="let e of stockPopupData; let i = index">
+                    <td class="text-center">{{e.invoice_no}}</td>
+                    <td class="text-center">{{e.price}}</td>
+                    <td class="text-center">{{e.qty}}</td>
 
-            </tr>
+                </tr>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+</ng-template>
 
-</div>

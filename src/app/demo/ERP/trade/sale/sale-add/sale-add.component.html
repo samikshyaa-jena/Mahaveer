@@ -232,7 +232,7 @@
     </div>
 
     <div class="footer_btn">
-        <button class="btn btn-warning mr-2" (click)="resetProductForm()">Cancel</button>
+        <button class="btn btn-warning mr-2" (click)="resetProductForm(); previousPage()">Cancel</button>
         <button class="btn btn-primary disable" (click)="add_purchase_details()" [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.category == 'ChooseProduct'">Submit</button>
     </div>
 

@@ -72,10 +72,9 @@ export class StockComponent implements OnInit {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
   }
-  stockTablePopup = (data)=>{
+  stockTablePopup = (data, content)=>{
     console.log(data);
-
-    this.stk_modal = true;
+    this.modalService.open(content);
     this.stockPopupData = data;
   }
 

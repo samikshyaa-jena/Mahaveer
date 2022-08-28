@@ -1,155 +1,3 @@
-<!-- <div class="container">
-    <button type="button" class="btn btn-warning mt-3" (click)="previousPage()">Back</button>
-    <div class="bg-white">
-          <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
-            <div class="row col-sm-12">
-
-                <div class="col-sm-12 text-right"><button class="btn btn-success" (click)="openModal()"
-                        [disabled]="purchase_form.invalid">Add Product</button></div>
-            </div>
-            <form [formGroup]="purchase_form">
-                <div class="row col-sm-12 mt-1">
-
-                    <div class="col-sm-4 ">
-                        <label for="">Invoicenumber</label>
-                        <input type="text" formControlName="invo" class="form-control">
-                    </div>
-                    <div class="col-sm-4 ">
-                        <label for="">Vendor Name</label>
-                        <select class="form-control" formControlName="vendor" (ngModelChange)="vendorType($event)">
-                            <option [value]="vendor.vendor_id" *ngFor="let vendor of getVendorData">{{vendor.name}}
-                            </option>
-                        </select>
-
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="">Purchase Date</label>
-                        <input type="date" formControlName="p_date" class="form-control">
-
-                    </div>
-                </div>
-            </form>
-            <table class="table w-100 mt-5" *ngIf="productformarray.length!=0">
-                <thead class="bg-primary">
-                    <tr>
-                        <th class="text-white" scope="col">Product Id</th>
-                        <th class="text-white" scope="col">Item Id</th>
-                        <th class="text-white" scope="col">IGST</th>
-                        <th class="text-white" scope="col">CGST</th>
-                        <th class="text-white" scope="col">SGST</th>
-                        <th class="text-white" scope="col">HSN</th>
-                        <th class="text-white" scope="col">Price</th>
-                        <th class="text-white" scope="col">Quantity</th>
-                        <th class="text-white" scope="col">Discount</th>
-                        <th class="text-white" scope="col">Total</th>
-                        <th class="text-white" scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let data of duplicateproductformarray;let i=index">
-
-                        <td>{{data.category}}</td>
-                        <td>{{data.item_id}}</td>
-                        <td>{{data.igst}}</td>
-                        <td>{{data.cgst}}</td>
-                        <td>{{data.sgst}}</td>
-                        <td>{{data.hsn}}</td>
-                        <td>{{data.price}}</td>
-                        <td>{{data.qty}}</td>
-                        <td>{{data.discount}}</td>
-                        <td>{{data.total}}</td>
-                        <td (click)="delete(i)"><i class="fa fa-trash" aria-hidden="true"></i></td>
-                    </tr>
-
-                </tbody>
-            </table>
-            <div class="row col-sm-12" *ngIf="productformarray.length!=0">
-
-                <div class="col-sm-12 text-right"><button class="btn btn-success"
-                        (click)="add_purchase_details()">Submit</button></div>
-            </div>
-
-    </div>
-</div>
-<div id="myModal2" class="modal2" *ngIf="openmodal">
-
-    <div class="card">
-        <div class="card-header text-danger text-right"><span (click)="openmodal=false"
-                style="cursor: pointer;">X</span>
-        </div>
-        <div class="card-body">
-            <form [formGroup]="productForm">
-                <div class="row">
-                    <div class="col">
-                        <label>Choose Category</label>
-                        <select class="form-control" (change)="chooseCategory($event.target.value)"
-                            formControlName="category">
-                            <option selected value="choose">ChooseCategory</option>
-                            <option *ngFor="let category of getCategoryData;let i=index" [value]="category.cat_id">
-                                {{category.cat_name}}</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label>Item</label>
-                        <select class="form-control" formControlName="item_id"
-                            (change)="chooseItem($event.target.value)">
-                            <option selected value="choose">ChooseItem </option>
-                            <option *ngFor="let item of itemData" [value]="item.item_id">{{item.item_name}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        <label>IGST</label>
-                        <input type="number" formControlName="igst" class="form-control" disabled>
-                    </div>
-                    <div class="col">
-                        <label>CGST</label>
-                        <input type="number" formControlName="cgst" class="form-control" disabled>
-                    </div>
-                    <div class="col">
-                        <label>SGST</label>
-                        <input type="number" formControlName="sgst" class="form-control" disabled>
-                    </div>
-                    <div class="col">
-                        <label>Hsn</label>
-                        <input type="number" formControlName="hsn" class="form-control" disabled>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        <label>Pur. Price</label>
-                        <input type="number" formControlName="price" class="form-control" (input)="calc_total()">
-                    </div>
-                    <div class="col">
-                        <label>Quantity</label>
-                        <input type="number" formControlName="qty" class="form-control" (input)="calc_total()">
-                    </div>
-                    <div class="col">
-                        <label>Discount</label>
-                        <input type="number" formControlName="discount" class="form-control" (input)="calc_total()">
-                    </div>
-                    <div class="col">
-                        <label>Total</label>
-                        <input type="number" formControlName="total" class="form-control" readonly>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-sm-12 text-right ">
-                        <button type="button" class="btn btn-warning" (click)="submitArray();openmodal=false"
-                            [disabled]="productForm.invalid">Submit</button>
-                    </div>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div> -->
-
-
-
-
-
 <div class="card p-3">
     <div>
         <!-- <div class="card bg-white"> -->
@@ -160,8 +8,6 @@
         <!-- <div class="card-body"> -->
         <div class="row col-sm-12">
 
-            <!-- <div class="col-sm-12 text-right"><button class="btn btn-success" (click)="openModal()"
-                [disabled]="purchase_form.invalid">Add Product</button></div> -->
         </div>
         <form [formGroup]="purchase_form">
             <div class="d-flex justify-content-between align-items-center">
@@ -202,7 +48,6 @@
                             <th style="width: 15%;">Item</th>
                             <th>Hsn</th>
                             <th>Quantity</th>
-                            <th>Unit</th>
                             <th>Sale Price</th>
                             <th>Discount</th>
                             <th>CGST</th>
@@ -222,20 +67,22 @@
                                         (change)="chooseCategory(Product, $event.target.value)"
                                         formControlName="category">
                                         <option selected value="ChooseProduct" disabled>Choose Category</option>
-                                        <option class="disable" *ngFor="let category of getCategoryData;let i=index"
+                                        <option class="disable" *ngFor="let category of getCategoryData"
                                             [value]="category.cat_id"
                                             [disabled]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname' || Product.controls.edit.value == false">
                                             {{category.cat_name}}</option>
                                     </select>
                                 </td>
+
                                 <td>
+                                    <input type="hidden" formControlName="hide_item">
                                     <select class="form-control table_input" id="item"
                                         (change)="chooseItem(Product, $event.target.value); totalCalculation()"
                                         formControlName="item">
                                         <option selected value="ChooseProduct" disabled>Choose Item</option>
-                                        <option class="disable" *ngFor="let item of itemData;let i=index"
-                                            [value]="item.item_id" [disabled]="Product.controls.edit.value == false">
-                                            {{item.item_name}}</option>
+                                        <option class="disable" *ngFor="let item of itemData[Product.controls.hide_item.value]" [value]="item.prod_id" [disabled]="Product.controls.edit.value == false">
+                                            {{item.prod_name}}
+                                        </option>
                                     </select>
                                 </td>
 
@@ -246,12 +93,8 @@
                                         (keypress)="prevent($event, 'qty')" min="1"
                                         [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
                                 </td>
-                                <td><input type="text" formControlName="unit" id="unit" class="form-control table_input"
-                                        [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
-                                </td>
                                 <td><input type="number" formControlName="price" id="price"
-                                        (keypress)="prevent($event,'dis')"
-                                        (input)="calc_total(Product.controls); totalCalculation()"
+                                        (keypress)="prevent($event,'dis')" (input)="calc_total(Product.controls); totalCalculation()"
                                         class="form-control table_input" [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false"></td>
                                 <td><input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
                                         min="0" id="discount" class="form-control table_input"
@@ -265,10 +108,7 @@
                                         disabled></td>
                                 <td><input type="number" formControlName="total" class="form-control table_input"
                                         readonly></td>
-                                <!-- <td>
-                                <button border="none" class="btn btn-primary disable" (click)="submitArray(i)"
-                                    [disabled]="i.invalid"><i class="fas fa-check"></i></button>
-                            </td> -->
+                                
                                 <td class="d-flex">
                                     <button border="none" class="btn delete_btn disable"
                                         (click)="deleteRow(i); totalCalculation()"
@@ -308,22 +148,22 @@
                 <th style="width: 120px;"></th>
             </tr>
             <tr>
-                <td>Total IGST <span class="text-danger">*</span></td>
+                <td>Total IGST</td>
                 <td>:</td>
                 <td><input name="t_igst" [(ngModel)]="t_igst" class="total_cal_field" type="text" readonly></td>
             </tr>
             <tr>
-                <td>Total SGST <span class="text-danger">*</span></td>
+                <td>Total SGST</td>
                 <td>:</td>
                 <td><input name="t_sgst" [(ngModel)]="t_sgst" class="total_cal_field" type="text" readonly></td>
             </tr>
             <tr>
-                <td>Total CGST <span class="text-danger">*</span></td>
+                <td>Total CGST</td>
                 <td>:</td>
                 <td><input name="t_cgst" [(ngModel)]="t_cgst" class="total_cal_field" type="text" readonly></td>
             </tr>
             <tr>
-                <td>Total Amount <span class="text-danger">*</span></td>
+                <td>Total Amount</td>
                 <td>:</td>
                 <td><input name="t_amount" [(ngModel)]="t_amount" class="total_cal_field" type="text" readonly></td>
             </tr>

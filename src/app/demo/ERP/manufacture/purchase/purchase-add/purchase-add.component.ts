@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import * as Notiflix from 'notiflix';
 import { finalize } from 'rxjs/operators';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ErpServiceService } from '../../../erp-service.service';
 import { erp_all_api } from '../../../erpAllApi';
 import { DatePipe } from '@angular/common';
@@ -47,12 +45,7 @@ export class PurchaseAddComponent implements OnInit {
 
   constructor(
     private ErpService: ErpServiceService,
-    private http: HttpClient,
-    private router: Router,
-    config: NgbModalConfig,
-    private modalService: NgbModal,
     private fb: FormBuilder,
-    // public saleService: SaleSrviceService,
     private datePipe: DatePipe,
   ) {
    

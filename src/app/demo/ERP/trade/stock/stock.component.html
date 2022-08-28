@@ -9,12 +9,13 @@
 </div>
 <!-- Loader Ends -->
 <div class="container">
-  <div class="mode_change col-sm-12 mt-3">
-    <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Trade" disabled>Trade</button>
-    <button class="btn btn-primary" routerLink="/v1/manufacture/stock" title="Go To Manufacture">Manufacture</button>
-  </div>
+    <div class="mode_change col-sm-12 mt-3 p-0">
+        <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Trade" disabled>Trade</button>
+        <button class="btn btn-primary" routerLink="/v1/manufacture/stock"
+            title="Go To Manufacture">Manufacture</button>
+    </div>
     <div class="table-responsive">
-      <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Trade</h3>
+        <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Trade</h3>
         <table class="table v-middle nowrap">
             <thead>
                 <tr>
@@ -27,8 +28,8 @@
             </thead>
             <tbody>
                 <tr *ngFor="let data of stockData; let i = index">
-                    <td><u style="color: blue; cursor: pointer;" (click)="stockTablePopup(data.ItemHistory)">
-                        {{data.prod_name}}</u>
+                    <td><u style="color: blue; cursor: pointer;" (click)="stockTablePopup(data.ItemHistory, content2)">
+                            {{data.prod_name}}</u>
                     </td>
                     <td>{{data.total_qty}}</td>
                     <td>{{data.total_price}}</td>
@@ -43,7 +44,7 @@
 <!-- modal starts -->
 <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
+        <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
         <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
     </div>
     <div class="modal-body">
@@ -51,19 +52,22 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="close(content)">Submit</button>
-      <button type="button" class="btn btn-outline-dark" (click)="close(content)">Cancel</button>
+        <button type="button" class="btn btn-outline-dark" (click)="close(content)">Cancel</button>
     </div>
-  </ng-template>
-  <!-- popup btn starts -->
+</ng-template>
+<!-- popup btn starts -->
 
-  <div id="myModal2" class="modal2 px-5 col-sm-12 row" *ngIf="stk_modal" (click)="stk_modal=false">
-      <div class="col-sm-2"></div>
-      <div class="col-sm-10">
+<ng-template #content2 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <div class="w-100 text-right"><i class="fa fa-times-circle" aria-hidden="true" (click)="close('content2')"></i>
+        </div>
+    </div>
+    <div class="modal-body">
         <table class="table table-bordered">
             <thead class="bg-primary">
                 <tr>
-                    <th scope="col" class="text-white text-center">Invoice No. <span class="text-danger">*</span></th>
-                    <th scope="col" class="text-white text-center">Price <span class="text-danger">*</span></th>
+                    <th scope="col" class="text-white text-center">Invoice No.</th>
+                    <th scope="col" class="text-white text-center">Price</th>
                     <!-- <th scope="col" class="text-white text-center">Quantity</th> -->
                 </tr>
             </thead>
@@ -72,13 +76,10 @@
                     <td class="text-center">{{e.invoice_no}}</td>
                     <td class="text-center">{{e.price}}</td>
                     <!-- <td class="text-center">{{e.qty}}</td> -->
-    
+
                 </tr>
-    
+
             </tbody>
         </table>
-      </div>
-      <!-- <div class="col-sm-2"></div> -->
-  
-
-</div>
+    </div>
+</ng-template>

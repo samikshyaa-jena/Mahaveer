@@ -8,7 +8,7 @@
     </div>
 </div>
 <!-- Loader Ends -->
-<div class="container">
+<div class="container card p-3">
     <div class="prod_table" *ngIf='!showAddVendor'>
         <div style="float: right; margin-top: 10px;">
             <button class="btn btn-primary" (click)="show_AddVendor()">Add Customer</button>
@@ -36,7 +36,7 @@
                         <td>{{getVendorData[i].type}}</td>
                         <td>{{getVendorData[i].gstn}}</td>
                         <td>{{getVendorData[i].address}}</td>
-                        <td>
+                        <td class="d-flex">
                             <span style="cursor: pointer;"><i class="fa fa-edit" aria-hidden="true"
                                     (click)="update_vend_popup_open(content,i)"></i></span>
                             <span class="mx-2" style="cursor: pointer;" (click)="delete_vendor(i)"><i
@@ -49,12 +49,7 @@
 
     </div>
     <div class="add_vendor" *ngIf='showAddVendor'>
-        <div class="row col-sm-12">
-            <div class="col-sm-12 text-right mt-3">
-                <button class="btn btn-primary mr-1" type="submit" (click)="add_Vendor()">Add</button>
-                <button class="btn btn-warning" type="reset" (click)="hide_AddVendor()">Cancel</button>
-            </div>
-        </div>
+        
         <div class="modal_head">
             <div class="modal_body">
                 <div class="addVendorForm">
@@ -91,6 +86,10 @@
                 </div>
             </div>
         </div>
+            <div class="col-sm-12 text-right p-0 mt-3">
+                <button class="btn btn-primary mr-1" type="submit" (click)="add_Vendor()">Add</button>
+                <button class="btn btn-warning" type="reset" (click)="hide_AddVendor()">Cancel</button>
+            </div>
     </div>
 </div>
 <!-- modal starts -->

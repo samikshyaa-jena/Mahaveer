@@ -1,7 +1,9 @@
 .modal2 {
-    padding: 5% 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
-    z-index: 1;
+    z-index: 9999999999999;
     left: 0;
     top: 0;
     width: 100%;
