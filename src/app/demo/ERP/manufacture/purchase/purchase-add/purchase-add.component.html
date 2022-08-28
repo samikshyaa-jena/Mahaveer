@@ -227,7 +227,7 @@
                                             {{category.cat_name}}</option>
                                     </select>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <select class="form-control table_input" id="item"
                                         (change)="chooseItem(Product, $event.target.value); totalCalculation()"
                                         formControlName="item">
@@ -236,20 +236,19 @@
                                             [value]="item.item_id" [disabled]="Product.controls.edit.value == false">
                                             {{item.item_name}}</option>
                                     </select>
-                                </td>
+                                </td> -->
 
-                                <!-- <td>
+                                <td>
+                                    <input type="hidden" formControlName="hide_item">
                                     <select class="form-control table_input" id="item"
                                         (change)="chooseItem(Product, $event.target.value); totalCalculation()"
                                         formControlName="item">
                                         <option selected value="ChooseProduct" disabled>Choose Item</option>
-                                        <option class="disable" *ngFor="let category of getCategoryData"[value]="item.item_id" [disabled]="Product.controls.edit.value == false">
-                                        <ng-container *ngFor="let item of category.itemData">
+                                        <option class="disable" *ngFor="let item of itemData[Product.controls.hide_item.value]" [value]="item.item_id" [disabled]="Product.controls.edit.value == false">
                                             {{item.item_name}}
-                                        </ng-container>
                                         </option>
                                     </select>
-                                </td> -->
+                                </td>
 
                                 <td><input type="text" formControlName="hsn" class="form-control table_input" disabled>
                                 </td>
@@ -259,8 +258,7 @@
                                         [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
                                 </td>
                                 <td><input type="number" formControlName="price" id="price"
-                                        (keypress)="prevent($event,'dis')"
-                                        (input)="calc_total(Product.controls); totalCalculation()"
+                                        (keypress)="prevent($event,'dis')" (input)="calc_total(Product.controls); totalCalculation()"
                                         class="form-control table_input" [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false"></td>
                                 <td><input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
                                         min="0" id="discount" class="form-control table_input"
