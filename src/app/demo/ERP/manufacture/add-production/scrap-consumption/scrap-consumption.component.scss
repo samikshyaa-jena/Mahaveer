@@ -103,3 +103,14 @@
 .readonly:read-only{
     cursor: not-allowed;
 }
+.delete_btn{
+    vertical-align: middle;
+    text-align: center;
+    width: 5%;
+    padding: 0;
+    button{
+        color: red;
+        padding: 0;
+        text-align: center;
+    }
+}
