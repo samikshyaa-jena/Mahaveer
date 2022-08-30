@@ -8,6 +8,13 @@
     </div>
 </div>
 <!-- Loader Ends -->
+
+
+<app-req-entry class="add_prod" *ngIf='!prod_table && req_entry' (BackTab)="back()"></app-req-entry>
+<app-req-edit class="add_prod" *ngIf='prod_table && req_entry' [getProductData]="getProductData2"
+(BackTab)="back()"></app-req-edit>
+
+
 <div class="container card p-3">
     <div class="prod_table" *ngIf='prod_table && !req_entry'>
         <div style="float: right; margin: 10px 0;">
@@ -46,7 +53,6 @@
 
     </div>
 
-    <app-req-entry class="add_prod" *ngIf='!prod_table && req_entry' (BackTab)="back()"></app-req-entry>
 
 
     <div class="add_prod" *ngIf='!prod_table && !req_entry'>
@@ -96,8 +102,7 @@
     </div>
 
 
-    <app-req-edit class="add_prod" *ngIf='prod_table && req_entry' [getProductData]="getProductData2"
-        (BackTab)="back()"></app-req-edit>
+   
 
 
     <!-- <div class="cata_act" *ngIf='!showAddProd && prod_table'>

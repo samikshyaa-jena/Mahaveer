@@ -1,49 +1,143 @@
-.back_btn{
-    font-size: 25px;
-    color: royalblue;
+.modal2 {
+    position: fixed;
+    z-index:1;
+    padding: 10% 32%;
+    left: 0;
+    top: 0; 
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    }
+   
+    .css_modal_content2 {
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
     padding: 0;
-}
-.footer_btn{
-    margin-top: 30px;
-    // margin-right: 20px;
+    border-radius: 5px;
+    width: auto;
+    height: auto;
+    }
+    .modal_header{
+    margin: 5% 5% 0 5%;
+    font-size: 15px;
+    font-weight: bolder;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-
-    button{
-        border-radius: 3px;
+    justify-content: space-between;
     }
-}
-.col-sm-12, .col-sm-2, .col-sm-3{
-    padding-left: 0 !important;
-}
-.total_cal{
-    display: flex;
-    justify-content: flex-end;
-    border: 1px solid transparent;
-    margin-top: 10px;
-}
-.total_cal_field{
-    border: 0px solid transparent;
-    border-bottom: 1px solid black;
-}
-.delete_btn{
-    color: red;
-    padding-right: 0;
-}
-.edit_btn{
-    color: royalblue;
-}
-.invoice_no{
-  color: royalblue;
-  cursor: pointer;
-  font-weight: bold;
-}
-.table_input{
-    padding: 1px;
-    text-align: center;
-}
-.disable:disabled{
-    cursor: not-allowed;
-}
+    .spinner-border{
+        width: 7rem;
+        height: 7rem;
+    }
+    
+    .close_btn{
+        cursor: pointer;
+        float: right;
+        border: none;
+        background: transparent;
+        margin-left: 450px;
+        font-size: 18px;
+    }
+    .modaltable{
+        padding: 0% 0%!important;
+    }
+    .spinner-container{
+        top: 0;
+        z-index: 999;
+        background: rgba(255,255,255,0.8);
+        left: 0;
+    }
+    .spinner-border{
+        width: 7rem;
+        height: 7rem;
+    }
+    .back_btn{
+        font-size: 25px;
+        color: royalblue;
+        padding: 0;
+    }
+    .footer_btn{
+        // margin-top: 30px;
+        // margin-right: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+    
+        button{
+            border-radius: 3px;
+        }
+    }
+    .col-sm-12, .col-sm-2, .col-sm-3{
+        padding-left: 0 !important;
+    }
+    .total_cal{
+        display: flex;
+        justify-content: flex-end;
+        border: 1px solid transparent;
+        margin-top: 10px;
+    }
+    .total_cal_field{
+        border: 0px solid transparent;
+        border-bottom: 1px solid black;
+    }
+    .table_input{
+        padding: 1px;
+        text-align: center;
+    }
+    .disable:disabled{
+        cursor: not-allowed;
+    }
+
+
+    .main_cnt{
+        border: 1px solid transparent;
+        padding: 1% 3%;
+    }
+    .datee{
+        border-bottom: 1px solid lightgray;
+        white-space: nowrap;
+        input{
+            background-color: lightgray;
+            border: 1px solid lightgray;
+        border-radius: 3px;
+        }
+    }
+    .table{
+        border: 1px solid lightgray;
+        margin-bottom: 0;
+        border-left: 0;
+    }
+    .table th{
+        padding: 5px 7px;
+        border: 1px solid lightgray;
+    }
+    
+    .table td, .td_e{
+        padding: 2px;
+        border: 1px solid lightgray;
+        // background: lightgoldenrodyellow;
+    }
+    .delete_btn{
+        vertical-align: middle;
+        text-align: center;
+        width: 5%;
+        padding: 0;
+        button{
+            // color: red;
+            padding: 0;
+            text-align: center;
+        }
+    }
+    .main_heading{
+        color: black;
+        font-weight: bold;
+        font-size: 20px;
+        margin-left: -1%;
+    }
+    .field_height{
+        height: 33px;
+    }

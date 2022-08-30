@@ -19,7 +19,7 @@
                     <td>{{data.prod_name}}</td>
                     <td>{{data.quantity}}</td>
                     <td *ngIf="data.status == 'complete'" style="text-transform: capitalize;">Completed</td>
-                    <td *ngIf="data.status == 'complete'">
+                    <td *ngIf="data.status == 'in process'">
                         <select (change)="updateProduct($event.target.value,data)" class="selSts">
                             <option value="in process" selected>In Progress</option>
                             <option value="complete">Completed</option>

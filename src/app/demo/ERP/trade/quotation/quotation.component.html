@@ -1,58 +1,61 @@
 <!-- Loader Starts -->
 <div *ngIf="loader"
-  class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
-  <div class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
-      <span class="sr-only">Loading...</span>
+    class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
-  </div>
 </div>
 <!-- Loader Ends -->
 
-<app-quotation-entry *ngIf="purchase_tab && !invoice" (get_purchase_details)="get_purchase_details()" (BackTab)="back()">
+<app-quotation-entry *ngIf="purchase_tab && !invoice" (get_purchase_details)="get_purchase_details()"
+    (BackTab)="back()">
 </app-quotation-entry>
 <div class="container card" style="padding: 15px" *ngIf="!purchase_tab && !invoice && !pdf">
-  
-  <div class="mt-3">
-    <button class="btn btn-primary mb-3 mt-2" (click)="purchase_entry()">
-        Quotation Entry
-    </button>
-  </div>
-  <div class="prod_table px-0 py-0 mx-0 my-0">
-    <div class="table-responsive px-0 py-0 mx-0 my-0">
-      <table class="table v-middle nowrap">
-        <thead class="table-secondary">
-          <tr>
-            <th class="border-top-0">Quotation</th>
-            <th class="border-top-0">Date</th>
-            <th class="border-top-0">Customer</th>
-            <th class="border-top-0">GSTN</th>
-            <th class="border-top-0">CGST</th>
-            <th class="border-top-0">SGST</th>
-            <th class="border-top-0">IGST</th>
-            <th class="border-top-0">Total</th>
-            <th class="border-top-0">Print</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of get_purchase_data; let i = index">
-            <td class="invoice_no" title="update">
-                <span (click)="invoicenumberPopup(data,i)">{{ data.quotation_no
-                }}</span>
-            </td>
-            <td>{{ data.quote_date | date: "dd/MM/yyyy" }}</td>
-            <td>{{ data.customerData.name }}</td>
-            <td>{{ data.customerData.gstn }}</td>
-            <td>{{ data.totalcgst }}</td>
-            <td>{{ data.totalsgst }}</td>
-            <td>{{ data.totaligst }}</td>
-            <td>{{ data.totalsum }}</td>
-            <td><span title="View Invoice" style="cursor: pointer;" (click)="generateInvoice(data.quotation_no)"><i class="fa fa-print" aria-hidden="true"></i></span></td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div class="mt-3">
+        <button class="btn btn-primary mb-3 mt-2" (click)="purchase_entry()">
+            Quotation Entry
+        </button>
     </div>
-  </div>
+    <div class="prod_table px-0 py-0 mx-0 my-0">
+        <div class="table-responsive px-0 py-0 mx-0 my-0">
+            <table class="table v-middle nowrap">
+                <thead class="table-secondary">
+                    <tr>
+                        <th class="border-top-0">Quotation</th>
+                        <th class="border-top-0">Date</th>
+                        <th class="border-top-0">Customer</th>
+                        <th class="border-top-0">GSTN</th>
+                        <th class="border-top-0">CGST</th>
+                        <th class="border-top-0">SGST</th>
+                        <th class="border-top-0">IGST</th>
+                        <th class="border-top-0">Total</th>
+                        <th class="border-top-0">Print</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of get_purchase_data; let i = index">
+                        <td class="invoice_no" title="update">
+                            <span (click)="invoicenumberPopup(data,i)">{{ data.quotation_no
+                                }}</span>
+                        </td>
+                        <td>{{ data.quote_date | date: "dd/MM/yyyy" }}</td>
+                        <td>{{ data.customerData.name }}</td>
+                        <td>{{ data.customerData.gstn }}</td>
+                        <td>{{ data.totalcgst }}</td>
+                        <td>{{ data.totalsgst }}</td>
+                        <td>{{ data.totaligst }}</td>
+                        <td>{{ data.totalsum }}</td>
+                        <td><span title="View Invoice" style="cursor: pointer;"
+                                (click)="generateInvoice(data.quotation_no)"><i class="fa fa-print"
+                                    aria-hidden="true"></i></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 
@@ -60,167 +63,178 @@
 
 
 
-<div class="card p-3" *ngIf="invoice && !purchase_tab">
-  <div>
-      <button type="button" class="btn back_btn mt-3" (click)="quotationTabclose(); resetProductForm()"><i
-              class="fas fa-arrow-alt-circle-left"></i></button>
-     
-      <div class="row col-sm-12">
-      </div>
-      <form [formGroup]="quotation_form">
-          <div class="col-sm-12 px-0 d-flex flex-row">
-              <div class="col-sm-3 pl-0">
-                  <label for="">Quotation Number <span class="text-danger">*</span></label>
-                  <input type="text" formControlName="quto" class="form-control" readonly>
-              </div>
-              <div class="col-sm-3 p-0">
-                  <label for="">Custmer Name <span class="text-danger">*</span></label>
-                  <input type="hidden" formControlName="custmer_id" class="form-control">
-                  <input type="text" formControlName="custmer" class="form-control" readonly>
+<div *ngIf="invoice && !purchase_tab">
 
-              </div>
-              <div class="col-sm-3">
-                  <label for="">Quotation Date <span class="text-danger">*</span></label>
-                  <input type="text" formControlName="q_date" class="form-control" readonly>
-              </div>
-              <div class="col-sm-2">
-                  <label for="">Priority <span class="text-danger">*</span></label>
-                  <select name="" id="" formControlName="priority" class="form-control">
-                    <option value="LOW">LOW</option>
-                    <option value="MEDIUM">MEDIUM</option>
-                    <option value="HIGH">HIGH</option>
-                  </select>
-              </div>
-              <div class="col-sm-1 p-0">
-                <label for="">Amount <span class="text-danger">*</span></label>
-                <input type="text" formControlName="amnt" class="form-control">
+    <button type="button" class="btn back_btn mt-3" (click)="quotationTabclose(); resetProductForm()"><i
+            class="fas fa-arrow-alt-circle-left"></i></button>
+
+    <div class="card main_cnt mb-3">
+
+        <div class="main_heading">Trade</div>
+        <hr style="margin: 1% auto 1.5% -3%; width: 106%;">
+        <form [formGroup]="quotation_form">
+            <div class="col-sm-12 px-0 d-flex flex-row">
+                <div class="col-sm-3 pl-0">
+                    <label for="">Quotation Number <span class="text-danger">*</span></label>
+                    <input type="text" formControlName="quto" class="form-control field_height" readonly>
+                </div>
+                <div class="col-sm-3 p-0">
+                    <label for="">Custmer Name <span class="text-danger">*</span></label>
+                    <input type="hidden" formControlName="custmer_id" class="form-control">
+                    <input type="text" formControlName="custmer" class="form-control field_height" readonly>
+
+                </div>
+                <div class="col-sm-3">
+                    <label for="">Quotation Date <span class="text-danger">*</span></label>
+                    <input type="text" formControlName="q_date" class="form-control field_height" readonly>
+                </div>
+                <div class="col-sm-2">
+                    <label for="">Priority <span class="text-danger">*</span></label>
+                    <select name="" id="" formControlName="priority" class="form-control field_height">
+                        <option value="LOW">LOW</option>
+                        <option value="MEDIUM">MEDIUM</option>
+                        <option value="HIGH">HIGH</option>
+                    </select>
+                </div>
+                <div class="col-sm-1 p-0">
+                    <label for="">Amount <span class="text-danger">*</span></label>
+                    <input type="text" formControlName="amnt" class="form-control field_height">
+                </div>
+
             </div>
-                  
-          </div>
-      </form>
+        </form>
 
-      <div class="mt-3">
-          <form [formGroup]="updateQuotation">
-              <table width="100%" border="1px solid gray" class="text-center"
-                  style="border-collapse: separate;text-indent: initial;">
-                  <thead class="bg-white">
-                      <tr>
-                          <th>Product</th>
-                          <th>Hsn</th>
-                          <th>Quantity</th>
-                          <th>Sale Price</th>
-                          <th>Discount</th>
-                          <th>CGST</th>
-                          <th>SGST</th>
-                          <th>IGST</th>
-                          <th>Total</th>
-                          <th>Action</th>
-                      </tr>
+        <div class="mt-3">
+            <form [formGroup]="updateQuotation">
+                <table class="table2">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Hsn</th>
+                            <th>Quantity</th>
+                            <th>Sale Price</th>
+                            <th>Discount</th>
+                            <th>CGST</th>
+                            <th>SGST</th>
+                            <th>IGST</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
 
-                  </thead>
-                  <tbody>
-                      <ng-container formArrayName="product">
-                          <tr *ngFor="let Product of updateQuotation.get('product')['controls'];let i=index"
-                              [formGroupName]="i">
-                              <td>
-                                  <select class="form-control table_input" id="prud"
-                                      (change)="chooseProduct(Product, $event.target.value); totalCalculation()"
-                                      formControlName="prud" [disabled]="quotation_form.invalid">
-                                      <option selected value="ChooseProduct" disabled>Choose Product</option>
-                                      <option class="disable" *ngFor="let prod of itemData2;let i=index"
-                                          [value]="prod.prod_id"
-                                          [disabled]="Product.controls.edit.value == false">
-                                          {{prod.prod_name}}</option>
-                                  </select>
-                              </td>
-                              <td><input type="text" formControlName="hsn" class="form-control table_input" disabled>
-                              </td>
-                              <td><input type="number" formControlName="qty" id="qty" class="form-control table_input"
-                                      (input)="calc_total(Product.controls); totalCalculation()"
-                                      (keypress)="prevent($event, 'qty')" min="1"
-                                      [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'">
-                              </td>
-                              <td><input type="number" formControlName="price" id="price"
-                                      class="form-control table_input" [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'"></td>
-                              <td><input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
-                                      min="0" id="discount" class="form-control table_input"
-                                      (input)="calc_total(Product.controls); totalCalculation()"
-                                      [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'"></td>
-                              <td><input type="number" formControlName="cgst" class="form-control table_input"
-                                      disabled></td>
-                              <td><input type="number" formControlName="sgst" class="form-control table_input"
-                                      disabled></td>
-                              <td><input type="number" formControlName="igst" class="form-control table_input"
-                                      disabled></td>
-                              <td><input type="number" formControlName="total" class="form-control table_input"
-                                      readonly></td>
-                              <td class="d-flex flex-row">
-                                  <button border="none" class="btn delete_btn disable"
-                                      (click)="deleteRow(i); totalCalculation()"
-                                      [disabled]="updateQuotation.get('product').length == 1"><i
-                                          class="fas fa-times-circle"></i></button>
-                                  <button border="none" class="btn edit_btn disable" formControlName="edit"
-                                      (click)="Edit(Product.controls, i)"><i class="fa fa-edit" aria-hidden="true"></i></button>
-                              </td>
-                          </tr>
-                      </ng-container>
-                  </tbody>
-                  <tfoot style="border: none;">
-                      <tr style="border: none;">
-                          <td colspan="2" style="white-space: nowrap; float: left; padding: 2px;"><button
-                                  class="btn btn-primary disable" (click)="add_row2()"
-                                  [disabled]="updateQuotation.get('product')['controls'][updateQuotation.get('product')['controls'].length-1].value.prud == 'ChooseProduct'">Add
-                                  Row</button>
-                          </td>
-                      </tr>
-                  </tfoot>
+                    </thead>
+                    <tbody>
+                        <ng-container formArrayName="product">
+                            <tr *ngFor="let Product of updateQuotation.get('product')['controls'];let i=index"
+                                [formGroupName]="i">
+                                <td class="td_e">
+                                    <select class="form-control table_input" id="prud"
+                                        (change)="chooseProduct(Product, $event.target.value); totalCalculation()"
+                                        formControlName="prud" [disabled]="quotation_form.invalid">
+                                        <option selected value="ChooseProduct" disabled>Choose Product</option>
+                                        <option class="disable" *ngFor="let prod of itemData2;let i=index"
+                                            [value]="prod.prod_id" [disabled]="Product.controls.edit.value == false">
+                                            {{prod.prod_name}}</option>
+                                    </select>
+                                </td>
+                                <td class="td_e"><input type="text" formControlName="hsn" class="form-control table_input" disabled>
+                                </td>
+                                <td class="td_e"><input type="number" formControlName="qty" id="qty" class="form-control table_input"
+                                        (input)="calc_total(Product.controls); totalCalculation()"
+                                        (keypress)="prevent($event, 'qty')" min="1"
+                                        [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'">
+                                </td>
+                                <td class="td_e"><input type="number" formControlName="price" id="price"
+                                        class="form-control table_input"
+                                        [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'">
+                                </td>
+                                <td class="td_e"><input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
+                                        min="0" id="discount" class="form-control table_input"
+                                        (input)="calc_total(Product.controls); totalCalculation()"
+                                        [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'">
+                                </td>
+                                <td class="td_e"><input type="number" formControlName="cgst" class="form-control table_input"
+                                        disabled></td>
+                                <td class="td_e"><input type="number" formControlName="sgst" class="form-control table_input"
+                                        disabled></td>
+                                <td class="td_e"><input type="number" formControlName="igst" class="form-control table_input"
+                                        disabled></td>
+                                <td class="td_e"><input type="number" formControlName="total" class="form-control table_input"
+                                        readonly></td>
+                                <td class="delete_btn">
+                                    <button border="none" class="btn text-danger disable mr-1"
+                                        (click)="deleteRow(i); totalCalculation()"
+                                        [disabled]="updateQuotation.get('product').length == 1"><i
+                                            class="fas fa-times-circle"></i></button>
+                                    <button border="none" class="btn text-info disable" formControlName="edit"
+                                        (click)="Edit(Product.controls, i)"><i class="fa fa-edit"
+                                            aria-hidden="true"></i></button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                    <tfoot>
+                        <tr style="border: 1px solid lightgray;">
+                            <td colspan="2" style="white-space: nowrap; float: left; padding: 2px; border: 0;"><button
+                                    class="btn text-info disable" (click)="add_row2()"
+                                    [disabled]="updateQuotation.get('product')['controls'][updateQuotation.get('product')['controls'].length-1].value.prud == 'ChooseProduct'">
+                                    <span><i class="fas fa-plus"></i>&nbsp; &nbsp;</span><span>Add Row</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tfoot>
 
-              </table>
+                </table>
 
-          </form>
-      </div>
+            </form>
+        </div>
 
 
-  </div>
 
-  <div class="total_cal">
-      <table style="width: 290px; color: black;">
-          <tr>
-              <th style="width: 120px;"></th>
-              <th style="width: 50px;"></th>
-              <th style="width: 120px;"></th>
-          </tr>
-          <tr>
-              <td>Total IGST</td>
-              <td>:</td>
-              <td><input name="t_igst" [(ngModel)]="t_igst" class="total_cal_field" type="text" readonly></td>
-          </tr>
-          <tr>
-              <td>Total SGST</td>
-              <td>:</td>
-              <td><input name="t_sgst" [(ngModel)]="t_sgst" class="total_cal_field" type="text" readonly></td>
-          </tr>
-          <tr>
-              <td>Total CGST</td>
-              <td>:</td>
-              <td><input name="t_cgst" [(ngModel)]="t_cgst" class="total_cal_field" type="text" readonly></td>
-          </tr>
-          <tr>
-              <td>Total Amount</td>
-              <td>:</td>
-              <td><input name="t_amount" [(ngModel)]="t_amount" class="total_cal_field" type="text" readonly></td>
-          </tr>
-      </table>
-  </div>
+        <div class="total_cal mb-4">
+            <table style="width: 290px; color: black;">
+                <tr>
+                    <th style="width: 120px;"></th>
+                    <th style="width: 50px;"></th>
+                    <th style="width: 120px;"></th>
+                </tr>
+                <tr>
+                    <td>Total IGST</td>
+                    <td>:</td>
+                    <td><input name="t_igst" [(ngModel)]="t_igst" class="total_cal_field" type="text" readonly></td>
+                </tr>
+                <tr>
+                    <td>Total SGST</td>
+                    <td>:</td>
+                    <td><input name="t_sgst" [(ngModel)]="t_sgst" class="total_cal_field" type="text" readonly></td>
+                </tr>
+                <tr>
+                    <td>Total CGST</td>
+                    <td>:</td>
+                    <td><input name="t_cgst" [(ngModel)]="t_cgst" class="total_cal_field" type="text" readonly></td>
+                </tr>
+                <tr>
+                    <td>Total Amount</td>
+                    <td>:</td>
+                    <td><input name="t_amount" [(ngModel)]="t_amount" class="total_cal_field" type="text" readonly></td>
+                </tr>
+            </table>
+        </div>
 
-  <div class="footer_btn">
-      <button class="btn btn-warning mr-2" (click)="quotationTabclose()">Cancel</button>
-      <button class="btn btn-primary disable mr-2" [disabled]="updateQuotation.get('product')['controls'][updateQuotation.get('product')['controls'].length-1].value.prud == 'ChooseProduct'" (click)="update_quotation_details()">Update</button>
-      <button class="btn btn-primary disable" [disabled]="updateQuotation.get('product')['controls'][updateQuotation.get('product')['controls'].length-1].value.prud == 'ChooseProduct'" (click)="add_purchase_details()">Move to Sale</button>
-  </div>
+        <hr style="margin: 1% auto 1.5% -3%; width: 106%; margin-top: 10%;">
 
+        <div class="footer_btn">
+            <button class="btn btn-warning mr-2" (click)="quotationTabclose()">Cancel</button>
+            <button class="btn btn-primary disable mr-2"
+                [disabled]="updateQuotation.get('product')['controls'][updateQuotation.get('product')['controls'].length-1].value.prud == 'ChooseProduct'"
+                (click)="update_quotation_details()">Update</button>
+            <button class="btn btn-primary disable"
+                [disabled]="updateQuotation.get('product')['controls'][updateQuotation.get('product')['controls'].length-1].value.prud == 'ChooseProduct'"
+                (click)="add_purchase_details()">Move to Sale</button>
+        </div>
+
+    </div>
 </div>
 
-<div class="genPdfSectio" *ngIf = "pdf">
-    <app-invoice (newItemEvent)="hidePdf($event)"  [page]="'quotation'" [invoiceData]="pdfData"></app-invoice>
-  </div>
+<div class="genPdfSectio" *ngIf="pdf">
+    <app-invoice (newItemEvent)="hidePdf($event)" [page]="'quotation'" [invoiceData]="pdfData"></app-invoice>
+</div>

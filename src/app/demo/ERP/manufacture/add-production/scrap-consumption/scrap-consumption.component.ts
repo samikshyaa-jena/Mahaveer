@@ -119,6 +119,12 @@ export class ScrapConsumptionComponent implements OnInit {
   add_row2() {
     (<FormArray>this.consumptionForm.get('Consumption')).push(this.matdata2())
   }
+  deleteRow(i) {
+    (<FormArray>this.scrapForm.get('Scrap')).removeAt(i)
+  }
+  deleteRow2(i) {
+    (<FormArray>this.consumptionForm.get('Consumption')).removeAt(i)
+  }
 
   previousPage() {
     this.BackTab.emit();

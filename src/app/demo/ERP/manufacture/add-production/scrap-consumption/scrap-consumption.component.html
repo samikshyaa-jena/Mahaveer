@@ -13,7 +13,7 @@
 
 <div class="card main_cnt mb-3">
 
-    <div style="color: black; font-weight: bold; font-size: 20px; margin-left: -1%;">Manufacture</div>
+    <div class="main_heading">Manufacture</div>
     <hr style="margin: 1% auto 1.5% -3%; width: 106%;">
 
     <div class="bar2 mb-4">
@@ -102,7 +102,7 @@
                         <td class="delete_btn">
                             <button border="none" class="btn disable"
                                         (click)="deleteRow(i); totalCalculation()"
-                                        [disabled]="scrapForm.get('product').length == 1"><i
+                                        [disabled]="scrapForm.get('Scrap').length == 1"><i
                                             class="fas fa-times-circle"></i>
                                             </button>
                         </td>
@@ -114,9 +114,8 @@
     <div class="d-flex justify-content-between align-items-center mb-4"
         style="border: 1px solid lightgray;border-top: none; padding-right: 10px;">
         <button (click)="add_row()" class="btn disable" border="none" style="color: #07abb0; padding-left: 10px;"
-            [disabled]="!edit || scrapForm.get('Scrap')['controls'][scrapForm.get('Scrap')['controls'].length-1].status == 'INVALID'"><span><i
-                    class="fas fa-plus"></i>
-                &nbsp; &nbsp;</span><span>Add Row</span></button>
+            [disabled]="!edit || scrapForm.get('Scrap')['controls'][scrapForm.get('Scrap')['controls'].length-1].status == 'INVALID'">
+            <span><i class="fas fa-plus"></i>&nbsp; &nbsp;</span><span>Add Row</span></button>
         <div class="d-flex align-items-center">
         </div>
     </div>
@@ -157,8 +156,8 @@
                                 (input)="calc_total(Product.controls); totalCalculation()" formControlName="cost"></td>
                                 <td class="delete_btn">
                                     <button border="none" class="btn disable"
-                                    (click)="deleteRow(i); totalCalculation()"
-                                    [disabled]="consumptionForm.get('product').length == 1"><i
+                                    (click)="deleteRow2(i); totalCalculation()"
+                                    [disabled]="consumptionForm.get('Consumption').length == 1"><i
                                         class="fas fa-times-circle"></i>
                                         </button>
                                 </td>

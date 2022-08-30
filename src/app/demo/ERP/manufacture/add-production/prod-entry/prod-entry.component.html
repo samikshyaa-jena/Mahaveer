@@ -87,14 +87,15 @@
                     class="fas fa-rupee-sign"></i></span><span>{{total}}</span></div>
     </div>
 
-</div>
 
-<hr style="margin: 1% auto 1.5% -3%; width: 106%; margin-top: 10%;">
+    <hr style="margin: 1% auto 1.5% -3%; width: 106%; margin-top: 10%;">
 
-<div class="d-flex justify-content-end align-items-center">
-    <div>
-        <button class="btn btn-warning mr-2" style="border-radius: 2px;" (click)="previousPage()">Cancel</button>
-        <button class="btn btn-primary disable" style="border-radius: 2px;" (click)="add_Product()" type="submit"
-            [disabled]="!addProductForm.valid || qty_error">Submit</button>
+    <div class="d-flex justify-content-end align-items-center">
+        <div>
+            <button class="btn btn-warning mr-2" style="border-radius: 2px;" (click)="previousPage()">Cancel</button>
+            <button class="btn btn-primary disable" style="border-radius: 2px;" (click)="add_Product()" type="submit"
+                [disabled]="!addProductForm.valid || qty_error">Submit</button>
+        </div>
     </div>
+
 </div>

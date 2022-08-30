@@ -1,146 +1,157 @@
-<div class="card p-3">
-    <div>
-        <!-- <div class="card bg-white"> -->
-        <button type="button" class="btn back_btn mt-3" (click)="previousPage(); resetProductForm()"><i
-                class="fas fa-arrow-alt-circle-left"></i></button>
-        <!-- <div class="card-header">
-        </div> -->
-        <!-- <div class="card-body"> -->
-        <div class="row col-sm-12">
+<button type="button" class="btn back_btn mt-3" (click)="previousPage(); resetProductForm()"><i
+        class="fas fa-arrow-alt-circle-left"></i></button>
 
-        </div>
-        <form [formGroup]="purchase_form">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="w_30">
-                    <label for="">Invoice Number <span class="text-danger">*</span></label>
-                    <input type="text" formControlName="invo" class="form-control">
-                </div>
-                <div class="w_30">
-                    <label for="">Vendor Name <span class="text-danger">*</span></label>
-                    <select class="form-control" formControlName="custmer"
-                        (ngModelChange)="vendorType($event); resetProductForm()">
-                        <option value="choose_cname" disabled>Choose</option>
-                        <option [value]="vendor.vendor_id" *ngFor="let vendor of getVendorData">{{vendor.name}}
-                        </option>
-                    </select>
 
-                </div>
-                <div class="w_30">
-                    <label for="">Purchase Date <span class="text-danger">*</span></label>
-                    <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="p_date"
-                        class="form-control" [max]="today" readonly="true" placeholder="YYYY-MM-DD">
-                    <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
-                    <!-- <input type="date" [max]="today" formControlName="p_date" class="form-control"> -->
-                </div>
-                <!-- <ng-template *ngIf="showInps"> -->
 
-                <!-- </ng-template> -->
+<div class="card main_cnt mb-3">
+
+    <div class="main_heading">Trade</div>
+    <hr style="margin: 1% auto 1.5% -3%; width: 106%;">
+
+    <form [formGroup]="purchase_form" class="bar2 mb-4">
+        <div class="left_cnt">
+            <div class="mr-2">
+                <label for="">Invoice Number <span class="text-danger">*</span></label>
+                <input type="text" formControlName="invo" class="form-control">
             </div>
-        </form>
+            <div>
+                <label for="">Vendor Name <span class="text-danger">*</span></label>
+                <select class="form-control" formControlName="custmer"
+                    (ngModelChange)="vendorType($event); resetProductForm()">
+                    <option value="choose_cname" disabled>Choose</option>
+                    <option [value]="vendor.vendor_id" *ngFor="let vendor of getVendorData">{{vendor.name}}
+                    </option>
+                </select>
 
-        <div class="mt-3">
-            <form [formGroup]="productForm">
-                <table width="100%" border="1px solid gray" class="text-center"
-                    style="border-collapse: separate;text-indent: initial;">
-                    <thead class="bg-white">
-                        <tr>
-                            <th style="width: 15%;">Category</th>
-                            <th style="width: 15%;">Item</th>
-                            <th>Hsn</th>
-                            <th>Quantity</th>
-                            <th>Sale Price</th>
-                            <th>Discount</th>
-                            <th>CGST</th>
-                            <th>SGST</th>
-                            <th>IGST</th>
-                            <th>Total</th>
-                            <th>Delete</th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                        <ng-container formArrayName="product">
-                            <tr *ngFor="let Product of productForm.get('product')['controls'];let i=index"
-                                [formGroupName]="i">
-                                <td>
-                                    <select class="form-control table_input" id="category"
-                                        (change)="chooseCategory(Product, $event.target.value)"
-                                        formControlName="category">
-                                        <option selected value="ChooseProduct" disabled>Choose Category</option>
-                                        <option class="disable" *ngFor="let category of getCategoryData"
-                                            [value]="category.cat_id"
-                                            [disabled]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname' || Product.controls.edit.value == false">
-                                            {{category.cat_name}}</option>
-                                    </select>
-                                </td>
-
-                                <td>
-                                    <input type="hidden" formControlName="hide_item">
-                                    <select class="form-control table_input" id="item"
-                                        (change)="chooseItem(Product, $event.target.value); totalCalculation()"
-                                        formControlName="item">
-                                        <option selected value="ChooseProduct" disabled>Choose Item</option>
-                                        <option class="disable" *ngFor="let item of itemData[Product.controls.hide_item.value]" [value]="item.prod_id" [disabled]="Product.controls.edit.value == false">
-                                            {{item.prod_name}}
-                                        </option>
-                                    </select>
-                                </td>
-
-                                <td><input type="text" formControlName="hsn" class="form-control table_input" disabled>
-                                </td>
-                                <td><input type="number" formControlName="qty" id="qty" class="form-control table_input"
-                                        (input)="calc_total(Product.controls); totalCalculation()"
-                                        (keypress)="prevent($event, 'qty')" min="1"
-                                        [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
-                                </td>
-                                <td><input type="number" formControlName="price" id="price"
-                                        (keypress)="prevent($event,'dis')" (input)="calc_total(Product.controls); totalCalculation()"
-                                        class="form-control table_input" [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false"></td>
-                                <td><input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
-                                        min="0" id="discount" class="form-control table_input"
-                                        (input)="calc_total(Product.controls); totalCalculation()"
-                                        [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false"></td>
-                                <td><input type="number" formControlName="cgst" class="form-control table_input"
-                                        disabled></td>
-                                <td><input type="number" formControlName="sgst" class="form-control table_input"
-                                        disabled></td>
-                                <td><input type="number" formControlName="igst" class="form-control table_input"
-                                        disabled></td>
-                                <td><input type="number" formControlName="total" class="form-control table_input"
-                                        readonly></td>
-                                
-                                <td class="d-flex">
-                                    <button border="none" class="btn delete_btn disable"
-                                        (click)="deleteRow(i); totalCalculation()"
-                                        [disabled]="productForm.get('product').length == 1"><i
-                                            class="fas fa-times-circle"></i></button>
-
-                                            <button *ngIf="pur_editData" border="none" class="btn edit_btn disable" formControlName="edit"
-                                        (click)="Edit(Product.controls, i)"><i class="fa fa-edit"
-                                            aria-hidden="true"></i></button>
-                                </td>
-                            </tr>
-                        </ng-container>
-                    </tbody>
-                    <tfoot style="border: none;">
-                        <tr style="border: none;">
-                            <td colspan="2" style="white-space: nowrap; float: left; padding: 2px;"><button
-                                    class="btn btn-primary disable" (click)="add_row2()"
-                                    [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.item == 'ChooseProduct'">Add
-                                    Row</button>
-                            </td>
-                        </tr>
-                    </tfoot>
-
-                </table>
-
-            </form>
+            </div>
         </div>
 
+        <div class="right_cnt">
+            <div class="datee">
+                <label for="">Purchase Date <span class="text-danger">*</span> &nbsp;</label>
+                <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="p_date"
+                    [max]="today" readonly="true" placeholder="YYYY-MM-DD">
+                <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+                <!-- <input type="date" [max]="today" formControlName="p_date" class="form-control"> -->
+            </div>
+            <!-- <ng-template *ngIf="showInps"> -->
 
-    </div>
+            <!-- </ng-template> -->
+        </div>
+    </form>
 
-    <div class="total_cal">
+    <!-- <div class="mt-3"> -->
+    <form [formGroup]="productForm">
+        <table class="table">
+            <thead class="bg-white">
+                <tr>
+                    <th style="width: 15%;">Category</th>
+                    <th style="width: 15%;">Item</th>
+                    <th>Hsn</th>
+                    <th>Quantity</th>
+                    <th style="white-space: nowrap;">Sale Price</th>
+                    <th>Discount</th>
+                    <th>CGST</th>
+                    <th>SGST</th>
+                    <th>IGST</th>
+                    <th>Total</th>
+                    <th>Delete</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <ng-container formArrayName="product">
+                    <tr *ngFor="let Product of productForm.get('product')['controls'];let i=index" [formGroupName]="i">
+                        <td class="td_e">
+                            <select class="form-control table_input" id="category"
+                                (change)="chooseCategory(Product, $event.target.value)" formControlName="category">
+                                <option selected value="ChooseProduct" disabled>Choose Category</option>
+                                <option class="disable" *ngFor="let category of getCategoryData"
+                                    [value]="category.cat_id"
+                                    [disabled]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname' || Product.controls.edit.value == false">
+                                    {{category.cat_name}}</option>
+                            </select>
+                        </td>
+
+                        <td class="td_e">
+                            <input type="hidden" formControlName="hide_item">
+                            <select class="form-control table_input" id="item"
+                                (change)="chooseItem(Product, $event.target.value); totalCalculation()"
+                                formControlName="item">
+                                <option selected value="ChooseProduct" disabled>Choose Item</option>
+                                <option class="disable" *ngFor="let item of itemData[Product.controls.hide_item.value]"
+                                    [value]="item.prod_id" [disabled]="Product.controls.edit.value == false">
+                                    {{item.prod_name}}
+                                </option>
+                            </select>
+                        </td>
+
+                        <td class="td_e"><input type="text" formControlName="hsn" class="form-control table_input"
+                                disabled>
+                        </td>
+                        <td class="td_e"><input type="number" formControlName="qty" id="qty"
+                                class="form-control table_input"
+                                (input)="calc_total(Product.controls); totalCalculation()"
+                                (keypress)="prevent($event, 'qty')" min="1"
+                                [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
+                        </td>
+                        <td class="td_e"><input type="number" formControlName="price" id="price"
+                                (keypress)="prevent($event,'dis')"
+                                (input)="calc_total(Product.controls); totalCalculation()"
+                                class="form-control table_input"
+                                [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
+                        </td>
+                        <td class="td_e"><input type="number" formControlName="discount"
+                                (keypress)="prevent($event,'dis')" min="0" id="discount"
+                                class="form-control table_input"
+                                (input)="calc_total(Product.controls); totalCalculation()"
+                                [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
+                        </td>
+                        <td class="td_e"><input type="number" formControlName="cgst" class="form-control table_input"
+                                disabled>
+                        </td>
+                        <td class="td_e"><input type="number" formControlName="sgst" class="form-control table_input"
+                                disabled>
+                        </td>
+                        <td class="td_e"><input type="number" formControlName="igst" class="form-control table_input"
+                                disabled>
+                        </td>
+                        <td class="td_e"><input type="number" formControlName="total" class="form-control table_input"
+                                readonly>
+                        </td>
+
+                        <td class="delete_btn">
+                            <button border="none" class="btn disable text-danger"
+                                (click)="deleteRow(i); totalCalculation()"
+                                [disabled]="productForm.get('product').length == 1"><i
+                                    class="fas fa-times-circle"></i></button>
+
+                            <button *ngIf="pur_editData" border="none" class="btn text-info disable"
+                                formControlName="edit" (click)="Edit(Product.controls, i)"><i class="fa fa-edit"
+                                    aria-hidden="true"></i></button>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+            <tfoot>
+                <tr style="border: 1px solid lightgray;">
+                    <td colspan="2" style="white-space: nowrap; float: left; padding: 2px; border: 0;"><button
+                            class="btn text-info disable" (click)="add_row2()"
+                            [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.item == 'ChooseProduct'">
+                            <span><i class="fas fa-plus"></i>&nbsp; &nbsp;</span><span>Add Row</span>
+                        </button>
+                    </td>
+                </tr>
+            </tfoot>
+
+        </table>
+
+    </form>
+    <!-- </div> -->
+
+
+
+    <div class="total_cal mb-4">
         <table style="width: 290px; color: black;">
             <tr>
                 <th style="width: 120px;"></th>
@@ -169,6 +180,8 @@
             </tr>
         </table>
     </div>
+
+    <hr style="margin: 1% auto 1.5% -3%; width: 106%; margin-top: 10%;">
 
     <div class="footer_btn">
         <button class="btn btn-warning mr-2" (click)="resetProductForm(); previousPage()">Cancel</button>

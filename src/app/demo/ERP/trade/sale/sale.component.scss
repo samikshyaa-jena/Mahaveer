@@ -266,7 +266,7 @@
       padding: 0;
   }
   .footer_btn{
-      margin-top: 30px;
+    //   margin-top: 30px;
     //   margin-right: 20px;
       display: flex;
       flex-direction: row;
@@ -290,10 +290,6 @@
       border: 0px solid transparent;
       border-bottom: 1px solid black;
   }
-  .delete_btn{
-      color: red;
-      padding-right: 0;
-  }
   .edit_btn{
       color: royalblue;
   }
@@ -309,3 +305,52 @@
   .disable:disabled{
       cursor: not-allowed;
   }
+
+  .main_cnt{
+    border: 1px solid transparent;
+    padding: 1% 3%;
+}
+.datee{
+    border-bottom: 1px solid lightgray;
+    white-space: nowrap;
+    input{
+        background-color: lightgray;
+        border: 1px solid lightgray;
+    border-radius: 3px;
+    }
+}
+.table2{
+    border: 1px solid lightgray;
+    margin-bottom: 0;
+    border-left: 0;
+}
+.table2 th{
+    padding: 5px 7px;
+    border: 1px solid lightgray;
+}
+
+.table2 td, .td_e{
+    padding: 2px;
+    border: 1px solid lightgray;
+    // background: lightgoldenrodyellow;
+}
+.delete_btn{
+    vertical-align: middle;
+    text-align: center;
+    width: 5%;
+    padding: 0;
+    button{
+        // color: red;
+        padding: 0;
+        text-align: center;
+    }
+}
+.main_heading{
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: -1%;
+}
+.field_height{
+    height: 33px;
+}
