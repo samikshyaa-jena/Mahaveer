@@ -46,6 +46,7 @@
     border-radius: 3px;
     width: 100%;
     padding: 1%;
+    height: calc(1.5em + 0.75rem + 2px);
 }
 .upload_label {
     display: flex;
@@ -53,13 +54,17 @@
     justify-content: center;
     background: #4680ff;
     color: white;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
     border: 2px solid transparent;
     width: 95px;
-    height: 38px;
+    height: calc(1.5em + 0.75rem + 2px);
     font-size: 14px;
-    margin-right: 10%;
+    // margin-right: 10%;
+  }
+  .inp_tag{
+    border-radius: 20px;
+    margin-top: 20px;
   }
  
   //modal start

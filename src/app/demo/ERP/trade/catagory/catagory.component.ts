@@ -62,9 +62,9 @@ export class CategoryComponent implements OnInit {
       cat_name: new FormControl("", [Validators.required])
     });
     this.addItemForm = new FormGroup({
-      category_name: new FormControl("choose a category", [Validators.required]),
+      category_name: new FormControl("Choose Category", [Validators.required]),
       item_name: new FormControl("", [Validators.required]),
-      gst: new FormControl("", [Validators.required]),
+      gst: new FormControl("Select GST", [Validators.required]),
       min_stk: new FormControl("", [Validators.required]),
       unit: new FormControl("", [Validators.required]),
       hsn: new FormControl("", [Validators.required]),

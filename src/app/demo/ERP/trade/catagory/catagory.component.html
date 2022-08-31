@@ -53,7 +53,8 @@
                             <span style="cursor: pointer;"><i class="fa fa-edit" aria-hidden="true"
                                     (click)="cat_edit_popup_open(content,i)"></i>
                             </span>
-                            <span class="mx-2" style="cursor: pointer;" (click)="item_delete_popup_open(delete_popup, i)"><i class="fa fa-trash"
+                            <span class="mx-2" style="cursor: pointer;"
+                                (click)="item_delete_popup_open(delete_popup, i)"><i class="fa fa-trash"
                                     aria-hidden="true"></i></span>
                         </td>
                     </tr>
@@ -82,7 +83,7 @@
 
     <div class="add_prod" *ngIf='show_cat_item==2'>
         <!-- <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Trade</h3> -->
-        
+
         <div class="modal_head">
             <div class="modal_body">
                 <div class="addCategoryForm">
@@ -95,9 +96,11 @@
             </div>
         </div>
         <div class="btns my-3" style="float: right;">
-            <button class="btn btn-primary mr-1" type="submit" [disabled]="addCategoryForm.invalid || addCategoryForm.value.cat_name.trim() ==''"
+            <button class="btn btn-primary mr-1" type="submit"
+                [disabled]="addCategoryForm.invalid || addCategoryForm.value.cat_name.trim() ==''"
                 (click)="add_Category()">Add</button>
-            <button class="btn btn-warning" type="reset" (click)="show_cat_item=1;addCategoryForm.reset()">Cancel</button>
+            <button class="btn btn-warning" type="reset"
+                (click)="show_cat_item=1;addCategoryForm.reset()">Cancel</button>
         </div>
     </div>
 
@@ -130,7 +133,7 @@
                                 (click)="item_edit_popup_open(content1,i)"></i>
                         </span>
                         <span class="mx-2" style="cursor: pointer;"><i class="fa fa-trash" aria-hidden="true"
-                            (click)="item_delete_popup_open(delete_popup, i)"></i></span>
+                                (click)="item_delete_popup_open(delete_popup, i)"></i></span>
                     </td>
                 </tr>
             </tbody>
@@ -140,52 +143,85 @@
 
     <div class="item" *ngIf='show_cat_item==4 || show_cat_item==5'>
         <!-- <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Trade</h3> -->
-        
+
         <div class="form_div" class="my-3">
+            <h3 class="text-center" style="font-family: fantasy;color: blue;text-transform: uppercase;"><span><em>Add
+                        Product</em></span></h3>
             <form [formGroup]="addItemForm" class="my-3">
-                <label class="lab_tag" for="">Category Name:  <span class="text-danger">*</span></label>
-                <select class="form-control inp_tag" (change)="addItemCategory($event.target.value)"
-                    formControlName="category_name">
-                    <option disabled selected>Choose a category</option>
-                    <option *ngFor="let data of cat_data" [value]="data.cat_id">{{data.cat_name}}</option>
-                </select>
-                <label class="lab_tag" for="">Item Name:  <span class="text-danger">*</span></label>
-                <input type="text" class="form-control inp_tag" formControlName="item_name">
-                <label class="lab_tag" for="">GST:  <span class="text-danger">*</span></label>
-                <select name="" id="" formControlName="gst" class="form-control inp_tag">
-                    <option value="gst" selected disabled>Select gst</option>
-                    <option value="0">0 %</option>
-                    <option value="5">5 %</option>
-                    <option value="12">12 %</option>
-                    <option value="18">18 %</option>
-                    <option value="28">28 %</option>
-                </select>
-                <label class="lab_tag" for="">Low Stock: <span class="text-danger">*</span></label>
-                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
-                <label class="lab_tag" for="">MRP: <span class="text-danger">*</span></label>
-                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
-                <label class="lab_tag" for="">HSN: <span class="text-danger">*</span></label>
-                <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
-                <label class="lab_tag" for="">Unit:  <span class="text-danger">*</span></label>
-                <input type="text" class="form-control inp_tag" formControlName="unit">
-                <label class="lab_tag" for="">Open Stock:  <span class="text-danger">*</span></label>
-                <input type="text" class="form-control inp_tag" formControlName="qty">
-                <label class="lab_tag" for="">Upload Image:</label>
-                        <div class="upimg_show">
+                <div class="col-sm-12 row">
+                    <div class="col-sm-4">
+                        <!-- <label class="lab_tag" for="">Category Name: <span class="text-danger">*</span></label> -->
+                        <select class="form-control inp_tag" (change)="addItemCategory($event.target.value)"
+                            formControlName="category_name">
+                            <option disabled selected>Choose Category</option>
+                            <option *ngFor="let data of cat_data" [value]="data.cat_id">{{data.cat_name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <!-- <label class="lab_tag" for="">Item Name: <span class="text-danger">*</span></label> -->
+                        <input type="text" class="form-control inp_tag" formControlName="item_name"
+                            placeholder="Item Name">
+                    </div>
+                    <div class="col-sm-4">
+                        <!-- <label class="lab_tag" for="">GST: <span class="text-danger">*</span></label> -->
+                        <select name="" id="" formControlName="gst" class="form-control inp_tag">
+                            <option selected disabled>Select GST</option>
+                            <option value="0">0 %</option>
+                            <option value="5">5 %</option>
+                            <option value="12">12 %</option>
+                            <option value="18">18 %</option>
+                            <option value="28">28 %</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12 row">
+                    <div class="col-sm-4">
+                        <!-- <label class="lab_tag" for="">Low Stock: <span class="text-danger">*</span></label> -->
+                        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag"
+                            formControlName="min_stk" placeholder="Low Stock">
+                    </div>
+                    <div class="col-sm-4">
+                        <!-- <label class="lab_tag" for="">MRP: <span class="text-danger">*</span></label> -->
+                        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag"
+                            formControlName="mrp" placeholder="MRP">
+                    </div>
+                    <div class="col-sm-4">
+                        <!-- <label class="lab_tag" for="">HSN: <span class="text-danger">*</span></label> -->
+                        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag"
+                            formControlName="hsn" placeholder="HSN">
+                    </div>
+                </div>
+                <div class="col-sm-12 row">
+                    <div class="col-sm-4">
+                        <!-- <label class="lab_tag" for="">Unit: <span class="text-danger">*</span></label> -->
+                        <input type="text" class="form-control inp_tag" formControlName="unit" placeholder="Unit">
+                    </div>
+                    <div class="col-sm-4">
+                        <!-- <label class="lab_tag" for="">Open Stock: <span class="text-danger">*</span></label> -->
+                        <input type="text" class="form-control inp_tag" formControlName="qty" placeholder="Open Stock">
+                    </div>
+                    <div class="col-sm-4">
+                        <!-- <label class="lab_tag" for="">Upload Image:</label> -->
+                        <div class="upimg_show inp_tag mx-0 px-0">
                             <input id="img_up" type="file" accept="image/*" style="display: none;"
-                            (change)="onUpload($event)" formControlName="img">
-                            <label for="img_up" class="upload_label"><i class="fas fa-plus"></i>&nbsp;Choose</label>
+                                (change)="onUpload($event)" formControlName="img">
+                            <label for="img_up" class="upload_label py-0 my-0"><i
+                                    class="fas fa-plus"></i>&nbsp;Choose</label>
                             <div *ngIf="uploadedFiles">
                                 <img id="pre_img" src="" alt="" width="70px"> &nbsp;&nbsp;&nbsp;
-                            <span style="margin-top: 15px;">{{uploadedFiles.name}} &nbsp;&nbsp;&nbsp;</span>
-                            </div>   
+                                <span style="margin-top: 15px;">{{uploadedFiles.name}} &nbsp;&nbsp;&nbsp;</span>
+                            </div>
                         </div>
+                    </div>
+                </div>
             </form>
         </div>
-            <div class="d-flex justify-content-end align-items-center">
-                <button class="btn btn-primary mr-1" type="submit" [disabled]="addItemForm.invalid" (click)="add_item()">Add</button>
-                <button class="btn btn-warning" type="reset" (click)="show_cat_item=1;addItemForm.reset()">Cancel</button>
-            </div>
+        <div class="d-flex justify-content-end align-items-center mt-5">
+            <button class="btn btn-primary mr-1 mt-4" type="submit" [disabled]="addItemForm.invalid"
+                (click)="add_item()">Add</button>
+            <button class="btn btn-warning mt-4" type="reset"
+                (click)="show_cat_item=1;addItemForm.reset()">Cancel</button>
+        </div>
     </div>
 
 </div>
@@ -225,9 +261,9 @@
     <div class="modal-body">
         <div class="editItemForm">
             <form [formGroup]="editItemForm" class="my-3">
-                <label class="lab_tag" for="">Category Name:  <span class="text-danger">*</span></label>
+                <label class="lab_tag" for="">Category Name: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="category_name" readonly>
-                <label class="lab_tag" for="">Item Name:  <span class="text-danger">*</span></label>
+                <label class="lab_tag" for="">Item Name: <span class="text-danger">*</span></label>
                 <input type="text" class="form-control inp_tag" formControlName="item_name">
                 <label class="lab_tag" for="">GST: <span class="text-danger">*</span></label>
                 <select name="" id="" formControlName="gst" class="form-control inp_tag">
@@ -238,9 +274,9 @@
                     <option value="18">18 %</option>
                     <option value="28">28 %</option>
                 </select>
-                <label class="lab_tag" for="">Low Stock:  <span class="text-danger">*</span></label>
+                <label class="lab_tag" for="">Low Stock: <span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
-                <label class="lab_tag" for="">MRP:  <span class="text-danger">*</span></label>
+                <label class="lab_tag" for="">MRP: <span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
                 <label class="lab_tag" for="">HSN: <span class="text-danger">*</span></label>
                 <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
@@ -260,15 +296,16 @@
 
 <ng-template #delete_popup let-c="close" let-d="dismiss">
     <div class="modal-body">
-      <p style="font-size: 18px;">Are you sure you want to delete the item ?</p>
+        <p style="font-size: 18px;">Are you sure you want to delete the item ?</p>
     </div>
     <div class="modal-footer">
-      <button border="none" (click)="deletePopup(delete_popup)" class="btn btn-primary mr-2">Cancel</button>
-      <button border="none" (click)="del_Category()" class="btn btn-warning"
-        *ngIf="show_cat_item == 1">Delete</button>
-      <button border="none" (click)="del_item();deletePopup(delete_popup)" class="btn btn-warning" *ngIf="show_cat_item == 3">Delete</button>
+        <button border="none" (click)="deletePopup(delete_popup)" class="btn btn-primary mr-2">Cancel</button>
+        <button border="none" (click)="del_Category()" class="btn btn-warning"
+            *ngIf="show_cat_item == 1">Delete</button>
+        <button border="none" (click)="del_item();deletePopup(delete_popup)" class="btn btn-warning"
+            *ngIf="show_cat_item == 3">Delete</button>
     </div>
-  </ng-template>
+</ng-template>
 
 <!-- <div class="mymodal1" *ngIf="delete_popup == true">
     <div class="mymodal_cnt">

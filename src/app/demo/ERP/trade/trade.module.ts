@@ -19,6 +19,8 @@ import { QuotationEntryComponent } from './quotation/quotation-entry/quotation-e
 // import { InvoiceComponent } from '../invoice/invoice.component';
 import { InvoiceComponent } from '../../../theme/shared/invoice/invoice.component';
 import { CategoryComponent } from './catagory/catagory.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 
 
 
@@ -31,7 +33,8 @@ import { CategoryComponent } from './catagory/catagory.component';
     FormsModule,
     NgbModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule,    
+    OwlNativeDateTimeModule,  
+    MatFormFieldModule  
   ]
 })
 export class TradeModule { }
