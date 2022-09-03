@@ -73,6 +73,7 @@ export class QuotationEntryComponent implements OnInit {
     this.get_proddata();
     this.get_Vendor();
     this.add_row();
+    this.get_next_quotation();
   }
   get_Category = () => {
     this.loader = true;
@@ -470,5 +471,24 @@ export class QuotationEntryComponent implements OnInit {
       return e.keyCode >= 48 && e.charCode <= 57;
     }
   }
+
+  get_next_quotation = () => {
+    this.loader = true;
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+    this.ErpService.get_Reqs(erp_all_api.urls.get_next_quotation_no, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+
+      (res: any) => {
+        let vendorData = res.data;
+
+        this.quotation_form.get('quto').setValue(vendorData)
+       
+      },
+
+      (err: any) => {
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+      });
+  };
 
 }
