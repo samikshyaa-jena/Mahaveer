@@ -10,10 +10,10 @@
         <div class="col-sm-12 px-0 d-flex flex-row">
             <div class="col-sm-2 ">
                 <label for="">Invoice Number <span class="text-danger">*</span></label>
-                <input type="text" formControlName="invo" class="form-control field_height">
+                <input type="text" formControlName="invo" class="form-control field_height" readonly="true">
             </div>
             <div class="col-sm-3 pl-0">
-                <label for="">Custmer Name <span class="text-danger">*</span></label>
+                <label for="">Customer Name <span class="text-danger">*</span></label>
                 <select class="form-control field_height" formControlName="custmer"
                     (ngModelChange)="vendorType($event); resetProductForm()">
                     <option value="choose_cname" disabled>Choose</option>
