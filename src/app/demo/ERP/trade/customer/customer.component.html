@@ -49,47 +49,94 @@
 
     </div>
     <div class="add_vendor" *ngIf='showAddVendor'>
-        
+
         <div class="modal_head">
             <div class="modal_body">
                 <div class="addVendorForm">
+                    <div class="col-sm-12 row">
+                        <p style="font-weight: 300;margin-top: 10px;background-color: #F9FAFA;">Add Customer</p>
+                        <hr style="width: 100%;">
+                    </div>
                     <form [formGroup]="addVendorForm" class="my-3">
-                        <label class="lab_tag" for="">Name: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" formControlName="ven_name">
-                        <label class="lab_tag" for="">ID: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" formControlName="id">
-                        <label class="lab_tag" for="">Email: <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" formControlName="ven_email">
-                        <label class="lab_tag" for="">Mobile No: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" formControlName="mob">
-                        <label class="lab_tag" for="">Type: <span class="text-danger">*</span></label>
-                        <select name="" id="" formControlName="type" class="form-control">
-                            <option value="type" selected disabled>Select Type</option>
-                            <option value="Intra State">Intra State</option>
-                            <option value="Inter State">Inter State</option>
-                        </select>
-                        <label class="lab_tag" for="">GST No:  <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" maxlength="15" minlength="15" formControlName="gst_in"
-                            #gst (input)="gst.value=$event.target.value.toUpperCase()">
-                        <div *ngIf="addVendorForm.get('gst_in').hasError('minlength') && addVendorForm.get('gst_in').touched"
-                            class="err-message">
-                            <span class="text-danger">It should be 15 digits.</span>
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Name" class="form-control inp_tag"
+                                    formControlName="ven_name">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="ID" class="form-control inp_tag" formControlName="id">
+                            </div>
+                            <div class="col-sm-4"></div>
                         </div>
-                        <div *ngIf="addVendorForm.get('gst_in').hasError('pattern') && addVendorForm.get('gst_in').touched"
-                            class="err-message">
-                            <span class="text-danger">Invalid GST No.</span>
+                        <div class="col-sm-12 row">
+                            <p style="font-weight: 300;margin-top: 20px;background-color: #F9FAFA;">Customer Details</p>
+                            <hr style="width: 100%;">
                         </div>
-                        <label class="lab_tag" for="">Address: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" formControlName="add">
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-4">
+                                <input type="email" placeholder="Email" class="form-control inp_tag"
+                                    formControlName="ven_email">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Mobile No" class="form-control inp_tag"
+                                    formControlName="mob">
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                        <div class="col-sm-12 row">
+                            <hr style="width: 100%;">
+                        </div>
+                        <div class="col-sm-12 row">
+                            
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="GST No" class="form-control inp_tag" maxlength="15"
+                                    minlength="15" formControlName="gst_in" #gst
+                                    (input)="gst.value=$event.target.value.toUpperCase()">
+                                <div *ngIf="addVendorForm.get('gst_in').hasError('minlength') && addVendorForm.get('gst_in').touched"
+                                    class="err-message">
+                                    <span class="text-danger">It should be 15 digits.</span>
+                                </div>
+                                <div *ngIf="addVendorForm.get('gst_in').hasError('pattern') && addVendorForm.get('gst_in').touched"
+                                    class="err-message">
+                                    <span class="text-danger">Invalid GST No.</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Address" class="form-control inp_tag"
+                                    formControlName="add">
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
+                        <div class="col-sm-12 row">
+                            <hr style="width: 100%;">
+                        </div>
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-4">
+                                <select name="" id="" formControlName="type" class="form-control inp_tag">
+                                    <option selected disabled>Select Type</option>
+                                    <option value="Intra State">Intra State</option>
+                                    <option value="Inter State">Inter State</option>
+                                </select>
+                            </div>
+                            <!-- <div class="col-sm-4">
+                                <input type="text" placeholder="Address" class="form-control inp_tag"
+                                    formControlName="add">
+                            </div> -->
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4"></div>
+                        </div>
+
+
 
                     </form>
                 </div>
             </div>
         </div>
-            <div class="col-sm-12 text-right p-0 mt-3">
-                <button class="btn btn-warning mr-1" type="reset" (click)="hide_AddVendor()">Cancel</button>
-                <button class="btn btn-primary" type="submit" [disabled]="addVendorForm.invalid" (click)="add_Vendor()">Add</button>
-            </div>
+        <div class="col-sm-12 text-right p-0 mt-3">
+            <button class="btn btn-warning mr-1" type="reset" (click)="hide_AddVendor()">Cancel</button>
+            <button class="btn btn-primary" type="submit" [disabled]="addVendorForm.invalid"
+                (click)="add_Vendor()">Add</button>
+        </div>
     </div>
 </div>
 <!-- modal starts -->
@@ -135,6 +182,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-warning" (click)="update_vend_popup_close(content)">Cancel</button>
-        <button type="button" class="btn btn-primary" [disabled]="updateVendorForm.invalid" (click)="update_vendor()">Submit</button>
+        <button type="button" class="btn btn-primary" [disabled]="updateVendorForm.invalid"
+            (click)="update_vendor()">Submit</button>
     </div>
 </ng-template>

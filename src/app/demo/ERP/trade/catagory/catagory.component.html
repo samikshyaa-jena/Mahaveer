@@ -87,10 +87,23 @@
         <div class="modal_head">
             <div class="modal_body">
                 <div class="addCategoryForm">
+                    <div class="col-sm-12 row mt-3">
+                        <p style="font-weight: 300;margin-top: 10px;background-color: #F9FAFA;">Add Category</p>
+                        <hr style="width: 100%;">
+                    </div>
                     <form [formGroup]="addCategoryForm" class="my-3">
-                        <label class="lab_tag" for="">Category Name: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control inp_tag" formControlName='cat_name'>
-
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Category Name" class="form-control inp_tag"
+                                    formControlName='cat_name'>
+                                <div *ngIf="addCategoryForm.get('cat_name').hasError('required') && addCategoryForm.get('cat_name').touched"
+                                    class="err-message">
+                                    <span class="text-danger px-2 py-2">Category can't be blank</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4"></div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -172,7 +185,7 @@
                         <input type="text" class="form-control inp_tag" formControlName="unit" placeholder="Unit">
                     </div>
                     <div class="col-sm-4"></div>
-                    
+
                 </div>
                 <div class="col-sm-12 row">
                     <div class="col-sm-6"></div>
@@ -190,7 +203,8 @@
                     </div>
                 </div>
                 <div class="col-sm-12 row">
-                    <p style="font-weight: 300;margin-top: 10px;background-color: #F9FAFA; color:red">Pricing & Stock</p>
+                    <p style="font-weight: 300;margin-top: 10px;background-color: #F9FAFA; color:red">Pricing & Stock
+                    </p>
                     <hr style="width: 100%;">
                     <p style="font-weight: 300;margin-top: 10px;background-color: #F9FAFA;">Sale Pricing</p>
                 </div>

@@ -19,14 +19,15 @@
 .lab_tag{
     margin-top: 1%;
 }
-
+.inp_tag{
+    margin-top: 20px;
+  }
 .upimg_show{
     display: flex;
     align-items: center;
-    border: 1px solid lightgray;
-    border-radius: 3px;
     width: 100%;
     padding: 1%;
+    height: calc(1.5em + 0.75rem + 2px);
 }
 .upload_label {
     display: flex;

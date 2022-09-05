@@ -92,9 +92,24 @@
     <div class="modal_head">
       <div class="modal_body">
         <div class="addCategoryForm">
+          <div class="col-sm-12 row mt-3">
+            <p style="font-weight: 300;margin-top: 10px;background-color: #F9FAFA;">Add Category</p>
+            <hr style="width: 100%;">
+          </div>
           <form [formGroup]="addCategoryForm" class="my-3">
-            <label class="lab_tag" for="">Category Name: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control inp_tag" formControlName="cat_name" />
+            <div class="col-sm-12 row">
+              <div class="col-sm-4">
+                <input type="text" placeholder="Category Name" class="form-control inp_tag"
+                  formControlName="cat_name" />
+                <div
+                  *ngIf="addCategoryForm.get('cat_name').hasError('required') && addCategoryForm.get('cat_name').touched"
+                  class="err-message">
+                  <span class="text-danger px-2 my-2">Category can't be blank</span>
+                </div>
+              </div>
+              <div class="col-sm-4"></div>
+              <div class="col-sm-4"></div>
+            </div>
           </form>
         </div>
       </div>
@@ -160,7 +175,6 @@
     <div class="form_div" class="my-3">
       <p style="font-weight: 300;">Add Item</p>
       <form [formGroup]="addItemForm" class="my-3">
-
         <div class="col-sm-12 row">
           <div class="col-sm-4">
             <select class="form-control inp_tag" (change)="addItemCategory($event.target.value)"
@@ -178,7 +192,8 @@
         </div>
         <div class="col-sm-12 row">
           <div class="col-sm-4">
-            <input type="text" placeholder="HSN" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn" />
+            <input type="text" placeholder="HSN" (keypress)="prevent($event)" class="form-control inp_tag"
+              formControlName="hsn" />
           </div>
           <div class="col-sm-4">
             <input type="text" placeholder="Unit" class="form-control inp_tag" formControlName="unit" />
@@ -198,21 +213,22 @@
           </div>
           <div class="col-sm-4"></div>
           <div class="col-sm-4"></div>
-          
+
         </div>
         <div class="col-sm-12 row mt-3">
           <hr style="width: 100%;">
           <p style="font-weight: 300;margin-top: 10px;background-color: #F9FAFA;">Stock</p>
-      </div>
+        </div>
         <div class="col-sm-12 row">
           <div class="col-sm-4">
             <input type="text" placeholder="Open Stock" class="form-control inp_tag" formControlName="qty" />
           </div>
           <div class="col-sm-4">
-            <input type="text" placeholder="Low Stock" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk" />
+            <input type="text" placeholder="Low Stock" (keypress)="prevent($event)" class="form-control inp_tag"
+              formControlName="min_stk" />
           </div>
           <div class="col-sm-4"></div>
-          
+
         </div>
 
 

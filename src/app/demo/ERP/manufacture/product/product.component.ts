@@ -39,7 +39,7 @@ export class ProductComponent implements OnInit {
   ) {
     this.addProductForm = new FormGroup({
       prod_name: new FormControl("", [Validators.required]),
-      gst: new FormControl("", [Validators.required]),
+      gst: new FormControl("Select GST", [Validators.required]),
       min_stk: new FormControl("", [Validators.required]),
       unit: new FormControl("", [Validators.required]),
       hsn: new FormControl("", [Validators.required]),

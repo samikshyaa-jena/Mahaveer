@@ -10,19 +10,21 @@
 <!-- Loader Ends -->
 <div class="container card p-3">
     <div class="prod_table" *ngIf='!showAddVendor'>
-      <div class="row col-sm-12 mt-3">
-        <div class="mode_change col-sm-9">
-          <form [formGroup]="modeForm">
-            <button class="btn btn-primary text-white mr-1 disable" style="cursor:not-allowed" title="Trade" disabled>Trade</button>
-            <button class="btn btn-primary" routerLink="/v1/manufacture/vendor" title="Go To Manufacture">Manufacture</button>
-          </form>
+        <div class="row col-sm-12 mt-3">
+            <div class="mode_change col-sm-9">
+                <form [formGroup]="modeForm">
+                    <button class="btn btn-primary text-white mr-1 disable" style="cursor:not-allowed" title="Trade"
+                        disabled>Trade</button>
+                    <button class="btn btn-primary" routerLink="/v1/manufacture/vendor"
+                        title="Go To Manufacture">Manufacture</button>
+                </form>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-primary" style="float: right;" (click)="show_AddVendor()">Add Vendor</button>
+            </div>
         </div>
-        <div class="col-sm-3">
-            <button class="btn btn-primary" style="float: right;" (click)="show_AddVendor()">Add Vendor</button>
-        </div>
-      </div>
         <div class="table-responsive">
-          <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Trade</h3>
+            <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Trade</h3>
             <table class="table v-middle nowrap">
                 <thead>
                     <tr>
@@ -46,8 +48,9 @@
                         <td>
                             <span style="cursor: pointer;"><i class="fa fa-edit" aria-hidden="true"
                                     (click)="update_vend_popup_open(content,i)"></i></span>
-                            <span class="mx-2" style="cursor: pointer;" (click)="item_delete_popup_open(delete_popup, i)"><i
-                                    class="fa fa-trash" aria-hidden="true"></i></span>
+                            <span class="mx-2" style="cursor: pointer;"
+                                (click)="item_delete_popup_open(delete_popup, i)"><i class="fa fa-trash"
+                                    aria-hidden="true"></i></span>
                         </td>
                     </tr>
                 </tbody>
@@ -56,46 +59,68 @@
 
     </div>
     <div class="add_vendor" *ngIf='showAddVendor'>
-      <!-- <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Trade</h3> -->
-        
         <div class="modal_head">
             <div class="modal_body">
                 <div class="addVendorForm">
+                    <div class="col-sm-12 row mt-3">
+                        <p style="font-weight: 300;margin-top: 10px;background-color: #F9FAFA;">Add Vendor</p>
+                        <hr style="width: 100%;">
+                    </div>
                     <form [formGroup]="addVendorForm" class="my-3">
-                        <label class="lab_tag" for="">Name: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" formControlName="ven_name">
-                        <label class="lab_tag" for="">Email: <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" formControlName="ven_email">
-                        <label class="lab_tag" for="">Mobile No: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" formControlName="mob">
-                        <label class="lab_tag" for="">Type: <span class="text-danger">*</span></label>
-                        <select name="" id="" formControlName="type" class="form-control">
-                            <option value="type" disabled>Select Type</option>
-                            <option value="Intra State">Intra State</option>
-                            <option value="Inter State">Inter State</option>
-                        </select>
-                        <label class="lab_tag" for="">GST No: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" maxlength="15" minlength="15" formControlName="gst_in"
-                            #gst (input)="gst.value=$event.target.value.toUpperCase()">
-                        <div *ngIf="addVendorForm.get('gst_in').hasError('minlength') && addVendorForm.get('gst_in').touched"
-                            class="err-message">
-                            <span class="text-danger">It should be 15 digits.</span>
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Name" class="form-control inp_tag"
+                                    formControlName="ven_name">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="email" placeholder="Email" class="form-control inp_tag"
+                                    formControlName="ven_email">
+                            </div>
+                            <div class="col-sm-4"></div>
                         </div>
-                        <div *ngIf="addVendorForm.get('gst_in').hasError('pattern') && addVendorForm.get('gst_in').touched"
-                            class="err-message">
-                            <span class="text-danger">Invalid GST No.</span>
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Mobile No" class="form-control inp_tag"
+                                    formControlName="mob">
+                            </div>
+                            <div class="col-sm-4">
+                                <select name="" id="" formControlName="type" class="form-control inp_tag">
+                                    <option value="type" selected disabled>Select Type</option>
+                                    <option value="Intra State">Intra State</option>
+                                    <option value="Inter State">Inter State</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4"></div>
                         </div>
-                        <label class="lab_tag" for="">Address: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" formControlName="add">
-
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="GST No" class="form-control inp_tag" maxlength="15"
+                                    minlength="15" formControlName="gst_in" #gst
+                                    (input)="gst.value=$event.target.value.toUpperCase()">
+                                <div *ngIf="addVendorForm.get('gst_in').hasError('minlength') && addVendorForm.get('gst_in').touched"
+                                    class="err-message">
+                                    <span class="text-danger">It should be 15 digits.</span>
+                                </div>
+                                <div *ngIf="addVendorForm.get('gst_in').hasError('pattern') && addVendorForm.get('gst_in').touched"
+                                    class="err-message">
+                                    <span class="text-danger">Invalid GST No.</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Address" class="form-control inp_tag"
+                                    formControlName="add">
+                            </div>
+                            <div class="col-sm-4"></div>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-end align-items-center">
-            <button class="btn btn-primary mr-1 disable" [disabled]="addVendorForm.invalid" type="submit" (click)="add_Vendor()">Add</button>
+            <button class="btn btn-primary mr-1 disable" [disabled]="addVendorForm.invalid" type="submit"
+                (click)="add_Vendor()">Add</button>
             <button class="btn btn-warning" type="reset" (click)="hide_AddVendor()">Cancel</button>
-    </div>
+        </div>
     </div>
 </div>
 <!-- modal starts -->
@@ -139,17 +164,19 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary disable" [disabled]="updateVendorForm.invalid" (click)="update_vendor()">Submit</button>
+        <button type="button" class="btn btn-primary disable" [disabled]="updateVendorForm.invalid"
+            (click)="update_vendor()">Submit</button>
         <button type="button" class="btn btn-warning" (click)="update_vend_popup_close(content)">Cancel</button>
     </div>
 </ng-template>
 
 <ng-template #delete_popup let-c="close" let-d="dismiss">
     <div class="modal-body">
-      <p style="font-size: 18px;">Are you sure you want to delete the item ?</p>
+        <p style="font-size: 18px;">Are you sure you want to delete the item ?</p>
     </div>
     <div class="modal-footer">
-      <button border="none" (click)="deletePopup(delete_popup)" class="btn btn-primary mr-2">Cancel</button>
-      <button border="none" (click)="delete_vendor();deletePopup(delete_popup)" class="btn btn-warning">Delete</button>
+        <button border="none" (click)="deletePopup(delete_popup)" class="btn btn-primary mr-2">Cancel</button>
+        <button border="none" (click)="delete_vendor();deletePopup(delete_popup)"
+            class="btn btn-warning">Delete</button>
     </div>
-  </ng-template>
+</ng-template>

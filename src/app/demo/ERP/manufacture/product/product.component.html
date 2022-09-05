@@ -59,36 +59,70 @@
         <div class="modal_head">
             <div class="modal_body">
                 <div class="addProductForm">
+                    <p style="font-weight: 300;">Add Product</p>
                     <form [formGroup]="addProductForm" class="my-3">
-                        <label class="lab_tag" for="">Product Name: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control inp_tag" formControlName="prod_name">
-                        <label class="lab_tag" for="">GST: <span class="text-danger">*</span></label>
-                        <select name="" id="" formControlName="gst" class="form-control inp_tag">
-                            <option value="gst" selected disabled>Select gst</option>
-                            <option value="0">0 %</option>
-                            <option value="5">5 %</option>
-                            <option value="12">12 %</option>
-                            <option value="18">18 %</option>
-                            <option value="28">28 %</option>
-                        </select>
-                        <label class="lab_tag" for="">Low Stock: <span class="text-danger">*</span></label>
-                        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
-                        <label class="lab_tag" for="">Unit: <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control inp_tag" formControlName="unit">
-                        <label class="lab_tag" for="">Mrp: <span class="text-danger">*</span></label>
-                        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
-                        <label class="lab_tag" for="">Hsn: <span class="text-danger">*</span></label>
-                        <input type="text" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
-                        <label class="lab_tag" for="">Upload Image:</label>
-                        <div class="upimg_show">
-                            <input id="img_up" type="file" accept="image/*" style="display: none;"
-                            (change)="onUpload($event)" formControlName="img">
-                            <label for="img_up" class="upload_label"><i class="fas fa-plus"></i>&nbsp;Choose</label>
-                            <div *ngIf="uploadedFiles">
-                                <img id="pre_img" src="" alt="" width="70px"> &nbsp;&nbsp;&nbsp;
-                            <span style="margin-top: 15px;">{{uploadedFiles.name}} &nbsp;&nbsp;&nbsp;</span>
-                            </div>   
+                        <div class="col-sm-12 row">
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Product Name" class="form-control inp_tag" formControlName="prod_name">
+                            </div>
+                            <div class="col-sm-4">
+                                <select name="" id="" formControlName="gst" class="form-control inp_tag">
+                                    <option selected disabled>Select GST</option>
+                                    <option value="0">0 %</option>
+                                    <option value="5">5 %</option>
+                                    <option value="12">12 %</option>
+                                    <option value="18">18 %</option>
+                                    <option value="28">28 %</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4"></div>
+                          </div>
+                          <div class="col-sm-12 row">
+                            <hr style="width: 100%;">
+                            <p style="font-weight: 300;margin-top: 10px;background-color: #F9FAFA;">Stock Details</p>
                         </div>
+                          <div class="col-sm-12 row">
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="HSN" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="hsn">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Unit" class="form-control inp_tag" formControlName="unit">
+                            </div>
+                            <div class="col-sm-4"></div>
+                          </div>
+                          
+                          <div class="col-sm-12 row">
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+                                <div class="upimg_show mt-3">
+                                    <input id="img_up" type="file" accept="image/*" style="display: none;"
+                                    (change)="onUpload($event)" formControlName="img">
+                                    <label for="img_up" class="py-0 my-0"><i class="fa fa-camera camera"
+                                        aria-hidden="true"><span class="ml-1">Choose Product Image</span></i></label>
+                                    <div *ngIf="uploadedFiles">
+                                        <img id="pre_img" src="" alt="" width="70px"> &nbsp;&nbsp;&nbsp;
+                                    <span style="margin-top: 15px;">{{uploadedFiles.name}} &nbsp;&nbsp;&nbsp;</span>
+                                    </div>   
+                                </div>
+                            </div>
+                            <div class="col-sm-4"></div>
+                          </div>
+                          <div class="col-sm-12 row">
+                            <hr style="width: 100%;">
+                        </div>
+                          <div class="col-sm-12 row">
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Mrp" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="mrp">
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" placeholder="Low Stock" (keypress)="prevent($event)" class="form-control inp_tag" formControlName="min_stk">
+                            </div>
+                            <div class="col-sm-4"></div>
+                          </div>
+                          
+                        
+                        <!-- <label class="lab_tag" for="">Upload Image:</label> -->
+                        
 
                         <div class="btns my-3" style="float: right;">
                             <button class="btn btn-primary mr-2" type="submit" [disabled]="!addProductForm.valid"
