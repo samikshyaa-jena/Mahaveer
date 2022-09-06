@@ -266,7 +266,6 @@ export class PurchaseAddComponent implements OnInit {
       }
     }
 
-    console.log(form_cont);
     // let gstTotal = (igst + cgst + sgst) / 100;
 
     let total: number = 0;
@@ -274,7 +273,10 @@ export class PurchaseAddComponent implements OnInit {
     let total_cgst: number = 0;
     let total_sgst: number = 0;
 
-    if (qt && gst) {
+    if (qt) { 
+      console.log(qt);
+      console.log(gst);
+      
 
       total_igst = igst * qt;
       total_cgst = cgst * qt;
@@ -286,6 +288,7 @@ export class PurchaseAddComponent implements OnInit {
       } else {
         total = gstTotal + ((prc * qt) - 0);
       }
+      
 
       form_cont.total.patchValue(total);
       form_cont.igst.patchValue(total_igst);

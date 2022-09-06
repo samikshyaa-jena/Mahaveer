@@ -257,7 +257,7 @@ export class QuotationEntryComponent implements OnInit {
     let total_cgst: number = 0;
     let total_sgst: number = 0;
 
-    if (qt && prc && gst) {
+    if (qt && prc) {
 
       total_igst = igst * qt;
       total_cgst = cgst * qt;

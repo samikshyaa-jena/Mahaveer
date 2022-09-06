@@ -243,106 +243,8 @@ export class SaleAddComponent implements OnInit {
     this.calc_total(form_cont.controls);
 
 
-    // if (e != "ChooseProduct") {
-    //   for (let i = 0; i < this.getCategoryData.length; i++) {
-    //     if (this.getCategoryData[i].cat_id == e) {
-    //       this.itemData = this.getCategoryData[i].itemData;
-    //       this.productname = this.getCategoryData[i].cat_name
-    //     }
-    //   }
-
-    //   let x = this.itemData;
-    //   this.itemData = [];
-    //   for (let i = 0; i < x.length; i++) {
-    //     if (x[i].delete_stat == 0) {
-    //       this.itemData.push(x[i]);
-    //     }
-    //   }
-
-    //   console.log(this.itemData);
-    // } else {
-    //   Notiflix.Report.failure('choose correct option', '', 'Close');
-    // }
-
   }
 
-  // chooseItem(e, p_form: any) {
-  //   console.log("gfekjdf");
-
-  //   if (e != "choose") {
-  //     let hsn;
-  //     let gst;
-  //     let gstvalue;
-  //     let mrp;
-  //     console.log(this.itemData);
-
-  //     for (let i = 0; i < this.itemData.length; i++) {
-  //       if (this.itemData[i].prod_id == e) {
-  //         gst = parseInt(this.itemData[i].gst);
-  //         hsn = this.itemData[i].hsn;
-  //         mrp = this.itemData[i].mrp;
-  //         this.itemname = this.itemData[i].prod_name
-  //         if (this.type == 'Intra State') {
-  //           gstvalue = gst / 2
-  //           this.productForm.patchValue({
-  //             p_form: {
-  //               igst: 0,
-  //               hsn: hsn,
-  //               cgst: gstvalue,
-  //               sgst: gstvalue,
-  //               price: mrp
-  //             }
-  //           });
-  //           // this.productForm.patchValue({
-  //           //   igst: 0,
-  //           //   hsn: hsn,
-  //           //   cgst: gstvalue,
-  //           //   sgst: gstvalue,
-  //           //   price: mrp
-  //           // })
-  //         } else {
-  //           gstvalue = gst
-  //           this.productForm.patchValue({
-  //             p_form: {
-  //               igst: gstvalue,
-  //               hsn: hsn,
-  //               cgst: 0,
-  //               sgst: 0,
-  //               price: mrp
-  //             }
-  //           });
-  //           // this.productForm.patchValue({
-  //           //   igst: gstvalue,
-  //           //   hsn: hsn,
-  //           //   cgst: 0,
-  //           //   sgst: 0,
-  //           //   price: mrp
-  //           // })
-  //         }
-  //       }
-  //       console.log(p_form)
-  //     }
-
-  //   } else {
-  //     Notiflix.Report.failure('Choose a correct option', '', 'Close');
-  //     this.productForm.patchValue({
-  //       p_form: {
-  //         igst: 0,
-  //         hsn: 0,
-  //         cgst: 0,
-  //         sgst: 0
-  //       }
-  //     });
-  //     // this.productForm.patchValue({
-  //     //   igst: 0,
-  //     //   hsn: 0,
-  //     //   cgst: 0,
-  //     //   sgst: 0
-  //     // })
-
-
-  //   }
-  // }
 
 
   calc_total(form_cont) {
@@ -385,7 +287,7 @@ export class SaleAddComponent implements OnInit {
     let total_cgst: number = 0;
     let total_sgst: number = 0;
 
-    if (qt && prc && gst) {
+    if (qt && prc) {
 
       total_igst = igst * qt;
       total_cgst = cgst * qt;

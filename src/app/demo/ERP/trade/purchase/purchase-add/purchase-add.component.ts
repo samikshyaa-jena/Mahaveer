@@ -274,7 +274,7 @@ export class PurchaseAddComponent implements OnInit {
     let total_cgst: number = 0;
     let total_sgst: number = 0;
 
-    if (qt && gst) {
+    if (qt) {
 
       total_igst = igst * qt;
       total_cgst = cgst * qt;

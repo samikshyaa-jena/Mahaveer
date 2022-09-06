@@ -73,7 +73,7 @@
                             <select class="tab_inp readonly" id="item"
                                 (change)="chooseItem(Product, $event.target.value); totalCalculation()"
                                 formControlName="item">
-                                <option selected value="ChooseProduct" disabled>Choose Item</option>
+                                <option selected value="ChooseProduct">Choose Item</option>
                                 <option class="disable" *ngFor="let item of itemData[Product.controls.hide_item.value]"
                                     [value]="item.item_id" [disabled]="Product.controls.edit.value == false">
                                     {{item.item_name}}

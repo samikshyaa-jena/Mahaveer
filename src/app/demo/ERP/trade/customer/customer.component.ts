@@ -60,6 +60,7 @@ export class CustomerComponent implements OnInit {
   }
   hide_AddVendor() {
     this.showAddVendor = false;
+    this.addVendorForm.reset();
   }
 
   get_Vendor = () =>{
@@ -111,7 +112,7 @@ export class CustomerComponent implements OnInit {
         this.addVendorData = res.data;
         console.log(this.addVendorData);
         this.addVendorForm.reset();
-        Notiflix.Report.success(res.msg, '', 'Close');;
+        Notiflix.Report.success(res.message, '', 'Close');;
       },
       (err: any) =>{
         console.log(err);

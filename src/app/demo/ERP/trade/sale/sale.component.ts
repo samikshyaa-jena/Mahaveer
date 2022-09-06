@@ -156,6 +156,34 @@ export class SaleComponent implements OnInit {
       });
   };
 
+  
+  get_Item = () => {
+
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.get_Reqs(erp_all_api.urls.get_prod, { headers: headers }).pipe(finalize(() => { })).subscribe(
+      (res: any) => {
+        console.log(res, "get item");
+
+        let catData = res.data;
+        for (let i = 0; i < catData.length; i++) {
+          if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
+            this.itemData2.push(catData[i]);
+          }
+        }
+        console.log(this.itemData2);
+
+        console.log(this.item_name);
+      },
+      (err: any) => {
+        console.log(err);
+
+      });
+
+  };
+
   purchase_entry = () => {
     this.purchase_tab = true;
   }
@@ -205,40 +233,6 @@ export class SaleComponent implements OnInit {
 
   };
 
-  get_Item = () => {
-
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
-
-    this.ErpService.get_Reqs(erp_all_api.urls.get_prod, { headers: headers }).pipe(finalize(() => { })).subscribe(
-      (res: any) => {
-        console.log(res, "get item");
-
-        let catData = res.data;
-        for (let i = 0; i < catData.length; i++) {
-          if (catData[i].delete_stat == 0) {
-            this.itemData2.push(catData[i] && !(this.prodData_id.includes(catData[i].prod_id)));
-          }
-        }
-        console.log(this.itemData2);
-
-        // this.itemData = res.data;
-        // this.item_data = res.data.map((val) => {
-        //   return { item_name: val.item_name, item_id: val.item_id, gst: val.gst };
-        // });
-        // console.log(this.item_data);
-        // for (let i = 0; i < this.item_data.length; i++) {
-        //   this.item_name[i] = this.item_data[i].item_name;
-        // }
-        console.log(this.item_name);
-      },
-      (err: any) => {
-        console.log(err);
-
-      });
-
-  };
 
   // chooseCategory(e) {
   //   console.log(e);
