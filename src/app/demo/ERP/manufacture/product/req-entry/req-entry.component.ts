@@ -246,9 +246,8 @@ export class ReqEntryComponent implements OnInit {
 
     if (qt) {
 
-      total_gst = gst * qt;
-      total = total_gst + (prc * qt);
-
+      total_gst = parseFloat((gst * qt).toFixed(2));
+      total = parseFloat((total_gst + (prc * qt).toFixed(2)));
 
       form_cont.total.patchValue(total);
       form_cont.gst.patchValue(total_gst);

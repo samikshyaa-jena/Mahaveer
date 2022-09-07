@@ -126,7 +126,7 @@ export class ProductComponent implements OnInit {
       fd.append('gst', parseInt(this.addProductForm.get('gst').value));
       fd.append('min_stock', parseInt(this.addProductForm.get('min_stk').value));
       fd.append('unit', this.addProductForm.get('unit').value);
-      fd.append('price', 0);
+      fd.append('price', this.addProductForm.get('mrp').value);
       fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name);
     } else {
       fd = {
@@ -134,7 +134,7 @@ export class ProductComponent implements OnInit {
         gst: parseInt(this.addProductForm.get('gst').value),
         min_stock: parseInt(this.addProductForm.get('min_stk').value),
         unit: this.addProductForm.get('unit').value,
-        price: 0,
+        price: this.addProductForm.get('mrp').value,
         prod_image: ''
       };
     }

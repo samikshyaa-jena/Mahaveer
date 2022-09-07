@@ -92,7 +92,7 @@
                                         {{mat.item_name}}</option>
                                 </select>
                             </td>
-                            <!-- <td class="td_e"><input type="text" formControlName="hsn" class="form-control table_input" disabled> -->
+                            <td class="td_e"><input type="text" formControlName="hsn" class="form-control table_input" disabled>
                             <td class="td_e"><input type="number" formControlName="qty" id="qty"
                                     class="form-control table_input"
                                     (input)="calc_total(Product.controls); totalCalculation()"
@@ -101,7 +101,7 @@
                             </td>
                             <td class="td_e"><input type="number" formControlName="price" id="price"
                                     (input)="calc_total(Product.controls); totalCalculation()"
-                                    class="form-control table_input"
+                                    class="form-control table_input" min="0"
                                     [readonly]="Product.controls.edit.value == false || Product.controls.item.value == 'ChooseProduct'">
                             </td>
                             <!-- <td class="td_e"><input type="text" formControlName="unit"

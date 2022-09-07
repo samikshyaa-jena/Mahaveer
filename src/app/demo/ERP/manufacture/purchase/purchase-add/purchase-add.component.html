@@ -89,7 +89,7 @@
                                 [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
                         </td>
                         <td class="td_e"><input type="number" formControlName="price" id="price"
-                                (keypress)="prevent($event,'dis')"
+                                (keypress)="prevent($event,'dis')" min="0"
                                 (input)="calc_total(Product.controls); totalCalculation()" class="tab_inp readonly"
                                 [readonly]="Product.controls.item.value == 'ChooseProduct' || Product.controls.edit.value == false">
                         </td>

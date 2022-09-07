@@ -64,18 +64,7 @@ export class SaleAddComponent implements OnInit {
 
       ])
     })
-    // p_form = new FormGroup({
-    // category: new FormControl('ChooseCategory', [Validators.required]),
-    // prod_id: new FormControl('ChooseItem', [Validators.required]),
-    // igst: new FormControl('', [Validators.required]),
-    // cgst: new FormControl('', [Validators.required]),
-    // sgst: new FormControl('', [Validators.required]),
-    // hsn: new FormControl(''),
-    // price: new FormControl('0', [Validators.required]),
-    // qty: new FormControl('1', [Validators.required]),
-    // discount: new FormControl('0', [Validators.required]),
-    // total: new FormControl('', [Validators.required])
-    // })
+    
     this.purchase_form = new FormGroup({
       invo: new FormControl("", [Validators.required]),
       custmer: new FormControl("choose_cname", [Validators.required]),
@@ -230,20 +219,8 @@ export class SaleAddComponent implements OnInit {
 
     }
 
-    // else {
-    //   Notiflix.Report.failure('Choose a correct option', '', 'Close');
-    //   form_cont.patchValue({
-    //     igst: 0,
-    //       hsn: 0,
-    //       cgst: 0,
-    //       sgst: 0
-    //   });
-    // }
-
     this.calc_total(form_cont.controls);
-
-
-  }
+}
 
 
 
@@ -268,8 +245,8 @@ export class SaleAddComponent implements OnInit {
 
         if (this.type == 'Intra State') {
           igst = 0;
-          sgst = gst / 2;
-          cgst = gst / 2;
+          sgst = parseFloat((gst / 2).toFixed(2));
+          cgst = parseFloat((gst / 2).toFixed(2));
         }
         else {
           igst = gst;
@@ -287,17 +264,17 @@ export class SaleAddComponent implements OnInit {
     let total_cgst: number = 0;
     let total_sgst: number = 0;
 
-    if (qt && prc) {
+    if (qt) {
 
-      total_igst = igst * qt;
-      total_cgst = cgst * qt;
-      total_sgst = sgst * qt;
+      total_igst = parseFloat((igst * qt).toFixed(2));
+      total_cgst = parseFloat((cgst * qt).toFixed(2));
+      total_sgst = parseFloat((sgst * qt).toFixed(2));
       let gstTotal: number = (total_igst + total_cgst + total_sgst);
 
       if (discnt) {
-        total = gstTotal + ((prc * qt) - discnt);
+        total = parseFloat((gstTotal + ((prc * qt) - discnt)).toFixed(2));
       } else {
-        total = gstTotal + ((prc * qt) - 0);
+        total = parseFloat((gstTotal + ((prc * qt) - 0)).toFixed(2));
       }
 
       form_cont.total.patchValue(total);
@@ -309,47 +286,6 @@ export class SaleAddComponent implements OnInit {
 
   }
 
-  // submitArray() {
-  //   this.showInps = true;
-  //   // this.productformarray;
-  //   let category
-  //   let value = this.productForm.value.product[0]
-  //   // let value = p_form.value
-  //   var p_form = this.productForm.get('product')['controls'];
-  //   let duplicatevalue = { ...value }
-  //   console.log(this.getCategoryData);
-  //   this.duplicateproductformarray;
-  //   for (let i = 0; i < this.getCategoryData.length; i++) {
-  //     if (this.getCategoryData[i].cat_id == p_form.value.category) {
-  //       duplicatevalue.category = this.getCategoryData[i].cat_name
-  //     }
-  //   }
-  //   for (let i = 0; i < this.getCategoryData.length; i++) {
-  //     if (this.getCategoryData[i].prod_id == p_form.value.prod_id) {
-  //       duplicatevalue.prod_id = this.getCategoryData[i].prod_name;
-  //     }
-  //   }
-
-  //   for (let i = 0; i < this.productForm.get('product')['controls'].length; i++) {
-  //     console.log(this.productForm.get('product')['controls'][i].value);
-  //     this.productformarray.push(this.productForm.get('product')['controls'][i].value)
-  //   }
-
-  //   // this.productformarray.push(value)
-  //   this.duplicateproductformarray.push(duplicatevalue)
-  //   console.log(duplicatevalue);
-  //   console.log(this.duplicateproductformarray);
-  //   console.log(this.productformarray);
-  //   let sum = 0;
-  //   for (let i = 0; i < this.productformarray.length; i++) {
-  //     sum = sum + this.productformarray[i].total;
-  //   }
-  //   this.purchase_form.patchValue({
-  //     payMode: 'Cash',
-  //     payStatus: 'Paid',
-  //     amnt: sum,
-  //   })
-  // }
   delete(i) {
     Notiflix.Report.success('Are you want to delete', '', 'Ok');
     this.productformarray.splice(i, 1)

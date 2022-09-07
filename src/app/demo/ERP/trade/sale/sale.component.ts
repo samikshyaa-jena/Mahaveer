@@ -156,7 +156,7 @@ export class SaleComponent implements OnInit {
       });
   };
 
-  
+
   get_Item = () => {
 
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
@@ -524,20 +524,15 @@ export class SaleComponent implements OnInit {
 
     console.log(index);
     this.invoiceTabopen();
-    //  this.customerSelectedId=this.vendor_data.data[i].customer_id
 
     var p_form = this.updatePurchase.get('product')['controls'];
 
     for (let i = 0; i < saledata.sellData.length; i++) {
-      this.add_row();
 
-      // if (this.itemData2[i].prod_id == saledata.sellData[i].prod_id) {
-      //   var c_id = this.itemData2[i].cat_id
-      // }
+      if (saledata.sellData[i]) {
+        this.add_row();
 
       p_form[i].patchValue({
-        // category: 'PRODCAT2022033008070703',
-        // category: c_id,
         prud: saledata.sellData[i].prod_id,
         igst: saledata.sellData[i].igst,
         cgst: saledata.sellData[i].cgst,
@@ -548,283 +543,10 @@ export class SaleComponent implements OnInit {
         discount: saledata.sellData[i].discount,
         total: saledata.sellData[i].total,
       });
-
-      // this.chooseCategory('PRODCAT2022033008070703');
-      // this.chooseCategory(c_id);
+      }
 
     }
-
-
-
     this.totalCalculation();
-
-
-    // console.log( );
-
-
-    // this.purchase_dataArray = [];
-    // console.log(o);
-    // this.invoiceNo = o;
-
-    // let total = 0;
-    // let igstVal = 0;
-    // let cgstVal = 0;
-    // let sgstVal = 0;
-    // this.dummy = [
-    //   {
-    //     category: '',
-    //     categoryName: '',
-    //     item_id: '',
-    //     itemName: '',
-    //     hsn: '',
-    //     price: '',
-    //     qty: '',
-    //     unit: '',
-    //     discount: '',
-    //     cgst: '',
-    //     sgst: '',
-    //     igst: '',
-    //     cgstVal: '',
-    //     sgstVal: '',
-    //     igstVal: '',
-    //     total: '',
-    //             bill_amount: '',
-    //   },
-    //   {
-    //     category: '',
-    //     categoryName: '',
-    //     item_id: '',
-    //     itemName: '',
-    //     hsn: '',
-    //     price: '',
-    //     qty: '',
-    //     unit: '',
-    //     discount: '',
-    //     cgst: '',
-    //     sgst: '',
-    //     igst: '',
-    //     cgstVal: '',
-    //     sgstVal: '',
-    //     igstVal: '',
-    //     total: '',
-    //             bill_amount: '',
-    //   },
-    //   {
-    //     category: '',
-    //     categoryName: '',
-    //     item_id: '',
-    //     itemName: '',
-    //     hsn: '',
-    //     price: '',
-    //     qty: '',
-    //     unit: '',
-    //     discount: '',
-    //     cgst: '',
-    //     sgst: '',
-    //     igst: '',
-    //     cgstVal: '',
-    //     sgstVal: '',
-    //     igstVal: '',
-    //     total: '',
-    //             bill_amount: '',
-    //   },
-    //   {
-    //     category: '',
-    //     categoryName: '',
-    //     item_id: '',
-    //     itemName: '',
-    //     hsn: '',
-    //     price: '',
-    //     qty: '',
-    //     unit: '',
-    //     discount: '',
-    //     cgst: '',
-    //     sgst: '',
-    //     igst: '',
-    //     cgstVal: '',
-    //     sgstVal: '',
-    //     igstVal: '',
-    //     total: '',
-    //             bill_amount: '',
-    //   },
-    //   {
-    //     category: '',
-    //     categoryName: '',
-    //     item_id: '',
-    //     itemName: '',
-    //     hsn: '',
-    //     price: '',
-    //     qty: '',
-    //     unit: '',
-    //     discount: '',
-    //     cgst: '',
-    //     sgst: '',
-    //     igst: '',
-    //     cgstVal: '',
-    //     sgstVal: '',
-    //     igstVal: '',
-    //     total: '',
-    //             bill_amount: '',
-    //   },
-    //   {
-    //     category: '',
-    //     categoryName: '',
-    //     item_id: '',
-    //     itemName: '',
-    //     hsn: '',
-    //     price: '',
-    //     qty: '',
-    //     unit: '',
-    //     discount: '',
-    //     cgst: '',
-    //     sgst: '',
-    //     igst: '',
-    //     cgstVal: '',
-    //     sgstVal: '',
-    //     igstVal: '',
-    //     total: '',
-    //             bill_amount: '',
-    //   },
-    //   {
-    //     category: '',
-    //     categoryName: '',
-    //     item_id: '',
-    //     itemName: '',
-    //     hsn: '',
-    //     price: '',
-    //     qty: '',
-    //     unit: '',
-    //     discount: '',
-    //     cgst: '',
-    //     sgst: '',
-    //     igst: '',
-    //     cgstVal: '',
-    //     sgstVal: '',
-    //     igstVal: '',
-    //     total: '',
-    //     bill_amount: '',
-
-    //   },
-    //   {
-    //     category: '',
-    //     categoryName: '',
-    //     item_id: '',
-    //     itemName: '',
-    //     hsn: '',
-    //     price: '',
-    //     qty: '',
-    //     unit: '',
-    //     discount: '',
-    //     cgst: '',
-    //     sgst: '',
-    //     igst: '',
-    //     cgstVal: '',
-    //     sgstVal: '',
-    //     igstVal: '',
-    //     total: '',
-    //     bill_amount: '',
-
-    //   },
-    //   {
-    //     category: '',
-    //     categoryName: '',
-    //     item_id: '',
-    //     itemName: '',
-    //     hsn: '',
-    //     price: '',
-    //     qty: '',
-    //     unit: '',
-    //     discount: '',
-    //     cgst: '',
-    //     sgst: '',
-    //     igst: '',
-    //     cgstVal: '',
-    //     sgstVal: '',
-    //     igstVal: '',
-    //     total: '',
-    //     bill_amount: '',
-
-    //   },
-    //   {
-    //     category: '',
-    //     categoryName: '',
-    //     item_id: '',
-    //     itemName: '',
-    //     hsn: '',
-    //     price: '',
-    //     qty: '',
-    //     unit: '',
-    //     discount: '',
-    //     cgst: '',
-    //     sgst: '',
-    //     igst: '',
-    //     cgstVal: '',
-    //     sgstVal: '',
-    //     igstVal: '',
-    //     total: '',
-    //     bill_amount: '',
-    //   },
-    // ];
-    // this.popupData = s;
-    // console.log("pop====.>", this.popupData);
-    // for (let i = 0; i < this.popupData.length; i++) {
-    //   let cgstBarri = this.popupData[i].cgst;
-    //   let igstBarri = this.popupData[i].igst;
-    //   let sgstBarri = this.popupData[i].sgst;
-    //   let priceBarri = this.popupData[i].price;
-    //   let qtyBarri = this.popupData[i].quantity;
-    //   priceBarri = priceBarri*qtyBarri;
-    //   igstVal = (igstBarri/100)*priceBarri;
-    //   sgstVal = (sgstBarri/100)*priceBarri;
-    //   cgstVal = (cgstBarri/100)*priceBarri;
-    //   this.popupData[i].igstVal = igstVal;
-    //   this.popupData[i].sgstVal = sgstVal;
-    //   this.popupData[i].cgstVal = cgstVal;
-    // }
-    // this.popupData.totalData = total;
-
-    // console.log(this.popupData.total);
-    // console.log(this.popupData);
-    // let allData = this.popupData;
-    // this.popupData = [];
-    // for (let i = 0; i < allData.length; i++) {
-    //   if (allData[i].delete_stat != 1) {
-    //     this.popupData.push(allData[i]);
-    //   }
-    // }
-    // console.log(this.popupData);
-    // this.invoice = true;
-    // this.purchase_tab = false;
-    // this.loader = true;
-    // for (let l = 0; l < this.popupData.length; l++) {
-    //   this.dummy[l].category = this.popupData[l].cat_id;
-    //   this.dummy[l].cat_name = this.popupData[l].cat_name
-    //   this.dummy[l].prod_id = this.popupData[l].prod_id;
-    //   this.dummy[l].prod_name = this.popupData[l].prod_name;
-    //   this.dummy[l].hsn = this.popupData[l].hsn;
-    //   this.dummy[l].price = this.popupData[l].price;
-    //   this.dummy[l].qty = this.popupData[l].quantity;
-    //   this.dummy[l].unit = this.popupData[l].unit;
-    //   this.dummy[l].discount = this.popupData[l].discount;
-    //   this.dummy[l].cgst = this.popupData[l].cgst;
-    //   this.dummy[l].sgst = this.popupData[l].sgst;
-    //   this.dummy[l].igst = this.popupData[l].igst;
-    //   this.dummy[l].cgstVal = this.popupData[l].cgstVal;
-    //   this.dummy[l].sgstVal = this.popupData[l].sgstVal;
-    //   this.dummy[l].igstVal = this.popupData[l].igstVal;
-    //   this.dummy[l].total = this.popupData[l].total;
-    //   this.dummy[l].bill_amount = this.popupData[l].total;
-
-    // }
-
-    // this.dummy =  this.dummy.filter((el) => {
-    //   return el.category !=  '';
-    // });
-    // console.log(this.dummy);
-    // this.popupData = this.dummy;
-    // console.log(this.popupData);
-    this.saleService.sendData(this.vendData, this.popupData, this.invoiceNo);
-    // this.loader = false;
   }
 
 
@@ -1073,17 +795,17 @@ export class SaleComponent implements OnInit {
     let total_cgst: number = 0;
     let total_sgst: number = 0;
 
-    if (qt && prc && gst) {
+    if (qt) {
 
-      total_igst = igst * qt;
-      total_cgst = cgst * qt;
-      total_sgst = sgst * qt;
+      total_igst = parseFloat((igst * qt).toFixed(2));
+      total_cgst = parseFloat((cgst * qt).toFixed(2));
+      total_sgst = parseFloat((sgst * qt).toFixed(2));
       let gstTotal: number = (total_igst + total_cgst + total_sgst);
 
       if (discnt) {
-        total = gstTotal + ((prc * qt) - discnt);
+        total = parseFloat((gstTotal + ((prc * qt) - discnt)).toFixed(2));
       } else {
-        total = gstTotal + ((prc * qt) - 0);
+        total = parseFloat((gstTotal + ((prc * qt) - 0)).toFixed(2));
       }
 
       form_cont.total.patchValue(total);

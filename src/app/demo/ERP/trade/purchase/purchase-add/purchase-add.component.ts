@@ -9,8 +9,8 @@ import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-purchase-add',
-templateUrl: './purchase-add.component.html',
-styleUrls: ['./purchase-add.component.scss']
+  templateUrl: './purchase-add.component.html',
+  styleUrls: ['./purchase-add.component.scss']
 })
 export class PurchaseAddComponent implements OnInit {
 
@@ -48,7 +48,7 @@ export class PurchaseAddComponent implements OnInit {
     private fb: FormBuilder,
     private datePipe: DatePipe,
   ) {
-   
+
 
     this.productForm = new FormGroup({
       "product": new FormArray([
@@ -63,13 +63,13 @@ export class PurchaseAddComponent implements OnInit {
     });
   }
 
-  async ngOnInit() {    
+  async ngOnInit() {
 
     this.get_Category();
     this.get_Vendor();
 
     console.log(this.pur_editData);
-    
+
 
     if (this.pur_editData) {
 
@@ -85,23 +85,24 @@ export class PurchaseAddComponent implements OnInit {
       console.log(p_form);
 
       for (let i = 0; i < this.pur_editData.purchase_data.length; i++) {
-        this.add_row();
-        this.chooseCategory(p_form[i], this.pur_editData.purchase_data[i].cat_id);
+        if (this.pur_editData.purchase_data[i].delete_stat == 0) {
+          this.add_row();
+          this.chooseCategory(p_form[i], this.pur_editData.purchase_data[i].cat_id);
 
-        p_form[i].patchValue({
-          category: this.pur_editData.purchase_data[i].cat_id,
-          item: this.pur_editData.purchase_data[i].prod_id,
-          igst: this.pur_editData.purchase_data[i].igst,
-          cgst: this.pur_editData.purchase_data[i].cgst,
-          sgst: this.pur_editData.purchase_data[i].sgst,
-          hsn: this.pur_editData.purchase_data[i].hsn,
-          price: this.pur_editData.purchase_data[i].purchase_price,
-          qty: this.pur_editData.purchase_data[i].quantity,
-          discount: this.pur_editData.purchase_data[i].discount,
-          total: this.pur_editData.purchase_data[i].total,
-        });
-        this.calc_total(p_form[i].controls);
-
+          p_form[i].patchValue({
+            category: this.pur_editData.purchase_data[i].cat_id,
+            item: this.pur_editData.purchase_data[i].prod_id,
+            igst: this.pur_editData.purchase_data[i].igst,
+            cgst: this.pur_editData.purchase_data[i].cgst,
+            sgst: this.pur_editData.purchase_data[i].sgst,
+            hsn: this.pur_editData.purchase_data[i].hsn,
+            price: this.pur_editData.purchase_data[i].purchase_price,
+            qty: this.pur_editData.purchase_data[i].quantity,
+            discount: this.pur_editData.purchase_data[i].discount,
+            total: this.pur_editData.purchase_data[i].total,
+          });
+          this.calc_total(p_form[i].controls);
+        }
       }
 
       this.totalCalculation();
@@ -109,7 +110,7 @@ export class PurchaseAddComponent implements OnInit {
     else {
       this.add_row2();
     }
-    
+
   }
   get_Category = () => {
     // this.loader = true;
@@ -119,23 +120,23 @@ export class PurchaseAddComponent implements OnInit {
 
     // this.ErpService.get_Reqs(erp_all_api.urls.getTradeCat, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
     //   (res: any) => {
-        let catData = this.catData;
-        console.log(catData);
+    let catData = this.catData;
+    console.log(catData);
 
-        for (let i = 0; i < catData.length; i++) {
-          if (catData[i].delete_stat == 0 && catData[i].itemData.length > 0) {
-            this.getCategoryData.push(catData[i]);
-            this.itemData.push(catData[i].itemData);
-          }
-        }
+    for (let i = 0; i < catData.length; i++) {
+      if (catData[i].delete_stat == 0 && catData[i].itemData.length > 0) {
+        this.getCategoryData.push(catData[i]);
+        this.itemData.push(catData[i].itemData);
+      }
+    }
 
-        console.log(this.getCategoryData);
-        console.log(this.itemData);
-      // },
-      // (err: any) => {
-      //   Notiflix.Report.failure(err.error.msg, '', 'Close');
+    console.log(this.getCategoryData);
+    console.log(this.itemData);
+    // },
+    // (err: any) => {
+    //   Notiflix.Report.failure(err.error.msg, '', 'Close');
 
-      // });
+    // });
 
   };
   get_Vendor = () => {
@@ -276,15 +277,15 @@ export class PurchaseAddComponent implements OnInit {
 
     if (qt) {
 
-      total_igst = igst * qt;
-      total_cgst = cgst * qt;
-      total_sgst = sgst * qt;
+      total_igst = parseFloat((igst * qt).toFixed(2));
+      total_cgst = parseFloat((cgst * qt).toFixed(2));
+      total_sgst = parseFloat((sgst * qt).toFixed(2));
       let gstTotal: number = (total_igst + total_cgst + total_sgst);
 
       if (discnt) {
-        total = gstTotal + ((prc * qt) - discnt);
+        total = parseFloat((gstTotal + ((prc * qt) - discnt)).toFixed(2));
       } else {
-        total = gstTotal + ((prc * qt) - 0);
+        total = parseFloat((gstTotal + ((prc * qt) - 0)).toFixed(2));
       }
 
       form_cont.total.patchValue(total);
@@ -320,11 +321,11 @@ export class PurchaseAddComponent implements OnInit {
 
     let url;
 
-  if (type == 'add') {
-    url = erp_all_api.urls.trd_purchase_entry;
-  } else {
-    url = erp_all_api.urls.trd_update_purchase_entry;
-  }
+    if (type == 'add') {
+      url = erp_all_api.urls.trd_purchase_entry;
+    } else {
+      url = erp_all_api.urls.trd_update_purchase_entry;
+    }
 
     this.productformarray = [];
     var p_form = this.productForm.get('product')['controls'];
@@ -359,7 +360,7 @@ export class PurchaseAddComponent implements OnInit {
     console.log(this.purchase_form.get('invo').value,);
     console.log(this.productformarray);
     const reqBody = {
-      
+
       "invoice": this.purchase_form.get('invo').value,
       "vendor_id": this.purchase_form.get('custmer').value,
       "type": this.type,

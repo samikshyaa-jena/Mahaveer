@@ -119,7 +119,7 @@
                             </td>
                             <td class="td_e"><input type="number" formControlName="price" id="price"
                                     (input)="calc_total(Product.controls); totalCalculation()"
-                                    class="form-control table_input"
+                                    class="form-control table_input" min="0"
                                     [readonly]="Product.controls.item.value == 'choose_mat'"></td>
                             <td class="td_e"><input type="text" formControlName="unit" id="discount"
                                     class="form-control table_input" readonly></td>

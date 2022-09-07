@@ -633,17 +633,17 @@ export class QuotationComponent implements OnInit {
     let total_cgst: number = 0;
     let total_sgst: number = 0;
 
-    if (qt && prc) {
+    if (qt) {
 
-      total_igst = igst * qt;
-      total_cgst = cgst * qt;
-      total_sgst = sgst * qt;
+      total_igst = parseFloat((igst * qt).toFixed(2));
+      total_cgst = parseFloat((cgst * qt).toFixed(2));
+      total_sgst = parseFloat((sgst * qt).toFixed(2));
       let gstTotal: number = (total_igst + total_cgst + total_sgst);
 
       if (discnt) {
-        total = gstTotal + ((prc * qt) - discnt);
+        total = parseFloat((gstTotal + ((prc * qt) - discnt)).toFixed(2));
       } else {
-        total = gstTotal + ((prc * qt) - 0);
+        total = parseFloat((gstTotal + ((prc * qt) - 0)).toFixed(2));
       }
 
       form_cont.total.patchValue(total);

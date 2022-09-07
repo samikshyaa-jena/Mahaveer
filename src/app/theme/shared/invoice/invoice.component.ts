@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import html2canvas from 'html2canvas';
-import { jsPDF } from 'jspdf'; 
+// import jspdf from 'jspdf';
+import { jsPDF } from 'jspdf';
 import { ToWords } from 'to-words';
 
 @Component({
@@ -10,9 +11,11 @@ import { ToWords } from 'to-words';
 })
 export class InvoiceComponent implements OnInit {
 
-  @ViewChild("screen", { static: false }) screen: ElementRef;
-  @ViewChild("canvas", { static: false }) canvas: ElementRef;
-  @ViewChild("downloadLink", { static: false }) downloadLink: ElementRef;
+  // @ViewChild("screen", { static: false }) screen: ElementRef;
+  // @ViewChild("canvas", { static: false }) canvas: ElementRef;
+  // @ViewChild("downloadLink", { static: false }) downloadLink: ElementRef;
+
+  @ViewChild('htmlData', {static: false}) htmlData:ElementRef;
 
   filePreview: string;
   @Output() newItemEvent = new EventEmitter<boolean>();
@@ -21,6 +24,7 @@ export class InvoiceComponent implements OnInit {
   @Input() page: any;
   numWords: any;
   totalsum: any;
+  loader: boolean;
 
   constructor(
     // private sanitizer: DomSanitizer
@@ -100,9 +104,21 @@ export class InvoiceComponent implements OnInit {
 
 
 
-    print(){
+    async print(){
+
+  //     this.loader =true;
       let dt = Date.now(); 
       console.log(dt);
+
+  //     let DATA = document.getElementById('print');
+  //   let doc = new jspdf('p','pt', 'a3');
+
+  //  doc.setProperties({
+  //      title: 'invoice'+dt+'.pdf'
+  // });
+  //  await doc.html(DATA.innerHTML);
+  //  window.open(URL.createObjectURL(doc.output("blob")))
+   
       
 
       var data = document.getElementById('print');  
@@ -116,9 +132,9 @@ export class InvoiceComponent implements OnInit {
         let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF  
         var position = 0;  
         pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight); 
-        // pdf.save('invoice'+dt+'.pdf'); // Generated PDF
+        pdf.save('invoice'+dt+'.pdf'); // Generated PDF
         // pdf.autoPrint();
-        window.open(pdf.output(), '_blank');
+        // window.open(pdf.output(), '_blank');
         // window.print();
   
       });
