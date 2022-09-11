@@ -37,6 +37,10 @@ export class DebitNoteComponent implements OnInit {
   fateRange1: any;
   search_month_array: any;
   item_data: any;
+  invoiceNoArr: any = [];
+  invo_data: any = [];
+  inv: boolean = false;
+  debitData: any;
 
   constructor(
     private fb: FormBuilder,
@@ -45,11 +49,13 @@ export class DebitNoteComponent implements OnInit {
   ) {
 
     this.userForm = new FormGroup({
-      "choose_vender": new FormControl('ch_vender'),
+      "vender": new FormControl(''),
+      "invo_date": new FormControl(''),
+      "invoiceNo": new FormControl('Invoice Number'),
       "user": new FormArray([
 
       ])
-    })
+    });
 
     this.modeForm = new FormGroup({
       mode: new FormControl("manufcture")
@@ -81,10 +87,48 @@ export class DebitNoteComponent implements OnInit {
     this.getVender();
     this.getItem();
     this.add_row();
+    this.getInvoiceNo();
+    this.getDebitData();
 
     this.monthList = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.firmList = ['abc', 'xyz', 'pqr'];
     this.td = ['1', '2', '3'];
+  }
+
+  getDebitData() {
+    this.loader = true;
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
+    const reqBody = {
+      "type":"stock"
+    }
+
+    this.ErpService.post_Reqs(erp_all_api.urls.debitData,reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        console.log(res);
+        let data = res.data;
+        console.log(data);
+        this.debitData = data.map((x:any)=>{
+          return {
+            invoNo: x.invoice_no,
+            date: this.datePipe.transform(x.return_date,'dd-MM-yyyy'),
+            vendData: x.vendorData,
+            returnData: x.ReturnData,
+            gstn: x.vendorData.gstn,
+            name: x.vendorData.name,
+            type: x.vendorData.type,
+            vend_id: x.vendorData.id
+          }
+        });
+        console.log(this.debitData);
+        
+        
+      },
+      (err: any) => {
+        console.log(err);
+      });
+
   }
 
   getcategory() {
@@ -131,11 +175,48 @@ export class DebitNoteComponent implements OnInit {
       },
       (err: any) => {
         console.log(err);
-
       });
-
   }
+  getInvoiceNo() {
+    this.loader = true;
+    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+    let headers = new HttpHeaders();
+    headers = headers.set('auth-token', auth_token);
 
+    this.ErpService.get_Reqs(erp_all_api.urls.getInvoiceNo, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        console.log(res.data);
+        let data = res.data;
+        this.invoiceNoArr = data.filter((x:any)=>{
+          if (x.c == "trade") {
+            return x;
+          }
+        });
+        console.log(this.invoiceNoArr);
+        
+      },
+      (err: any) => {
+        console.log(err);
+      });
+  }
+  chooseInvoice = () =>{
+    this.inv = true;
+    let inv = this.userForm.get('invoiceNo').value;
+    this.invo_data = this.invoiceNoArr.filter((x:any)=>{
+      if (x.invoice_no == inv) {
+        return x;
+      }
+    });
+    console.log(this.invo_data);
+    let dt = this.datePipe.transform(this.invo_data[0].purchase_date,'dd-MM-yyyy');
+    console.log(dt);
+    
+    this.userForm.patchValue({
+      vender: this.invo_data[0].vendorData.name,
+      invo_date: dt
+    });
+  }
+  
   getItem() {
     this.loader = true;
     let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'

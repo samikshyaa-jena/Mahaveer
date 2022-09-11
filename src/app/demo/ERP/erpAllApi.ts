@@ -72,6 +72,8 @@ export class erp_all_api{
         trd_get_rawMatData: base_url+'/trade/stock',
         trd_update_purchase_entry: base_url+'/trade/updateProdPurchaseEntry',
         get_next_invoice_no: base_url+'/trade/invoiceNo',
+        getInvoiceNo: base_url+'/trade/prodPurchase',
+        debitData: base_url+'/common/purchaseReturnData',
 
         // updtPurc: base_url+'/trade/prodPurchaseEntry',
         // trade ends

@@ -50,32 +50,20 @@
             <table class="table w-100 mt-1">
                 <thead class="bg-primary">
                     <tr>
+                        <th class="text-white" scope="col">Invoice</th>
                         <th class="text-white" scope="col">Date</th>
-                        <th class="text-white" scope="col">Reference Id</th>
-                        <th class="text-white" scope="col">Party Name</th>
-                        <th class="text-white" scope="col">Category Name</th>
+                        <th class="text-white" scope="col">Vendor Name</th>
+                        <th class="text-white" scope="col">GSTN</th>
                         <th class="text-white" scope="col">Type</th>
-                        <th class="text-white" scope="col">Total</th>
-                        <th class="text-white" scope="col">Recieved</th>
-                        <th class="text-white" scope="col">Balance</th>
-                        <th class="text-white" scope="col">Due Date</th>
-                        <th class="text-white" scope="col">Status</th>
-                        <th class="text-white" scope="col">Print</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let data of manufacture_data">
-                        <td>{{data.return_date}}</td>                       
-                        <td>{{data.item_name}}</td>                       
-                        <td>{{data.return_date}}</td>                       
-                        <td>{{data.return_date}}</td>                       
-                        <td>{{data.return_date}}</td>                       
-                        <td>{{data.return_date}}</td>                       
-                        <td>{{data.return_date}}</td>                       
-                        <td>{{data.return_date}}</td>                       
-                        <td>{{data.return_date}}</td>                       
-                        <td>{{data.return_date}}</td>                       
-                        <td>{{data.return_date}}</td>                       
+                    <tr *ngFor="let d of debitData">
+                        <td>{{d.invoNo}}</td>                       
+                        <td>{{d.date}}</td>                       
+                        <td>{{d.name}}</td>                       
+                        <td>{{d.gstn}}</td>                       
+                        <td>{{d.type}}</td>                      
                     </tr>
                 </tbody>
             </table>
@@ -154,24 +142,21 @@
             <form [formGroup]="userForm">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                            <select class="form-control" formControlName="choose_vender">
-                                <option value="ch_vender" disabled>Choose Vendor</option>
-                                <option *ngFor="let vender of vendor_data" value="vender.name">{{vender.name}}</option>
+                        <label *ngIf="inv">Invoice Number</label>
+                            <select class="form-control" formControlName="invoiceNo" (change)="chooseInvoice()">
+                                <option selected disabled>Invoice Number</option>
+                                <option *ngFor="let option of invoiceNoArr" [value]="option.invoice_no">{{option.invoice_no}}</option>
                             </select>
                     </div>
                     <div>
                             <table cellpadding="2px">
                                 <tr class="text_left">
-                                    <td>Return No.</td>
-                                    <td><input type="text" class="inpTag"></td>
-                                </tr>
-                                <tr class="text_left">
-                                    <td>Invoice No.</td>
-                                    <td><input type="text" class="inpTag"></td>
+                                    <td>Vendor Name</td>
+                                    <td><input type="text" readonly class="inpTag" formControlName="vender"></td>
                                 </tr>
                                 <tr class="text_left">
                                     <td>Invoice Date</td>
-                                    <td><input type="date" class="inpTag"></td>
+                                    <td><input type="text" readonly class="inpTag" formControlName="invo_date"></td>
                                 </tr>
                                 <tr class="text_left">
                                     <td>Date</td>
