@@ -1,4 +1,4 @@
-let base_url = 'http://3.109.161.106:3000'
+let base_url = 'http://43.205.31.253:3000'
 // let base_url = 'http://localhost:3000'
 // let base_url = 'https://a432-/45-114-49-105.ngrok.io'
 export class erp_all_api{
