@@ -64,24 +64,22 @@ export class AppService {
     this.router.navigate(['/']);
   }
 
-  async fetchWalletBalance() {
-    const tokenData: {sub: string} = jwt_decode(sessionStorage.getItem('CORE_SESSION'));
-    const encodeUrl = await AuthConfig.config.encodeUrl('https://itpl.iserveu.tech/user/wallet2/getuserbalance');
-    // this.http.post('https://grpcwallet-vn3k2k7q7q-uc.a.run.app/wallet/checkbalance', {user_name: tokenData.sub}) // Staging
-    this.http.get(encodeUrl) // Production
-    .pipe(finalize(() => { this.ngxSpinner.hide('walletSpinner'); }))
-    .subscribe(
-      (res: any) => {
-        console.log('Wallet Balance Response: ', res);
-        this.walletBalance.next(res); // Update Wallet Balance.
-      },
-      (err: any) => {
-        console.log('Wallet Balance Error: ', err);
-        // vex.dialog.alert(err.error.errorMessage);
-        this.walletBalance.next(0);
-      }
-    );
-  }
+  // async fetchWalletBalance() {
+  //   const tokenData: {sub: string} = jwt_decode(sessionStorage.getItem('CORE_SESSION'));
+  //   const encodeUrl = await AuthConfig.config.encodeUrl('https://itpl.iserveu.tech/user/wallet2/getuserbalance');
+  //   this.http.get(encodeUrl) 
+  //   .pipe(finalize(() => { this.ngxSpinner.hide('walletSpinner'); }))
+  //   .subscribe(
+  //     (res: any) => {
+  //       console.log('Wallet Balance Response: ', res);
+  //       this.walletBalance.next(res); 
+  //     },
+  //     (err: any) => {
+  //       console.log('Wallet Balance Error: ', err);
+  //       this.walletBalance.next(0);
+  //     }
+  //   );
+  // }
 
   fetchNotifications(notiReqBody: any) {
     return this.http.post('https://unifiedfcmhub-vn3k2k7q7q-uc.a.run.app/fetch_notification', notiReqBody);

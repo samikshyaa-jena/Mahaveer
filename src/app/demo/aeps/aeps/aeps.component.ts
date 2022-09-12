@@ -964,7 +964,7 @@ export class AepsComponent implements OnInit, AfterViewInit {
           console.log('Socket Data In Aeps: ', data);
           this.cashwithdrawres = data;
           setTimeout(() => {
-            this.appService.fetchWalletBalance();
+            // this.appService.fetchWalletBalance();
           }, 2000);
           this.ngxSpinner.hide('elasticSpinner');
           if (this.cashwithdrawres.status === "SUCCESS") {
@@ -1207,7 +1207,7 @@ export class AepsComponent implements OnInit, AfterViewInit {
 
             this.cashwithdrawres = res;
             setTimeout(() => {
-              this.appService.fetchWalletBalance();
+              // this.appService.fetchWalletBalance();
             }, 2000);
             this.ngxSpinner.hide('elasticSpinner');
             if (this.cashwithdrawres.status === "SUCCESS") {
@@ -1884,7 +1884,7 @@ export class AepsComponent implements OnInit, AfterViewInit {
         if (data) {
           console.log('Socket Data In Aeps: ', data);
           setTimeout(() => {
-            this.appService.fetchWalletBalance();
+            // this.appService.fetchWalletBalance();
           }, 2000);
           this.aadhaarpay_socketdis = data;
           if (this.aadhaarpay_socketdis.status === "SUCCESS") {

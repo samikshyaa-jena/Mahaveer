@@ -86,12 +86,12 @@ export class ProductComponent implements OnInit {
   get_Product = () => {
     this.getProductData = [];
     this.loader = true;
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    // this.ErpService.get_Reqs(erp_all_api.urls.getProduct, { headers: headers }).pipe(finalize(() => {this.loader = false;})).subscribe(
-    this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    // this.ErpService.get_Reqs(erp_all_api.urls.getProduct).pipe(finalize(() => {this.loader = false;})).subscribe(
+    this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
         let prod = res.data;
@@ -148,11 +148,11 @@ export class ProductComponent implements OnInit {
     //   prod_image: fd
     // };
 
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.addProduct, fd, { headers: headers }).pipe(finalize(() => { Notiflix.Loading.remove(); })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.addProduct, fd).pipe(finalize(() => { Notiflix.Loading.remove(); })).subscribe(
       (res: any) => {
         console.log(res);
         Notiflix.Report.success(res.msg, '', 'Close');;
@@ -179,11 +179,11 @@ export class ProductComponent implements OnInit {
       price: 0
     };
 
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.updateProduct, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.updateProduct, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
         Notiflix.Report.success(res.msg, '', 'Close');;
@@ -205,11 +205,11 @@ export class ProductComponent implements OnInit {
       "prod_id": this.getProductData[i].prod_id
     };
 
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.deleteProduct, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.deleteProduct, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
         Notiflix.Report.success(res.msg, '', 'Close');;

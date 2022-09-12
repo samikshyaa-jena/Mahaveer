@@ -496,7 +496,7 @@ export class AadharPayComponent implements OnInit {
       .subscribe((data: any) => {
         if (data) {
           setTimeout(() => {
-            this.appService.fetchWalletBalance();
+            // this.appService.fetchWalletBalance();
           }, 2000);
 
           this.aadhaarpay_socketdis = data;

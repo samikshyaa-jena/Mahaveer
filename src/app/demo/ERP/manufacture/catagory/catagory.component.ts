@@ -82,6 +82,8 @@ export class CategoryComponent implements OnInit {
 
    ngOnInit() {
     this.get_Category();
+    console.log(erp_all_api.token.auth_token);
+    
   }
   changeType = (e)=>{
     console.log(e);
@@ -133,11 +135,14 @@ export class CategoryComponent implements OnInit {
     this.cat_data.length=0;
     this.getCategoryData.length=0;
     this.loader = true;
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    console.log(sessionStorage.getItem('CORE_SESSION'));
+    
+    
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.getCategory, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.get_Reqs(erp_all_api.urls.getCategory).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
@@ -166,11 +171,11 @@ export class CategoryComponent implements OnInit {
     console.log(reqBody);
 
 
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.add_Category, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.add_Category, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log("response is", this.addCategoryData);
         this.cat_data.length=0;
@@ -197,11 +202,11 @@ export class CategoryComponent implements OnInit {
       "cat_id": this.cat_data[i].cat_id
     }
     console.log(reqBody);
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.del_Category, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.del_Category, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success(res.msg, '', 'Close');
         this.addCategoryData = res;
@@ -224,11 +229,11 @@ export class CategoryComponent implements OnInit {
       "item_id": this.itemList[i].item_id
     }
     console.log(reqBody);
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.del_item, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.del_item, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success(res.msg, '', 'Close');
         this.itemList = [];
@@ -249,11 +254,11 @@ export class CategoryComponent implements OnInit {
       "cat_id": this.cat_data[this.editCatIndex].cat_id,
     }
     console.log(reqBody);
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.edit_Category, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.edit_Category, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success(res.msg, '', 'Close');
         this.getCategoryData = [];
@@ -282,11 +287,11 @@ export class CategoryComponent implements OnInit {
       // "qty": this.editItemForm.get('qty').value ? parseInt(this.editItemForm.get('qty').value) : 0
     }
     console.log(reqBody);
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.edit_item, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.edit_item, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         this.cat_edit_popup_close('content');
         Notiflix.Report.success(res.msg, '', 'Close');
@@ -315,12 +320,12 @@ export class CategoryComponent implements OnInit {
     this.getItem();
   }
   getItem = () => {
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
     let params = { cat_id: this.cat_id }
 
-    this.ErpService.get_Reqs(erp_all_api.urls.get_Item, { headers: headers, params: params }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.get_Reqs_params(erp_all_api.urls.get_Item, { params: params }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         this.itemList = [];
         console.log("response is", res.data);
@@ -361,11 +366,11 @@ export class CategoryComponent implements OnInit {
 
     }
     console.log(reqBody);
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.add_Item, reqBody, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.add_Item, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log("response is", res);
         Notiflix.Report.success(res.msg, '', 'Close');

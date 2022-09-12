@@ -48,11 +48,11 @@ export class ProdEntryComponent implements OnInit {
 
   get_Category = () => {
     this.loader = true;
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
@@ -71,11 +71,11 @@ export class ProdEntryComponent implements OnInit {
   };
   // get_proddata = () => {
   //   this.loader = true;
-  //   let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
+  //   let auth_token = sessionStorage.getItem('CORE_SESSION');
   //   let headers = new HttpHeaders();
   //   headers = headers.set('auth-token', auth_token);
 
-  //   this.ErpService.get_Reqs(erp_all_api.urls.get_prod, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+  //   this.ErpService.get_Reqs(erp_all_api.urls.get_prod).pipe(finalize(() => { this.loader = false; })).subscribe(
   //     (res: any) => {
   //       let catData = res.data;
   //       for (let i = 0; i < catData.length; i++) {
@@ -130,9 +130,9 @@ export class ProdEntryComponent implements OnInit {
 
   add_Product = () => {
     this.loader = true;
-    let auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2Vyc0RldGFpbHMiOnsidXNlcklkIjoiQ3ZUZGZMMDhJUThzdTgzclRxTlNYam5DeEpSVEFCVWEiLCJuYW1lIjoiYWRtaW4iLCJ1c2VyVHlwZSI6ImFkbWluIiwic3RhdHVzIjoxLCJjcmVhdGVkX2F0IjoiMjAyMi0wMi0xOVQwMzozMToyOC4wMDBaIiwicGFzc3dvcmQiOiIkMmIkMTAkNk9SSWRDLnNadVJ6Lnc1Y3JIWEpXZTlGQkQvU0h6OFhydEgvQ2g0aXJxbnpuQmxaeUI2akciLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSJ9LCJpYXQiOjE2NDU0MjY5NTZ9.1082MNi-TtAV1I4zLDdZlWY3_OjiqBXAnCqFDJP44Gk'
-    let headers = new HttpHeaders();
-    headers = headers.set('auth-token', auth_token);
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
 
     const req_body = {
       "prod_id": this.addProductForm.value.prod_name,
@@ -141,7 +141,7 @@ export class ProdEntryComponent implements OnInit {
 
     }
 
-    this.ErpService.post_Reqs(erp_all_api.urls.add_product, req_body, { headers: headers }).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.add_product, req_body).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success(res, '', 'Close');
         this.previousPage();

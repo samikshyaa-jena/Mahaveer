@@ -13,10 +13,13 @@ export class ErpServiceService {
   
 
 
-  post_Reqs(url: string, reqBody: any, headers: any) {
-    return this.http.post(url, reqBody, headers);
+  post_Reqs(url: string, reqBody: any) {
+    return this.http.post(url, reqBody);
   }
-  get_Reqs(url: string, headers: any ) {
-    return this.http.get(url, headers);
+  get_Reqs(url: string) {
+    return this.http.get(url);
+  }
+  get_Reqs_params(url: string, header: any) {
+    return this.http.get(url, header);
   }
 }

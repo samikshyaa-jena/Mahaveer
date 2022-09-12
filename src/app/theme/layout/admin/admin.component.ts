@@ -47,7 +47,7 @@ export class AdminComponent implements OnInit {
       }, 500);
     }
 
-    this.appService.fetchWalletBalance();
+    // this.appService.fetchWalletBalance();
   }
 
   navMobClick() {

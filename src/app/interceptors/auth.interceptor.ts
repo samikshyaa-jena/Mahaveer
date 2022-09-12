@@ -30,7 +30,7 @@ export class AuthInterceptor implements HttpInterceptor {
             if (expDate <= startDate) { this.appService.logOut(); }
 
             if (this.allowRefresh && (mins <= 10)) {
-                this.refreshToken();
+                // this.refreshToken();
             }
 
         } else {
@@ -53,7 +53,7 @@ export class AuthInterceptor implements HttpInterceptor {
             } else {
                 req = req.clone({
                     setHeaders: {
-                        Authorization: `${sessionStorage.getItem('CORE_SESSION')}`
+                        "auth-token": `${sessionStorage.getItem('CORE_SESSION')}`
                     }
                 });
             }            
@@ -62,24 +62,21 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(req);
     }
 
-    private async refreshToken() {
-        this.allowRefresh = false;
+    // private async refreshToken() {
+    //     this.allowRefresh = false;
 
-        const encUrl = await AuthConfig.config.encodeUrl(AuthApi.url.refreshToken);
+    //     const encUrl = await AuthConfig.config.encodeUrl(AuthApi.url.refreshToken);
 
-        this.http.post(encUrl, {})
-        .pipe(finalize(() => { this.allowRefresh = true; }))
-        .subscribe(
-            (res: any) => {
-                // console.log('Refresh Token Response: ', res);
-                // Replace Token
-                sessionStorage.setItem('CORE_SESSION', res.token);
-                this.appService.autoLogOut(); // Refresh Logout Timer.
-            },
-            (err: any) => {
-                // console.log('Refresh Token Error: ', err);
-            }
-        );
+    //     this.http.post(encUrl, {})
+    //     .pipe(finalize(() => { this.allowRefresh = true; }))
+    //     .subscribe(
+    //         (res: any) => {
+    //             sessionStorage.setItem('CORE_SESSION', res.token);
+    //             this.appService.autoLogOut(); 
+    //         },
+    //         (err: any) => {
+    //         }
+    //     );
 
-    }
+    // }
 }

@@ -228,7 +228,7 @@ export class FundtransferComponent implements OnInit, OnDestroy {
                 // Fetch Shop Name
                 this.getShopName();
 
-                this.appService.fetchWalletBalance();
+                // this.appService.fetchWalletBalance();
               }
               // Beneficiary Verification Performed Code Ends
 

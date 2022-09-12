@@ -76,7 +76,7 @@ export class NavRightComponent implements OnInit {
 
   fetchWallet() {
     this.ngxSpinner.show('walletSpinner', { bdColor: "rgba(0, 0, 0, 0.5)", type: "timer" });
-    this.appService.fetchWalletBalance();
+    // this.appService.fetchWalletBalance();
   }
 
   logOutApp() {

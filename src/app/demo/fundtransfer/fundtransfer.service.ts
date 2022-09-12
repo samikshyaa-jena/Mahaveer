@@ -86,9 +86,9 @@ export class FundtransferService {
     return this.http.get('https://wallet.iserveu.online/CORESTAGING/user/user_details');
   }
 
-  fetchWalletBalance(postData: { user_name: string }) {
-    return this.http.post('https://grpcwallet-vn3k2k7q7q-uc.a.run.app/wallet/checkbalance', postData);
-  }
+  // fetchWalletBalance(postData: { user_name: string }) {
+  //   return this.http.post('https://grpcwallet-vn3k2k7q7q-uc.a.run.app/wallet/checkbalance', postData);
+  // }
 
   checkDMTFeature() {
     const tokenData: {sub: string} = jwt_decode(sessionStorage.getItem('CORE_SESSION'));
