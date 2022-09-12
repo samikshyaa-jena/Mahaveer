@@ -72,7 +72,7 @@ export class AddProductionComponent implements OnInit {
         console.log(res);
         let prod = res.data;
         for (let i = 0; i < prod.length; i++) {
-          if (prod[i].delete_stat == 0 ) {
+          if (prod[i].delete_stat == 0) {
             this.getProductData.push(prod[i]);
           }
           // for (let j = 0; j < this.productCategory.length; j++) {
@@ -87,7 +87,7 @@ export class AddProductionComponent implements OnInit {
         }
 
         console.log("getProductData==>", this.getProductData);
-        
+
 
         //   for (let j = 0; j < this.getProductData.length; j++) {
         //     var t;
@@ -95,7 +95,7 @@ export class AddProductionComponent implements OnInit {
         //     t = this.getProductData[j].approx_time;
 
         //     console.log(this.getProductData[j].approx_time.length);
-            
+
 
         //     if (t.length == 3) {
         //       tar_t = t.charAt(0) + t.charAt(1);              
@@ -106,11 +106,11 @@ export class AddProductionComponent implements OnInit {
         //     var n = parseInt(tar_t);
 
         //     console.log(n);
-            
+
         //     this.date2.setDate(this.today.getDate() + n);
 
         //     console.log(this.date2);
-            
+
 
         //     if (this.getProductData[j].approx_time.slice(-1) == 'D') {
         //       this.getProductData[j] = Object.assign(this.getProductData[j],
@@ -123,16 +123,16 @@ export class AddProductionComponent implements OnInit {
         //       );
 
         //     }
-            
+
         //   }
 
         // console.log(this.getProductData);
-        
+
       },
-      (err: any) =>{
+      (err: any) => {
         console.log(err);
         Notiflix.Report.failure(err.error.msg, '', 'Close');
-        
+
       });
 
     // this.ErpService.get_Reqs(erp_all_api.urls.get_product).pipe(finalize(() => { this.loader = false; })).subscribe(
@@ -207,7 +207,7 @@ export class AddProductionComponent implements OnInit {
       });
 
   };
- 
+
   // getScrap = () => {
   //   this.loader = true;
   //   let auth_token = sessionStorage.getItem('CORE_SESSION');
@@ -220,7 +220,7 @@ export class AddProductionComponent implements OnInit {
 
   //       this.getscrapData = res.data;
   //       this.getscrapData2 = res.data;
-        
+
   //     },
   //     (err: any) => {
   //       Notiflix.Report.failure(err.error.msg, '', 'Close');
@@ -259,10 +259,10 @@ export class AddProductionComponent implements OnInit {
     // headers = headers.set('auth-token', auth_token);
 
     const req_body = [{
-    "type": this.editProductForm.value.scrap,
-    "qty": this.editProductForm.value.qty,
-    "unit": this.editProductForm.value.unit,
-    "entry_date": this.datePipe.transform(this.today, 'yyyy-MM-dd')
+      "type": this.editProductForm.value.scrap,
+      "qty": this.editProductForm.value.qty,
+      "unit": this.editProductForm.value.unit,
+      "entry_date": this.datePipe.transform(this.today, 'yyyy-MM-dd')
     }]
 
     this.ErpService.post_Reqs(erp_all_api.urls.add_scrap, req_body).pipe(finalize(() => { this.loader = false; })).subscribe(
@@ -287,11 +287,11 @@ export class AddProductionComponent implements OnInit {
     this.edit = false;
     this.rawmatData = row;
     this.showscrapcons();
-    
+
     // var t_date = new Date(row.tar_date);
     // t_date = this.datePipe.transform(t_date, 'yyyy-MM-dd');
     // console.log(t_date);
-    
+
     // this.editProductForm.patchValue({
     //   target_time: t_date,
     //   prod_id: row.prodution_id,
@@ -301,36 +301,36 @@ export class AddProductionComponent implements OnInit {
     // this.getScrap();
   }
 
-  chStatus(evt){
+  chStatus(evt) {
     if (evt.target.value == 'completed') {
       this.scrap = true;
       this.editProductForm.patchValue({
         target_time: this.today,
-      });      
+      });
     }
-    else{
+    else {
       this.scrap = false;
     }
   }
 
-  getScheduledTime(evt){
+  getScheduledTime(evt) {
     console.log(evt);
-    
+
     var d1 = this.datePipe.transform(evt.value, 'yyyy-MM-dd');
     var d2 = this.datePipe.transform(this.today, 'yyyy-MM-dd');
 
     console.log(d1, d2);
-    
 
-    if ( this.editProductForm.value.status == 'completed' &&  d1 > d2) {
+
+    if (this.editProductForm.value.status == 'completed' && d1 > d2) {
       this.editProductForm.patchValue({
         status: 'progress',
-      });      
+      });
     }
   }
 
   prevent_0(e: any) {
-    console.log(e);    
+    console.log(e);
 
     if (this.addProductForm.value.qty < 1 && this.addProductForm.value.qty != '') {
       this.qty_error = 'Quantity should be greater than 0';
@@ -338,21 +338,21 @@ export class AddProductionComponent implements OnInit {
       this.qty_error = null;
     }
   }
-  updateProduct(status,row){
+  updateProduct(status, row) {
     console.log(row);
 
     this.edit = true;
     this.rawmatData = row;
-    
+
     // this.loader = true;
     // let auth_token = sessionStorage.getItem('CORE_SESSION');
     // let headers = new HttpHeaders();
     // headers = headers.set('auth-token', auth_token);
 
     const req_body = {
-        "prodution_id": row.production_id,
-        "expected_time": this.datePipe.transform(row.expected_time, 'dd-MM-yyyy'),
-        "status": status
+      "prodution_id": row.production_id,
+      "expected_time": this.datePipe.transform(row.expected_time, 'dd-MM-yyyy'),
+      "status": status
     }
 
     this.ErpService.post_Reqs(erp_all_api.urls.update_product, req_body).pipe(finalize(() => { this.loader = false; })).subscribe(
@@ -373,18 +373,18 @@ export class AddProductionComponent implements OnInit {
   //     this.addScrap();
   //   }
   // }
-  showscrapcons(){
+  showscrapcons() {
     this.scrap_con = true;
     this.show_prod = false;
   }
-  cancelEdittab(){
+  cancelEdittab() {
     this.edit_prod = false;
     // this.editProductForm.reset();
   }
   prevent_char(e: any) {
-    console.log(e);   
+    console.log(e);
 
-      return e.keyCode >= 48 && e.charCode <= 57;
+    return e.keyCode >= 48 && e.charCode <= 57;
   }
 
   // getSc(event){
@@ -394,10 +394,10 @@ export class AddProductionComponent implements OnInit {
   //   var temp = this.getscrapData.filter(d => {
   //     const vals = d.type;
   //     console.log(vals);
-      
+
   //     return new RegExp(val, 'gi').test(vals.toString());
   //   });
-  
+
   //   this.getscrapData = temp;
   //   if (temp && temp != '') {
   //     this.showAutcompleteList = true;
@@ -417,7 +417,7 @@ export class AddProductionComponent implements OnInit {
   //   this.editProductForm.controls.scrap.setValue(obj.type);
   // }
 
-  back(e){
+  back(e) {
     this.scrap_con = e;
     this.show_prod = e;
     this.get_Product();
