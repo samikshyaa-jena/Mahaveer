@@ -125,6 +125,7 @@ export class ProductComponent implements OnInit {
     fd.append('min_stock', parseInt(this.addProductForm.get('min_stk').value));
     fd.append('unit', this.addProductForm.get('unit').value);
     fd.append('price', this.addProductForm.get('mrp').value);
+    fd.append('hsn', this.addProductForm.get('hsn').value);
     this.uploadedFiles ? fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name) : ''
    
 
@@ -165,6 +166,7 @@ export class ProductComponent implements OnInit {
       gst: parseInt(this.editProductForm.get('gst').value),
       min_stock: parseInt(this.editProductForm.get('min_stk').value),
       unit: this.editProductForm.get('unit').value,
+      hsn: this.editProductForm.get('hsn').value,
       price: 0
     };
 

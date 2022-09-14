@@ -64,7 +64,7 @@ export class QuotationEntryComponent implements OnInit {
       custmer: new FormControl("choose_cname", [Validators.required]),
       q_date: new FormControl(this.today, [Validators.required]),
       priority: new FormControl("choose_quot", [Validators.required]),
-      amnt: new FormControl("0", [Validators.required]),
+      amnt: new FormControl(0, [Validators.required]),
     });
   }
 
@@ -388,7 +388,7 @@ export class QuotationEntryComponent implements OnInit {
       "priority": this.quotation_form.get('priority').value,
       "date": this.datePipe.transform(this.quotation_form.get('q_date').value, 'yyyy-MM-dd'),
       "quote_data": quotation_arr,
-      "paid_amount": this.quotation_form.get('amnt').value,
+      "paid_amount": (+this.quotation_form.get('amnt').value).toFixed(2),
       "status": "QUOTATION"
     };
 
