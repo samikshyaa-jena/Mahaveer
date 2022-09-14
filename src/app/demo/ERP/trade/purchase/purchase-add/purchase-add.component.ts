@@ -201,7 +201,7 @@ export class PurchaseAddComponent implements OnInit {
           GST = parseInt(this.itemData[form_cont.controls.hide_item.value][i].gst);
           hsn = this.itemData[form_cont.controls.hide_item.value][i].hsn;
 
-          mrp = form_cont.controls.price.value;
+          mrp = this.itemData[form_cont.controls.hide_item.value][i].mrp;
           gst = mrp * (GST / 100);
           this.itemname = this.itemData[form_cont.controls.hide_item.value][i].prod_name;
 
@@ -320,72 +320,79 @@ export class PurchaseAddComponent implements OnInit {
   add_purchase_details = (type) => {
 
     let url;
+    if (this.t_amount == 0) {
+      Notiflix.Report.failure("purchase amount should not be 0", '', 'Close');
 
-    if (type == 'add') {
-      url = erp_all_api.urls.trd_purchase_entry;
     } else {
-      url = erp_all_api.urls.trd_update_purchase_entry;
+
+      if (type == 'add') {
+        url = erp_all_api.urls.trd_purchase_entry;
+      } else {
+        url = erp_all_api.urls.trd_update_purchase_entry;
+      }
+
+      this.productformarray = [];
+      var p_form = this.productForm.get('product')['controls'];
+      console.log(p_form);
+
+      for (let i = 0; i < p_form.length; i++) {
+        console.log(p_form[i].value);
+        this.productformarray.push(p_form[i].value)
+      }
+
+      if (this.productformarray) {
+
+        var product_arr = this.productformarray.map((p_array) => {
+          return {
+            catagory: p_array.category,
+            prod_id: p_array.item,
+            hsn: p_array.hsn,
+            igst: p_array.igst,
+            cgst: p_array.cgst,
+            sgst: p_array.sgst,
+            price: p_array.price,
+            qty: p_array.qty,
+            discount: p_array.discount,
+            total: p_array.total,
+            unit: p_array.unit
+          }
+        });
+
+      }
+
+      this.loader = true;
+      console.log(this.purchase_form.get('invo').value,);
+      console.log(this.productformarray);
+      const reqBody = {
+
+        "invoice": this.purchase_form.get('invo').value,
+        "vendor_id": this.purchase_form.get('custmer').value,
+        "type": this.type,
+        "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
+        "purchase_data": product_arr,
+
+      }
+
+      // let auth_token = sessionStorage.getItem('CORE_SESSION');
+      // let headers = new HttpHeaders();
+      // headers = headers.set('auth-token', auth_token);
+
+      this.ErpService.post_Reqs(url, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
+        (res: any) => {
+          Notiflix.Report.success('SuccessFully Added', '', 'Close');
+          console.log(res, "get item");
+          this.get_purchase_details.emit();
+          this.purchase_form.reset();
+          this.previousPage();
+        },
+        (err: any) => {
+          console.log(err);
+          console.log(err.error.msg);
+          Notiflix.Report.failure(err.error.msg, '', 'Close');
+        });
+
+
     }
-
-    this.productformarray = [];
-    var p_form = this.productForm.get('product')['controls'];
-    console.log(p_form);
-
-    for (let i = 0; i < p_form.length; i++) {
-      console.log(p_form[i].value);
-      this.productformarray.push(p_form[i].value)
-    }
-
-    if (this.productformarray) {
-
-      var product_arr = this.productformarray.map((p_array) => {
-        return {
-          catagory: p_array.category,
-          prod_id: p_array.item,
-          hsn: p_array.hsn,
-          igst: p_array.igst,
-          cgst: p_array.cgst,
-          sgst: p_array.sgst,
-          price: p_array.price,
-          qty: p_array.qty,
-          discount: p_array.discount,
-          total: p_array.total,
-          unit: p_array.unit
-        }
-      });
-
-    }
-
-    this.loader = true;
-    console.log(this.purchase_form.get('invo').value,);
-    console.log(this.productformarray);
-    const reqBody = {
-
-      "invoice": this.purchase_form.get('invo').value,
-      "vendor_id": this.purchase_form.get('custmer').value,
-      "type": this.type,
-      "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
-      "purchase_data": product_arr,
-
-    }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
-    this.ErpService.post_Reqs(url, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
-      (res: any) => {
-        Notiflix.Report.success('SuccessFully Added', '', 'Close');
-        console.log(res, "get item");
-        this.get_purchase_details.emit();
-        this.purchase_form.reset();
-        this.previousPage();
-      },
-      (err: any) => {
-        console.log(err);
-        console.log(err.error.msg);
-        Notiflix.Report.failure(err.error.msg, '', 'Close');
-      });
   };
   previousPage() {
     console.log('hii');
@@ -440,10 +447,10 @@ export class PurchaseAddComponent implements OnInit {
     this.t_amount = 0;
 
     for (let i = 0; i < pform.length; i++) {
-      this.t_igst = this.t_igst + pform[i].value.igst;
-      this.t_sgst = this.t_sgst + pform[i].value.sgst;
-      this.t_cgst = this.t_cgst + pform[i].value.cgst;
-      this.t_amount = this.t_amount + pform[i].value.total;
+      this.t_igst = (this.t_igst + pform[i].value.igst).toFixed(2);
+      this.t_sgst = (this.t_sgst + pform[i].value.sgst).toFixed(2);
+      this.t_cgst = (this.t_cgst + pform[i].value.cgst).toFixed(2);
+      this.t_amount = (this.t_amount + pform[i].value.total).toFixed(2);
     }
 
   }

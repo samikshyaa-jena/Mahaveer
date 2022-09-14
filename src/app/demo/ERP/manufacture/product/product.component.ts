@@ -117,27 +117,16 @@ export class ProductComponent implements OnInit {
     console.log(this.uploadedFiles);
 
     // var gst: number = parseInt(this.addProductForm.get('gst').value);
-
-    var fd: any;
-
-    if (this.uploadedFiles != undefined || this.uploadedFiles != '') {
-      fd = new FormData();
-      fd.append('prod_name', this.addProductForm.get('prod_name').value);
-      fd.append('gst', parseInt(this.addProductForm.get('gst').value));
-      fd.append('min_stock', parseInt(this.addProductForm.get('min_stk').value));
-      fd.append('unit', this.addProductForm.get('unit').value);
-      fd.append('price', this.addProductForm.get('mrp').value);
-      fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name);
-    } else {
-      fd = {
-        prod_name: this.addProductForm.get('prod_name').value,
-        gst: parseInt(this.addProductForm.get('gst').value),
-        min_stock: parseInt(this.addProductForm.get('min_stk').value),
-        unit: this.addProductForm.get('unit').value,
-        price: this.addProductForm.get('mrp').value,
-        prod_image: ''
-      };
-    }
+    let p_name = this.addProductForm.get('prod_name').value
+    console.log("prod_name==>", this.addProductForm.get('prod_name').value, p_name);
+    const fd: any = new FormData();
+    fd.append('prod_name', p_name);
+    fd.append('gst', parseInt(this.addProductForm.get('gst').value));
+    fd.append('min_stock', parseInt(this.addProductForm.get('min_stk').value));
+    fd.append('unit', this.addProductForm.get('unit').value);
+    fd.append('price', this.addProductForm.get('mrp').value);
+    this.uploadedFiles ? fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name) : ''
+   
 
     // const reqBody = {
     //   prod_name: this.addProductForm.get('prod_name').value,

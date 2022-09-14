@@ -31,6 +31,7 @@ export class PurchaseAddComponent implements OnInit {
   duplicateproductformarray: any = [];
   type: any;
   today = new Date();
+  total_chk: any;
 
   @Output() BackTab = new EventEmitter<boolean>()
   @Input() pur_editData: any;
@@ -324,6 +325,10 @@ export class PurchaseAddComponent implements OnInit {
 
   add_purchase_details = (type) => {
 
+    if (this.t_amount == 0) {
+      Notiflix.Report.failure("purchase amount should not be 0", '', 'Close');
+      
+    }else {
     let url;
 
     if (type == 'add') {
@@ -390,6 +395,7 @@ export class PurchaseAddComponent implements OnInit {
         console.log(err.error.msg);
         Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
+    }
   };
   previousPage() {
     console.log('hii');
@@ -442,6 +448,7 @@ export class PurchaseAddComponent implements OnInit {
     this.t_sgst = 0;
     this.t_cgst = 0;
     this.t_amount = 0;
+    
 
     for (let i = 0; i < pform.length; i++) {
       this.t_igst = this.t_igst + pform[i].value.igst;
@@ -449,6 +456,8 @@ export class PurchaseAddComponent implements OnInit {
       this.t_cgst = this.t_cgst + pform[i].value.cgst;
       this.t_amount = this.t_amount + pform[i].value.total;
     }
+
+    
 
   }
 

@@ -27,7 +27,7 @@ export class PurchaseComponent implements OnInit {
   purchase_data: any;
   purchase_tab: boolean;
   gstVal: any;
-  control: FormGroup; 
+  control: FormGroup;
   getCategoryData: any;
   itemList: any;
   cat_id: any;
@@ -66,7 +66,7 @@ export class PurchaseComponent implements OnInit {
     config: NgbModalConfig,
     private modalService: NgbModal,
     private fb: FormBuilder,
-  ) { 
+  ) {
     this.purchase_form = new FormGroup({
       invo: new FormControl("", [Validators.required]),
       vendor: new FormControl("", [Validators.required]),
@@ -95,9 +95,9 @@ export class PurchaseComponent implements OnInit {
       igst: new FormControl(""),
       total: new FormControl(""),
     });
-   }
+  }
 
-   ngOnInit() {
+  ngOnInit() {
     this.get_Category();
     this.get_Vendor();
     this.get_Item();
@@ -171,7 +171,7 @@ export class PurchaseComponent implements OnInit {
     this.catt_id = this.updateData[i].category;
     this.itemmName = this.updateData[i].itemName;
     this.itemm_id = this.updateData[i].prod_id;
-    console.log(this.cattName,this.itemmName,this.catt_id,this.itemm_id);
+    console.log(this.cattName, this.itemmName, this.catt_id, this.itemm_id);
 
     this.updatePurchase.patchValue({
       category: this.cattName,
@@ -268,7 +268,7 @@ export class PurchaseComponent implements OnInit {
   };
   // edit ends
 
-  changeType = (e)=>{
+  changeType = (e) => {
     console.log(e);
     if (e == 'manufcture') {
       // this.router.navigate(["/v2/Erpmain/category"])
@@ -302,7 +302,7 @@ export class PurchaseComponent implements OnInit {
     this.dynamicManufacture.reset();
     this.purchase_form.reset();
   }
-  openUpdateProductPage = (i)=>{
+  openUpdateProductPage = (i) => {
     this.purchase_tab = true;
     this.purchase_tab2 = this.get_purchase_data[i];
   }
@@ -329,19 +329,19 @@ export class PurchaseComponent implements OnInit {
   }
 
   calc_total() {
-    let prc=this.updatePurchase.get('price').value;
-    let qt=this.updatePurchase.get('qty').value;
-    let discnt=this.updatePurchase.get('discount').value;
-    let igst = this.updatePurchase.get('igst').value;
-    let sgst =this.updatePurchase.get('sgst').value;
-    let cgst = this.updatePurchase.get('cgst').value;
+    let prc = this.updatePurchase.get('price').value;
+    let qt = this.updatePurchase.get('qty').value;
+    let discnt = this.updatePurchase.get('discount').value;
+    let igst = (this.updatePurchase.get('igst').value).toFixed(2);
+    let sgst = (this.updatePurchase.get('sgst').value).toFixed(2);
+    let cgst = (this.updatePurchase.get('cgst').value).toFixed(2);
     let total = 0;
-    let gstTotal = (igst + cgst + sgst)/100;
+    let gstTotal = (igst + cgst + sgst) / 100;
     let sum = 0;
-    sum = qt*prc
-    total = ((sum*gstTotal) + sum)-discnt;
+    sum = qt * prc
+    total = ((sum * gstTotal) + sum) - discnt;
     this.updatePurchase.patchValue({
-       total:total
+      total: (total).toFixed(2)
     })
   }
 
@@ -524,10 +524,10 @@ export class PurchaseComponent implements OnInit {
             s = s + sgst[j];
             totalSgst[i] = s;
 
-            totalIgst[i] = (totalIgst[i] == 0) ? "NA" : totalIgst[i] //+ " %";
-            totalCgst[i] = (totalCgst[i] == 0) ? "NA" : totalCgst[i] //+ " %";
-            totalSgst[i] = (totalSgst[i] == 0) ? "NA" : totalSgst[i] //+ " %";
-            this.get_purchase_data[i].totalsum = totaldata[i];
+            totalIgst[i] = (totalIgst[i] == 0) ? "NA" : (totalIgst[i]).toFixed(2) //+ " %";
+            totalCgst[i] = (totalCgst[i] == 0) ? "NA" : (totalCgst[i]).toFixed(2) //+ " %";
+            totalSgst[i] = (totalSgst[i] == 0) ? "NA" : (totalSgst[i]).toFixed(2) //+ " %";
+            this.get_purchase_data[i].totalsum = (totaldata[i]).toFixed(2);
             this.get_purchase_data[i].totaligst = totalIgst[i];
             this.get_purchase_data[i].totalcgst = totalCgst[i];
             this.get_purchase_data[i].totalsgst = totalSgst[i];
@@ -583,7 +583,7 @@ export class PurchaseComponent implements OnInit {
   };
 
 
-  closeUpdateForm = (updt) =>{
+  closeUpdateForm = (updt) => {
     this.modalService.dismissAll(updt);
   }
 
@@ -849,10 +849,10 @@ export class PurchaseComponent implements OnInit {
       let sgstBarri = this.popupData[i].sgst;
       let priceBarri = this.popupData[i].purchase_price;
       let qtyBarri = this.popupData[i].quantity;
-      priceBarri = priceBarri*qtyBarri;
-      igstVal = (igstBarri/100)*priceBarri;
-      sgstVal = (sgstBarri/100)*priceBarri;
-      cgstVal = (cgstBarri/100)*priceBarri;
+      priceBarri = priceBarri * qtyBarri;
+      igstVal = (igstBarri / 100) * priceBarri;
+      sgstVal = (sgstBarri / 100) * priceBarri;
+      cgstVal = (cgstBarri / 100) * priceBarri;
       this.popupData[i].igstVal = igstVal;
       this.popupData[i].sgstVal = sgstVal;
       this.popupData[i].cgstVal = cgstVal;
@@ -903,8 +903,8 @@ export class PurchaseComponent implements OnInit {
       this.dummy[l].total = this.popupData[l].total;
     }
 
-    this.dummy =  this.dummy.filter((el) => {
-      return el.category !=  '';
+    this.dummy = this.dummy.filter((el) => {
+      return el.category != '';
     });
     console.log(this.dummy);
     this.popupData = this.dummy;

@@ -48,9 +48,9 @@
                 <td>{{data.purchase_date | date: 'dd/MM/yyyy'}}</td>
                 <td>{{data.vendorData.name}}</td>
                 <td>{{data.vendorData.gstn}}</td>
-                <td>NA</td>
-                <td>NA</td>
-                <td>NA</td>
+                <td>{{data.totalcgst}}</td>
+                <td>{{data.totalsgst}}</td>
+                <td>{{data.totaligst}}</td>
                 <td>{{data.totalPrice}}</td>
                 <!-- <td><span style="color: blue; cursor: pointer;" (click)="debitNote(data.invoice_no,data.purchase_data,data.vendorData,debit)">Return</span></td> -->
               </tr>

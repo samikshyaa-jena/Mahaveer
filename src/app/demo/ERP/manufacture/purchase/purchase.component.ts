@@ -178,19 +178,19 @@ export class PurchaseComponent implements OnInit {
 
   }
   calc_total() {
-    let prc=this.updatePurchase.get('price').value;
+    let prc=(this.updatePurchase.get('price').value).toFixed(2);
     let qt=this.updatePurchase.get('qty').value;
     let discnt=this.updatePurchase.get('discount').value;
-    let igst = this.updatePurchase.get('igst').value;
-    let sgst =this.updatePurchase.get('sgst').value;
-    let cgst = this.updatePurchase.get('cgst').value;
+    let igst = (this.updatePurchase.get('igst').value).toFixed(2);
+    let sgst =(this.updatePurchase.get('sgst').value).toFixed(2);
+    let cgst = (this.updatePurchase.get('cgst').value).toFixed(2);
     let total = 0;
     let gstTotal = (igst + cgst + sgst)/100;
     let sum = 0;
     sum = qt*prc
     total = ((sum*gstTotal) + sum)-discnt;
     this.updatePurchase.patchValue({
-       total:total
+       total:(total).toFixed(2)
     })
   }
 
@@ -344,11 +344,14 @@ export class PurchaseComponent implements OnInit {
             //sgst
             s = s + sgst[j];
             totalSgst[i] = s;
+            console.log("totalIgst==>", totalIgst[i], "totalCgst==>", totalCgst[i], "totalSgst==>", totalSgst[i]);
 
-            totalIgst[i] = (totalIgst[i] == 0) ? "NA" : totalIgst[i] //+ " %";
-            totalCgst[i] = (totalCgst[i] == 0) ? "NA" : totalCgst[i] //+ " %";
-            totalSgst[i] = (totalSgst[i] == 0) ? "NA" : totalSgst[i] //+ " %";
-            this.get_purchase_data[i].totalsum = totaldata[i];
+            totalIgst[i] = (totalIgst[i] == 0) ? "NA" : (totalIgst[i]).toFixed(2) //+ " %";
+            totalCgst[i] = (totalCgst[i] == 0) ? "NA" : (totalCgst[i]).toFixed(2) //+ " %";
+            totalSgst[i] = (totalSgst[i] == 0) ? "NA" : (totalSgst[i]).toFixed(2) //+ " %";
+            console.log("totalIgst==>", totalIgst[i], "totalCgst==>", totalCgst[i], "totalSgst==>", totalSgst[i]);
+
+            this.get_purchase_data[i].totalsum = (totaldata[i]).toFixed(2);
             this.get_purchase_data[i].totaligst = totalIgst[i];
             this.get_purchase_data[i].totalcgst = totalCgst[i];
             this.get_purchase_data[i].totalsgst = totalSgst[i];

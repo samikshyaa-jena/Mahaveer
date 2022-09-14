@@ -353,17 +353,19 @@ export class CategoryComponent implements OnInit {
 
     this.loader = true;
     let qnt = this.addItemForm.get('qty').value ? parseInt(this.addItemForm.get('qty').value) : 0;
-
+    let name = this.addItemForm.get('item_name').value;
+    console.log("qnt==>"+ qnt +" name==>"+ name);
+    
     const fd: any = new FormData();
     fd.append('cat_id', this.cat);
-    fd.append('name', this.addItemForm.get('item_name').value);
+    fd.append('name', name);
     fd.append('gst', parseInt(this.addItemForm.get('gst').value));
     fd.append('min_stock', parseInt(this.addItemForm.get('min_stk').value));
     fd.append('unit', this.addItemForm.get('unit').value);
     fd.append('mrp', parseFloat(this.addItemForm.get('mrp').value));
     fd.append('hsn', parseFloat(this.addItemForm.get('hsn').value));
     fd.append('qty', qnt);
-    fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name);
+    this.uploadedFiles ? fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name) : ''
 
     
     // const reqBody = {

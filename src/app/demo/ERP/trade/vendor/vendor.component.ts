@@ -34,7 +34,7 @@ export class VendorComponent implements OnInit {
   ) { 
     this.addVendorForm = new FormGroup({
       ven_name: new FormControl("",[Validators.required]),
-      ven_email: new FormControl("",[Validators.required]),
+      ven_email: new FormControl("",[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
       mob: new FormControl("",[Validators.required, Validators.minLength(10)]),
       type: new FormControl("type",[Validators.required]),
       gst_in: new FormControl("",[Validators.required, Validators.pattern(/^[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[1-9A-Za-z]{1}[Zz]{1}[0-9A-Za-z]{1}?$/)]),
@@ -42,7 +42,7 @@ export class VendorComponent implements OnInit {
     });
     this.updateVendorForm = new FormGroup({
       ven_name: new FormControl("",[Validators.required]),
-      ven_email: new FormControl("",[Validators.required]),
+      ven_email: new FormControl("",[Validators.required, Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)]),
       mob: new FormControl("",[Validators.required, Validators.minLength(10)]),
       type: new FormControl("type",[Validators.required]),
       gst_in: new FormControl("",[Validators.required, Validators.pattern(/^[0-9]{2}[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}[1-9A-Za-z]{1}[Zz]{1}[0-9A-Za-z]{1}?$/)]),
