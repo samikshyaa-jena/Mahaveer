@@ -4,9 +4,6 @@ import { Observable } from "rxjs";
 
 import jwt_decode from 'jwt-decode';
 import { AppService } from "../app.service";
-import { AuthApi } from "../auth/auth.api";
-import { AuthConfig } from "../app-config";
-import { finalize } from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
@@ -38,19 +35,13 @@ export class AuthInterceptor implements HttpInterceptor {
         }
 
         if (!req.url.includes('getlogintoken.json')) {
-            if(req.url.endsWith('isu_bank/_search') || req.url.endsWith('isu_elastic_user/_search')) {
+            if(req.url.endsWith('khwaja') || req.url.endsWith('shyam')) {
                 req = req.clone({
                     setHeaders: {
-                        Authorization: `Basic ZWxhc3RpYzpUQWhJamJ4U2RzRzRRRDY3WWVmZTZQdzg=`
+                        "auth-token": ``
                     }
                 });
-            } else if(req.url.startsWith('https://subscribefcm-vn3k2k7q7q-uc.a.run.app/subscribetotopic')) {
-                req = req.clone({
-                    setHeaders: {
-                        'Content-Type': `application/json`
-                    }
-                });
-            } else {
+            }  else {
                 req = req.clone({
                     setHeaders: {
                         "auth-token": `${sessionStorage.getItem('CORE_SESSION')}`

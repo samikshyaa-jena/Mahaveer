@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaymentService } from '../demo/payment/payment.service';
+// import { PaymentService } from '../demo/payment/payment.service';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -19,7 +19,7 @@ export class DepositslipComponent implements OnInit {
   UserName:any;
 
   constructor(
-    private paymentService: PaymentService,
+    // private paymentService: PaymentService,
     private router: Router
     ) {
       this.challanData = this.router.getCurrentNavigation().extras.state;

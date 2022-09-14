@@ -1,10 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './theme/shared/shared.module';
-
 import { AppComponent } from './app.component';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { AuthComponent } from './theme/layout/auth/auth.component';
@@ -18,10 +16,8 @@ import { NavLeftComponent } from './theme/layout/admin/nav-bar/nav-left/nav-left
 import { NavSearchComponent } from './theme/layout/admin/nav-bar/nav-left/nav-search/nav-search.component';
 import { NavRightComponent } from './theme/layout/admin/nav-bar/nav-right/nav-right.component';
 import { ConfigurationComponent } from './theme/layout/admin/configuration/configuration.component';
-import {MatProgressBarModule} from '@angular/material'
-
+import { MatProgressBarModule } from '@angular/material'
 import { ToggleFullScreenDirective } from './theme/shared/full-screen/toggle-full-screen';
-
 /* Menu Items */
 import { NavigationItem } from './theme/layout/admin/navigation/navigation';
 import { NgbButtonsModule, NgbDropdownModule, NgbTabsetModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
@@ -29,35 +25,31 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { ErrorComponent } from './demo/error/error.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { StorageModule } from '@ngx-pwa/local-storage';
-import {MatDialogModule} from '@angular/material/dialog';
+// import { StorageModule } from '@ngx-pwa/local-storage';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatRadioModule} from '@angular/material';
-import {MatSelectModule} from '@angular/material/select';
-
+import { MatRadioModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
 // FCM Packages
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireMessagingModule } from '@angular/fire/messaging';
+// import { AngularFireModule } from '@angular/fire';
+// import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { PushNotifyService } from './push-notify.service';
 // Socket Package
 import { Socket2Service } from './socket2.service';
 import { DepositslipComponent } from './depositslip/depositslip.component';
 import { StorageService } from './storage.service';
 import { AgmCoreModule } from '@agm/core';
-
 //import { AepsComponent } from './aeps/aeps.component';
-
-const fireBaseConfig = {
-  apiKey: "AIzaSyATxpFql9-yuh2FKtTYJSDcGp4b1unNdXE",
-  authDomain: "iserveumainapp.firebaseapp.com",
-  databaseURL: "https://iserveumainapp.firebaseio.com",
-  projectId: "iserveumainapp",
-  storageBucket: "iserveu_storage",
-  messagingSenderId: "421535327263",
-  appId: "1:421535327263:android:ad016c8ce5814f655ae12a"
-};
-
+// const fireBaseConfig = {
+//   apiKey: "AIzaSyATxpFql9-yuh2FKtTYJSDcGp4b1unNdXE",
+//   authDomain: "iserveumainapp.firebaseapp.com",
+//   databaseURL: "https://iserveumainapp.firebaseio.com",
+//   projectId: "iserveumainapp",
+//   storageBucket: "iserveu_storage",
+//   messagingSenderId: "421535327263",
+//   appId: "1:421535327263:android:ad016c8ce5814f655ae12a"
+// };
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,8 +68,6 @@ const fireBaseConfig = {
     ToggleFullScreenDirective,
     ErrorComponent,
     DepositslipComponent,
-    
-
     //AepsComponent
   ],
   imports: [
@@ -90,10 +80,6 @@ const fireBaseConfig = {
     NgbButtonsModule,
     NgbTabsetModule,
     HttpClientModule,
-    // StoreModule.forRoot({ dashboard: dashboardReducer }),
-    StorageModule.forRoot({ IDBNoWrap: true }),
-    AngularFireModule.initializeApp(fireBaseConfig),
-    AngularFireMessagingModule,
     MatDialogModule,
     MatTabsModule,
     MatSlideToggleModule,
@@ -103,6 +89,9 @@ const fireBaseConfig = {
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDRFjW0vNm_vvcaspgCXhdcBOPJeLcaPJU'
     })
+    // StorageModule.forRoot({ IDBNoWrap: true }),
+    // AngularFireModule.initializeApp(fireBaseConfig),
+    // AngularFireMessagingModule,
     // SocketIoModule.forRoot(config)
   ],
   providers: [
