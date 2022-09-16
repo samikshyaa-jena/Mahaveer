@@ -21,6 +21,7 @@ export class DebitNoteComponent implements OnInit {
   modeForm: FormGroup;
   cattName: any;
   userForm: FormGroup;
+  adduserForm: FormGroup;
   control: FormGroup;
   userformnumber: []
   // userinfo: any;
@@ -41,6 +42,9 @@ export class DebitNoteComponent implements OnInit {
   invo_data: any = [];
   inv: boolean = false;
   debitData: any;
+  adduserformArray: any[]
+  t_gst: number;
+  t_amount: number;
 
   constructor(
     private fb: FormBuilder,
@@ -52,10 +56,13 @@ export class DebitNoteComponent implements OnInit {
       "vender": new FormControl(''),
       "invo_date": new FormControl(''),
       "invoiceNo": new FormControl('Invoice Number'),
+    });
+
+    this.adduserForm = new FormGroup({
       "user": new FormArray([
 
       ])
-    });
+    })
 
     this.modeForm = new FormGroup({
       mode: new FormControl("manufcture")
@@ -258,25 +265,25 @@ export class DebitNoteComponent implements OnInit {
   userinfo(): FormGroup {
     return this.fb.group({
 
-      "item": new FormControl('ch_item'),
+      "item": new FormControl('ch_item', [Validators.required]),
       "model_no": new FormControl(''),
-      "variant": new FormControl(''),
-      "quantity": new FormControl(''),
-      "unit": new FormControl('None'),
-      "price": new FormControl(''),
-      "a": new FormControl(''),
-      "discount": new FormControl(''),
-      "b": new FormControl(''),
-      "tax": new FormControl(''),
-      "amount": new FormControl(''),
+      "hsn": new FormControl('', [Validators.required]),
+      "quantity": new FormControl('', [Validators.required]),
+      "unit": new FormControl('None', [Validators.required]),
+      "price": new FormControl('', [Validators.required]),
+      "a": new FormControl('', [Validators.required]),
+      "discount": new FormControl('', [Validators.required]),
+      "b": new FormControl('', [Validators.required]),
+      "tax": new FormControl('', [Validators.required]),
+      "amount": new FormControl('', [Validators.required]),
 
     })
   }
   add_row() {
-    (<FormArray>this.userForm.get('user')).push(this.userinfo())
+    (<FormArray>this.adduserForm.get('user')).push(this.userinfo())
   }
   deleteRow(i) {
-    (<FormArray>this.userForm.get('user')).removeAt(i)
+    (<FormArray>this.adduserForm.get('user')).removeAt(i)
   }
 
 
@@ -371,5 +378,167 @@ export class DebitNoteComponent implements OnInit {
     this.manufacture_data_length = temp.length;
 
   }
+
+  chooseItem(form_cont, item){
+    form_cont.patchValue({
+      a: 0,
+      discount: 0,
+      quantity: 1,
+    });
+
+    console.log(item);
+    console.log(form_cont);
+    console.log(this.adduserForm);
+    console.log(this.item_data);
+
+    if (item != "ch_item") {
+      let gst;
+      let GST;
+      let mrp;
+
+      for (let i = 0; i < this.item_data.length; i++) {
+        if (this.item_data[i].item_id == item) {
+          GST = parseInt(this.item_data[i].gst);
+
+            mrp = this.item_data[i].mrp;
+            gst = mrp * (GST / 100);
+
+            form_cont.patchValue({
+              b: GST,
+              tax: gst,
+              hsn: this.item_data[i].hsn,
+              price: mrp,
+              unit: this.item_data[i].unit
+            });
+          
+        }
+      }
+
+    }
+
+    this.calc_total(form_cont.controls);
+  }
+
+  calc_total(form_cont) {
+
+    let prc: number = form_cont.price.value;
+    let qt: number = form_cont.quantity.value;
+    let discnt: number = form_cont.discount.value;
+    let item = form_cont.item.value;
+
+    let gst: number;
+    let GST: number;
+
+    for (let i = 0; i < this.item_data.length; i++) {
+      if (this.item_data[i].item_id == item) {
+
+        GST = parseInt(this.item_data[i].gst);
+        gst = prc * (GST / 100);
+      }
+    }
+
+    console.log(form_cont);
+    // let gstTotal = (igst + cgst + sgst) / 100;
+
+    let total: number = 0;
+    let total_gst: number = 0;
+
+    if (qt) {
+
+      total_gst = parseFloat((gst * qt).toFixed(2));
+        total = parseFloat((total_gst + ((prc * qt) - discnt)).toFixed(2));      
+
+      form_cont.amount.patchValue(total);
+      form_cont.tax.patchValue(total_gst);
+      console.log(form_cont);
+    }
+
+  }
+
+  totalCalculation() {
+
+    var pform = this.adduserForm.get('user')['controls'];
+
+    this.t_gst = 0;
+    this.t_amount = 0;
+
+    for (let i = 0; i < pform.length; i++) {
+      this.t_gst = this.t_gst + pform[i].value.tax;
+      this.t_amount = this.t_amount + pform[i].value.amount;
+    }
+
+  }
+
+  prevent(e, type) {
+    console.log(e.target.value);
+
+    if (type == 'qty') {
+      if (e.target.value > 0) {
+        return e.keyCode >= 48 && e.charCode <= 57;
+      } else {
+        return e.keyCode > 48 && e.charCode <= 57;
+      }
+    }
+    else if (type == 'dis') {
+      return e.keyCode >= 48 && e.charCode <= 57;
+    }
+  }
+
+  add_purchase_details = () => {
+
+    this.adduserformArray = [];
+    var p_form = this.adduserForm.get('user')['controls'];
+    console.log(p_form);
+
+    for (let i = 0; i < p_form.length; i++) {
+      console.log(p_form[i].value);
+      this.adduserformArray.push(p_form[i].value)
+    }
+
+    if (this.adduserformArray) {
+
+      var user_arr = this.adduserformArray.map((u_array) => {
+        return {
+          prod_id: u_array.category,
+          igst: u_array.igst,
+          cgst: u_array.cgst,
+          sgst: u_array.sgst,
+          price: u_array.price,
+          qty: u_array.qty,
+          discount: u_array.discount,
+          total: u_array.total
+        }
+      });
+
+    }
+
+    this.loader = true;
+    console.log(this.purchase_form.get('invo').value,);
+    console.log(this.adduserformArray);
+    const reqBody = {
+      "invoice": this.purchase_form.get('invo').value,
+      "customer_id": this.purchase_form.get('custmer').value,
+      // "type": "rawmaterial",
+      "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
+      "sell_data": user_arr,
+      "payment_status": this.purchase_form.get('payStatus').value,
+      "method": this.purchase_form.get('payMode').value,
+      "paid_amount": this.purchase_form.get('amnt').value
+
+    }
+
+    this.ErpService.post_Reqs(erp_all_api.urls.trd_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        // Notiflix.Report.success('SuccessFully Added', '', 'Close');
+        console.log(res, "get item");
+        this.adduserForm.reset();
+        // this.previousPage();
+      },
+      (err: any) => {
+        console.log(err);
+        console.log(err.error.msg);
+        // Notiflix.Report.failure(err.error.msg, '', 'Close');
+      });
+  };
 
 }
