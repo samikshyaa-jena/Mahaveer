@@ -1,40 +1,140 @@
-.top_buttons{
+.top_bar{
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 1%;
+    margin-bottom: 15px;
+    input{
+        border: 1px solid transparent;
+    }
 }
-.inpTag{
+.top_btn{
+    button{
+        border-radius: 60px;
+    }
+    .btn-light{
+        color: #07abb0;
+        border: 1px solid #07abb0;
+        background: white;
+    }
+}
+.bar2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    .left_cnt{
+        display: flex;
+        input{
+            width: 150px;
+            height: 32px;
+            border-radius: 2px;
+            border: 1.5px solid #07abb0;
+        }
+        select{
+            width: 250px;
+            height: 33px;
+            border-radius: 2px;
+            border: 1px solid lightgrey;
+        }
+        .mat_name{
+            width: 250px;
+            height: 30px;
+            border-radius: 2px;
+            border: 1.5px solid lightgray;
+        }
+    }    
+    .right_cnt{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        input{
+            border: 0;
+            // width: 70px;
+        }
+    }
+}
+.main_cnt{
+    border: 1px solid transparent;
+    padding: 1% 3%;
+}
+.datee{
+    border-bottom: 1px solid lightgray;
+    white-space: nowrap;
+    input{
+        background-color: lightgray;
+        border: 1px solid lightgray;
+    border-radius: 3px;
+    }
+}
+.v_line{
+    border: 0.1px solid lightgray;
+    height: 50px;
+}
+.v_line2{
+    border: 0.1px solid lightgray;
+    height: 30px;
+}
+.table2{
+    border: 1px solid lightgray;
+    margin-bottom: 0;
+    border-left: 0;
+}
+.table2 th{
+    padding: 5px 7px;
+    border: 1px solid lightgray;
+}
+
+.table2 td, .td_e{
+    padding: 2px;
+    border: 1px solid lightgray;
+}
+.td_v{
+    padding: 5px 7px;
+    border: 1px solid lightgray;
+}
+
+.back_btn{
+    font-size: 25px;
+    color: royalblue;
+    padding: 0;
+}
+.tab_inp{
+    width: 100%;
+    height: 35px;
     border: 1px solid lightgray;
     border-radius: 3px;
-    width: 200px;
-    margin-left: 3px;
 }
-.inpTag1{
-    border: none;
-    width: 100%;
-    padding: 8px 5px;
+
+.disable:disabled{
+    cursor: not-allowed;
 }
-// .inpTag1{
-//     border: none;
-//     width: 100%;
-//     padding: 10px 5px;
-//     font-size: 10px;
+// .readonly:read-only{
+//     cursor: not-allowed;
 // }
-.page_color{
-    background-color: #f3f3f3;
-    // height: 95%;
-    padding-top: 10px;
-    padding-bottom: 30px;
-    padding-left: 15px;
-    margin-top: 0;
-    // margin-bottom: 3%;
-    
+.delete_btn{
+    vertical-align: middle;
+    text-align: center;
+    width: 5%;
+    padding: 0;
+    button{
+        // color: red;
+        padding: 0;
+        text-align: center;
+    }
 }
-.text_left{
-    text-align: left;
+.main_heading{
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: -1%;
 }
+
 .footer_btn{
-    margin-top: 3%;
+    // margin-top: 30px;
+    // margin-right: 20px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -44,14 +144,17 @@
         border-radius: 3px;
     }
 }
-.back_btn{
-    font-size: 25px;
-    color: royalblue;
-}
-.delete_btn{
-    font-size: 20px;
-    color: red;
-}
-.w_30{
-    width: 30%;
-}
+
+    .total_cal{
+        display: flex;
+        justify-content: flex-end;
+        border: 1px solid transparent;
+        margin-top: 10px;
+    }
+    .total_cal_field{
+        border: 0px solid transparent;
+        border-bottom: 1px solid black;
+    }
+    .field_height{
+        height: 33px;
+    }

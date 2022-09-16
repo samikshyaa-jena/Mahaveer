@@ -85,6 +85,12 @@ export class erp_all_api{
         update_quotation: base_url+'/quotation/update',
         get_next_quotation_no: base_url+'/quotation/quoteNo',
 
+        
+        //common
+
+        creditnote: base_url+'/common/creditNote',
+        debitnote: base_url+'/common/debitNote',
+
     };
     public static token = {
         auth_token: 'auth works'

@@ -513,17 +513,17 @@ export class DebitNoteComponent implements OnInit {
     }
 
     this.loader = true;
-    console.log(this.purchase_form.get('invo').value,);
+    console.log(this.userForm.get('invo').value,);
     console.log(this.adduserformArray);
     const reqBody = {
-      "invoice": this.purchase_form.get('invo').value,
-      "customer_id": this.purchase_form.get('custmer').value,
-      // "type": "rawmaterial",
-      "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
-      "sell_data": user_arr,
-      "payment_status": this.purchase_form.get('payStatus').value,
-      "method": this.purchase_form.get('payMode').value,
-      "paid_amount": this.purchase_form.get('amnt').value
+      // "invoice": this.purchase_form.get('invo').value,
+      // "customer_id": this.purchase_form.get('custmer').value,
+      // // "type": "rawmaterial",
+      // "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
+      // "sell_data": user_arr,
+      // "payment_status": this.purchase_form.get('payStatus').value,
+      // "method": this.purchase_form.get('payMode').value,
+      // "paid_amount": this.purchase_form.get('amnt').value
 
     }
 

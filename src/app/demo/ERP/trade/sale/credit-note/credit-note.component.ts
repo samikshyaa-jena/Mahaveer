@@ -21,6 +21,7 @@ export class CreditNoteComponent implements OnInit {
   modeForm: FormGroup;
   cattName: any;
   userForm: FormGroup;
+  adduserForm: FormGroup;
   control: FormGroup;
   userformnumber: []
   vendor_data: any;
@@ -45,6 +46,9 @@ export class CreditNoteComponent implements OnInit {
 
     this.userForm = new FormGroup({
       "choose_vender": new FormControl('ch_vender'),
+    })
+
+    this.adduserForm = new FormGroup({
       "user": new FormArray([
 
       ])
@@ -174,25 +178,25 @@ export class CreditNoteComponent implements OnInit {
   userinfo(): FormGroup {
     return this.fb.group({
 
-      "item": new FormControl('ch_item'),
-      "model_no": new FormControl(''),
-      "variant": new FormControl(''),
-      "quantity": new FormControl(''),
-      "unit": new FormControl('None'),
-      "price": new FormControl(''),
-      "a": new FormControl(''),
-      "discount": new FormControl(''),
-      "b": new FormControl(''),
-      "tax": new FormControl(''),
-      "amount": new FormControl(''),
+      "item": new FormControl('ch_item', [Validators.required]),
+      "model_no": new FormControl('', [Validators.required]),
+      "variant": new FormControl('', [Validators.required]),
+      "quantity": new FormControl('', [Validators.required]),
+      "unit": new FormControl('None', [Validators.required]),
+      "price": new FormControl('', [Validators.required]),
+      "a": new FormControl('', [Validators.required]),
+      "discount": new FormControl('', [Validators.required]),
+      "b": new FormControl('', [Validators.required]),
+      "tax": new FormControl('', [Validators.required]),
+      "amount": new FormControl('', [Validators.required]),
 
     })
   }
   add_row() {
-    (<FormArray>this.userForm.get('user')).push(this.userinfo())
+    (<FormArray>this.adduserForm.get('user')).push(this.userinfo())
   }
   deleteRow(i) {
-    (<FormArray>this.userForm.get('user')).removeAt(i)
+    (<FormArray>this.adduserForm.get('user')).removeAt(i)
   }
 
 
