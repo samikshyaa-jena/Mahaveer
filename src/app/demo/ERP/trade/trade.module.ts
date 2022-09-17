@@ -20,12 +20,13 @@ import { QuotationEntryComponent } from './quotation/quotation-entry/quotation-e
 import { InvoiceComponent } from '../../../theme/shared/invoice/invoice.component';
 import { CategoryComponent } from './catagory/catagory.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { ScrapSaleComponent } from './sale/scrap-sale/scrap-sale.component';
 
 
 
 
 @NgModule({
-  declarations: [CategoryComponent, VendorComponent, PurchaseComponent, StockComponent, SaleComponent, CustomerComponent, SaleAddComponent, CreditNoteComponent, PurchaseAddComponent, DebitNoteComponent, QuotationComponent, QuotationEntryComponent, InvoiceComponent],
+  declarations: [CategoryComponent, VendorComponent, PurchaseComponent, StockComponent, SaleComponent, CustomerComponent, SaleAddComponent, CreditNoteComponent, PurchaseAddComponent, DebitNoteComponent, QuotationComponent, QuotationEntryComponent, InvoiceComponent, ScrapSaleComponent],
   imports: [
     CommonModule,
     TradeRoutingModule,

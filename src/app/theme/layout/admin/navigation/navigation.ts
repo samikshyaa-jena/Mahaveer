@@ -118,15 +118,21 @@ const NavigationItems = [
       },
       {
         id: 'sale_parent',
-        title: 'Sale-(Trade)',
+        title: 'Sales',
         type: 'collapse',
         icon: 'feather icon-menu',
         children: [
           {
             id: 'sale',
-            title: 'Sale',
+            title: 'Sales (Product)',
             type: 'item',
             url: '/v1/trade/sale'
+          },
+          {
+            id: 'scrap_sales',
+            title: 'Sales (Scrap)',
+            type: 'item',
+            url: '/v1/trade/scrap-sell'
           },
           {
             id: 'credit_sale',
