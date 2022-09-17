@@ -23,7 +23,12 @@ export class ProdEntryComponent implements OnInit {
   qty_error: any;
   addProductForm: FormGroup;
   total: number = 0;
-  today = new Date();
+  yr= new Date().getFullYear()
+  mon= new Date().getMonth()
+  dt= new Date().getDate()
+  today = new Date(this.yr, this.mon, this.dt);
+  
+  
 
   constructor(
     private fb: FormBuilder,
@@ -41,6 +46,7 @@ export class ProdEntryComponent implements OnInit {
 
     // console.log(this.edit);
     // console.log(this.rawmatData);
+    
 
     this.get_Category();
 
@@ -143,7 +149,7 @@ export class ProdEntryComponent implements OnInit {
 
     this.ErpService.post_Reqs(erp_all_api.urls.add_product, req_body).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        Notiflix.Report.success(res, '', 'Close');
+        Notiflix.Report.success(res.msg, '', 'Close');
         this.previousPage();
       },
       (err: any) => {

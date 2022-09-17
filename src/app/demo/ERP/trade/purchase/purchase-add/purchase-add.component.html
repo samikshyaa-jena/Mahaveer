@@ -187,7 +187,7 @@
         <button class="btn btn-warning mr-2" (click)="resetProductForm(); previousPage()">Cancel</button>
         <button *ngIf="!pur_editData" class="btn btn-primary disable" (click)="add_purchase_details('add')"
             [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.item == 'ChooseProduct'">Submit</button>
-        <button *ngIf="pur_editData" class="btn btn-primary disable" (click)="add_purchase_details('update')"
+        <button *ngIf="pur_editData" class="btn btn-primary disable" (click)="add_purchase_details('update');"
             [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.item == 'ChooseProduct'">Update</button>
     </div>
 

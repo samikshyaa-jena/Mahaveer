@@ -322,11 +322,18 @@
       <form [formGroup]="updateCatForm" class="my-3">
         <label class="lab_tag" for="">Category Name: <span class="text-danger">*</span></label>
         <input type="text" class="form-control inp_tag" formControlName="cat_name" />
+        <div
+        *ngIf="updateCatForm.get('cat_name').hasError('required') && updateCatForm.get('cat_name').touched"
+        class="err-message">
+        <span class="text-danger px-2 my-2">Category can't be blank</span>
+      </div>
       </form>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-primary" (click)="edit_Category()">
+    <button type="button" class="btn btn-primary disable" 
+    [disabled]="updateCatForm.invalid || updateCatForm.value.cat_name.trim() ==''"
+    (click)="edit_Category()">
       Submit
     </button>
     <button type="button" class="btn btn-warning" (click)="cat_edit_popup_close(content)">
@@ -388,7 +395,7 @@
   </div>
   <div class="modal-footer">
     <button border="none" (click)="deletePopup(delete_popup)" class="btn btn-primary mr-2">Cancel</button>
-    <button border="none" (click)="del_Category()" class="btn btn-warning" *ngIf="show_cat_item == 1">Delete</button>
+    <button border="none" (click)="del_Category();deletePopup(delete_popup)" class="btn btn-warning" *ngIf="show_cat_item == 1">Delete</button>
     <button border="none" (click)="del_item();deletePopup(delete_popup)" class="btn btn-warning"
       *ngIf="show_cat_item == 3">Delete</button>
   </div>

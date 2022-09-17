@@ -187,7 +187,7 @@
     <div class="footer_btn">
         <button class="btn btn-warning mr-2" (click)="previousPage()">Cancel</button>
         <button class="btn btn-primary disable"
-            [disabled]="addmat.get('product')['controls'][addmat.get('product')['controls'].length-1].value.item == 'choose_mat'"
+            [disabled]="addmat.get('product')['controls'][addmat.get('product')['controls'].length-1].value.item == 'choose_mat' || item_form.get('est_time').hasError('min')"
             (click)="add_requirement()">Submit</button>
     </div>
 

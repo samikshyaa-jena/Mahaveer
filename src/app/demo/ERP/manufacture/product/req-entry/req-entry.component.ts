@@ -60,7 +60,7 @@ export class ReqEntryComponent implements OnInit {
 
     this.item_form = new FormGroup({
       prod_name: new FormControl("choose_prod", [Validators.required]),
-      est_time: new FormControl("1", [Validators.required]),
+      est_time: new FormControl("1", [Validators.required, Validators.min(1)]),
       // gst: new FormControl("gst", [Validators.required]),
       // stock: new FormControl("", [Validators.required]),
       // unit: new FormControl("unit", [Validators.required]),

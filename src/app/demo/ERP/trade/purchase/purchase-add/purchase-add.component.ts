@@ -380,6 +380,7 @@ export class PurchaseAddComponent implements OnInit {
       this.ErpService.post_Reqs(url, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
         (res: any) => {
           Notiflix.Report.success('SuccessFully Added', '', 'Close');
+          this.clearRow()
           console.log(res, "get item");
           this.get_purchase_details.emit();
           this.purchase_form.reset();
@@ -429,6 +430,10 @@ export class PurchaseAddComponent implements OnInit {
   }
   deleteRow(i) {
     (<FormArray>this.productForm.get('product')).removeAt(i)
+  }
+
+  clearRow() {
+    (<FormArray>this.productForm.get('product')).reset()
   }
 
   Edit(pform, i) {

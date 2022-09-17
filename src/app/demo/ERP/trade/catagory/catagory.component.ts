@@ -127,6 +127,7 @@ export class CategoryComponent implements OnInit {
       min_stk: this.itemList[i].min_stock,
       unit: this.itemList[i].unit,
       hsn: this.itemList[i].hsn,
+      mrp: this.itemList[i].mrp,
       category_name: this.cat_data[this.cat_index].cat_name,
     });
     this.modalService.open(content1);

@@ -72,7 +72,10 @@ export class ProductComponent implements OnInit {
       hsn: this.getProductData[i].hsn,
     });
     this.modalService.open(content);
+    console.log("price===>",this.getProductData[i].price);
   }
+
+  
   // edit cat popup close
   product_edit_popup_close(content) {
     this.modalService.dismissAll(content);
@@ -167,7 +170,7 @@ export class ProductComponent implements OnInit {
       min_stock: parseInt(this.editProductForm.get('min_stk').value),
       unit: this.editProductForm.get('unit').value,
       hsn: this.editProductForm.get('hsn').value,
-      price: 0
+      price: this.editProductForm.get('mrp').value
     };
 
     // let auth_token = sessionStorage.getItem('CORE_SESSION');

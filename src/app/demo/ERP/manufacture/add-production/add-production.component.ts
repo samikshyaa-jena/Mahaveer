@@ -26,7 +26,11 @@ export class AddProductionComponent implements OnInit {
   prodData_id: any = [];
   product_filterData: any = [];
   qty_error: any;
-  today = new Date();
+  // today = new Date();
+  yr= new Date().getFullYear()
+  mon= new Date().getMonth()
+  dt= new Date().getDate()
+  today = new Date(this.yr, this.mon, this.dt);
   date2 = new Date();
   scrap: boolean;
   getscrapData: any;
@@ -243,7 +247,7 @@ export class AddProductionComponent implements OnInit {
 
     this.ErpService.post_Reqs(erp_all_api.urls.add_product, req_body).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        Notiflix.Report.success(res, '', 'Close');
+        Notiflix.Report.success(res.msg, '', 'Close');
         this.get_Product();
       },
       (err: any) => {

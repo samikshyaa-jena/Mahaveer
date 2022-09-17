@@ -44,7 +44,7 @@ export class ReqEditComponent implements OnInit {
     this.item_form = new FormGroup({
       prod_name: new FormControl("", [Validators.required]),
       prod_id: new FormControl(""),
-      est_time: new FormControl("1", [Validators.required]),
+      est_time: new FormControl("", [Validators.required, Validators.min(1)]),
       // gst: new FormControl("", [Validators.required]),
       // stock: new FormControl("", [Validators.required]),
       // unit: new FormControl("", [Validators.required]),
@@ -62,7 +62,7 @@ export class ReqEditComponent implements OnInit {
     this.item_form.patchValue({
       prod_name: this.getProductData.prod_name,
       prod_id: this.getProductData.prod_id,
-      est_time: this.getProductData.approx_time,
+      est_time: this.getProductData.approx_time.slice(0, -1),
       // gst: this.getProductData.gst,
       // stock: this.getProductData.min_stock,
       // unit: this.getProductData.unit,

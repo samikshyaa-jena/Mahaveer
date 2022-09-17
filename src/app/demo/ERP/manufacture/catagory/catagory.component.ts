@@ -208,7 +208,9 @@ export class CategoryComponent implements OnInit {
 
     this.ErpService.post_Reqs(erp_all_api.urls.del_Category, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
+        // this.deletePopup(content)
         Notiflix.Report.success(res.msg, '', 'Close');
+
         this.addCategoryData = res;
         console.log("response is", this.addCategoryData);
         this.getCategoryData = [];
@@ -250,7 +252,7 @@ export class CategoryComponent implements OnInit {
     this.loader = true;
     const reqBody =
     {
-      "name": this.updateCatForm.get('cat_name').value,
+      "name": this.updateCatForm.get('cat_name').value.trim(),
       "cat_id": this.cat_data[this.editCatIndex].cat_id,
     }
     console.log(reqBody);

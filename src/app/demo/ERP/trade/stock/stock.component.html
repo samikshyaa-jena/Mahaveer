@@ -68,14 +68,14 @@
                 <tr>
                     <th scope="col" class="text-white text-center">Invoice No.</th>
                     <th scope="col" class="text-white text-center">Price</th>
-                    <!-- <th scope="col" class="text-white text-center">Quantity</th> -->
+                    <th scope="col" class="text-white text-center">Quantity</th>
                 </tr>
             </thead>
             <tbody class="bg-white">
                 <tr *ngFor="let e of stockPopupData; let i = index">
                     <td class="text-center">{{e.invoice_no}}</td>
                     <td class="text-center">{{e.price}}</td>
-                    <!-- <td class="text-center">{{e.qty}}</td> -->
+                    <td class="text-center">{{e.qty}}</td>
 
                 </tr>
 

@@ -57,7 +57,7 @@
         <div class="right_cnt">
             <label class="datee">Expected Date: <span class="text-danger">*</span> &nbsp;</label>
             <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="target_time"
-                class="form-control" [min]="today" readonly="true" placeholder="YYYY-MM-DD">
+                class="form-control" [min]="today" placeholder="YYYY-MM-DD">
             <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
         </div>
     </form>

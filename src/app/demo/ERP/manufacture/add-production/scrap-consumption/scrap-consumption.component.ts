@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as Notiflix from 'notiflix';
 import { finalize } from 'rxjs/operators';
 import { ErpServiceService } from '../../../erp-service.service';
@@ -36,6 +37,8 @@ export class ScrapConsumptionComponent implements OnInit {
     private fb: FormBuilder,
     private ErpService: ErpServiceService,
     private datePipe: DatePipe,
+    private modalService: NgbModal
+
   ) {
     this.scrapForm = new FormGroup({
       "Scrap": new FormArray([])
@@ -368,4 +371,10 @@ export class ScrapConsumptionComponent implements OnInit {
     return e.keyCode >= 48 && e.charCode <= 57;
   }
 
+  deletePopup(content1) {
+    this.modalService.dismissAll(content1);
+  }
+  item_delete_popup_open(content1) {
+    this.modalService.open(content1);
+  }
 }
