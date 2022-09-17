@@ -12,7 +12,8 @@ import * as Notiflix from 'notiflix';
 })
 export class ScrapComponent implements OnInit {
   loader: boolean;
-  getscrapData: any;
+  getscrapData: any = [];
+  // scrapQty: [];
 
   constructor(private ErpService: ErpServiceService,) { }
 
@@ -30,7 +31,23 @@ export class ScrapComponent implements OnInit {
       (res: any) => {
         console.log(res);
 
-        this.getscrapData = res.data;
+        // this.getscrapData = res.data;
+        for (const scarpList of res.data) {
+          let qty = 0; 
+          for (const iterator of scarpList.scrap_data) {
+
+            qty = qty + iterator.quantity                       
+            
+          }
+          let scrap = {
+            type: scarpList["type"],
+            total_qty:qty
+          }
+          this.getscrapData.push(scrap)
+          
+        }
+        
+
         
       },
       (err: any) => {
