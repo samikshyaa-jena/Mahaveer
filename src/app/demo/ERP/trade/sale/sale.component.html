@@ -46,10 +46,10 @@
               <td>{{ data.sell_date | date: "dd/MM/yyyy" }}</td>
               <td>{{ data.customerData.name }}</td>
               <td>{{ data.customerData.gstn }}</td>
-              <td>{{ data.totalcgst }}</td>
-              <td>{{ data.totalsgst }}</td>
-              <td>{{ data.totaligst }}</td>
-              <td>{{ data.totalsum }}</td>
+              <td>{{ (data.totalcgst).toFixed(2) }}</td>
+              <td>{{ (data.totalsgst).toFixed(2) }}</td>
+              <td>{{ (data.totaligst).toFixed(2) }}</td>
+              <td>{{ (data.totalsum).toFixed(2) }}</td>
               <td><span title="View Invoice" style="cursor: pointer;" (click)="generateInvoice(data.invoice_no)"><i
                     class="fa fa-print" aria-hidden="true"></i></span></td>
               <!-- <td>

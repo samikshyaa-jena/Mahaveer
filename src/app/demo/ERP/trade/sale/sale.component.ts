@@ -579,7 +579,6 @@ export class SaleComponent implements OnInit {
 
   // }
   back() {
-    console.log('hii');
     this.purchase_tab = false;
     this.get_purchase_details();
   }

@@ -34,6 +34,7 @@ export class ScrapSaleComponent implements OnInit {
   duplicateproductformarray: any = [];
   type: any;
   today = new Date();
+  updatePurchase: FormGroup;
 
 
   @Output() BackTab = new EventEmitter<boolean>()
@@ -302,5 +303,71 @@ export class ScrapSaleComponent implements OnInit {
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
+  };
+
+  previousPage() {
+    this.BackTab.emit();
+  }
+
+  resetProductForm() {
+    var p_form = this.updatePurchase.get('product')['controls'];
+    console.log(p_form);
+    p_form.splice(0, p_form.length);
+    console.log(p_form);
+    this.totalCalculation()
+  }
+
+  
+  totalCalculation() {
+
+    var pform = this.updatePurchase.get('product')['controls'];
+
+    this.t_igst = 0;
+    this.t_sgst = 0;
+    this.t_cgst = 0;
+    this.t_amount = 0;
+
+    for (let i = 0; i < pform.length; i++) {
+      this.t_igst = this.t_igst + pform[i].value.igst;
+      this.t_sgst = this.t_sgst + pform[i].value.sgst;
+      this.t_cgst = this.t_cgst + pform[i].value.cgst;
+      this.t_amount = this.t_amount + pform[i].value.total;
+    }
+
+  }
+
+  add_purchase_details = () => {
+    debugger;
+    this.loader = true;
+    // console.log(this.purchase_data[0].price);
+    const reqBody = {
+      "invoice": this.purchase_form.get('invo').value,
+      "vendor_id": this.purchase_form.get('vendor').value,
+      "type": 'rawmaterial',
+      // "purchase_data": this.purchase_data[0],
+      "date": this.purchase_form.get('p_date').value
+    }
+
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.post_Reqs(erp_all_api.urls.trd_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        console.log(res, "get item");
+        Notiflix.Report.success(res.msg, '', 'Close');
+        // this.get_purchase_details();
+        // this.purchase_tab = false;
+        // this.dynamicManufacture.reset();
+        this.purchase_form.reset();
+        this.purchase_form.reset();
+        // this.purchase_tab = false;
+        // this.back();
+      },
+      (err: any) => {
+        console.log(err);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+      });
+
   };
 }

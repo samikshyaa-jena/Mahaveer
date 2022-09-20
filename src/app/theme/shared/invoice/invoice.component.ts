@@ -47,10 +47,10 @@ export class InvoiceComponent implements OnInit {
     if (this.page == 'sale') {
       for (let i = 0; i < this.invoiceData.sellData.length; i++) {
       
-        this.invoiceData.sellData.discount = (this.invoiceData.sellData.discount * 100)/this.invoiceData.sellData.price;
-        this.invoiceData.sellData.cgst = (this.invoiceData.sellData.cgst * 100)/this.invoiceData.sellData.price;
-        this.invoiceData.sellData.sgst = (this.invoiceData.sellData.sgst * 100)/this.invoiceData.sellData.price;
-        this.invoiceData.sellData.igst = (this.invoiceData.sellData.igst * 100)/this.invoiceData.sellData.price;
+        this.invoiceData.sellData.discount = ((this.invoiceData.sellData.discount * 100)/this.invoiceData.sellData.price).toFixed(2);
+        this.invoiceData.sellData.cgst = ((this.invoiceData.sellData.cgst * 100)/this.invoiceData.sellData.price).toFixed(2);
+        this.invoiceData.sellData.sgst = ((this.invoiceData.sellData.sgst * 100)/this.invoiceData.sellData.price).toFixed(2);
+        this.invoiceData.sellData.igst = ((this.invoiceData.sellData.igst * 100)/this.invoiceData.sellData.price).toFixed(2);
 
         // var base64 = this.getBase64Image(document.getElementById("imageid"));
         // console.log(base64);
@@ -63,16 +63,20 @@ export class InvoiceComponent implements OnInit {
     if (this.page == 'quotation') {
       for (let i = 0; i < this.invoiceData.quote_Data.length; i++) {
       
-        this.invoiceData.quote_Data.discount = (this.invoiceData.quote_Data.discount * 100)/this.invoiceData.quote_Data.price;
-        this.invoiceData.quote_Data.cgst = (this.invoiceData.quote_Data.cgst * 100)/this.invoiceData.quote_Data.price;
-        this.invoiceData.quote_Data.sgst = (this.invoiceData.quote_Data.sgst * 100)/this.invoiceData.quote_Data.price;
-        this.invoiceData.quote_Data.igst = (this.invoiceData.quote_Data.igst * 100)/this.invoiceData.quote_Data.price;
+        this.invoiceData.quote_Data.discount = ((this.invoiceData.quote_Data.discount * 100)/this.invoiceData.quote_Data.price).toFixed(2);
+        this.invoiceData.quote_Data.cgst = ((this.invoiceData.quote_Data.cgst * 100)/this.invoiceData.quote_Data.price).toFixed(2);
+        this.invoiceData.quote_Data.sgst = ((this.invoiceData.quote_Data.sgst * 100)/this.invoiceData.quote_Data.price).toFixed(2);
+        this.invoiceData.quote_Data.igst = ((this.invoiceData.quote_Data.igst * 100)/this.invoiceData.quote_Data.price).toFixed(2);
 
         // this.invoiceData.prod_img = `data:image/jpeg;base64,${this.invoiceData.prod_img}`;
         
       }
     }
-    
+    this.invoiceData.total_amount = parseFloat(this.invoiceData.total_amount).toFixed(2);
+    this.invoiceData.totalcgst = parseFloat(this.invoiceData.totalcgst).toFixed(2);
+    this.invoiceData.totalsgst = parseFloat(this.invoiceData.totalsgst).toFixed(2);
+    this.invoiceData.totaligst = parseFloat(this.invoiceData.totaligst).toFixed(2);
+    this.invoiceData.totalsum = parseFloat(this.invoiceData.totalsum).toFixed(2);
   }
 
   getBase64Image(img) {

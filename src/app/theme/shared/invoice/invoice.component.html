@@ -6,7 +6,7 @@
             </tr>
             <tr>
                 <td class="t_text2" colspan="2" style="width: 50%;">
-                    <div style="font-size: 20px;"><b>MAHAVER</b></div>
+                    <div style="font-size: 20px;"><b>MAHAVEER GYM PVT. LTD.</b></div>
                     <div>Address: DAMANA BHUBANESAR KHORDA ODISHA</div>
                     <div>Email: mahaveer@gmail.com, Phone: 3456789056</div>
                 </td>
@@ -19,9 +19,9 @@
             </tr>
             <tr>
                 <td class="t_text2">GSTIN: <span class="t_text3">{{invoiceData.customerData.gstn}}</span></td>
-                <td class="t_text2">Adhar/PAN: <span class="t_text3">SDFGHJTUJJI</span></td>
+                <td class="t_text2">Adhar/PAN: <span class="t_text3">--NO DATA--</span></td>
                 <td class="t_text2">GSTIN: <span class="t_text3">{{invoiceData.customerData.gstn}}</span></td>
-                <td class="t_text2">Id Type: </td>
+                <td class="t_text2">Id Type: <span class="t_text3">--NO DATA--</span></td> 
             </tr>
             <tr *ngIf="page == 'sale'">
                 <td class="t_text2">Invoice No: {{invoiceData.invoice_no}}</td>
@@ -67,8 +67,7 @@
                     <td class="t_text">{{i}}</td>
                     <td class="t_text">{{data.prod_name}}</td>
                     <!-- <td class="t_text"><img src="../../../../assets/images/maintenance/ship.svg" alt="prod" style="width: 40px;"></td> -->
-                    <!-- <td class="t_text"><img src="{{data.prod_img}}" alt="prod" style="width: 40px;"></td> -->
-                    <td class="t_text"><img src="https://firebasestorage.googleapis.com/v0/b/iserveu_storage/o/KYC%2Fstarpayw393%2FSPSD115%2Fpancard.png?alt=media&token=a417ecb1-21e6-4515-9976-e72dc4224754" id="imageid" alt="prod" style="width: 40px;"></td>
+                    <td class="t_text"><img src={{data.prod_img}} alt="NO-IMAGE" style="width: 40px;" onerror="this.style.display = 'none';"></td>
                     <td class="t_text">{{data.hsn}}</td>
                     <td class="t_text">{{data.cgst}}</td>
                     <td class="t_text">{{data.quantity}}</td>
@@ -89,8 +88,8 @@
                 <tr *ngFor = "let data of invoiceData.quote_Data; let i=index">
                     <td class="t_text">{{i}}</td>
                     <td class="t_text">{{data.prod_name}}</td>
-                    <td class="t_text"><img src="https://firebasestorage.googleapis.com/v0/b/iserveu_storage/o/KYC%2Fstarpayw393%2FSPSD115%2Fpancard.png?alt=media&token=a417ecb1-21e6-4515-9976-e72dc4224754" id="imageid" alt="prod" style="width: 40px;"></td>
                     <!-- <td class="t_text"><img src="{{data.prod_img}}" alt="prod" style="width: 40px;"></td> -->
+                    <td class="t_text"><img src={{data.prod_img}} alt="NO-IMAGE" style="width: 40px;" onerror="this.style.display = 'none';"></td>
                     <td class="t_text">{{data.hsn}}</td>
                     <td class="t_text">{{data.cgst}}</td>
                     <td class="t_text">{{data.quantity}}</td>
@@ -108,12 +107,12 @@
                 </tr>
             </ng-container>
             <tr>
-                <td colspan="16" style="visibility: hidden;">efghjkl</td>
+                <td colspan="16" style="visibility: hidden;">--NO DATA--</td>
             </tr>
             <tr>
                 <td class="t_text" colspan="8">Total</td>
-                <td class="t_text">{{invoiceData.total_amount}}</td>
                 <td class="t_text"></td>
+                <td class="t_text">{{invoiceData.total_amount}}</td>
                 <td class="t_text"></td>
                 <td class="t_text">{{invoiceData.totalcgst}}</td>
                 <td class="t_text"></td>
@@ -129,8 +128,8 @@
                     <div>Amount chargable in (words)</div>
                     <div style="text-transform: uppercase;">{{totalsum}}</div>
                 </td>
-                <td class="t_text">Account No: 234567890 | Holder Name: wertgyhjkl | Bank Name: wertyui | IFSC Code:
-                    sdfghjk34567t</td>
+                <td class="t_text">Account No: 234567890 | Holder Name: --NO DATA-- | Bank Name: --NO DATA-- | IFSC Code:
+                    --NO DATA--</td>
             </tr>
             <tr>
                 <td class="t_text2" style="vertical-align: top;">

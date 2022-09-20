@@ -37,7 +37,7 @@ export class CategoryComponent implements OnInit {
   editItemIndex: any;
   modeForm: FormGroup;
   page = 1;
-  pageSize =5;
+  pageSize = 5;
   collectionSize: [];
   reports: any;
   report_length: any;
@@ -78,14 +78,14 @@ export class CategoryComponent implements OnInit {
       hsn: new FormControl("", [Validators.required]),
       qty: new FormControl("", [Validators.required]),
     });
-   }
+  }
 
-   ngOnInit() {
+  ngOnInit() {
     this.get_Category();
     console.log(erp_all_api.token.auth_token);
-    
+
   }
-  changeType = (e)=>{
+  changeType = (e) => {
     console.log(e);
     if (e == 'trade') {
       this.router.navigate(["/v2/Erpmain/trade/category"])
@@ -120,7 +120,7 @@ export class CategoryComponent implements OnInit {
     this.modalService.open(content1);
   }
   item_delete_popup_open(content1, i) {
-    this.delete_item=i;
+    this.delete_item = i;
     this.modalService.open(content1);
   }
   // edit cat popup close
@@ -132,12 +132,12 @@ export class CategoryComponent implements OnInit {
     this.modalService.dismissAll(content1);
   }
   get_Category = () => {
-    this.cat_data.length=0;
-    this.getCategoryData.length=0;
+    this.cat_data.length = 0;
+    this.getCategoryData.length = 0;
     this.loader = true;
     console.log(sessionStorage.getItem('CORE_SESSION'));
-    
-    
+
+
     // let auth_token = sessionStorage.getItem('CORE_SESSION');
     // let headers = new HttpHeaders();
     // headers = headers.set('auth-token', auth_token);
@@ -155,7 +155,7 @@ export class CategoryComponent implements OnInit {
           return { cat_id: val.cat_id, cat_name: val.cat_name, itemData: val.itemData };
         });
         this.reports = this.cat_data;
-        this.collectionSize=this.cat_data.length
+        this.collectionSize = this.cat_data.length
       },
       (err: any) => {
         console.log(err);
@@ -178,8 +178,8 @@ export class CategoryComponent implements OnInit {
     this.ErpService.post_Reqs(erp_all_api.urls.add_Category, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log("response is", this.addCategoryData);
-        this.cat_data.length=0;
-        this.getCategoryData.length=0;
+        this.cat_data.length = 0;
+        this.getCategoryData.length = 0;
         this.show_cat_item = 1;
         this.addCategoryData = res;
         this.get_Category();
@@ -194,7 +194,7 @@ export class CategoryComponent implements OnInit {
   };
 
   del_Category = () => {
-    this.delete_popup=false
+    this.delete_popup = false
     var i = this.delete_item;
     this.loader = true;
     const reqBody =
@@ -223,7 +223,7 @@ export class CategoryComponent implements OnInit {
   };
 
   del_item = () => {
-    this.delete_popup=false
+    this.delete_popup = false
     var i = this.delete_item;
     this.loader = true;
     const reqBody =
@@ -387,11 +387,11 @@ export class CategoryComponent implements OnInit {
   // filter
   updateFilter(event: any) {
     const val = event.target.value;
-     console.log(val);
+    console.log(val);
     //  let datavalues = this.reports;
 
     //  this.reports = this.cat_data;
-     console.log(this.reports);
+    console.log(this.reports);
     var temp = this.reports.filter(d => {
       const vals = Object.values(d);
       console.log(vals);
@@ -404,7 +404,8 @@ export class CategoryComponent implements OnInit {
 
   prevent(e) {
     console.log(e);
-      return e.keyCode >= 48 && e.charCode <= 57;
+    return e.keyCode >= 48 && e.charCode <= 57;
   }
+
 
 }

@@ -70,7 +70,7 @@
 
     <div class="card main_cnt mb-3">
 
-        <div class="main_heading">Trade</div>
+        <div class="main_heading">Quotation</div>
         <hr style="margin: 1% auto 1.5% -3%; width: 106%;">
         <form [formGroup]="quotation_form">
             <div class="col-sm-12 px-0 d-flex flex-row">
@@ -79,7 +79,7 @@
                     <input type="text" formControlName="quto" class="form-control field_height" readonly>
                 </div>
                 <div class="col-sm-3 p-0">
-                    <label for="">Custmer Name <span class="text-danger">*</span></label>
+                    <label for="">Customer Name <span class="text-danger">*</span></label>
                     <input type="hidden" formControlName="custmer_id" class="form-control">
                     <input type="text" formControlName="custmer" class="form-control field_height" readonly>
 
@@ -88,7 +88,7 @@
                     <label for="">Quotation Date <span class="text-danger">*</span></label>
                     <input type="text" formControlName="q_date" class="form-control field_height" readonly>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3 p-0">
                     <label for="">Priority <span class="text-danger">*</span></label>
                     <select name="" id="" formControlName="priority" class="form-control field_height">
                         <option value="LOW">LOW</option>
@@ -96,10 +96,10 @@
                         <option value="HIGH">HIGH</option>
                     </select>
                 </div>
-                <div class="col-sm-1 p-0">
+                <!-- <div class="col-sm-1 p-0">
                     <label for="">Amount <span class="text-danger">*</span></label>
                     <input type="text" formControlName="amnt" class="form-control field_height">
-                </div>
+                </div> -->
 
             </div>
         </form>
