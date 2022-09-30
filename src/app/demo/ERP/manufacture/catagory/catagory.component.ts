@@ -43,6 +43,9 @@ export class CategoryComponent implements OnInit {
   report_length: any;
   delete_item: any;
   delete_popup: boolean;
+  itemSel: boolean = false;
+  changed: boolean = true;
+  cat_name: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -70,7 +73,7 @@ export class CategoryComponent implements OnInit {
       qty: new FormControl("", [Validators.required]),
     });
     this.editItemForm = new FormGroup({
-      category_name: new FormControl("choose a category", [Validators.required]),
+      category_name: new FormControl("Choose Category", [Validators.required]),
       item_name: new FormControl("", [Validators.required]),
       gst: new FormControl("", [Validators.required]),
       min_stk: new FormControl("", [Validators.required]),
@@ -313,12 +316,20 @@ export class CategoryComponent implements OnInit {
     this.show_cat = false;
     this.show_edit = false;
   }
-  categoryAction(i) {
+  setSel = () =>{
+    this.itemSel = false;
+  }
+  categoryAction(i:any,d:any) {  
+    // this.cat_name = d; 
+    this.addItemForm.patchValue({
+      category_name: d
+    });
     this.cat_id = [];
     this.loader = true;
     this.cat_index = i;
     this.cat_id = this.cat_data[i].cat_id;
     this.show_cat_item = 3;
+    this.itemSel = true;
     this.getItem();
   }
   getItem = () => {
@@ -354,10 +365,16 @@ export class CategoryComponent implements OnInit {
     this.cat = event;
   }
   add_item = () => {
+    let cid = '';
+    if (this.itemSel) {
+      cid = this.cat_id;
+    } else {
+      cid = this.cat;
+    }
     this.loader = true;
     let qnt = this.addItemForm.get('qty').value ? parseInt(this.addItemForm.get('qty').value) : 0;
     const reqBody = {
-      cat_id: this.cat,
+      cat_id: cid,
       name: this.addItemForm.get('item_name').value.trim(),
       gst: parseInt(this.addItemForm.get('gst').value),
       min_stock: parseInt(this.addItemForm.get('min_stk').value),

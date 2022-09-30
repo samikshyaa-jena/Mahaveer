@@ -42,6 +42,12 @@ export class QuotationEntryComponent implements OnInit {
   t_sgst: number;
   t_cgst: number;
   t_amount: number;
+  newVal: any = {
+    gst: '',
+    igst: '',
+    sgst: '',
+    cgst: ''
+  };
 
   constructor(
     private ErpService: ErpServiceService,
@@ -154,10 +160,31 @@ export class QuotationEntryComponent implements OnInit {
     console.log(this.type);
   }
   chooseCategory(form_cont, item) {
+    console.log(form_cont);
+    console.log(item);
+    console.log(this.getCategoryData);
+    for (let i = 0; i < this.getCategoryData.length; i++) {
+      if (this.getCategoryData[i].prod_id == item) {
+
+        if (this.type == 'Intra State') {
+          this.newVal.gst = this.getCategoryData[i].gst;
+          this.newVal.igst = 0;
+          this.newVal.sgst = this.getCategoryData[i].gst / 2;
+          this.newVal.cgst = this.getCategoryData[i].gst / 2;
+        }
+        else {
+          this.newVal.gst = this.getCategoryData[i].gst;
+          this.newVal.igst = this.getCategoryData[i].gst;
+          this.newVal.sgst = 0;
+          this.newVal.cgst = 0;
+        }
+      }
+    }
+    console.log(this.newVal);
     form_cont.patchValue({
       discount: 0,
       qty: 1,
-  });
+    });
 
     console.log(item);
     console.log(form_cont);
@@ -278,56 +305,10 @@ export class QuotationEntryComponent implements OnInit {
     }
 
   }
-
-  // submitArray() {
-  //   this.showInps = true;
-  //   // this.productformarray;
-  //   let category
-  //   let value = this.QuotationForm.value.product[0]
-  //   // let value = p_form.value
-  //   var p_form = this.QuotationForm.get('product')['controls'];
-  //   let duplicatevalue = { ...value }
-  //   console.log(this.getCategoryData);
-  //   this.duplicateproductformarray;
-  //   for (let i = 0; i < this.getCategoryData.length; i++) {
-  //     if (this.getCategoryData[i].cat_id == p_form.value.category) {
-  //       duplicatevalue.category = this.getCategoryData[i].cat_name
-  //     }
-  //   }
-  //   for (let i = 0; i < this.getCategoryData.length; i++) {
-  //     if (this.getCategoryData[i].prod_id == p_form.value.prod_id) {
-  //       duplicatevalue.prod_id = this.getCategoryData[i].prod_name;
-  //     }
-  //   }
-
-  //   for (let i = 0; i < this.QuotationForm.get('product')['controls'].length; i++) {
-  //     console.log(this.QuotationForm.get('product')['controls'][i].value);
-  //     this.productformarray.push(this.QuotationForm.get('product')['controls'][i].value)
-  //   }
-
-  //   // this.productformarray.push(value)
-  //   this.duplicateproductformarray.push(duplicatevalue)
-  //   console.log(duplicatevalue);
-  //   console.log(this.duplicateproductformarray);
-  //   console.log(this.productformarray);
-  //   let sum = 0;
-  //   for (let i = 0; i < this.productformarray.length; i++) {
-  //     sum = sum + this.productformarray[i].total;
-  //   }
-  //   this.quotation_form.patchValue({
-  //     payMode: 'Cash',
-  //     payStatus: 'Paid',
-  //     amnt: sum,
-  //   })
-  // }
   delete(i) {
     Notiflix.Report.success('Are you want to delete', '', 'Ok');
     this.productformarray.splice(i, 1)
   }
-  // openModal() { 
-  //   p_form.reset()
-  //   this.openmodal = true;
-  // }
 
 
   resetProductForm() {
@@ -369,14 +350,17 @@ export class QuotationEntryComponent implements OnInit {
           price: p_array.price,
           qty: p_array.qty,
           discount: p_array.discount,
-          total: p_array.total
+          total: p_array.total,
+          igst_rate: p_array.igst == 0 ? 0: (p_array.igst/p_array.price),
+          cgst_rate: p_array.cgst == 0 ? 0: (p_array.cgst/p_array.price),
+          sgst_rate: p_array.sgst == 0 ? 0: (p_array.sgst/p_array.price)
         }
       });
 
     }
 
     console.log(quotation_arr);
-    
+
 
     this.loader = true;
     console.log(this.quotation_form.get('quto').value,);
@@ -389,7 +373,10 @@ export class QuotationEntryComponent implements OnInit {
       "date": this.datePipe.transform(this.quotation_form.get('q_date').value, 'yyyy-MM-dd'),
       "quote_data": quotation_arr,
       "paid_amount": (+this.quotation_form.get('amnt').value).toFixed(2),
-      "status": "QUOTATION"
+      "status": "QUOTATION",
+      // "igst_rate": this.newVal.igst,
+      // "cgst_rate": this.newVal.cgst,
+      // "sgst_rate": this.newVal.sgst
     };
 
     // let auth_token = sessionStorage.getItem('CORE_SESSION');
@@ -483,7 +470,7 @@ export class QuotationEntryComponent implements OnInit {
         let vendorData = res.data;
 
         this.quotation_form.get('quto').setValue(vendorData)
-       
+
       },
 
       (err: any) => {

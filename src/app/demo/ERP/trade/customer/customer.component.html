@@ -154,23 +154,23 @@
         <div class="updateVendorForm">
             <form [formGroup]="updateVendorForm" class="my-3">
                 <label class="lab_tag" for="">Customer Name: <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" formControlName="ven_name">
+                <input type="text" class="form-control" formControlName="ven_name" (input)="changed = false">>
                 <label class="lab_tag" for="">ID: </label>
-                <input type="text" class="form-control" formControlName="id">
+                <input type="text" class="form-control" formControlName="id" (input)="changed = false">>
                 <label class="lab_tag" for="">Email: <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" formControlName="ven_email">
+                <input type="email" class="form-control" formControlName="ven_email" (input)="changed = false">>
                 <div *ngIf="updateVendorForm.get('ven_email').hasError('pattern') && updateVendorForm.get('ven_email').touched"
                     class="err-message">
                     <span class="text-danger">Invalid Email ID</span>
                 </div>
                 <label class="lab_tag" for="">Mobile No: <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" formControlName="mob">
+                <input type="text" class="form-control" formControlName="mob" (input)="changed = false">>
                 <div *ngIf="updateVendorForm.get('mob').hasError('minlength') && updateVendorForm.get('mob').touched"
                 class="err-message">
                 <span class="text-danger">Mobile no should not be less than 10 digits</span>
             </div>
                 <label class="lab_tag" for="">Type: <span class="text-danger">*</span></label>
-                <select name="" id="" formControlName="type" class="form-control">
+                <select name="" id="" formControlName="type" class="form-control" (change)="changed = false">>
                     <option value="type" selected disabled>Select Type</option>
                     <option value="Intra State">Intra State</option>
                     <option value="Inter State">Inter State</option>
@@ -187,7 +187,7 @@
                     <span class="text-danger">Invalid GST No.</span>
                 </div>
                 <label class="lab_tag" for="">Address: <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" formControlName="add">
+                <input type="text" class="form-control" formControlName="add" (input)="changed = false">>
                 <div *ngIf="updateVendorForm.get('add').hasError('minlength') && updateVendorForm.get('add').touched"
                 class="err-message">
                 <span class="text-danger">Address should not be less than 10 character</span>
@@ -196,8 +196,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-warning" (click)="update_vend_popup_close(content)">Cancel</button>
-        <button type="button" class="btn btn-primary" [disabled]="updateVendorForm.invalid"
+        <button type="button" class="btn btn-warning" (click)="update_vend_popup_close(content);changed = true">Cancel</button>
+        <button type="button" class="btn btn-primary" [disabled]="updateVendorForm.invalid || changed"
             (click)="update_vendor()">Submit</button>
     </div>
 </ng-template>

@@ -24,6 +24,7 @@ export class VendorComponent implements OnInit {
   vendIndex: any;
   modeForm: FormGroup;
   delete_item: any;
+  changed: boolean = true;
 
   constructor(
     private ErpService: ErpServiceService,

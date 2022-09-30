@@ -44,6 +44,8 @@ export class CategoryComponent implements OnInit {
   uploadedFiles: any;
   imgpath: any;
   delete_item: any;
+  itemSel: boolean = false;
+  changed: boolean = true;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -73,7 +75,7 @@ export class CategoryComponent implements OnInit {
       img: new FormControl(""),
     });
     this.editItemForm = new FormGroup({
-      category_name: new FormControl("choose a category", [Validators.required]),
+      category_name: new FormControl("Choose Category", [Validators.required]),
       item_name: new FormControl("", [Validators.required]),
       gst: new FormControl("", [Validators.required]),
       min_stk: new FormControl("", [Validators.required]),
@@ -310,7 +312,14 @@ export class CategoryComponent implements OnInit {
     this.show_cat = false;
     this.show_edit = false;
   }
-  categoryAction(i) {
+  setSel = () =>{
+    this.itemSel = false;
+  }
+  categoryAction(i:any, d:any) {
+    this.addItemForm.patchValue({
+      category_name: d
+    });
+    this.itemSel = true;
     this.cat_id = [];
     this.loader = true;
     this.cat_index = i;
@@ -352,13 +361,20 @@ export class CategoryComponent implements OnInit {
   }
   add_item = () => {
 
+    let cid = '';
+    if (this.itemSel) {
+      cid = this.cat_id;
+    } else {
+      cid = this.cat;
+    }
+
     this.loader = true;
     let qnt = this.addItemForm.get('qty').value ? parseInt(this.addItemForm.get('qty').value) : 0;
     let name = this.addItemForm.get('item_name').value;
     console.log("qnt==>"+ qnt +" name==>"+ name);
     
     const fd: any = new FormData();
-    fd.append('cat_id', this.cat);
+    fd.append('cat_id', cid);
     fd.append('name', name);
     fd.append('gst', parseInt(this.addItemForm.get('gst').value));
     fd.append('min_stock', parseInt(this.addItemForm.get('min_stk').value));

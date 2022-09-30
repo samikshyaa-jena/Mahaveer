@@ -22,7 +22,7 @@
                     title="Go To Manufacture">Manufacture</button>
             </div>
             <div class="add_btn">
-                <button class="btn btn-primary mr-1" type="button" (click)="show_cat_item=5">Add Product</button>
+                <button class="btn btn-primary mr-1" type="button" (click)="show_cat_item=5;setSel()">Add Product</button>
                 <button class="btn btn-primary" (click)='show_cat_item=2'>Add Category</button>
             </div>
         </div>
@@ -46,7 +46,7 @@
                     <tr *ngFor="let data of cat_data |slice:(page-1)* pageSize:page*pageSize; index as i;">
                         <td>{{cat_data[i].cat_name}}</td>
                         <td>
-                            <span style="cursor: pointer;" (click)="categoryAction(i)" title="View products"><i
+                            <span style="cursor: pointer;" (click)="categoryAction(i,cat_data[i].cat_name)" title="View products"><i
                                     class="fas fa-ellipsis-h" aria-hidden="true"></i></span>
                         </td>
                         <td>
@@ -162,12 +162,15 @@
                 Product</p>
             <form [formGroup]="addItemForm" class="my-3">
                 <div class="col-sm-12 row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" *ngIf="!itemSel">
                         <select class="form-control inp_tag" (change)="addItemCategory($event.target.value)"
                             formControlName="category_name">
                             <option disabled selected>Choose Category</option>
                             <option *ngFor="let data of cat_data" [value]="data.cat_id">{{data.cat_name}}</option>
                         </select>
+                    </div>
+                    <div class="col-sm-4" *ngIf="itemSel">
+                        <input type="text" class="form-control inp_tag" formControlName="category_name" readonly>
                     </div>
                     <div class="col-sm-4">
                         <input type="text" class="form-control inp_tag" formControlName="item_name"
@@ -266,13 +269,13 @@
         <div class="updateCatForm">
             <form [formGroup]="updateCatForm" class="my-3">
                 <label class="lab_tag" for="">Category Name: <span class="text-danger">*</span></label>
-                <input type="text" class="form-control inp_tag" formControlName="cat_name">
+                <input type="text" class="form-control inp_tag" formControlName="cat_name" (input)="changed = false">
             </form>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary mr-1" (click)="edit_Category()">Submit</button>
-        <button type="button" class="btn btn-warning" (click)="cat_edit_popup_close(content)">Cancel</button>
+        <button type="button" class="btn btn-primary mr-1" (click)="edit_Category()" [disabled]="changed || updateCatForm.invalid">Submit</button>
+        <button type="button" class="btn btn-warning" (click)="cat_edit_popup_close(content);changed = true">Cancel</button>
     </div>
 </ng-template>
 <!-- edit category modal starts -->

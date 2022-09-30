@@ -23,7 +23,7 @@
         </form>
       </div>
       <div class="add_btn">
-        <button class="btn btn-primary mr-1" type="button" (click)="show_cat_item = 5">
+        <button class="btn btn-primary mr-1" type="button" (click)="show_cat_item = 5;setSel()">
           Add Item
         </button>
         <button class="btn btn-primary" (click)="show_cat_item = 2">
@@ -49,7 +49,7 @@
           <tr *ngFor="let data of cat_data |slice:(page-1)* pageSize:page*pageSize; index as i">
             <td>{{ cat_data[i].cat_name }}</td>
             <td>
-              <span style="cursor: pointer" (click)="categoryAction(i)" title="View item"><i class="fas fa-ellipsis-h"
+              <span style="cursor: pointer" (click)="categoryAction(i,cat_data[i].cat_name)" title="View item"><i class="fas fa-ellipsis-h"
                   aria-hidden="true"></i></span>
             </td>
             <td>
@@ -176,14 +176,17 @@
       <p style="font-weight: 300;">Add Item</p>
       <form [formGroup]="addItemForm" class="my-3">
         <div class="col-sm-12 row">
-          <div class="col-sm-4">
+          <div class="col-sm-4" *ngIf="!itemSel">
             <select class="form-control inp_tag" (change)="addItemCategory($event.target.value)"
               formControlName="category_name">
-              <option disabled selected>Choose Category</option>
+              <option disabled [selected]="true">Choose Category</option>
               <option *ngFor="let data of cat_data" [value]="data.cat_id">
                 {{ data.cat_name }}
               </option>
             </select>
+          </div>
+          <div class="col-sm-4" *ngIf="itemSel">
+            <input type="text" class="form-control inp_tag" formControlName="category_name" readonly/>
           </div>
           <div class="col-sm-4">
             <input type="text" placeholder="Item Name" class="form-control inp_tag" formControlName="item_name" />
@@ -311,17 +314,11 @@
 
 <!-- edit category modal starts -->
 <ng-template #content let-c="close" let-d="dismiss">
-  <!-- <div class="modal-header">
-    <h3 class="mb-3 mt-3 ml-3" style="color: blue; font-weight: 700;">Manufacture</h3>
-    <button class="close_btn">
-      <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
-    </button>
-  </div> -->
   <div class="modal-body">
     <div class="updateCatForm">
       <form [formGroup]="updateCatForm" class="my-3">
         <label class="lab_tag" for="">Category Name: <span class="text-danger">*</span></label>
-        <input type="text" class="form-control inp_tag" formControlName="cat_name" />
+        <input type="text" class="form-control inp_tag" formControlName="cat_name" (input)="changed = false"/>
         <div
         *ngIf="updateCatForm.get('cat_name').hasError('required') && updateCatForm.get('cat_name').touched"
         class="err-message">
@@ -332,11 +329,11 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-primary disable" 
-    [disabled]="updateCatForm.invalid || updateCatForm.value.cat_name.trim() ==''"
+    [disabled]="updateCatForm.invalid || updateCatForm.value.cat_name.trim() =='' || changed"
     (click)="edit_Category()">
       Submit
     </button>
-    <button type="button" class="btn btn-warning" (click)="cat_edit_popup_close(content)">
+    <button type="button" class="btn btn-warning" (click)="cat_edit_popup_close(content);changed = true">
       Cancel
     </button>
   </div>

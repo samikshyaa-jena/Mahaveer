@@ -38,10 +38,10 @@ export class PurchaseAddComponent implements OnInit {
   @Output() get_purchase_details: EventEmitter<any> = new EventEmitter();
   showInps: boolean = false;
 
-  t_igst: number;
-  t_sgst: number;
-  t_cgst: number;
-  t_amount: number;
+  t_igst: any;
+  t_sgst: any;
+  t_cgst: any;
+  t_amount: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -112,6 +112,7 @@ export class PurchaseAddComponent implements OnInit {
     }
 
   }
+
   get_Category = () => {
     // this.loader = true;
     // let auth_token = sessionStorage.getItem('CORE_SESSION');
@@ -339,6 +340,8 @@ export class PurchaseAddComponent implements OnInit {
         console.log(p_form[i].value);
         this.productformarray.push(p_form[i].value)
       }
+      console.log(this.productformarray);
+      
 
       if (this.productformarray) {
 
@@ -395,6 +398,7 @@ export class PurchaseAddComponent implements OnInit {
 
     }
   };
+ 
   previousPage() {
     console.log('hii');
     this.BackTab.emit();
@@ -444,7 +448,7 @@ export class PurchaseAddComponent implements OnInit {
 
   totalCalculation() {
 
-    var pform = this.productForm.get('product')['controls'];
+    let pform:any = this.productForm.get('product')['controls'];
 
     this.t_igst = 0;
     this.t_sgst = 0;
@@ -452,10 +456,10 @@ export class PurchaseAddComponent implements OnInit {
     this.t_amount = 0;
 
     for (let i = 0; i < pform.length; i++) {
-      this.t_igst = (this.t_igst + pform[i].value.igst).toFixed(2);
-      this.t_sgst = (this.t_sgst + pform[i].value.sgst).toFixed(2);
-      this.t_cgst = (this.t_cgst + pform[i].value.cgst).toFixed(2);
-      this.t_amount = (this.t_amount + pform[i].value.total).toFixed(2);
+      this.t_igst = (this.t_igst + parseFloat(pform[i].value.igst)).toFixed(2);
+      this.t_sgst = (this.t_sgst + parseFloat(pform[i].value.sgst)).toFixed(2);
+      this.t_cgst = (this.t_cgst + parseFloat(pform[i].value.cgst)).toFixed(2);
+      this.t_amount = (this.t_amount + parseFloat(pform[i].value.total)).toFixed(2);
     }
 
   }

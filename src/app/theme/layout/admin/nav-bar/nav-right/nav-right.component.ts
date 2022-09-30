@@ -36,7 +36,7 @@ export class NavRightComponent implements OnInit {
 
   ngOnInit() { 
     let dashboardData = JSON.parse(sessionStorage.getItem('dashboardData'));
-    this.userName = dashboardData.userInfo.userName;
+    // this.userName = dashboardData.userInfo.userName;
     
     
 

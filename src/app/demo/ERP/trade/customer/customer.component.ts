@@ -22,6 +22,7 @@ export class CustomerComponent implements OnInit {
   getVendorData: any = [];
   addVendorData: any;
   vendIndex: any;
+  changed: boolean = true;
 
   constructor(
     private ErpService: ErpServiceService,

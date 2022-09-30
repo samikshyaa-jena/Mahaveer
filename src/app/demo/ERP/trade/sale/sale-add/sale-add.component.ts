@@ -334,7 +334,10 @@ export class SaleAddComponent implements OnInit {
           price: p_array.price,
           qty: p_array.qty,
           discount: p_array.discount,
-          total: p_array.total
+          total: p_array.total,
+          igst_rate: p_array.igst == 0 ? 0: (p_array.igst/p_array.price),
+          cgst_rate: p_array.cgst == 0 ? 0: (p_array.cgst/p_array.price),
+          sgst_rate: p_array.sgst == 0 ? 0: (p_array.sgst/p_array.price)
         }
       });
 
