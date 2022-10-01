@@ -8,6 +8,8 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ErpServiceService } from '../../../erp-service.service';
 import { erp_all_api } from '../../../erpAllApi';
+import { SaleSrviceService } from '../sale-srvice.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -17,35 +19,62 @@ import { erp_all_api } from '../../../erpAllApi';
 })
 export class ScrapSaleComponent implements OnInit {
 
-
-  getScrapType: any = [];
-  prodData_id: any = [];
-  productForm: FormGroup;
-  productformArray: any[]
-  openmodal: boolean = false
-  total_value: number;
-  gstVal: number;
-  productformarray: any = [];
-  loader: boolean;
-  getVendorData: any = [];
-  productname: any;
-  itemname: any;
   purchase_form: FormGroup;
-  duplicateproductformarray: any = [];
-  type: any;
-  today = new Date();
+  vendor_data: any;
+  vendor_name: any = [];
+  item_data: any;
+  item_name: any = [];
+  dynamicManufacture: FormGroup;
+  total_value: any = [];
+  get_purchase_data: any = [];
+  total_value1: number;
+  purchase_data: any;
+  purchase_tab: boolean;
+  gstVal: any;
+  control: FormGroup;
+  getCategoryData: any = [];
+  itemList: any;
+  cat_id: any;
+  hsn: any;
+  cat_data: any;
+  itemData: any;
+  Item_name: any;
+  formArrayValue: any;
+  invoice: boolean;
+  modal1: boolean = false;
+  popupData: any = [];
+  x: boolean;
+  y: boolean;
+  z: boolean;
+  loader: boolean;
+  invoData: any[];
+  productname: any;
   updatePurchase: FormGroup;
-
-
-  @Output() BackTab = new EventEmitter<boolean>()
-  @Output() get_purchase_details: EventEmitter<any> = new EventEmitter();
-  showInps: boolean = false;
-
+  purchase_dataArray: any = [];
+  enable: boolean = false;
+  gi: any;
+  updateData: any;
+  invoiceNo: any;
+  vendData: any;
+  dummy: any = [];
+  customerSelectedId: any;
+  cattName: any;
+  proddName: any;
+  catt_id: any;
+  prodd_id: any;
+  modal3: boolean;
   t_igst: number;
   t_sgst: number;
   t_cgst: number;
   t_amount: number;
-  inv_no: string;
+  itemname: any;
+  type: any;
+  p_array: any = [];
+  itemData2: any = [];
+  prodData_id: any = [];
+  productformarray: any = [];
+  pdf: boolean = false;
+  pdfData: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -54,10 +83,18 @@ export class ScrapSaleComponent implements OnInit {
     config: NgbModalConfig,
     private modalService: NgbModal,
     private fb: FormBuilder,
-    // public saleService: SaleSrviceService,
-    // private datePipe: DatePipe,
+    public saleService: SaleSrviceService,
+    private datePipe: DatePipe,
   ) {
-    this.productForm = new FormGroup({
+    // this.purchase_form = new FormGroup({
+    //   invo: new FormControl("", [Validators.required]),
+    //   vendor: new FormControl("", [Validators.required]),
+    //   p_date: new FormControl("", [Validators.required]),
+
+
+    // });
+
+    this.updatePurchase = new FormGroup({
       "product": new FormArray([
 
       ])
@@ -65,71 +102,582 @@ export class ScrapSaleComponent implements OnInit {
 
     this.purchase_form = new FormGroup({
       invo: new FormControl("", [Validators.required]),
-      custmer: new FormControl("choose_cname", [Validators.required]),
-      p_date: new FormControl(this.today, [Validators.required]),
+      custmer_id: new FormControl(""),
+      custmer: new FormControl("", [Validators.required]),
+      p_date: new FormControl("", [Validators.required]),
       amnt: new FormControl("0", [Validators.required]),
       payMode: new FormControl("choosepaymode", [Validators.required]),
       payStatus: new FormControl("choosepay", [Validators.required]),
     });
 
+    this.dynamicManufacture = this.fb.group({
+      manufacture: this.fb.array([])
+    });
+
+    //   this.updatePurchase = new FormGroup({
+    //     category: new FormControl(""),
+    //     prod_id: new FormControl(""),
+    //     hsn: new FormControl(""),
+    //     price: new FormControl(""),
+    //     qty: new FormControl(""),
+    //     // unit: new FormControl(""),
+    //     discount: new FormControl(""),
+    //     cgst: new FormControl(""),
+    //     sgst: new FormControl(""),
+    //     igst: new FormControl(""),
+    //     total: new FormControl(""),
+    //   });
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     // this.get_Category();
-    this.get_proddata();
+    this.get_Item();
     this.get_Vendor();
-    this.add_row();
-    this.get_next_invoice()
+    this.get_purchase_details();
   }
 
-  get_proddata = () => {
-    this.loader = true;
+
+
+  get_Item = () => {
+
     // let auth_token = sessionStorage.getItem('CORE_SESSION');
     // let headers = new HttpHeaders();
     // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.get_Reqs(erp_all_api.urls.get_scrap).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.get_Reqs(erp_all_api.urls.scrap_sell_entry).pipe(finalize(() => { })).subscribe(
       (res: any) => {
-        // this.getScrapType = res.data;
-        // let catData = res.data;
-        this.getScrapType = res.data
-        // for (let i = 0; i < catData.length; i++) {
-        //   if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
-        //     this.getScrapType.push(catData[i]);
-        //   }
-        // }
-        console.log(this.getScrapType);
-      },
-      (err: any) => {
-        Notiflix.Report.failure(err.error.msg, '', 'Close');
+        console.log(res, "get item");
 
-      });
-
-  };
-
-  get_Vendor = () => {
-    this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-    this.ErpService.get_Reqs(erp_all_api.urls.get_cust).pipe(finalize(() => { this.loader = false; })).subscribe(
-
-      (res: any) => {
-        let vendorData = res.data;
-        for (let i = 0; i < vendorData.length; i++) {
-          if (vendorData[i].delete_stat == 0) {
-            this.getVendorData.push(vendorData[i]);
+        let catData = res.data;
+        for (let i = 0; i < catData.length; i++) {
+          if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
+            this.itemData2.push(catData[i]);
           }
         }
-        console.log(this.getVendorData);
-      },
+        console.log(this.itemData2);
 
+        console.log(this.item_name);
+      },
       (err: any) => {
-        Notiflix.Report.failure(err.error.msg, '', 'Close');
+        console.log(err);
+
       });
+
   };
 
-  chooseCategory(form_cont, item) {
+  purchase_entry = () => {
+    this.purchase_tab = true;
+  }
+  back_table = () => {
+    this.purchase_tab = false;
+    this.dynamicManufacture.reset();
+    this.purchase_form.reset();
+  }
+
+  get UserFormGroups() {
+    return this.dynamicManufacture.get('manufacture') as FormArray
+  }
+  add_more_item() {
+    this.control = new FormGroup({
+      'cat_name': new FormControl(null),
+      'item_id': new FormControl(null),
+      'GST': new FormControl(null),
+      'hsn': new FormControl(null),
+      'price': new FormControl(null),
+      'qty': new FormControl(null),
+      'discount': new FormControl(null),
+      'total': new FormControl(null),
+    });
+    (<FormArray>this.dynamicManufacture.get('manufacture')).push(this.control)
+  }
+  delete(e) {
+    (<FormArray>this.dynamicManufacture.get('manufacture')).removeAt(e)
+
+  }
+
+  get_Vendor = () => {
+
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.get_Reqs(erp_all_api.urls.get_cust).pipe(finalize(() => { })).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.vendor_data = res
+        console.log(this.vendor_data);
+      },
+      (err: any) => {
+        console.log(err);
+
+      });
+
+  };
+
+
+  // chooseCategory(e) {
+  //   console.log(e);
+  //   if (e != "choose") {
+  //     for (let i = 0; i < this.getCategoryData.length; i++) {
+  //       if (this.getCategoryData[i].cat_id == e) {
+  //         this.itemData = this.getCategoryData[i].itemData;
+  //         this.productname = this.getCategoryData[i].prod_name
+  //       }
+  //     }
+  //     console.log(this.itemData);
+  //   } else {
+  //     Notiflix.Report.failure('choose correct option', '', 'Close');
+  //   }
+  // }
+
+  updateArray = () => {
+    console.log(this.updatePurchase.value);
+    this.popupData[this.gi] = this.updatePurchase.value;
+    // this.popupData[this.gi] = this.updatePurchase.value;
+    // this.popupData[this.gi] = this.updatePurchase.value;
+    // console.log(this.popupData, "hhhhhhhhhhhhhhh");
+    for (let i = 0; i < this.popupData.length; i++) {
+      this.purchase_dataArray[i] = this.popupData[i];
+    }
+    console.log(this.purchase_dataArray);
+
+    this.enable = true;
+    console.log(this.updatePurchase.value);
+    this.modalService.dismissAll('updt');
+    this.purchase_dataArray = this.purchase_dataArray.filter((el) => {
+      return el != null;
+    });
+  }
+  // calc_total() {
+  //   let prc=this.updatePurchase.get('price').value;
+  //   let qt=this.updatePurchase.get('qty').value;
+  //   let discnt=this.updatePurchase.get('discount').value;
+  //   let igst = this.updatePurchase.get('igst').value;
+  //   let sgst =this.updatePurchase.get('sgst').value;
+  //   let cgst = this.updatePurchase.get('cgst').value;
+  //   let total = 0;
+  //   let gstTotal = (igst + cgst + sgst)/100;
+  //   let sum = 0;
+  //   sum = qt*prc
+  //   total = ((sum*gstTotal) + sum)-discnt;
+  //   this.updatePurchase.patchValue({
+  //      total:total
+  //   })
+  // }
+
+  openUpdatePucrchase = (i, d, updt) => {
+    this.gi = i
+    // this.modalService.open(updt);
+    this.open_modal2();
+    let total = 0;
+    let igstVal = 0;
+    let cgstVal = 0;
+    let sgstVal = 0;
+    this.updateData = d
+    console.log("pop====.>", this.updateData);
+    for (let i = 0; i < this.updateData.length; i++) {
+      let cgstBarri = this.updateData[i].cgst;
+      let igstBarri = this.updateData[i].igst;
+      let sgstBarri = this.updateData[i].sgst;
+      let priceBarri = this.updateData[i].price;
+      let qtyBarri = this.updateData[i].quantity;
+      priceBarri = priceBarri * qtyBarri;
+      igstVal = (igstBarri / 100) * priceBarri;
+      sgstVal = (sgstBarri / 100) * priceBarri;
+      cgstVal = (cgstBarri / 100) * priceBarri;
+      this.updateData[i].igstVal = igstVal;
+      this.updateData[i].sgstVal = sgstVal;
+      this.updateData[i].cgstVal = cgstVal;
+    };
+    this.updateData.totalData = total;
+    console.log(this.updateData.total);
+    console.log(this.updateData);
+
+    this.cattName = this.updateData[i].cat_name;
+    this.catt_id = this.updateData[i].cat_name;
+    this.proddName = this.updateData[i].prod_name;
+    this.prodd_id = this.updateData[i].prod_name;
+    this.updatePurchase.patchValue({
+      category: this.cattName,
+      prod_id: this.proddName,
+      hsn: this.updateData[i].hsn,
+      price: this.updateData[i].price,
+      qty: this.updateData[i].qty,
+      unit: this.updateData[i].unit,
+      discount: this.updateData[i].discount,
+      cgst: this.updateData[i].cgst,
+      sgst: this.updateData[i].sgst,
+      igst: this.updateData[i].igst,
+      total: this.updateData[i].total,
+    });
+  };
+  // closeUpdateForm = (updt) => {
+  //   this.modalService.dismissAll(updt);
+  // }
+
+  // update_purchase_details = () => {
+  //   this.loader = true;
+  //   var today = new Date();
+  //   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  //   const reqBody = {
+  //     "invoice": this.invoiceNo,
+  //     "customer_id":this.customerSelectedId,
+  //     "date": date,
+  //     "payment_status": "paid",
+  //     "paid": 0,
+  //     "method": "cheque",
+  //     "sell_data": this.purchase_dataArray
+  //   }
+
+  //   let auth_token = sessionStorage.getItem('CORE_SESSION');
+  //   let headers = new HttpHeaders();
+  //   headers = headers.set('auth-token', auth_token);
+
+  //   this.ErpService.post_Reqs(erp_all_api.urls.trd_updt_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
+  //     (res: any) => {
+  //       console.log(res, "get update_purchase_entry");
+  //       Notiflix.Report.success(res.msg, '', 'Close');
+  //       this.invoiceTabclose();
+  //       this.get_purchase_details();
+  //     },
+  //     (err: any) => {
+  //       console.log(err);
+  //       Notiflix.Report.failure(err.error.msg, '', 'Close');
+  //     });
+  // };
+
+
+
+
+  item_list = (e) => {
+    for (let i = 0; i < this.getCategoryData.length; i++) {
+      if (this.getCategoryData[i].cat_id == e) {
+        this.itemData = this.getCategoryData[i].itemData;
+      }
+    }
+    console.log(this.itemData);
+  }
+  get_gst = (e) => {
+    let form_object = this.dynamicManufacture.value
+    console.log(form_object);
+    console.log(e);
+    this.itemData.forEach(element => {
+      console.log(element);
+      if (element.item_id == e) {
+        this.gstVal = element.gst
+        this.hsn = element.hsn
+        this.Item_name = element.item_name
+      }
+
+    });
+
+    console.log(this.gstVal);
+    console.log(this.hsn);
+    console.log(this.Item_name);
+
+    this.control.controls['GST'].setValue(this.gstVal);
+    this.control.controls['hsn'].setValue(this.hsn);
+  }
+
+
+  get_purchase_details = () => {
+    this.loader = true;
+
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.get_Reqs(erp_all_api.urls.scrap_sell_record).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        console.log(res);
+
+        this.get_purchase_data = res.data;
+        let totaldata = []
+        let totalIgst = []
+        let totalCgst = []
+        let totalSgst = []
+        let p = [];
+        let k = 0
+        let g = 0
+        let c = 0
+        let s = 0
+        let purchase_data = []
+        let igst = []
+        let cgst = []
+        let sgst = []
+        for (let i = 0; i < this.get_purchase_data.length; i++) {
+          purchase_data = this.get_purchase_data[i].sellData
+          for (let j = 0; j < purchase_data.length; j++) {
+            console.log("pur data==>", purchase_data[j]);
+            p[j] = purchase_data[j].total;
+            igst[j] = gst_rev(purchase_data[j].total, purchase_data[j].igst);
+            cgst[j] = gst_rev(purchase_data[j].total, purchase_data[j].cgst);
+            sgst[j] = gst_rev(purchase_data[j].total, purchase_data[j].sgst);
+            //  sum
+            k = k + p[j];
+            totaldata[i] = k;
+            // igst
+            g = g + igst[j];
+            totalIgst[i] = g;
+            // cgst
+            c = c + cgst[j];
+            totalCgst[i] = c;
+            //sgst
+            s = s + sgst[j];
+            totalSgst[i] = s;
+
+            // totalIgst[i] = (totalIgst[i] == 0) ? "NA" : totalIgst[i] //+ " %";
+            // totalCgst[i] = (totalCgst[i] == 0) ? "NA" : totalCgst[i] //+ " %";
+            // totalSgst[i] = (totalSgst[i] == 0) ? "NA" : totalSgst[i] //+ " %";
+            this.get_purchase_data[i].totalsum = totaldata[i];
+            this.get_purchase_data[i].totaligst = totalIgst[i];
+            this.get_purchase_data[i].totalcgst = totalCgst[i];
+            this.get_purchase_data[i].totalsgst = totalSgst[i];
+          }
+          k = 0;
+          g = 0;
+          c = 0;
+          s = 0
+        }
+        console.log(totaldata);
+        console.log(totaldata);
+        console.log(this.get_purchase_data, "get_purchase_data");
+      },
+      (err: any) => {
+        console.log(err);
+        Notiflix.Report.failure('Something went wrong...', '', 'Close');
+      });
+
+  };
+
+  add_purchase_details = () => {
+    debugger;
+    this.loader = true;
+    console.log(this.purchase_data[0].price);
+    const reqBody = {
+      "invoice": this.purchase_form.get('invo').value,
+      "vendor_id": this.purchase_form.get('vendor').value,
+      "type": 'rawmaterial',
+      "purchase_data": this.purchase_data[0],
+      "date": this.purchase_form.get('p_date').value
+    }
+
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.post_Reqs(erp_all_api.urls.trd_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        console.log(res, "get item");
+        Notiflix.Report.success(res.msg, '', 'Close');
+        this.get_purchase_details();
+        this.purchase_tab = false;
+        this.dynamicManufacture.reset();
+        this.purchase_form.reset();
+        this.purchase_form.reset();
+        this.purchase_tab = false;
+        this.back();
+      },
+      (err: any) => {
+        console.log(err);
+        Notiflix.Report.failure(err.error.msg, '', 'Close');
+      });
+
+  };
+
+  invoicenumberPopup(saledata, index) {
+    // console.log(c, "customer data................");
+    // console.log(s, "sale data................");
+    // this.vendData = c;
+    console.log(saledata);
+
+    this.type = saledata.customerData.type;
+
+    this.purchase_form.patchValue({
+      invo: saledata.invoice_no,
+      custmer_id: saledata.customerData.customer_id,
+      custmer: saledata.customerData.name,
+      p_date: this.datePipe.transform(saledata.sell_date, 'yyyy-MM-dd'),
+      amnt: 0,
+      payMode: saledata.method,
+      payStatus: saledata.payment_status
+    });
+
+    console.log(index);
+    this.invoiceTabopen();
+
+    var p_form = this.updatePurchase.get('product')['controls'];
+
+    for (let i = 0; i < saledata.sellData.length; i++) {
+
+      if (saledata.sellData[i]) {
+        this.add_row();
+
+      p_form[i].patchValue({
+        prud: saledata.sellData[i].prod_id,
+        igst: saledata.sellData[i].igst,
+        cgst: saledata.sellData[i].cgst,
+        sgst: saledata.sellData[i].sgst,
+        hsn: saledata.sellData[i].hsn,
+        price: saledata.sellData[i].price,
+        qty: saledata.sellData[i].quantity,
+        discount: saledata.sellData[i].discount,
+        total: saledata.sellData[i].total,
+      });
+      }
+
+    }
+    this.totalCalculation();
+  }
+
+
+  // invoicenumberPopup(d) {
+  //   let total = 0;
+  //   let igstVal = 0;
+  //   let cgstVal = 0;
+  //   let sgstVal = 0;
+  //   this.popupData = d
+  //   console.log("pop====.>", this.popupData);
+  //   this.popupData.forEach(x => {
+  //     console.log(x.total);
+  //     total += x.total;
+  //     this.x = (x.cgst == 0) ? true : false;
+  //     this.y = (x.sgst == 0) ? true : false;
+  //     this.z = (x.igst == 0) ? true : false;
+  //     cgstVal = gst_rev(x.total, x.cgst);
+  //     sgstVal = gst_rev(x.total, x.sgst);
+  //     igstVal = gst_rev(x.total, x.igst);
+  //     x.igstVal = igstVal;
+  //     x.sgstVal = sgstVal;
+  //     x.cgstVal = cgstVal;
+  //   });
+  //   this.popupData.totalData = total;
+
+  //   console.log(this.popupData.total);
+  //   console.log(this.popupData);
+
+  //   this.modal = true
+
+  // }
+  back() {
+    this.purchase_tab = false;
+    this.get_purchase_details();
+  }
+
+  generateInvoice = (e: any) => {
+    console.log(this.get_purchase_data);
+    this.pdfData = this.get_purchase_data.filter((x) => {
+      return x.invoice_no == e;
+    });
+    console.log(this.pdfData);
+    this.pdf = true;
+  }
+  hidePdf = (e: any) => {
+    if (e) {
+      this.pdf = false;
+    }
+
+  }
+
+  // invoice popup open
+  openInvoice = (content, ino) => {
+    this.router.navigate(['/v2/Erpmain/trade/invoice']);
+  }
+  // invoice popup close
+  closeInvoice(content) {
+    this.modalService.dismissAll(content);
+  }
+  // print invoice
+  printInvoice = () => {
+    window.print();
+    console.log('hi');
+    this.closeInvoice('content');
+
+  }
+
+  prevent(e, type) {
+    console.log(e);
+
+    if (type == 'qty') {
+      if (e.target.value > 0) {
+        return e.keyCode >= 48 && e.charCode <= 57;
+      } else {
+        return e.keyCode > 48 && e.charCode <= 57;
+      }
+    }
+    else if (type == 'dis' || type == 'prc') {
+      return e.keyCode >= 48 && e.charCode <= 57;
+    }
+  }
+
+  open_modal2() {
+    this.modal3 = true;
+  }
+  closeUpdateForm() {
+    this.modal3 = false;
+  }
+  invoiceTabopen() {
+    this.purchase_tab = false;
+    this.invoice = true;
+  }
+  invoiceTabclose() {
+    this.purchase_tab = false;
+    this.invoice = false;
+    this.get_purchase_details();
+  }
+
+  productdata(): FormGroup {
+    return this.fb.group({
+
+      // category: new FormControl('Choosecat', [Validators.required]),
+      prud: new FormControl('ChooseProduct', [Validators.required]),
+      igst: new FormControl('', [Validators.required]),
+      cgst: new FormControl('', [Validators.required]),
+      sgst: new FormControl('', [Validators.required]),
+      hsn: new FormControl(''),
+      price: new FormControl('0', [Validators.required]),
+      qty: new FormControl('1', [Validators.required]),
+      discount: new FormControl('0', [Validators.required]),
+      total: new FormControl('', [Validators.required]),
+      edit: new FormControl(false)
+
+    })
+  }
+
+  add_row() {
+    (<FormArray>this.updatePurchase.get('product')).push(this.productdata())
+  }
+  add_row2() {
+    (<FormArray>this.updatePurchase.get('product')).push(this.productdata())
+
+    var p_form = this.updatePurchase.get('product')['controls'];
+    var l: number = (p_form.length) - 1;
+    console.log(l);
+
+    p_form[l].controls.edit.patchValue(true);
+  }
+  deleteRow(i) {
+    (<FormArray>this.updatePurchase.get('product')).removeAt(i)
+  }
+
+  // chooseCategory(item) {
+
+  //   console.log(item);
+
+  //   this.p_array = [];
+
+  //   for (let i = 0; i < this.itemData2.length; i++) {
+  //     if (this.itemData2[i].cat_id == item) {
+  //       this.p_array.push(this.itemData2[i]);
+  //     }
+  //   }
+
+  //   console.log(this.p_array);
+
+  // }
+
+
+  chooseProduct(form_cont, item) {
 
     form_cont.patchValue({
       discount: 0,
@@ -139,52 +687,49 @@ export class ScrapSaleComponent implements OnInit {
     console.log(item);
     console.log(form_cont);
     console.log(this.purchase_form);
-    console.log(this.getScrapType);
+    console.log(this.itemData2);
 
-    if (item != "ChooseProduct") {
-      let hsn;
-      let gst;
-      let GST;
-      let gstvalue;
-      let mrp;
+    let hsn: number;
+    let gst: number;
+    let GST: number;
+    let gstvalue: number;
+    let mrp: number;
 
-      for (let i = 0; i < this.getScrapType.length; i++) {
-        if (this.getScrapType[i].prod_id == item) {
-          GST = parseInt(this.getScrapType[i].gst);
-          hsn = this.getScrapType[i].hsn;
+    for (let i = 0; i < this.itemData2.length; i++) {
+      if (this.itemData2[i].prod_id == item) {
+        GST = parseInt(this.itemData2[i].gst);
+        hsn = this.itemData2[i].hsn;
 
-          if (this.getScrapType[i].mrp) {
-            mrp = this.getScrapType[i].mrp;
-            gst = mrp * (GST / 100);
-          } else {
-            mrp = this.getScrapType[i].price;
-            gst = mrp * (GST / 100);
-          }
-          this.itemname = this.getScrapType[i].prod_name;
+        if (this.itemData2[i].mrp) {
+          mrp = this.itemData2[i].mrp;
+          gst = mrp * (GST / 100);
+        } else {
+          mrp = this.itemData2[i].price;
+          gst = mrp * (GST / 100);
+        }
+        this.itemname = this.itemData2[i].prod_name;
 
-          if (this.type == 'Intra State') {
-            gstvalue = gst / 2;
-            form_cont.patchValue({
-              igst: 0,
-              hsn: hsn,
-              cgst: gstvalue,
-              sgst: gstvalue,
-              price: mrp
-            });
-          }
-          else {
-            gstvalue = gst
-            form_cont.patchValue({
-              igst: gstvalue,
-              hsn: hsn,
-              cgst: 0,
-              sgst: 0,
-              price: mrp
-            });
-          }
+        if (this.type == 'Intra State') {
+          gstvalue = gst / 2;
+          form_cont.patchValue({
+            igst: 0,
+            hsn: hsn,
+            cgst: gstvalue,
+            sgst: gstvalue,
+            price: mrp
+          });
+        }
+        else {
+          gstvalue = gst
+          form_cont.patchValue({
+            igst: gstvalue,
+            hsn: hsn,
+            cgst: 0,
+            sgst: 0,
+            price: mrp
+          });
         }
       }
-
     }
 
     this.calc_total(form_cont.controls);
@@ -195,7 +740,7 @@ export class ScrapSaleComponent implements OnInit {
     let prc: number = form_cont.price.value;
     let qt: number = form_cont.qty.value;
     let discnt: number = form_cont.discount.value;
-    let item = form_cont.category.value;
+    let item = form_cont.prud.value;
 
     let gst: number;
     let GST: number;
@@ -203,16 +748,16 @@ export class ScrapSaleComponent implements OnInit {
     let sgst: number;
     let cgst: number;
 
-    for (let i = 0; i < this.getScrapType.length; i++) {
-      if (this.getScrapType[i].prod_id == item) {
+    for (let i = 0; i < this.itemData2.length; i++) {
+      if (this.itemData2[i].prod_id == item) {
 
-        GST = parseInt(this.getScrapType[i].gst);
+        GST = parseInt(this.itemData2[i].gst);
         gst = prc * (GST / 100);
 
         if (this.type == 'Intra State') {
           igst = 0;
-          sgst = parseFloat((gst / 2).toFixed(2));
-          cgst = parseFloat((gst / 2).toFixed(2));
+          sgst = gst / 2;
+          cgst = gst / 2;
         }
         else {
           igst = gst;
@@ -252,72 +797,7 @@ export class ScrapSaleComponent implements OnInit {
 
   }
 
-  productdata(): FormGroup {
-    return this.fb.group({
 
-      category: new FormControl('ChooseProduct', [Validators.required]),
-      // prod_id: new FormControl('ChooseItem', [Validators.required]),
-      igst: new FormControl('', [Validators.required]),
-      cgst: new FormControl('', [Validators.required]),
-      sgst: new FormControl('', [Validators.required]),
-      hsn: new FormControl(''),
-      price: new FormControl('0', [Validators.required]),
-      qty: new FormControl('1', [Validators.required]),
-      discount: new FormControl('0', [Validators.required]),
-      total: new FormControl('', [Validators.required])
-
-    })
-  }
-
-
-  add_row() {
-    (<FormArray>this.productForm.get('product')).push(this.productdata())
-  }
-  deleteRow(i) {
-    (<FormArray>this.productForm.get('product')).removeAt(i)
-  }
-
-
-  vendorType(e) {
-    console.log(e);
-    this.getVendorData.forEach(x => {
-      if (x.vendor_id == e) {
-        this.type = x.type;
-      }
-    })
-    console.log(this.type);
-  }
-
-  get_next_invoice = () => {
-    this.loader = true;
-
-    this.ErpService.get_Reqs(erp_all_api.urls.get_next_invoice_no).pipe(finalize(() => { this.loader = false; })).subscribe(
-
-      (res: any) => {
-        let vendorData = res.data;
-
-        this.purchase_form.get('invo').setValue(vendorData)
-
-      },
-
-      (err: any) => {
-        Notiflix.Report.failure(err.error.msg, '', 'Close');
-      });
-  };
-
-  previousPage() {
-    this.BackTab.emit();
-  }
-
-  resetProductForm() {
-    var p_form = this.updatePurchase.get('product')['controls'];
-    console.log(p_form);
-    p_form.splice(0, p_form.length);
-    console.log(p_form);
-    this.totalCalculation()
-  }
-
-  
   totalCalculation() {
 
     var pform = this.updatePurchase.get('product')['controls'];
@@ -335,39 +815,89 @@ export class ScrapSaleComponent implements OnInit {
     }
 
   }
+  Edit(pform, i) {
 
-  add_purchase_details = () => {
-    debugger;
+    console.log(pform);
+    console.log(pform.edit.value);
+    pform.edit.value = true;
+
+
+  }
+
+  resetProductForm() {
+    var p_form = this.updatePurchase.get('product')['controls'];
+    console.log(p_form);
+    p_form.splice(0, p_form.length);
+    console.log(p_form);
+    this.totalCalculation()
+  }
+
+  update_purchase_details = () => {
+
+    this.productformarray = [];
+    var p_form = this.updatePurchase.get('product')['controls'];
+    console.log(p_form);
+
+    for (let i = 0; i < p_form.length; i++) {
+      console.log(p_form[i].value);
+      this.productformarray.push(p_form[i].value)
+    }
+
+    if (this.productformarray) {
+
+      var product_arr = this.productformarray.map((p_array) => {
+        return {
+          prod_id: p_array.prud,
+          igst: p_array.igst,
+          cgst: p_array.cgst,
+          sgst: p_array.sgst,
+          price: p_array.price,
+          qty: p_array.qty,
+          discount: p_array.discount,
+          total: p_array.total,
+          igst_rate: p_array.igst == 0 ? 0: ((p_array.igst/p_array.price)*100),
+          cgst_rate: p_array.cgst == 0 ? 0: ((p_array.cgst/p_array.price)*100),
+          sgst_rate: p_array.sgst == 0 ? 0: ((p_array.sgst/p_array.price)*100)
+        }
+      });
+
+    }
+
     this.loader = true;
-    // console.log(this.purchase_data[0].price);
+    console.log(this.purchase_form.get('invo').value,);
+    console.log(this.productformarray);
     const reqBody = {
       "invoice": this.purchase_form.get('invo').value,
-      "vendor_id": this.purchase_form.get('vendor').value,
-      "type": 'rawmaterial',
-      // "purchase_data": this.purchase_data[0],
-      "date": this.purchase_form.get('p_date').value
+      "customer_id": this.purchase_form.get('custmer_id').value,
+      // "type": "rawmaterial",
+      "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
+      "sell_data": product_arr,
+      "payment_status": this.purchase_form.get('payStatus').value,
+      "method": this.purchase_form.get('payMode').value,
+      "paid_amount": this.purchase_form.get('amnt').value
+
     }
 
     // let auth_token = sessionStorage.getItem('CORE_SESSION');
     // let headers = new HttpHeaders();
     // headers = headers.set('auth-token', auth_token);
 
-    this.ErpService.post_Reqs(erp_all_api.urls.trd_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
+    this.ErpService.post_Reqs(erp_all_api.urls.trd_updt_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
+        Notiflix.Report.success('SuccessFully Added', '', 'Close');
         console.log(res, "get item");
-        Notiflix.Report.success(res.msg, '', 'Close');
-        // this.get_purchase_details();
-        // this.purchase_tab = false;
-        // this.dynamicManufacture.reset();
+        // this.get_purchase_details.emit();
         this.purchase_form.reset();
-        this.purchase_form.reset();
-        // this.purchase_tab = false;
-        // this.back();
+        this.invoiceTabclose();
       },
       (err: any) => {
         console.log(err);
+        console.log(err.error.msg);
         Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
-
   };
+}
+
+function gst_rev(original_price: any, gst: any) {
+  return parseFloat((original_price - (original_price * (100 / (100 + gst)))).toFixed(2))
 }
