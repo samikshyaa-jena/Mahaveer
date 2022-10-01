@@ -65,7 +65,6 @@ export class PurchaseAddComponent implements OnInit {
   }
 
   async ngOnInit() {    
-
     this.get_Category();
     this.get_Vendor();
 

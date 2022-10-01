@@ -163,26 +163,42 @@
                     (change)="chooseProduct(Product, $event.target.value); totalCalculation()" formControlName="prud"
                     [disabled]="purchase_form.invalid">
                     <option selected value="ChooseProduct" disabled>Choose Product</option>
-                    <option class="disable" *ngFor="let prod of itemData2;let i=index" [value]="prod.prod_id"
-                      [disabled]="Product.controls.edit.value == false">
+                    <option class="disable" *ngFor="let prod of itemData2;let i=index" [value]="prod.prod_id">
                       {{prod.prod_name}}</option>
+                    <!-- <option class="disable" *ngFor="let prod of itemData2;let i=index" [value]="prod.prod_id"
+                      [disabled]="Product.controls.edit.value == false">
+                      {{prod.prod_name}}</option> -->
                   </select>
                 </td>
                 <td class="td_e"><input type="text" formControlName="hsn" class="form-control table_input" disabled>
                 </td>
-                <td class="td_e"><input type="number" formControlName="qty" id="qty" class="form-control table_input"
+                <td class="td_e">
+                  <input type="number" formControlName="qty" id="qty" class="form-control table_input"
                     (input)="calc_total(Product.controls); totalCalculation()" (keypress)="prevent($event, 'qty')"
                     min="1"
-                    [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'">
+                    [readonly]="Product.controls.prud.value == 'ChooseProduct'">
+                  <!-- <input type="number" formControlName="qty" id="qty" class="form-control table_input"
+                    (input)="calc_total(Product.controls); totalCalculation()" (keypress)="prevent($event, 'qty')"
+                    min="1"
+                    [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'"> -->
                 </td>
-                <td class="td_e"><input type="number" formControlName="price" id="price"
+                <td class="td_e">
+                  <input type="number" formControlName="price" id="price"
                     class="form-control table_input"
-                    [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'">
+                    [readonly]="Product.controls.prud.value == 'ChooseProduct'">
+                  <!-- <input type="number" formControlName="price" id="price"
+                    class="form-control table_input"
+                    [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'"> -->
                 </td>
-                <td class="td_e"><input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
+                <td class="td_e">
+                  <input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
                     min="0" id="discount" class="form-control table_input"
                     (input)="calc_total(Product.controls); totalCalculation()"
-                    [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'">
+                    [readonly]="Product.controls.prud.value == 'ChooseProduct'">
+                  <!-- <input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
+                    min="0" id="discount" class="form-control table_input"
+                    (input)="calc_total(Product.controls); totalCalculation()"
+                    [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'"> -->
                 </td>
                 <td class="td_e"><input type="number" formControlName="cgst" class="form-control table_input" disabled>
                 </td>
@@ -199,8 +215,8 @@
                 <td class="delete_btn">
                   <button border="none" class="btn text-danger mr-1 disable" (click)="deleteRow(i); totalCalculation()"
                     [disabled]="updatePurchase.get('product').length == 1"><i class="fas fa-times-circle"></i></button>
-                  <button border="none" class="btn text-info disable" formControlName="edit"
-                    (click)="Edit(Product.controls, i)"><i class="fa fa-edit" aria-hidden="true"></i></button>
+                  <!-- <button border="none" class="btn text-info disable" formControlName="edit"
+                    (click)="Edit(Product.controls, i)"><i class="fa fa-edit" aria-hidden="true"></i></button> -->
                 </td>
               </tr>
             </ng-container>
