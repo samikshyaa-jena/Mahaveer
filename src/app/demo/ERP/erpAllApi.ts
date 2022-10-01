@@ -36,6 +36,7 @@ export class erp_all_api{
         add_product:base_url+'/manufacture/productEntry',
         update_product:base_url+'/manufacture/update_productionData',
         get_scrap:base_url+'/manufacture/fetchscrap',
+        get_scrap_data:base_url+'/manufacture/fetchscrap_data',
         add_scrap:base_url+'/manufacture/addscrap',
         get_consumption:base_url+'/manufacture/fetchConsumption',
         add_consumption:base_url+'/manufacture/addConsumption',
@@ -75,6 +76,12 @@ export class erp_all_api{
         getInvoiceNo: base_url+'/trade/prodPurchase',
         debitData: base_url+'/common/purchaseReturnData',
 
+        get_next_scrap_invoice_no: base_url+'/trade/scrap_invoiceNo',
+        scrap_sell_update:base_url+'/trade/scrap_updateSalesEntry',
+        scrap_sell_entry:base_url+'/trade/scrap_salesEntry',
+        scrap_sell_record:base_url+'/trade/scrap_salesRecord',
+        
+
         // updtPurc: base_url+'/trade/prodPurchaseEntry',
         // trade ends
 
@@ -90,6 +97,9 @@ export class erp_all_api{
 
         creditnote: base_url+'/common/creditNote',
         debitnote: base_url+'/common/debitNote',
+
+        // User
+        fetchOrgData: base_url+'/users/fetchOrgData',
 
     };
     public static token = {

@@ -94,6 +94,8 @@ export class InvoiceComponent implements OnInit {
   }
   
 
+  
+
     // print(){
 
     //   html2canvas(this.screen.nativeElement).then(canvas => {
@@ -126,6 +128,7 @@ export class InvoiceComponent implements OnInit {
       
 
       var data = document.getElementById('print');  
+      
       html2canvas(data).then(canvas => {  
         // Few necessary setting options  
         var imgWidth = 208;  
