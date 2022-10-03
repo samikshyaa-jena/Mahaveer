@@ -153,7 +153,7 @@ export class CategoryComponent implements OnInit {
             this.getCategoryData.push(catData[i]);
           }
         }
-        console.log("response is", catData);
+        // console.log("response is", catData);
         this.cat_data = this.getCategoryData.map((val) => {
           return { cat_id: val.cat_id, cat_name: val.cat_name, itemData: val.itemData };
         });
@@ -180,7 +180,7 @@ export class CategoryComponent implements OnInit {
 
     this.ErpService.post_Reqs(erp_all_api.urls.add_Category, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        console.log("response is", this.addCategoryData);
+        // console.log("response is", this.addCategoryData);
         this.cat_data.length = 0;
         this.getCategoryData.length = 0;
         this.show_cat_item = 1;
@@ -215,7 +215,7 @@ export class CategoryComponent implements OnInit {
         Notiflix.Report.success(res.msg, '', 'Close');
 
         this.addCategoryData = res;
-        console.log("response is", this.addCategoryData);
+        // console.log("response is", this.addCategoryData);
         this.getCategoryData = [];
         this.get_Category();
       },
@@ -341,7 +341,7 @@ export class CategoryComponent implements OnInit {
     this.ErpService.get_Reqs_params(erp_all_api.urls.get_Item, { params: params }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         this.itemList = [];
-        console.log("response is", res.data);
+        // console.log("response is", res.data);
         let itemData = res.data;
         for (let i = 0; i < itemData.length; i++) {
           if (itemData[i].delete_stat == 0) {
@@ -391,7 +391,7 @@ export class CategoryComponent implements OnInit {
 
     this.ErpService.post_Reqs(erp_all_api.urls.add_Item, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        console.log("response is", res);
+        // console.log("response is", res);
         Notiflix.Report.success(res.msg, '', 'Close');
         this.show_cat_item = 1;
         this.addItemForm.reset();

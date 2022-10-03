@@ -660,21 +660,21 @@ export class ScrapSaleComponent implements OnInit {
     (<FormArray>this.updatePurchase.get('product')).removeAt(i)
   }
 
-  // chooseCategory(item) {
+  chooseCategory(item) {
 
-  //   console.log(item);
+    console.log(item);
 
-  //   this.p_array = [];
+    this.p_array = [];
 
-  //   for (let i = 0; i < this.itemData2.length; i++) {
-  //     if (this.itemData2[i].cat_id == item) {
-  //       this.p_array.push(this.itemData2[i]);
-  //     }
-  //   }
+    for (let i = 0; i < this.itemData2.length; i++) {
+      if (this.itemData2[i].cat_id == item) {
+        this.p_array.push(this.itemData2[i]);
+      }
+    }
 
-  //   console.log(this.p_array);
+    console.log(this.p_array);
 
-  // }
+  }
 
 
   chooseProduct(form_cont, item) {

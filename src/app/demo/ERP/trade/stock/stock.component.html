@@ -30,7 +30,7 @@
                 </thead>
                 <tbody class="item_body">
                     <tr *ngFor="let data of stockData; let i = index">
-                        <td (click)="stockTablePopup(data.SaleHistory, content2)">
+                        <td (click)="stockTablePopup(data, content2)">
                             {{data.prod_name}}
                         </td>
                         <td>{{data.total_qty}}</td>
@@ -88,21 +88,32 @@
 </ng-template> -->
 
     <div class="container">
-        <!-- <div class="mode_change col-sm-12 mt-3 p-0">
-            <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Trade"
-                disabled>Trade</button>
-            <button class="btn btn-primary" routerLink="/v1/manufacture/stock"
-                title="Go To Manufacture">Manufacture</button>
-        </div> -->
+
         <div class="item_history">
-            <div>
+            <div *ngIf="stockBasicData" class="itembasicdataContainer">
+
+                <div class="itemdata"><b>{{stockBasicData.prod_name.toUpperCase()}}</b></div>
+                <div class="itemdata"></div>
+                <div class="itemdata"><button class="btn btn-primary mr-1" (click)="changeStockType(true)"
+                        title="Stock_in">Adjust
+                        Item (not complete)</button></div>
+                <div class="itemdata" style="float: right;">Price : {{(stockBasicData.price) ? stockBasicData.price :
+                    0}}</div>
+                <div class="itemdata"></div>
+                <div class="itemdata" style="float: right;">Stock Quantity: {{stockBasicData.total_qty}}</div>
 
             </div>
             <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Transactions</h3>
+            <div class="mode_change col-sm-12 mt-3 p-0">
+                <button class="btn btn-primary mr-1" (click)="changeStockType(true)" title="Stock_in">Stock
+                    In</button>
+                <button class="btn btn-primary" (click)="changeStockType(false)" title="Stock_out">Stock
+                    Out</button>
+            </div>
             <table class="table v-middle nowrap">
                 <thead>
                     <tr>
-                        <th class="border-top-0">Item</th>
+                        <th class="border-top-0">Invoice</th>
                         <th class="border-top-0">Price</th>
                         <th class="border-top-0">Quantity</th>
                         <th class="border-top-0">Customer</th>
@@ -110,12 +121,25 @@
                         <th class="border-top-0">total</th>
                     </tr>
                 </thead>
-                <tbody class="item_body">
-                <tbody class="bg-white">
-                    <tr *ngFor="let e of stockPopupData; let i = index">
+                <!-- <tbody class="item_body"> -->
+                <tbody *ngIf="stk_in === true" class="bg-white">
+                    <tr *ngFor="let e of stockInData; let i = index">
                         <td class="text-center">{{e.invoice_no}}</td>
-                        <td class="text-center">{{e.qty}}</td>
                         <td class="text-center">{{e.price}}</td>
+                        <td class="text-center">{{e.qty}}</td>
+                        <td class="text-center">{{e.vendor_name}}</td>
+                        <td class="text-center">{{e.discount}}</td>
+                        <td class="text-center">{{e.total}}</td>
+                        <!-- <td class="text-center">{{e.price}}</td> -->
+
+                    </tr>
+
+                </tbody>
+                <tbody *ngIf="stk_in === false" class="bg-white">
+                    <tr *ngFor="let e of stockOutData; let i = index">
+                        <td class="text-center">{{e.invoice_no}}</td>
+                        <td class="text-center">{{e.price}}</td>
+                        <td class="text-center">{{e.qty}}</td>
                         <td class="text-center">{{e.vendor_name}}</td>
                         <td class="text-center">{{e.discount}}</td>
                         <td class="text-center">{{e.total}}</td>

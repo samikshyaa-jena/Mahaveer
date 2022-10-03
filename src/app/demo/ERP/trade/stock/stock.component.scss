@@ -7,7 +7,7 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: whitesmoke;
+    // background-color: whitesmoke;
     background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -22,23 +22,43 @@
     height: 7rem;
 }
 
-.table-responsive{
+.table-responsive {
     width: 15rem;
     cursor: pointer;
     background-color: white;
 }
 
-.stockcontainer{
+.stockcontainer {
     display: flex;
+    // height: 100px;
+    // height: 400px;
 }
 
-.container{
-  display: inline-block;
-
+.container {
+    display: inline-block;
+    background-color: white;
+    width: fit-content;
+    overflow: scroll;
+    height: 500px;
+    overflow-x: hidden;
 }
 
-.item_history{
+.item_history {
     width: 45rem;
     background-color: white;
     cursor: pointer;
+}
+
+.itembasicdataContainer{
+    padding-top: 13px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+
+.itemdata {
+    display: inline-block;
+    background-color: white;
+    width: 30%;
 }

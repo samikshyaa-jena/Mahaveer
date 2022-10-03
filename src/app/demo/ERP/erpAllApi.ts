@@ -97,6 +97,7 @@ export class erp_all_api{
 
         creditnote: base_url+'/common/creditNote',
         debitnote: base_url+'/common/debitNote',
+        stock: base_url+'/common/stock',
 
         // User
         fetchOrgData: base_url+'/users/fetchOrgData',

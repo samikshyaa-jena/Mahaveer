@@ -180,10 +180,10 @@ export class ReqEntryComponent implements OnInit {
       qty: 1,
   });
 
-    console.log(item);
-    console.log(form_cont);
-    console.log(this.item_form);
-    console.log(this.getCategoryData);
+    // console.log(item);
+    // console.log(form_cont);
+    // console.log(this.item_form);
+    // console.log(this.getCategoryData);
 
     if (item != "ChooseProduct") {
       let gst;
