@@ -44,12 +44,7 @@ export class ReqEditComponent implements OnInit {
     this.item_form = new FormGroup({
       prod_name: new FormControl("", [Validators.required]),
       prod_id: new FormControl(""),
-      est_time: new FormControl("", [Validators.required, Validators.min(1)]),
-      // gst: new FormControl("", [Validators.required]),
-      // stock: new FormControl("", [Validators.required]),
-      // unit: new FormControl("", [Validators.required]),
-      // mrp: new FormControl("", [Validators.required]),
-      // hsn: new FormControl("", [Validators.required]),
+      est_time: new FormControl("", [Validators.required, Validators.min(1)])
     });
   }
 
@@ -62,12 +57,7 @@ export class ReqEditComponent implements OnInit {
     this.item_form.patchValue({
       prod_name: this.getProductData.prod_name,
       prod_id: this.getProductData.prod_id,
-      est_time: this.getProductData.approx_time.slice(0, -1),
-      // gst: this.getProductData.gst,
-      // stock: this.getProductData.min_stock,
-      // unit: this.getProductData.unit,
-      // mrp: this.getProductData.price,
-      // hsn: this.getProductData.hsn,
+      est_time: this.getProductData.approx_time.slice(0, -1)
     });
 
     var p_form = this.updatemat.get('product')['controls'];
@@ -89,18 +79,11 @@ export class ReqEditComponent implements OnInit {
       
     }   
 
-    // setTimeout(() => {
       this.totalCalculation();
-    // }, 50000)
     
   }
 
   getRawmaterials(){
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_rawmat).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         console.log(res);
@@ -175,11 +158,6 @@ export class ReqEditComponent implements OnInit {
       "targetTime": this.item_form.get('est_time').value + 'D',
       "requirements": product_arr,
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.update_prod_req, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');
@@ -210,7 +188,6 @@ export class ReqEditComponent implements OnInit {
 
       for (let i = 0; i < this.rawMat.length; i++) {
         if (this.rawMat[i].material_id == item) {
-          // GST = parseInt(this.rawMat[i].gst);
           GST = this.rawMat[i].gst;
             mrp = this.rawMat[i].mrp;
             gst = mrp * (GST / 100);
@@ -335,11 +312,6 @@ export class ReqEditComponent implements OnInit {
       "added_by": "",
       "requirements": product_arr,
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.update_prod_req, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');

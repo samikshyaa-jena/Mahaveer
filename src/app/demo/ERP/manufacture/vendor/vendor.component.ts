@@ -60,7 +60,6 @@ export class VendorComponent implements OnInit {
 
    ngOnInit(): void {
     this.get_Vendor();
-    // this.action();
   }
 
   changeType = (e)=>{
@@ -81,10 +80,6 @@ export class VendorComponent implements OnInit {
   get_Vendor = () =>{
     this.getVendorData = [];
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_Vendor).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         let vendorData = res.data;
@@ -113,11 +108,6 @@ export class VendorComponent implements OnInit {
     type: this.addVendorForm.get('type').value,
     address: this.addVendorForm.get('add').value
     };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.add_Vendor, reqBody).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         this.getVendorData = [];
@@ -167,11 +157,6 @@ export class VendorComponent implements OnInit {
     address: this.updateVendorForm.get('add').value,
     vendor_id: this.getVendorData[this.vendIndex].vendor_id,
     };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.update_Vendor, reqBody).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         this.get_Vendor();
@@ -200,11 +185,6 @@ export class VendorComponent implements OnInit {
     const reqBody = {
     vendor_id: this.getVendorData[i].vendor_id,
     };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.delete_Vendor, reqBody).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         this.getVendorData = [];
@@ -216,222 +196,4 @@ export class VendorComponent implements OnInit {
           Notiflix.Report.failure(err.error.msg, '', 'Close');(err.msg);
       });
   }
-
-  // action() {
-
-
-  //   // var docDefinition = {
-  //   //   pageSize: 'A4',
-  //   //   pageMargins: [50, 0, 0, 0],
-  //   //   content: [
-
-  //   //     {
-  //   //       columns: [{
-  //   //         margin: [0, 20, 0, 0],
-  //   //         table: {
-  //   //           widths: [490],
-  //   //           heights: [30],
-  //   //           color: '#ddd',
-  //   //           body: [
-  //   //             [{
-  //   //               text: 'Induslnd Bank',
-  //   //               bold: true,
-  //   //               fontSize: 34,
-  //   //               color: '#8c2626',
-  //   //               alignment: 'center',
-  //   //               italics: true,
-  //   //               margin: [0, 8, 0, 0],
-  //   //               border: [false, false, false, false]
-  //   //             }],
-  //   //           ]
-  //   //         }
-  //   //       }]
-  //   //     },
-  //   //     {
-
-  //   //       columns: [{
-  //   //         canvas: [{
-  //   //           type: 'polyline',
-  //   //           lineWidth: 2,
-  //   //           color: 'blue',
-  //   //           lineColor: 'red',
-  //   //           points: [{
-  //   //             x: 0,
-  //   //             y: 30
-  //   //           }, {
-  //   //             x: 500,
-  //   //             y: 30
-  //   //           }]
-  //   //         }]
-  //   //       }]
-  //   //     }, {
-  //   //       columns: [{
-  //   //         margin: [0, 20, 0, 0],
-  //   //         table: {
-  //   //           widths: [490],
-  //   //           heights: [30],
-  //   //           color: '#ddd',
-  //   //           body: [
-  //   //             [{
-  //   //               text: 'AEPS MINISTATEMENT',
-  //   //               bold: true,
-  //   //               fontSize: 14,
-  //   //               alignment: 'center',
-  //   //               margin: [0, 8, 0, 0]
-  //   //             }],
-  //   //           ]
-  //   //         }
-  //   //       }]
-  //   //     }, {
-  //   //       columns: [{
-  //   //         margin: [0, 20, 0, 0],
-  //   //         border: [true, true, true, true],
-  //   //         widths: [ '*', 'auto', 100, '*' ],
-  //   //         table: {
-  //   //           widths: [490],
-  //   //           heights: [10, 10],
-  //   //           border: [true, true, true, true],
-
-  //   //           body: [
-  //   //             [{
-  //   //               text: 'Date : ' + '3456789' +
-  //   //                 "Time : " + 'ertyuio',
-  //   //               fontSize: 12,
-  //   //               // alignment: 'center',
-  //   //               border: [false, false, false, false]
-  //   //             }],
-  //   //             [{
-  //   //               text: 'Shop Name : ' + 'iServeU Tech',
-  //   //               fontSize: 12,
-  //   //               // alignment: 'center',
-  //   //               border: [false, false, false, false]
-  //   //             }]
-  //   //           ]
-  //   //         }
-  //   //       }]
-  //   //     },
-  //   //     {
-  //   //       columns: [{
-  //   //         margin: [0, 20, 0, 0],
-  //   //         table: {
-  //   //           widths: [490],
-  //   //           heights: [10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 20, 10, 10, 10, 10, 10, 10, 10, 10, 10],
-  //   //           border: [false, false, false, false],
-  //   //           body: [
-
-  //   //             [{
-  //   //               text: 'Reference No. : ' + 'rthjkl',
-  //   //               fontSize: 12,
-  //   //               border: [false, false, false, false]
-  //   //             }],
-  //   //             [{
-  //   //               text: 'Txn ID : ' + 'ertghjkl',
-  //   //               fontSize: 12,
-  //   //               border: [false, false, false, false]
-  //   //             }]               
-
-  //   //           ]
-  //   //         }
-  //   //       }]
-  //   //     }, {
-  //   //       columns: [{
-  //   //         text: "Note : Please do not pay any charge/fee for this txn",
-  //   //         bold: true,
-  //   //         fontSize: 18,
-  //   //         italics: true
-  //   //       }]
-  //   //     },
-  //   //     {
-  //   //       columns: [{
-  //   //         margin: [0, 20, 0, 0],
-  //   //         table: {
-  //   //           widths: [490],
-  //   //           heights: [30],
-  //   //           color: '#ddd',
-  //   //           body: [
-  //   //             [{
-  //   //               text: 'Customer Copy',
-  //   //               fontSize: 12,
-  //   //               alignment: 'center',
-  //   //               margin: [0, 8, 0, 0]
-  //   //             }],
-  //   //           ]
-  //   //         }
-  //   //       }]
-  //   //     }
-  //   //   ],
-
-  //   //   styles: {
-  //   //     status: {
-  //   //       margin: [0, 30, 0, 0]
-  //   //     },
-  //   //     tableExample: {
-  //   //       margin: [0, 30, 0, 0]
-  //   //     },
-  //   //     header: {
-  //   //       margin: [0, 5, 0, 0],
-  //   //       fontSize: 15,
-  //   //       bold: true
-  //   //     },
-  //   //     bigger: {
-  //   //       fontSize: 10,
-  //   //       italics: true,
-  //   //     },
-  //   //     footer: {
-  //   //       margin: [420, 0, 0, 4],
-  //   //       fontSize: 13,
-  //   //       bold: true
-  //   //     }
-
-  //   //   }
-  //   // }
-
-  //   var docDefinition = {
-  //     content: [
-  //       {
-  //         layout: 'lightHorizontalLines', // optional
-  //         table: {
-  //           // headers are automatically repeated if the table spans over multiple pages
-  //           // you can declare how many rows should be treated as headers
-  //           headerRows: 1,
-  //           widths: [ '*', 'auto', 100, '*' ],
-    
-  //           body: [
-  //             [ 'First', 'Second', 'Third', 'The last one' ],
-  //             [ 'Value 1', 'Value 2', 'Value 3', 'Value 4' ],
-  //             [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
-  //           ]
-  //         }
-  //       }
-  //     ]
-  //   };
-
-  //   pdfMake.tableLayouts = {
-  //     exampleLayout: {
-  //       hLineWidth: function (i, node) {
-  //         if (i === 0 || i === node.table.body.length) {
-  //           return 0;
-  //         }
-  //         return (i === node.table.headerRows) ? 2 : 1;
-  //       },
-  //       vLineWidth: function (i, node) {
-  //         // return 0;
-  //         return (i === node.table.headerRows) ? 2 : 1;
-  //       },
-  //       hLineColor: function (i) {
-  //         return i === 1 ? 'black' : '#aaa';
-  //       },
-  //       paddingLeft: function (i) {
-  //         return i === 0 ? 0 : 8;
-  //       },
-  //       paddingRight: function (i, node) {
-  //         return (i === node.table.widths.length - 1) ? 0 : 8;
-  //       }
-  //     }
-  //   };
-
-  //     pdfMake.createPdf(docDefinition).print();
-    
-
-  // }
 }

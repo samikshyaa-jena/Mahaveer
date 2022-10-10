@@ -43,21 +43,11 @@ export class ProdEntryComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    // console.log(this.edit);
-    // console.log(this.rawmatData);
-    
-
     this.get_Category();
-
   }
 
   get_Category = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         let catData = res.data;
@@ -75,28 +65,6 @@ export class ProdEntryComponent implements OnInit {
       });
 
   };
-  // get_proddata = () => {
-  //   this.loader = true;
-  //   let auth_token = sessionStorage.getItem('CORE_SESSION');
-  //   let headers = new HttpHeaders();
-  //   headers = headers.set('auth-token', auth_token);
-
-  //   this.ErpService.get_Reqs(erp_all_api.urls.get_prod).pipe(finalize(() => { this.loader = false; })).subscribe(
-  //     (res: any) => {
-  //       let catData = res.data;
-  //       for (let i = 0; i < catData.length; i++) {
-  //         if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
-  //           this.productCategory.push(catData[i]);
-  //         }
-  //       }
-  //       console.log(this.productCategory);
-  //     },
-  //     (err: any) => {
-  //       Notiflix.Report.failure(err.error.msg, '', 'Close');
-
-  //     });
-
-  // };
 
   showRawmat(val){
     this.materialsData = [];
@@ -113,9 +81,7 @@ export class ProdEntryComponent implements OnInit {
       for (let i = 0; i < this.materialsData.length; i++) {
         this.materialsData[i] = Object.assign(this.materialsData[i],
           { qty: this.materialsData[i].quantity * this.addProductForm.value.qty }
-        );
-        // this.materialsData[i].quantity = this.materialsData[i].quantity * this.addProductForm.value.qty;   
-        
+        );        
       }      
     }
     console.log(this.materialsData);
@@ -127,19 +93,13 @@ export class ProdEntryComponent implements OnInit {
       for (let i = 0; i < this.materialsData.length; i++) {
         this.materialsData[i] = Object.assign(this.materialsData[i],
           { qty: this.materialsData[i].quantity * this.addProductForm.value.qty }
-        );
-        // this.materialsData[i].quantity = this.materialsData[i].quantity * this.addProductForm.value.qty;   
-        
+        );        
       }      
     }
   }
 
   add_Product = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     const req_body = {
       "prod_id": this.addProductForm.value.prod_name,
       "targetTime": this.datePipe.transform(this.addProductForm.value.target_time, 'MM-dd-yyyy'),

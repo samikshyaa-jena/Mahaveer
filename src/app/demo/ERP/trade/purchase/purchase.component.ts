@@ -188,52 +188,10 @@ export class PurchaseComponent implements OnInit {
     });
   };
 
-
-  // openUpdatePucrchase = (d,updt) => {
-  //   this.modalService.open(updt);
-  //   let total = 0;
-  //   let igstVal = 0;
-  //   let cgstVal = 0;
-  //   let sgstVal = 0;
-  //   this.updateData = d
-  //   console.log("pop====.>", this.updateData);
-  //   this.updateData.forEach(x => {
-  //     console.log(x.total);
-  //     total += x.total;
-  //     this.x = (x.cgst == 0) ? true : false;
-  //     this.y = (x.sgst == 0) ? true : false;
-  //     this.z = (x.igst == 0) ? true : false;
-  //     cgstVal = gst_rev(x.total, x.cgst);
-  //     sgstVal = gst_rev(x.total, x.sgst);
-  //     igstVal = gst_rev(x.total, x.igst);
-  //     x.igstVal = igstVal;
-  //     x.sgstVal = sgstVal;
-  //     x.cgstVal = cgstVal;
-  //   });
-  //   this.updateData.totalData = total;
-  //   console.log(this.updateData.total);
-  //   console.log(this.updateData);
-  //   this.updateModal = true;
-  //   this.updatePurchase.patchValue({
-  //     category: this.updateData[0].cat_name,
-  //     product: this.updateData[0].prod_name,
-  //     hsn: this.updateData[0].hsn,
-  //     purPrice: this.updateData[0].purchase_price,
-  //     quantity: this.updateData[0].quantity,
-  //     unit: this.updateData[0].unit,
-  //     discount: this.updateData[0].discount,
-  //     cgst: this.updateData[0].cgstVal,
-  //     sgst: this.updateData[0].sgstVal,
-  //     igst: this.updateData[0].igstVal,
-  //     total: this.updateData[0].total,
-  //   });
-  // };
-
   update_purchase_details = () => {
     this.loader = true;
     var today = new Date();
     var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    // console.log(this.purchase_data[0].price);
     const reqBody = {
       "invoice": this.invoiceNo,
       "vendor_id": this.vendData.vendor_id,
@@ -241,24 +199,12 @@ export class PurchaseComponent implements OnInit {
       "date": date,
       "purchase_data": this.purchase_dataArray
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.trd_update_purchase_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res, "get update_purchase_entry");
         Notiflix.Report.success(res.msg, '', 'Close');
         this.modal = false;
         this.get_purchase_details();
-        // this.get_purchase_details();
-        // this.purchase_tab = false;
-        // this.dynamicManufacture.reset();
-        // this.purchase_form.reset();
-        // this.purchase_form.reset();
-        // this.purchase_tab = false;
-        // this.back();
       },
       (err: any) => {
         console.log(err);
@@ -271,17 +217,11 @@ export class PurchaseComponent implements OnInit {
   changeType = (e) => {
     console.log(e);
     if (e == 'manufcture') {
-      // this.router.navigate(["/v2/Erpmain/category"])
       this.router.navigate(["/v2/Erpmain/purchaseMod/purchase"])
     }
   }
 
   get_Category = () => {
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.getTradeCat).pipe(finalize(() => { })).subscribe(
       (res: any) => {
         this.getCategoryData = res.data;
@@ -344,57 +284,8 @@ export class PurchaseComponent implements OnInit {
       total: (total).toFixed(2)
     })
   }
-
-  // calc_total(i) {
-  //   console.log(i);
-  //   let form_object = this.dynamicManufacture.value
-  //   console.log(form_object);
-  //   this.purchase_data = (Object.values(form_object));
-  //   let formArrayValue = form_object.manufacture[i]
-  //   console.log(formArrayValue);
-
-  //   let prc = form_object.manufacture[i].price;
-  //   console.log(prc);
-
-  //   let qt = form_object.manufacture[i].qty;
-  //   let discnt = form_object.manufacture[i].discount
-  //   if (qt != null) {
-  //     if (discnt != null) {
-  //       let amnt = prc * qt;
-  //       this.total_value[i] = ((((amnt * this.gstVal) / 100) + amnt) - (discnt));
-  //       formArrayValue.total = this.total_value[i];
-  //       console.log(amnt);
-
-  //     }
-  //     else {
-  //       let amnt = prc * qt;
-  //       this.total_value[i] = ((((amnt * this.gstVal) / 100) + amnt) - (0));
-  //       formArrayValue.total = this.total_value[i];
-  //       console.log(amnt);
-
-  //     }
-  //   } else if (discnt != null) {
-  //     let amnt = prc * 1;
-  //     this.total_value[i] = ((((amnt * this.gstVal) / 100) + amnt) - (discnt));
-  //     formArrayValue.total = this.total_value[i];
-  //     console.log(amnt);
-
-  //   } else {
-  //     let amnt = prc * 1;
-  //     console.log(amnt);
-
-  //     this.total_value[i] = ((((amnt * this.gstVal) / 100) + amnt) - (0));
-  //     formArrayValue.total = this.total_value[i];
-  //   }
-  //   formArrayValue.total = this.total_value[i];
-  // }
-
   get_Vendor = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_trd_vendor).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
@@ -409,11 +300,6 @@ export class PurchaseComponent implements OnInit {
   };
 
   get_Item = () => {
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_prod).pipe(finalize(() => { })).subscribe(
       (res: any) => {
         console.log(res, "get item");
@@ -469,11 +355,6 @@ export class PurchaseComponent implements OnInit {
 
   get_purchase_details = () => {
     this.loader = true;
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.trd_get_purchase_entry).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
@@ -558,11 +439,6 @@ export class PurchaseComponent implements OnInit {
       "purchase_data": this.purchase_data[0],
       "date": this.purchase_form.get('p_date').value
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.purchase_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res, "get item");
@@ -587,67 +463,6 @@ export class PurchaseComponent implements OnInit {
     this.modalService.dismissAll(updt);
   }
 
-  // updtPur = () =>{
-  //   this.loader = true;
-  //   console.log(this.purchase_data[0].price);
-  //   const reqBody = {
-  //     "invoice": this.purchase_form.get('invo').value,
-  //     "vendor_id": this.purchase_form.get('vendor').value,
-  //     "type": 'rawmaterial',
-  //     "purchase_data": this.purchase_data[0],
-  //     "date": this.purchase_form.get('p_date').value
-  //   }
-
-  //   let auth_token = sessionStorage.getItem('CORE_SESSION');
-  //   let headers = new HttpHeaders();
-  //   headers = headers.set('auth-token', auth_token);
-
-  //   this.ErpService.post_Reqs(erp_all_api.urls.purchase_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
-  //     (res: any) => {
-  //       console.log(res, "get item");
-  //       Notiflix.Report.success(res.msg, '', 'Close');
-  //       this.get_purchase_details();
-  //       this.purchase_tab = false;
-  //       this.dynamicManufacture.reset();
-  //       this.purchase_form.reset();
-  //       this.purchase_form.reset();
-  //       this.purchase_tab = false;
-  //       this.back();
-  //     },
-  //     (err: any) => {
-  //       console.log(err);
-  //       Notiflix.Report.failure(err.error.msg, '', 'Close');
-  //     });
-  // }
-
-
-  // invoicenumberPopup(d) {
-  //   let total = 0;
-  //   let igstVal = 0;
-  //   let cgstVal = 0;
-  //   let sgstVal = 0;
-  //   this.popupData = d
-  //   console.log("pop====.>", this.popupData);
-  //   this.popupData.forEach(x => {
-  //     console.log(x.total);
-  //     total += x.total;
-  //     this.x = (x.cgst == 0) ? true : false;
-  //     this.y = (x.sgst == 0) ? true : false;
-  //     this.z = (x.igst == 0) ? true : false;
-  //     cgstVal = gst_rev(x.total, x.cgst);
-  //     sgstVal = gst_rev(x.total, x.sgst);
-  //     igstVal = gst_rev(x.total, x.igst);
-  //     x.igstVal = igstVal;
-  //     x.sgstVal = sgstVal;
-  //     x.cgstVal = cgstVal;
-  //   });
-  //   this.popupData.totalData = total;
-
-  //   console.log(this.popupData.total);
-  //   console.log(this.popupData);
-
-  //   this.modal = true;
-  // }
   invoicenumberPopup(i, d, v) {
     console.log(v, "vendor data................");
     this.vendData = v;
@@ -857,21 +672,7 @@ export class PurchaseComponent implements OnInit {
       this.popupData[i].sgstVal = sgstVal;
       this.popupData[i].cgstVal = cgstVal;
     }
-    // this.popupData.forEach(x => {
-    //   console.log(x.total);
-    //   total += x.total;
-    //   this.x = (x.cgst == 0) ? true : false;
-    //   this.y = (x.sgst == 0) ? true : false;
-    //   this.z = (x.igst == 0) ? true : false;
-    //   cgstVal = gst_rev(x.total, x.cgst);
-    //   sgstVal = gst_rev(x.total, x.sgst);
-    //   igstVal = gst_rev(x.total, x.igst);
-    //   x.igstVal = igstVal;
-    //   x.sgstVal = sgstVal;
-    //   x.cgstVal = cgstVal;
-    // });
     this.popupData.totalData = total;
-
     console.log(this.popupData.total);
     console.log(this.popupData);
     let allData = this.popupData;
@@ -909,11 +710,6 @@ export class PurchaseComponent implements OnInit {
     console.log(this.dummy);
     this.popupData = this.dummy;
     console.log(this.popupData);
-    // this.cattName = this.popupData[i].categoryName;
-    // this.catt_id = this.popupData[i].category;
-    // this.itemmName = this.popupData[i].itemName;
-    // this.itemm_id = this.popupData[i].item_id;
-    // console.log(this.cattName,this.itemmName,this.catt_id,this.itemm_id);
     this.loader = false;
   }
 

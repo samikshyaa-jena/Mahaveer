@@ -26,7 +26,6 @@ export class AddProductionComponent implements OnInit {
   prodData_id: any = [];
   product_filterData: any = [];
   qty_error: any;
-  // today = new Date();
   yr= new Date().getFullYear()
   mon= new Date().getMonth()
   dt= new Date().getDate()
@@ -61,15 +60,11 @@ export class AddProductionComponent implements OnInit {
 
   ngOnInit(): void {
     this.get_Category();
-    // this.get_proddata();
     this.get_Product();
   }
   get_Product() {
     this.loader = true;
     this.getProductData = [];
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
 
     this.ErpService.get_Reqs(erp_all_api.urls.get_product).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
@@ -79,59 +74,9 @@ export class AddProductionComponent implements OnInit {
           if (prod[i].delete_stat == 0) {
             this.getProductData.push(prod[i]);
           }
-          // for (let j = 0; j < this.productCategory.length; j++) {
-          //   if (this.getProductData[i].prod_id == this.productCategory[j].prod_id) {
-          //     console.log(this.getProductData[i].prod_id);
-
-          //     this.getProductData[i] = Object.assign(this.getProductData[i],
-          //       { production_id: this.productCategory[j].prodution_id }
-          //     );
-          //   }
-          // }
         }
 
         console.log("getProductData==>", this.getProductData);
-
-
-        //   for (let j = 0; j < this.getProductData.length; j++) {
-        //     var t;
-        //     var tar_t: any;
-        //     t = this.getProductData[j].approx_time;
-
-        //     console.log(this.getProductData[j].approx_time.length);
-
-
-        //     if (t.length == 3) {
-        //       tar_t = t.charAt(0) + t.charAt(1);              
-        //     } else {
-        //       tar_t = t.charAt(0);              
-        //     }
-
-        //     var n = parseInt(tar_t);
-
-        //     console.log(n);
-
-        //     this.date2.setDate(this.today.getDate() + n);
-
-        //     console.log(this.date2);
-
-
-        //     if (this.getProductData[j].approx_time.slice(-1) == 'D') {
-        //       this.getProductData[j] = Object.assign(this.getProductData[j],
-        //         { tar_date: this.date2.setDate(this.today.getDate() + n) }
-        //       );
-        //     } else {
-
-        //       this.getProductData[j] = Object.assign(this.getProductData[j],
-        //         { tar_date: this.date2.setMonth(this.today.getMonth() + n) }
-        //       );
-
-        //     }
-
-        //   }
-
-        // console.log(this.getProductData);
-
       },
       (err: any) => {
         console.log(err);
@@ -139,39 +84,9 @@ export class AddProductionComponent implements OnInit {
 
       });
 
-    // this.ErpService.get_Reqs(erp_all_api.urls.get_product).pipe(finalize(() => { this.loader = false; })).subscribe(
-    //   (res: any) => {
-    //     let prodData = res.data;
-
-    //     for (let i = 0; i < prodData.length; i++) {
-    //       if (prodData[i].delete_stat == 0) {
-    //         this.getProductData.push(prodData[i]);
-    //       }
-    //       for (let j = 0; j < this.productCategory.length; j++) {
-    //         if (this.getProductData[i].prod_id == this.productCategory[j].prod_id) {
-    //           console.log(this.getProductData[i].prod_id);
-
-    //           this.getProductData[i] = Object.assign(this.getProductData[i],
-    //             { prod_name: this.productCategory[j].prod_name }
-    //           );
-    //         }
-    //       }
-    //     }
-
-    //     console.log(this.getProductData);
-
-    //   },
-    //   (err: any) => {
-    //     Notiflix.Report.failure(err.error.msg, '', 'Close');
-
-    //   });
   }
   get_Category = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         let catData = res.data;
@@ -191,10 +106,6 @@ export class AddProductionComponent implements OnInit {
   };
   get_proddata = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_prod).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         let catData = res.data;
@@ -212,32 +123,8 @@ export class AddProductionComponent implements OnInit {
 
   };
 
-  // getScrap = () => {
-  //   this.loader = true;
-  //   let auth_token = sessionStorage.getItem('CORE_SESSION');
-  //   let headers = new HttpHeaders();
-  //   headers = headers.set('auth-token', auth_token);
-
-  //   this.ErpService.get_Reqs(erp_all_api.urls.get_scrap).pipe(finalize(() => { this.loader = false; })).subscribe(
-  //     (res: any) => {
-  //       console.log(res);
-
-  //       this.getscrapData = res.data;
-  //       this.getscrapData2 = res.data;
-
-  //     },
-  //     (err: any) => {
-  //       Notiflix.Report.failure(err.error.msg, '', 'Close');
-
-  //     });
-
-  // };
   add_Product = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     const req_body = {
       "prod_id": this.addProductForm.value.prod_name,
       "targetTime": this.datePipe.transform(this.addProductForm.value.target_time, 'MM-dd-yyyy'),
@@ -258,9 +145,6 @@ export class AddProductionComponent implements OnInit {
   };
   addScrap = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
 
     const req_body = [{
       "type": this.editProductForm.value.scrap,
@@ -287,22 +171,9 @@ export class AddProductionComponent implements OnInit {
   }
   editProduct(row) {
 
-    // this.edit_prod = true;
     this.edit = false;
     this.rawmatData = row;
     this.showscrapcons();
-
-    // var t_date = new Date(row.tar_date);
-    // t_date = this.datePipe.transform(t_date, 'yyyy-MM-dd');
-    // console.log(t_date);
-
-    // this.editProductForm.patchValue({
-    //   target_time: t_date,
-    //   prod_id: row.prodution_id,
-    // });
-    // this.editProductForm.value.target_time.setDate(t_date);
-
-    // this.getScrap();
   }
 
   chStatus(evt) {
@@ -347,12 +218,6 @@ export class AddProductionComponent implements OnInit {
 
     this.edit = true;
     this.rawmatData = row;
-
-    // this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     const req_body = {
       "prodution_id": row.production_id,
       "expected_time": this.datePipe.transform(row.expected_time, 'dd-MM-yyyy'),
@@ -361,7 +226,6 @@ export class AddProductionComponent implements OnInit {
 
     this.ErpService.post_Reqs(erp_all_api.urls.update_product, req_body).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // this.get_Product();
         this.show_prod = false;
         this.edit_prod = true;
       },
@@ -371,55 +235,18 @@ export class AddProductionComponent implements OnInit {
       });
   }
 
-  // updateProduct_scrap(){
-  //   this.updateProduct();
-  //   if (this.editProductForm.value.status == 'completed') {      
-  //     this.addScrap();
-  //   }
-  // }
   showscrapcons() {
     this.scrap_con = true;
     this.show_prod = false;
   }
   cancelEdittab() {
     this.edit_prod = false;
-    // this.editProductForm.reset();
   }
   prevent_char(e: any) {
     console.log(e);
 
     return e.keyCode >= 48 && e.charCode <= 57;
   }
-
-  // getSc(event){
-  //   if (event.target.value != '') {
-  //     const val = event.target.value;
-  //   this.getscrapData = this.getscrapData2;
-  //   var temp = this.getscrapData.filter(d => {
-  //     const vals = d.type;
-  //     console.log(vals);
-
-  //     return new RegExp(val, 'gi').test(vals.toString());
-  //   });
-
-  //   this.getscrapData = temp;
-  //   if (temp && temp != '') {
-  //     this.showAutcompleteList = true;
-  //   }
-  //   else{
-  //     this.showAutcompleteList = false;
-  //   }
-  // }
-  // else{
-  //   this.showAutcompleteList = false;
-  // }
-  // }
-
-  // selectScrap(obj) {
-  //   console.log(obj);
-  //   this.showAutcompleteList = false;
-  //   this.editProductForm.controls.scrap.setValue(obj.type);
-  // }
 
   back(e) {
     this.scrap_con = e;

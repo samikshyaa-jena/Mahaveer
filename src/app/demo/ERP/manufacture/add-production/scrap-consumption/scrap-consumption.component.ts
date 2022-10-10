@@ -59,39 +59,12 @@ export class ScrapConsumptionComponent implements OnInit {
       
     }
 
-    // var s_form = this.scrapForm.get('Scrap')['controls'];
-    // console.log(s_form);
-
     for (let i = 0; i < this.rawmatData.used_raw_mat_data.length; i++) {
       this.t_rawmat += this.rawmatData.used_raw_mat_data[i].mrp;
     }
 
-    // for (let i = 0; i < this.rawmatData.scrap_data.length; i++) {
-    //   this.add_row();
-
-    //   s_form[i].patchValue({
-    //     scrap: this.rawmatData.scrap_data[i].type,
-    //     qty: this.rawmatData.scrap_data[i].qty,
-    //     unit: this.rawmatData.scrap_data[i].unit,
-    //     edit: false,
-    //   });
-
-    // }
-
-    // var c_form = this.consumptionForm.get('Consumption')['controls'];
-    // console.log(c_form);
-
     for (let i = 0; i < this.rawmatData.consumption_data.length; i++) {
-      // this.add_row2();
-
-      // c_form[i].patchValue({
-      //   consumption: this.rawmatData.consumption_data[i].type,
-      //   cost: this.rawmatData.consumption_data[i].cost,
-      //   edit: false,
-      // });
-
       this.t_cons += this.rawmatData.consumption_data[i].cost;
-
     }
 
     this.getScrap();
@@ -105,14 +78,12 @@ export class ScrapConsumptionComponent implements OnInit {
       scrap: new FormControl('', [Validators.required]),
       qty: new FormControl('', [Validators.required]),
       unit: new FormControl('', [Validators.required]),
-      // edit: new FormControl(true)
     })
   }
   matdata2(): FormGroup {
     return this.fb.group({
       consumption: new FormControl('', [Validators.required]),
       cost: new FormControl('', [Validators.required]),
-      // edit: new FormControl(true)
     })
   }
 
@@ -147,7 +118,6 @@ export class ScrapConsumptionComponent implements OnInit {
         this.getscrapData2 = res.data;
 
         console.log(this.getscrapData);
-        // console.log(this.getscrapData2);
 
 
       },
@@ -159,9 +129,6 @@ export class ScrapConsumptionComponent implements OnInit {
   };
   getConsumption = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
 
     this.ErpService.get_Reqs(erp_all_api.urls.get_consumption).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
@@ -171,9 +138,6 @@ export class ScrapConsumptionComponent implements OnInit {
         this.getconsData2 = res.data;
 
         console.log(this.getconsData);
-        // console.log(this.getconsData2);
-
-
       },
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
@@ -201,7 +165,6 @@ export class ScrapConsumptionComponent implements OnInit {
 
   selectScrap(obj, form_cont) {
     console.log(obj);
-    // this.scrapForm.controls.scrap.setValue(obj.type);
     form_cont.scrap.patchValue(obj.type);
   }
   getcn(event) {
@@ -223,7 +186,6 @@ export class ScrapConsumptionComponent implements OnInit {
 
   selectCons(obj, form_cont) {
     console.log(obj);
-    // this.scrapForm.controls.scrap.setValue(obj.type);
     form_cont.consumption.patchValue(obj.type);
   }
 
@@ -262,15 +224,9 @@ export class ScrapConsumptionComponent implements OnInit {
       "sacrap_data": product_arr,
     }
 
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.add_scrap, reqBody).subscribe(
       (res: any) => {
-        // Notiflix.Report.success('SuccessFully Added', '', 'Close');
         console.log(res, "get item");
-        // this.previousPage();
         this.addConsumption();
       },
       (err: any) => {
@@ -313,10 +269,6 @@ export class ScrapConsumptionComponent implements OnInit {
       "consumption_data": product_arr,
     }
 
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.add_consumption, reqBody).subscribe(
       (res: any) => {
         this.loader = false;
@@ -358,9 +310,7 @@ export class ScrapConsumptionComponent implements OnInit {
   }
 
   prevent_0(e: any) {
-    // return e.keyCode >= 48 && e.charCode <= 57;
     var v = parseInt(e.target.value)
-
     if (v > 0) {
       return e.keyCode >= 48 && e.charCode <= 57;
     } else {

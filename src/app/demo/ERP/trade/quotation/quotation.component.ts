@@ -67,7 +67,6 @@ export class QuotationComponent implements OnInit {
   t_amount: number;
   itemname: any;
   type: any;
-  // p_array: any = [];
   itemData2: any = [];
   quotationformarray: any = [];
   pri_sta: any;
@@ -88,7 +87,6 @@ export class QuotationComponent implements OnInit {
 
     this.updateQuotation = new FormGroup({
       "product": new FormArray([
-
       ])
     })
 
@@ -117,17 +115,7 @@ export class QuotationComponent implements OnInit {
     this.get_Vendor();
     this.get_purchase_details();
   }
-
-  // ngOnDestroy(){
-  //   sessionStorage.removeItem('priority')
-  // }
-
   get_Category = () => {
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.getProduct).pipe(finalize(() => { })).subscribe(
       (res: any) => {
         let catData = res.data;
@@ -175,11 +163,6 @@ export class QuotationComponent implements OnInit {
   }
 
   get_Vendor = () => {
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_cust).pipe(finalize(() => { })).subscribe(
       (res: any) => {
         console.log(res);
@@ -194,11 +177,6 @@ export class QuotationComponent implements OnInit {
   };
 
   get_Item = () => {
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_prod).pipe(finalize(() => { })).subscribe(
       (res: any) => {
         console.log(res, "get item");
@@ -224,8 +202,6 @@ export class QuotationComponent implements OnInit {
   updateArray = () => {
     console.log(this.updateQuotation.value);
     this.popupData[this.gi] = this.updateQuotation.value;
-    // this.popupData[this.gi] = this.updateQuotation.value;
-    // this.popupData[this.gi] = this.updateQuotation.value;
     console.log(this.popupData, "hhhhhhhhhhhhhhh");
     for (let i = 0; i < this.popupData.length; i++) {
       this.purchase_dataArray[i] = this.popupData[i];
@@ -242,7 +218,6 @@ export class QuotationComponent implements OnInit {
 
   openUpdatePucrchase = (i, d, updt) => {
     this.gi = i
-    // this.modalService.open(updt);
     this.open_modal2();
     let total = 0;
     let igstVal = 0;
@@ -320,11 +295,6 @@ export class QuotationComponent implements OnInit {
 
   get_purchase_details = () => {
     this.loader = true;
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.fetch_quotation, {}).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
@@ -379,10 +349,6 @@ export class QuotationComponent implements OnInit {
             //sgst
             s = s + sgst[j];
             totalSgst[i] = s;
-
-            // totalIgst[i] = (totalIgst[i] == 0) ? "NA" : totalIgst[i] //+ " %";
-            // totalCgst[i] = (totalCgst[i] == 0) ? "NA" : totalCgst[i] //+ " %";
-            // totalSgst[i] = (totalSgst[i] == 0) ? "NA" : totalSgst[i] //+ " %";
             this.get_purchase_data[i].totalsum = totaldata[i];
             this.get_purchase_data[i].totaligst = totalIgst[i];
             this.get_purchase_data[i].totalcgst = totalCgst[i];
@@ -501,8 +467,6 @@ export class QuotationComponent implements OnInit {
 
   productdata(): FormGroup {
     return this.fb.group({
-
-      // category: new FormControl('Choosecat', [Validators.required]),
       prud: new FormControl('ChooseProduct', [Validators.required]),
       igst: new FormControl('', [Validators.required]),
       cgst: new FormControl('', [Validators.required]),
@@ -513,7 +477,6 @@ export class QuotationComponent implements OnInit {
       discount: new FormControl('0', [Validators.required]),
       total: new FormControl('', [Validators.required]),
       edit: new FormControl(false)
-
     })
   }
 
@@ -594,18 +557,15 @@ export class QuotationComponent implements OnInit {
   }
 
   calc_total(form_cont) {
-
     let prc: number = form_cont.price.value;
     let qt: number = form_cont.qty.value;
     let discnt: number = form_cont.discount.value;
     let item = form_cont.prud.value;
-
     let gst: number;
     let GST: number;
     let igst: number;
     let sgst: number;
     let cgst: number;
-
     for (let i = 0; i < this.itemData2.length; i++) {
       if (this.itemData2[i].prod_id == item) {
 
@@ -626,8 +586,6 @@ export class QuotationComponent implements OnInit {
     }
 
     console.log(form_cont);
-    // let gstTotal = (igst + cgst + sgst) / 100;
-
     let total: number = 0;
     let total_igst: number = 0;
     let total_cgst: number = 0;
@@ -745,16 +703,10 @@ export class QuotationComponent implements OnInit {
       "paid_amount": this.quotation_form.get('amnt').value,
       "status": "QUOTATION"
     };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.update_quotation, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');
         console.log(res, "get item");
-        // this.get_purchase_details.emit();
         this.quotation_form.reset();
         this.quotationTabclose();
       },
@@ -806,16 +758,10 @@ export class QuotationComponent implements OnInit {
       "method": '',
       "paid_amount": this.quotation_form.get('amnt').value,
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.trd_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');
         console.log(res, "get item");
-        // this.get_purchase_details.emit();
         this.quotation_form.reset();
         this.quotationTabclose();
       },

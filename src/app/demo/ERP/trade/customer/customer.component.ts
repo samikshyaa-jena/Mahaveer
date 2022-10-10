@@ -67,10 +67,6 @@ export class CustomerComponent implements OnInit {
   get_Vendor = () =>{
     this.getVendorData = [];
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_cust).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         let vendorData = res.data;
@@ -100,11 +96,6 @@ export class CustomerComponent implements OnInit {
     type: this.addVendorForm.get('type').value,
     address: this.addVendorForm.get('add').value,
     };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.add_cust, reqBody).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         this.getVendorData = [];
@@ -157,11 +148,6 @@ export class CustomerComponent implements OnInit {
     id: this.updateVendorForm.get('id').value,
     customer_id: this.getVendorData[this.vendIndex].customer_id,
     };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.update_cust, reqBody).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         this.get_Vendor();
@@ -180,11 +166,6 @@ export class CustomerComponent implements OnInit {
     const reqBody = {
       customer_id: this.getVendorData[i].customer_id,
     };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.delete_cust, reqBody).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         this.getVendorData = [];

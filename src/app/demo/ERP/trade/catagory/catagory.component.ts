@@ -143,10 +143,6 @@ export class CategoryComponent implements OnInit {
     this.cat_data.length=0;
     this.getCategoryData.length=0;
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.getTradeCat).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         let catData = res.data;
@@ -174,12 +170,6 @@ export class CategoryComponent implements OnInit {
       name: this.addCategoryForm.get("cat_name").value,
     }
     console.log(reqBody);
-
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.add_TradeCat, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log("response is", this.addCategoryData);
@@ -206,10 +196,6 @@ export class CategoryComponent implements OnInit {
       "cat_id": this.cat_data[i].cat_id
     }
     console.log(reqBody);
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.del_TradeCat, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success(res.msg, '', 'Close');
@@ -232,10 +218,6 @@ export class CategoryComponent implements OnInit {
       "prod_id": this.itemList[i].prod_id
     }
     console.log(reqBody);
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.del_prod, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success(res.msg, '', 'Close');
@@ -257,10 +239,6 @@ export class CategoryComponent implements OnInit {
       "cat_id": this.cat_data[this.editCatIndex].cat_id,
     }
     console.log(reqBody);
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.edit_TradeCat, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success(res.msg, '', 'Close');
@@ -288,10 +266,6 @@ export class CategoryComponent implements OnInit {
       "mrp": parseFloat(this.editItemForm.get('mrp').value),
     }
     console.log(reqBody);
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.edit_prod, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         this.cat_edit_popup_close('content');
@@ -328,11 +302,7 @@ export class CategoryComponent implements OnInit {
     this.getProd();
   }
   getProd = () => {
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
     let params = { cat_id: this.cat_id }
-
     this.ErpService.get_Reqs_params(erp_all_api.urls.get_prod, { params: params }).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         this.itemList = [];
@@ -383,24 +353,7 @@ export class CategoryComponent implements OnInit {
     fd.append('hsn', parseFloat(this.addItemForm.get('hsn').value));
     fd.append('qty', qnt);
     this.uploadedFiles ? fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name) : ''
-
-    
-    // const reqBody = {
-    //   cat_id: this.cat,
-    //   name: this.addItemForm.get('item_name').value,
-    //   gst: parseInt(this.addItemForm.get('gst').value),
-    //   min_stock: parseInt(this.addItemForm.get('min_stk').value),
-    //   unit: this.addItemForm.get('unit').value,
-    //   mrp: parseFloat(this.addItemForm.get('mrp').value),
-    //   hsn: parseInt(this.addItemForm.get('hsn').value),
-    //   qty: qnt
-
-    // }
     console.log(fd);
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.add_prod, fd).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log("response is", res);
@@ -417,9 +370,6 @@ export class CategoryComponent implements OnInit {
    updateFilter(event: any) {
     const val = event.target.value;
      console.log(val);
-    //  let datavalues = this.reports;
-
-    //  this.reports = this.cat_data;
      console.log(this.reports);
     var temp = this.reports.filter(d => {
       const vals = Object.values(d);

@@ -132,10 +132,6 @@ export class PurchaseComponent implements OnInit {
 
   get_Category = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.getCategory).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         this.getCategoryData = res.data;
@@ -196,10 +192,6 @@ export class PurchaseComponent implements OnInit {
 
   get_Vendor = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_Vendor).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
@@ -215,10 +207,6 @@ export class PurchaseComponent implements OnInit {
 
   get_Item = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_Item).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res, "get item");
@@ -289,11 +277,6 @@ export class PurchaseComponent implements OnInit {
 
 
   get_purchase_details = () => {
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.purchase_entry).pipe(finalize(() => { })).subscribe(
       (res: any) => {
         console.log(res);
@@ -382,11 +365,6 @@ export class PurchaseComponent implements OnInit {
       "purchase_data": this.purchase_data[0],
       "date": this.purchase_form.get('p_date').value
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.purchase_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res, "get item");
@@ -491,11 +469,6 @@ export class PurchaseComponent implements OnInit {
       "date": this.debitNoteForm.get('date').value,
       "returnData": this.returnData
   }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.debit_note, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res,"debit note res");
@@ -567,13 +540,7 @@ export class PurchaseComponent implements OnInit {
     this.itemmName = this.updateData[i].itemName;
     this.itemm_id = this.updateData[i].item_id;
     console.log(this.cattName,this.itemmName,this.catt_id,this.itemm_id);
-    // console.log(this.updateData[i]);
     console.log(this.itemmName);
-    // this.itemData = [];
-    // this.itemData.push(this.itemmName);
-    // console.log(this.itemData);
-
-
     this.updatePurchase.patchValue({
       category: this.cattName,
       item_id: this.itemmName,
@@ -600,11 +567,6 @@ export class PurchaseComponent implements OnInit {
       "date": date,
       "purchase_data": this.purchase_dataArray
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.update_purchase_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res, "get update_purchase_entry");

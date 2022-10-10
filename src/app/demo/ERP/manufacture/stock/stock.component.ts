@@ -58,10 +58,6 @@ export class StockComponent implements OnInit {
   }
   get_rawMatData(){
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_rawMatData).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         console.log("response is",res);

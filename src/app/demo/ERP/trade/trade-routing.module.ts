@@ -10,8 +10,6 @@ import { VendorComponent } from './vendor/vendor.component';
 import { QuotationComponent } from './quotation/quotation.component';
 import { CategoryComponent } from './catagory/catagory.component';
 import { ScrapSaleComponent } from './sale/scrap-sale/scrap-sale.component';
-// import { InvoiceComponent } from '../../../theme/shared/invoice/invoice.component';
-// import { InvoiceComponent } from 'src/app/theme/shared/invoice/invoice.component';
 
 
 const routes: Routes = [
@@ -59,10 +57,6 @@ const routes: Routes = [
     path: 'scrap-sell',
     component: ScrapSaleComponent
   },
-  // {
-  //   path: 'invoice',
-  //   component: InvoiceComponent
-  // },
 ];
 
 @NgModule({

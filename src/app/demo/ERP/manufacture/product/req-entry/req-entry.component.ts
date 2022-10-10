@@ -60,12 +60,7 @@ export class ReqEntryComponent implements OnInit {
 
     this.item_form = new FormGroup({
       prod_name: new FormControl("choose_prod", [Validators.required]),
-      est_time: new FormControl("1", [Validators.required, Validators.min(1)]),
-      // gst: new FormControl("gst", [Validators.required]),
-      // stock: new FormControl("", [Validators.required]),
-      // unit: new FormControl("unit", [Validators.required]),
-      // mrp: new FormControl("", [Validators.required]),
-      // hsn: new FormControl("", [Validators.required]),
+      est_time: new FormControl("1", [Validators.required, Validators.min(1)])
     });
   }
 
@@ -78,13 +73,8 @@ export class ReqEntryComponent implements OnInit {
   }
   get_Category = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.getProduct).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // this.getCategoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
@@ -102,13 +92,8 @@ export class ReqEntryComponent implements OnInit {
   };
   get_proddata = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_prod).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // this.getCategoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
@@ -125,9 +110,6 @@ export class ReqEntryComponent implements OnInit {
   };
   get_Vendor = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
     this.ErpService.get_Reqs(erp_all_api.urls.get_cust).pipe(finalize(() => { this.loader = false; })).subscribe(
 
       (res: any) => {
@@ -146,11 +128,6 @@ export class ReqEntryComponent implements OnInit {
   };
 
   getRawmaterials(){
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_rawmat).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         console.log(res);
@@ -308,11 +285,6 @@ export class ReqEntryComponent implements OnInit {
       "targetTime": this.item_form.get('est_time').value + 'D',
       "requirements": product_arr,
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.set_prod_req, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');

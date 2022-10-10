@@ -114,44 +114,24 @@ export class PurchaseAddComponent implements OnInit {
   }
 
   get_Category = () => {
-    // this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
-    // this.ErpService.get_Reqs(erp_all_api.urls.getTradeCat).pipe(finalize(() => { this.loader = false; })).subscribe(
-    //   (res: any) => {
     let catData = this.catData;
     console.log(catData);
-
     for (let i = 0; i < catData.length; i++) {
       if (catData[i].delete_stat == 0 && catData[i].itemData.length > 0) {
         this.getCategoryData.push(catData[i]);
         this.itemData.push(catData[i].itemData);
       }
     }
-
     console.log(this.getCategoryData);
     console.log(this.itemData);
-    // },
-    // (err: any) => {
-    //   Notiflix.Report.failure(err.error.msg, '', 'Close');
-
-    // });
-
   };
   get_Vendor = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
     this.ErpService.get_Reqs(erp_all_api.urls.get_trd_vendor).pipe(finalize(() => { this.loader = false; })).subscribe(
-
       (res: any) => {
         this.getVendorData = res.data;
         console.log(this.getVendorData);
       },
-
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
@@ -269,26 +249,20 @@ export class PurchaseAddComponent implements OnInit {
     }
 
     console.log(form_cont);
-    // let gstTotal = (igst + cgst + sgst) / 100;
-
     let total: number = 0;
     let total_igst: number = 0;
     let total_cgst: number = 0;
     let total_sgst: number = 0;
-
     if (qt) {
-
       total_igst = parseFloat((igst * qt).toFixed(2));
       total_cgst = parseFloat((cgst * qt).toFixed(2));
       total_sgst = parseFloat((sgst * qt).toFixed(2));
       let gstTotal: number = (total_igst + total_cgst + total_sgst);
-
       if (discnt) {
         total = parseFloat((gstTotal + ((prc * qt) - discnt)).toFixed(2));
       } else {
         total = parseFloat((gstTotal + ((prc * qt) - 0)).toFixed(2));
       }
-
       form_cont.total.patchValue(total);
       form_cont.igst.patchValue(total_igst);
       form_cont.cgst.patchValue(total_cgst);
@@ -375,11 +349,6 @@ export class PurchaseAddComponent implements OnInit {
         "purchase_data": product_arr,
 
       }
-
-      // let auth_token = sessionStorage.getItem('CORE_SESSION');
-      // let headers = new HttpHeaders();
-      // headers = headers.set('auth-token', auth_token);
-
       this.ErpService.post_Reqs(url, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
         (res: any) => {
           Notiflix.Report.success('SuccessFully Added', '', 'Close');
@@ -394,8 +363,6 @@ export class PurchaseAddComponent implements OnInit {
           console.log(err.error.msg);
           Notiflix.Report.failure(err.error.msg, '', 'Close');
         });
-
-
     }
   };
  
@@ -406,7 +373,6 @@ export class PurchaseAddComponent implements OnInit {
 
   productdata(): FormGroup {
     return this.fb.group({
-
       category: new FormControl('ChooseProduct', [Validators.required]),
       item: new FormControl('ChooseProduct', [Validators.required]),
       igst: new FormControl('', [Validators.required]),
@@ -447,14 +413,11 @@ export class PurchaseAddComponent implements OnInit {
   }
 
   totalCalculation() {
-
     let pform:any = this.productForm.get('product')['controls'];
-
     this.t_igst = 0;
     this.t_sgst = 0;
     this.t_cgst = 0;
     this.t_amount = 0;
-
     for (let i = 0; i < pform.length; i++) {
       this.t_igst = (this.t_igst + parseFloat(pform[i].value.igst)).toFixed(2);
       this.t_sgst = (this.t_sgst + parseFloat(pform[i].value.sgst)).toFixed(2);
@@ -466,7 +429,6 @@ export class PurchaseAddComponent implements OnInit {
 
   prevent(e, type) {
     console.log(e.target.value);
-
     if (type == 'qty') {
       if (e.target.value > 0) {
         return e.keyCode >= 48 && e.charCode <= 57;

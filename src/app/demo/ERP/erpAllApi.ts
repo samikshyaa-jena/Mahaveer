@@ -1,6 +1,4 @@
 let base_url = 'http://43.205.31.253:3000'
-// let base_url = 'http://localhost:3000'
-// let base_url = 'https://a432-/45-114-49-105.ngrok.io'
 export class erp_all_api{
     public static urls = {
         // manufaturing strarts
@@ -75,7 +73,6 @@ export class erp_all_api{
         getInvoiceNo: base_url+'/trade/prodPurchase',
         debitData: base_url+'/common/purchaseReturnData',
 
-        // updtPurc: base_url+'/trade/prodPurchaseEntry',
         // trade ends
 
         //quation start

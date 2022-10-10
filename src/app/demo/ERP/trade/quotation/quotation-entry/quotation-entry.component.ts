@@ -83,13 +83,8 @@ export class QuotationEntryComponent implements OnInit {
   }
   get_Category = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.getProduct).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // this.getCategoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0) {
@@ -101,19 +96,12 @@ export class QuotationEntryComponent implements OnInit {
       },
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
-
       });
-
   };
   get_proddata = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_prod).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // this.getCategoryData = res.data;
         let catData = res.data;
         for (let i = 0; i < catData.length; i++) {
           if (catData[i].delete_stat == 0 && !(this.prodData_id.includes(catData[i].prod_id))) {
@@ -124,17 +112,11 @@ export class QuotationEntryComponent implements OnInit {
       },
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
-
       });
-
   };
   get_Vendor = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
     this.ErpService.get_Reqs(erp_all_api.urls.get_cust).pipe(finalize(() => { this.loader = false; })).subscribe(
-
       (res: any) => {
         let vendorData = res.data;
         for (let i = 0; i < vendorData.length; i++) {
@@ -144,7 +126,6 @@ export class QuotationEntryComponent implements OnInit {
         }
         console.log(this.getVendorData);
       },
-
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
@@ -277,8 +258,6 @@ export class QuotationEntryComponent implements OnInit {
     }
 
     console.log(form_cont);
-    // let gstTotal = (igst + cgst + sgst) / 100;
-
     let total: number = 0;
     let total_igst: number = 0;
     let total_cgst: number = 0;
@@ -374,20 +353,11 @@ export class QuotationEntryComponent implements OnInit {
       "quote_data": quotation_arr,
       "paid_amount": (+this.quotation_form.get('amnt').value).toFixed(2),
       "status": "QUOTATION",
-      // "igst_rate": this.newVal.igst,
-      // "cgst_rate": this.newVal.cgst,
-      // "sgst_rate": this.newVal.sgst
     };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.quotation_add, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');
         console.log(res, "get item");
-        // this.get_purchase_details.emit();
         this.quotation_form.reset();
         this.previousPage();
       },
@@ -404,9 +374,7 @@ export class QuotationEntryComponent implements OnInit {
 
   productdata(): FormGroup {
     return this.fb.group({
-
       category: new FormControl('ChooseProduct', [Validators.required]),
-      // prod_id: new FormControl('ChooseItem', [Validators.required]),
       igst: new FormControl('', [Validators.required]),
       cgst: new FormControl('', [Validators.required]),
       sgst: new FormControl('', [Validators.required]),
@@ -415,7 +383,6 @@ export class QuotationEntryComponent implements OnInit {
       qty: new FormControl('1', [Validators.required]),
       discount: new FormControl('0', [Validators.required]),
       total: new FormControl('', [Validators.required])
-
     })
   }
 
@@ -434,19 +401,16 @@ export class QuotationEntryComponent implements OnInit {
     this.t_sgst = 0;
     this.t_cgst = 0;
     this.t_amount = 0;
-
     for (let i = 0; i < pform.length; i++) {
       this.t_igst = this.t_igst + pform[i].value.igst;
       this.t_sgst = this.t_sgst + pform[i].value.sgst;
       this.t_cgst = this.t_cgst + pform[i].value.cgst;
       this.t_amount = this.t_amount + pform[i].value.total;
     }
-
   }
 
   prevent(e, type) {
     console.log(e);
-
     if (type == 'qty') {
       if (e.target.value > 0) {
         return e.keyCode >= 48 && e.charCode <= 57;
@@ -461,18 +425,11 @@ export class QuotationEntryComponent implements OnInit {
 
   get_next_quotation = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
     this.ErpService.get_Reqs(erp_all_api.urls.get_next_quotation_no).pipe(finalize(() => { this.loader = false; })).subscribe(
-
       (res: any) => {
         let vendorData = res.data;
-
         this.quotation_form.get('quto').setValue(vendorData)
-
       },
-
       (err: any) => {
         Notiflix.Report.failure(err.error.msg, '', 'Close');
       });

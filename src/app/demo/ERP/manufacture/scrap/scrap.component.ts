@@ -13,8 +13,6 @@ import * as Notiflix from 'notiflix';
 export class ScrapComponent implements OnInit {
   loader: boolean;
   getscrapData: any = [];
-  // scrapQty: [];
-
   constructor(private ErpService: ErpServiceService,) { }
 
   ngOnInit() {
@@ -23,15 +21,9 @@ export class ScrapComponent implements OnInit {
 
   getScrap = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_scrap).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
-
-        // this.getscrapData = res.data;
         for (const scarpList of res.data) {
           let qty = 0; 
           for (const iterator of scarpList.scrap_data) {

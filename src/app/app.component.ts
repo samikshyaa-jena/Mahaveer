@@ -19,26 +19,14 @@ export class AppComponent implements OnInit {
     private router: Router, 
     private appService: AppService, 
     private storage: StorageMap, 
-    // private pushnotifyService: PushNotifyService,
     private socketService2: Socket2Service,
   ) {
-    // Registering Vex Dialog Plugin only once through out the project
     vex.registerPlugin(vexDialog);
     vex.defaultOptions.className = 'vex-theme-default';
     
   }
 
   ngOnInit() {
-    // this.pushnotifyService.requestPermission();
-
-
-    // Set logout timer when page gets refresh, if user is logged in.
-    // if (sessionStorage.getItem('CORE_SESSION')) {
-    //   this.appService.observeInternetConn(); // Observe Internet Connection
-    //   this.appService.autoLogOut();
-    // } else {
-    //   this.appService.logOut();
-    // }
 
 
     this.router.events.subscribe((evt) => {

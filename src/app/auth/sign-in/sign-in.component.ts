@@ -14,7 +14,6 @@ import Toastify from 'toastify-js'
 })
 export class SignInComponent implements OnInit {
 
-  // userImg = 'https://firebasestorage.googleapis.com/v0/b/iserveu_storage/o/AdminFolder%2FinHouse%2Fphoto.png?alt=media&token=b0198a05-5988-4469-bdce-d52afb30ff19';
   signInForm: FormGroup;
   signing = false;
   siteData = {};
@@ -67,14 +66,6 @@ export class SignInComponent implements OnInit {
             this.notify(notify);
           }
 
-            // this.store.dispatch(new Dashboard.SetUserData({ loggedInUser: this.signInForm.value.username }));
-
-            // this.fetchDashboardData();
-            // this.fetchWallet1();
-            // this.fetchWallet2();
-
-            // this.appService.observeInternetConn(); // Observe Internet Connection
-            // this.appService.autoLogOut();
 
 
           },
@@ -89,7 +80,5 @@ export class SignInComponent implements OnInit {
         );
     
         }
-      }
-
-//  
+      } 
 

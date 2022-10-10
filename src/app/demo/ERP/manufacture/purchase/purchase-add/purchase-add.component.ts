@@ -114,13 +114,6 @@ export class PurchaseAddComponent implements OnInit {
     
   }
   get_Category = () => {
-    // this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
-    // this.ErpService.get_Reqs(erp_all_api.urls.getCategory).pipe(finalize(() => { this.loader = false; })).subscribe(
-    //   (res: any) => {
         let catData = this.catData;
         console.log(catData);
 
@@ -133,18 +126,10 @@ export class PurchaseAddComponent implements OnInit {
 
         console.log(this.getCategoryData);
         console.log(this.itemData);
-      // },
-      // (err: any) => {
-      //   Notiflix.Report.failure(err.error.msg, '', 'Close');
-
-      // });
 
   };
   get_Vendor = () => {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
     this.ErpService.get_Reqs(erp_all_api.urls.get_Vendor).pipe(finalize(() => { this.loader = false; })).subscribe(
 
       (res: any) => {
@@ -267,9 +252,6 @@ export class PurchaseAddComponent implements OnInit {
         }
       }
     }
-
-    // let gstTotal = (igst + cgst + sgst) / 100;
-
     let total: number = 0;
     let total_igst: number = 0;
     let total_cgst: number = 0;
@@ -376,11 +358,6 @@ export class PurchaseAddComponent implements OnInit {
       "purchase_data": product_arr,
 
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(url, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');
@@ -447,17 +424,12 @@ export class PurchaseAddComponent implements OnInit {
     this.t_sgst = 0;
     this.t_cgst = 0;
     this.t_amount = 0;
-    
-
     for (let i = 0; i < pform.length; i++) {
       this.t_igst = this.t_igst + pform[i].value.igst;
       this.t_sgst = this.t_sgst + pform[i].value.sgst;
       this.t_cgst = this.t_cgst + pform[i].value.cgst;
       this.t_amount = this.t_amount + pform[i].value.total;
     }
-
-    
-
   }
 
   prevent(e, type) {

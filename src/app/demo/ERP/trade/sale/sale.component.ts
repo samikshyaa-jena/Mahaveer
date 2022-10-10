@@ -84,17 +84,8 @@ export class SaleComponent implements OnInit {
     public saleService: SaleSrviceService,
     private datePipe: DatePipe,
   ) {
-    // this.purchase_form = new FormGroup({
-    //   invo: new FormControl("", [Validators.required]),
-    //   vendor: new FormControl("", [Validators.required]),
-    //   p_date: new FormControl("", [Validators.required]),
-
-
-    // });
-
     this.updatePurchase = new FormGroup({
       "product": new FormArray([
-
       ])
     })
 
@@ -111,20 +102,6 @@ export class SaleComponent implements OnInit {
     this.dynamicManufacture = this.fb.group({
       manufacture: this.fb.array([])
     });
-
-    //   this.updatePurchase = new FormGroup({
-    //     category: new FormControl(""),
-    //     prod_id: new FormControl(""),
-    //     hsn: new FormControl(""),
-    //     price: new FormControl(""),
-    //     qty: new FormControl(""),
-    //     // unit: new FormControl(""),
-    //     discount: new FormControl(""),
-    //     cgst: new FormControl(""),
-    //     sgst: new FormControl(""),
-    //     igst: new FormControl(""),
-    //     total: new FormControl(""),
-    //   });
   }
 
   ngOnInit() {
@@ -135,11 +112,6 @@ export class SaleComponent implements OnInit {
   }
 
   get_Category = () => {
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.getProduct).pipe(finalize(() => { })).subscribe(
       (res: any) => {
         let catData = res.data;
@@ -158,11 +130,6 @@ export class SaleComponent implements OnInit {
 
 
   get_Item = () => {
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_prod).pipe(finalize(() => { })).subscribe(
       (res: any) => {
         console.log(res, "get item");
@@ -215,11 +182,6 @@ export class SaleComponent implements OnInit {
   }
 
   get_Vendor = () => {
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_cust).pipe(finalize(() => { })).subscribe(
       (res: any) => {
         console.log(res);
@@ -228,32 +190,13 @@ export class SaleComponent implements OnInit {
       },
       (err: any) => {
         console.log(err);
-
       });
 
   };
 
-
-  // chooseCategory(e) {
-  //   console.log(e);
-  //   if (e != "choose") {
-  //     for (let i = 0; i < this.getCategoryData.length; i++) {
-  //       if (this.getCategoryData[i].cat_id == e) {
-  //         this.itemData = this.getCategoryData[i].itemData;
-  //         this.productname = this.getCategoryData[i].prod_name
-  //       }
-  //     }
-  //     console.log(this.itemData);
-  //   } else {
-  //     Notiflix.Report.failure('choose correct option', '', 'Close');
-  //   }
-  // }
-
   updateArray = () => {
     console.log(this.updatePurchase.value);
     this.popupData[this.gi] = this.updatePurchase.value;
-    // this.popupData[this.gi] = this.updatePurchase.value;
-    // this.popupData[this.gi] = this.updatePurchase.value;
     console.log(this.popupData, "hhhhhhhhhhhhhhh");
     for (let i = 0; i < this.popupData.length; i++) {
       this.purchase_dataArray[i] = this.popupData[i];
@@ -267,26 +210,9 @@ export class SaleComponent implements OnInit {
       return el != null;
     });
   }
-  // calc_total() {
-  //   let prc=this.updatePurchase.get('price').value;
-  //   let qt=this.updatePurchase.get('qty').value;
-  //   let discnt=this.updatePurchase.get('discount').value;
-  //   let igst = this.updatePurchase.get('igst').value;
-  //   let sgst =this.updatePurchase.get('sgst').value;
-  //   let cgst = this.updatePurchase.get('cgst').value;
-  //   let total = 0;
-  //   let gstTotal = (igst + cgst + sgst)/100;
-  //   let sum = 0;
-  //   sum = qt*prc
-  //   total = ((sum*gstTotal) + sum)-discnt;
-  //   this.updatePurchase.patchValue({
-  //      total:total
-  //   })
-  // }
 
   openUpdatePucrchase = (i, d, updt) => {
     this.gi = i
-    // this.modalService.open(updt);
     this.open_modal2();
     let total = 0;
     let igstVal = 0;
@@ -330,43 +256,6 @@ export class SaleComponent implements OnInit {
       total: this.updateData[i].total,
     });
   };
-  // closeUpdateForm = (updt) => {
-  //   this.modalService.dismissAll(updt);
-  // }
-
-  // update_purchase_details = () => {
-  //   this.loader = true;
-  //   var today = new Date();
-  //   var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-  //   const reqBody = {
-  //     "invoice": this.invoiceNo,
-  //     "customer_id":this.customerSelectedId,
-  //     "date": date,
-  //     "payment_status": "paid",
-  //     "paid": 0,
-  //     "method": "cheque",
-  //     "sell_data": this.purchase_dataArray
-  //   }
-
-  //   let auth_token = sessionStorage.getItem('CORE_SESSION');
-  //   let headers = new HttpHeaders();
-  //   headers = headers.set('auth-token', auth_token);
-
-  //   this.ErpService.post_Reqs(erp_all_api.urls.trd_updt_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
-  //     (res: any) => {
-  //       console.log(res, "get update_purchase_entry");
-  //       Notiflix.Report.success(res.msg, '', 'Close');
-  //       this.invoiceTabclose();
-  //       this.get_purchase_details();
-  //     },
-  //     (err: any) => {
-  //       console.log(err);
-  //       Notiflix.Report.failure(err.error.msg, '', 'Close');
-  //     });
-  // };
-
-
-
 
   item_list = (e) => {
     for (let i = 0; i < this.getCategoryData.length; i++) {
@@ -401,15 +290,9 @@ export class SaleComponent implements OnInit {
 
   get_purchase_details = () => {
     this.loader = true;
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.trd_get_sale_entry).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
-
         this.get_purchase_data = res.data;
         let totaldata = []
         let totalIgst = []
@@ -444,10 +327,6 @@ export class SaleComponent implements OnInit {
             //sgst
             s = s + sgst[j];
             totalSgst[i] = s;
-
-            // totalIgst[i] = (totalIgst[i] == 0) ? "NA" : totalIgst[i] //+ " %";
-            // totalCgst[i] = (totalCgst[i] == 0) ? "NA" : totalCgst[i] //+ " %";
-            // totalSgst[i] = (totalSgst[i] == 0) ? "NA" : totalSgst[i] //+ " %";
             this.get_purchase_data[i].totalsum = totaldata[i];
             this.get_purchase_data[i].totaligst = totalIgst[i];
             this.get_purchase_data[i].totalcgst = totalCgst[i];
@@ -480,11 +359,6 @@ export class SaleComponent implements OnInit {
       "purchase_data": this.purchase_data[0],
       "date": this.purchase_form.get('p_date').value
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.trd_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res, "get item");
@@ -505,13 +379,8 @@ export class SaleComponent implements OnInit {
   };
 
   invoicenumberPopup(saledata, index) {
-    // console.log(c, "customer data................");
-    // console.log(s, "sale data................");
-    // this.vendData = c;
     console.log(saledata);
-
     this.type = saledata.customerData.type;
-
     this.purchase_form.patchValue({
       invo: saledata.invoice_no,
       custmer_id: saledata.customerData.customer_id,
@@ -521,17 +390,12 @@ export class SaleComponent implements OnInit {
       payMode: saledata.method,
       payStatus: saledata.payment_status
     });
-
     console.log(index);
     this.invoiceTabopen();
-
     var p_form = this.updatePurchase.get('product')['controls'];
-
     for (let i = 0; i < saledata.sellData.length; i++) {
-
       if (saledata.sellData[i]) {
         this.add_row();
-
       p_form[i].patchValue({
         prud: saledata.sellData[i].prod_id,
         igst: saledata.sellData[i].igst,
@@ -549,35 +413,6 @@ export class SaleComponent implements OnInit {
     this.totalCalculation();
   }
 
-
-  // invoicenumberPopup(d) {
-  //   let total = 0;
-  //   let igstVal = 0;
-  //   let cgstVal = 0;
-  //   let sgstVal = 0;
-  //   this.popupData = d
-  //   console.log("pop====.>", this.popupData);
-  //   this.popupData.forEach(x => {
-  //     console.log(x.total);
-  //     total += x.total;
-  //     this.x = (x.cgst == 0) ? true : false;
-  //     this.y = (x.sgst == 0) ? true : false;
-  //     this.z = (x.igst == 0) ? true : false;
-  //     cgstVal = gst_rev(x.total, x.cgst);
-  //     sgstVal = gst_rev(x.total, x.sgst);
-  //     igstVal = gst_rev(x.total, x.igst);
-  //     x.igstVal = igstVal;
-  //     x.sgstVal = sgstVal;
-  //     x.cgstVal = cgstVal;
-  //   });
-  //   this.popupData.totalData = total;
-
-  //   console.log(this.popupData.total);
-  //   console.log(this.popupData);
-
-  //   this.modal = true
-
-  // }
   back() {
     this.purchase_tab = false;
     this.get_purchase_details();
@@ -647,8 +482,6 @@ export class SaleComponent implements OnInit {
 
   productdata(): FormGroup {
     return this.fb.group({
-
-      // category: new FormControl('Choosecat', [Validators.required]),
       prud: new FormControl('ChooseProduct', [Validators.required]),
       igst: new FormControl('', [Validators.required]),
       cgst: new FormControl('', [Validators.required]),
@@ -659,7 +492,6 @@ export class SaleComponent implements OnInit {
       discount: new FormControl('0', [Validators.required]),
       total: new FormControl('', [Validators.required]),
       edit: new FormControl(false)
-
     })
   }
 
@@ -678,23 +510,6 @@ export class SaleComponent implements OnInit {
   deleteRow(i) {
     (<FormArray>this.updatePurchase.get('product')).removeAt(i)
   }
-
-  // chooseCategory(item) {
-
-  //   console.log(item);
-
-  //   this.p_array = [];
-
-  //   for (let i = 0; i < this.itemData2.length; i++) {
-  //     if (this.itemData2[i].cat_id == item) {
-  //       this.p_array.push(this.itemData2[i]);
-  //     }
-  //   }
-
-  //   console.log(this.p_array);
-
-  // }
-
 
   chooseProduct(form_cont, item) {
 
@@ -787,60 +602,45 @@ export class SaleComponent implements OnInit {
     }
 
     console.log(form_cont);
-    // let gstTotal = (igst + cgst + sgst) / 100;
-
     let total: number = 0;
     let total_igst: number = 0;
     let total_cgst: number = 0;
     let total_sgst: number = 0;
-
     if (qt) {
-
       total_igst = parseFloat((igst * qt).toFixed(2));
       total_cgst = parseFloat((cgst * qt).toFixed(2));
       total_sgst = parseFloat((sgst * qt).toFixed(2));
       let gstTotal: number = (total_igst + total_cgst + total_sgst);
-
       if (discnt) {
         total = parseFloat((gstTotal + ((prc * qt) - discnt)).toFixed(2));
       } else {
         total = parseFloat((gstTotal + ((prc * qt) - 0)).toFixed(2));
       }
-
       form_cont.total.patchValue(total);
       form_cont.igst.patchValue(total_igst);
       form_cont.cgst.patchValue(total_cgst);
       form_cont.sgst.patchValue(total_sgst);
       console.log(form_cont);
     }
-
   }
 
-
   totalCalculation() {
-
     var pform = this.updatePurchase.get('product')['controls'];
-
     this.t_igst = 0;
     this.t_sgst = 0;
     this.t_cgst = 0;
     this.t_amount = 0;
-
     for (let i = 0; i < pform.length; i++) {
       this.t_igst = this.t_igst + pform[i].value.igst;
       this.t_sgst = this.t_sgst + pform[i].value.sgst;
       this.t_cgst = this.t_cgst + pform[i].value.cgst;
       this.t_amount = this.t_amount + pform[i].value.total;
     }
-
   }
   Edit(pform, i) {
-
     console.log(pform);
     console.log(pform.edit.value);
     pform.edit.value = true;
-
-
   }
 
   resetProductForm() {
@@ -885,7 +685,6 @@ export class SaleComponent implements OnInit {
     const reqBody = {
       "invoice": this.purchase_form.get('invo').value,
       "customer_id": this.purchase_form.get('custmer_id').value,
-      // "type": "rawmaterial",
       "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
       "sell_data": product_arr,
       "payment_status": this.purchase_form.get('payStatus').value,
@@ -893,16 +692,10 @@ export class SaleComponent implements OnInit {
       "paid_amount": this.purchase_form.get('amnt').value
 
     }
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.trd_updt_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         Notiflix.Report.success('SuccessFully Added', '', 'Close');
         console.log(res, "get item");
-        // this.get_purchase_details.emit();
         this.purchase_form.reset();
         this.invoiceTabclose();
       },

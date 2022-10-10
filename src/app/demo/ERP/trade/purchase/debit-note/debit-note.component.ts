@@ -24,7 +24,6 @@ export class DebitNoteComponent implements OnInit {
   adduserForm: FormGroup;
   control: FormGroup;
   userformnumber: []
-  // userinfo: any;
   vendor_data: any;
   manufacture_data: any;
   manufacture_data2: any;
@@ -102,9 +101,6 @@ export class DebitNoteComponent implements OnInit {
 
   getDebitData() {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
     const reqBody = {
       "type":"stock"
     }
@@ -138,9 +134,6 @@ export class DebitNoteComponent implements OnInit {
 
   getcategory() {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
     const cat_body = {
       "type": "rawmaterial"
     };
@@ -168,10 +161,6 @@ export class DebitNoteComponent implements OnInit {
 
   getVender() {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_Vendor).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
@@ -184,10 +173,6 @@ export class DebitNoteComponent implements OnInit {
   }
   getInvoiceNo() {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.getInvoiceNo).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res.data);
@@ -198,7 +183,6 @@ export class DebitNoteComponent implements OnInit {
           }
         });
         console.log(this.invoiceNoArr);
-        
       },
       (err: any) => {
         console.log(err);
@@ -224,22 +208,15 @@ export class DebitNoteComponent implements OnInit {
   
   getItem() {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_Item).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
         this.item_data = res.data;
         console.log(this.item_data);
-
       },
       (err: any) => {
         console.log(err);
-
       });
-
   }
 
   sortTable(colName: any) {
@@ -260,7 +237,6 @@ export class DebitNoteComponent implements OnInit {
   }
   userinfo(): FormGroup {
     return this.fb.group({
-
       "item": new FormControl('ch_item', [Validators.required]),
       "model_no": new FormControl('', [Validators.required]),
       "variant": new FormControl('', [Validators.required]),
@@ -271,8 +247,7 @@ export class DebitNoteComponent implements OnInit {
       "discount": new FormControl('', [Validators.required]),
       "b": new FormControl('', [Validators.required]),
       "tax": new FormControl('', [Validators.required]),
-      "amount": new FormControl('', [Validators.required]),
-
+      "amount": new FormControl('', [Validators.required])
     })
   }
   add_row() {
@@ -303,16 +278,13 @@ export class DebitNoteComponent implements OnInit {
       const vals = Object.values(d);
       return new RegExp(val, 'gi').test(vals.toString());
     });
-
     this.manufacture_data = temp;
-    // this.search_array = temp;
     this.manufacture_data_length = temp.length;
     console.log(this.manufacture_data_length);
   }
 
   searchmonth(m) {
     console.log(m);
-
     let p = this.manufacture_data2.map((x) => {
       return {
         item_name: x.item_name,
@@ -359,10 +331,7 @@ export class DebitNoteComponent implements OnInit {
     this.manufacture_data = p;
     var temp = this.manufacture_data.filter(a => {
       var date = new Date(a.return_date);
-      // date = date.parse(myDate);
-      // date = date.getTime();
       console.log(date);
-      
       return (date >= this.srh_date && date <= this.srh_date2);
     });
     console.log(temp)
@@ -370,9 +339,7 @@ export class DebitNoteComponent implements OnInit {
     this.search_date_array = temp;
     this.search_month_array = [];
     console.log(this.search_date_array);
-
     this.manufacture_data_length = temp.length;
-
   }
 
 }

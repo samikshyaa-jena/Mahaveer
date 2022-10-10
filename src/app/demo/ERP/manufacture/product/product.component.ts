@@ -89,11 +89,6 @@ export class ProductComponent implements OnInit {
   get_Product = () => {
     this.getProductData = [];
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
-    // this.ErpService.get_Reqs(erp_all_api.urls.getProduct).pipe(finalize(() => {this.loader = false;})).subscribe(
     this.ErpService.get_Reqs(erp_all_api.urls.get_profuct_req).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
@@ -115,11 +110,8 @@ export class ProductComponent implements OnInit {
   };
 
   add_Product = () => {
-    // this.loader = true;
     Notiflix.Loading.standard('Loading...');
     console.log(this.uploadedFiles);
-
-    // var gst: number = parseInt(this.addProductForm.get('gst').value);
     let p_name = this.addProductForm.get('prod_name').value
     console.log("prod_name==>", this.addProductForm.get('prod_name').value, p_name);
     const fd: any = new FormData();
@@ -129,22 +121,7 @@ export class ProductComponent implements OnInit {
     fd.append('unit', this.addProductForm.get('unit').value);
     fd.append('price', this.addProductForm.get('mrp').value);
     fd.append('hsn', this.addProductForm.get('hsn').value);
-    this.uploadedFiles ? fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name) : ''
-   
-
-    // const reqBody = {
-    //   prod_name: this.addProductForm.get('prod_name').value,
-    //   gst: parseInt(this.addProductForm.get('gst').value),
-    //   min_stock: parseInt(this.addProductForm.get('min_stk').value),
-    //   unit: this.addProductForm.get('unit').value,
-    //   price: 0,
-    //   prod_image: fd
-    // };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
+    this.uploadedFiles ? fd.append('prod_image', this.uploadedFiles, this.uploadedFiles.name) : '';
     this.ErpService.post_Reqs(erp_all_api.urls.addProduct, fd).pipe(finalize(() => { Notiflix.Loading.remove(); })).subscribe(
       (res: any) => {
         console.log(res);
@@ -172,11 +149,6 @@ export class ProductComponent implements OnInit {
       hsn: this.editProductForm.get('hsn').value,
       price: this.editProductForm.get('mrp').value
     };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.updateProduct, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
@@ -198,11 +170,6 @@ export class ProductComponent implements OnInit {
     const reqBody = {
       "prod_id": this.getProductData[i].prod_id
     };
-
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.post_Reqs(erp_all_api.urls.deleteProduct, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);

@@ -24,7 +24,6 @@ export class DebitNoteComponent implements OnInit {
   adduserForm: FormGroup;
   control: FormGroup;
   userformnumber: []
-  // userinfo: any;
   vendor_data: any;
   manufacture_data: any;
   manufacture_data2: any;
@@ -104,10 +103,6 @@ export class DebitNoteComponent implements OnInit {
 
   getInvoiceNo() {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.getInvoiceNo).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res.data);
@@ -144,9 +139,6 @@ export class DebitNoteComponent implements OnInit {
 
   getcategory() {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
     const cat_body = {
       "type": "rawmaterial"
     };
@@ -174,10 +166,6 @@ export class DebitNoteComponent implements OnInit {
 
   getVender() {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_Vendor).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
@@ -193,10 +181,6 @@ export class DebitNoteComponent implements OnInit {
 
   getItem() {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
-
     this.ErpService.get_Reqs(erp_all_api.urls.get_Item).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
         console.log(res);
@@ -212,9 +196,6 @@ export class DebitNoteComponent implements OnInit {
   }
   getDebitData() {
     this.loader = true;
-    // let auth_token = sessionStorage.getItem('CORE_SESSION');
-    // let headers = new HttpHeaders();
-    // headers = headers.set('auth-token', auth_token);
     const reqBody = {
       "type":"raw material"
     }
@@ -309,7 +290,6 @@ export class DebitNoteComponent implements OnInit {
     });
 
     this.manufacture_data = temp;
-    // this.search_array = temp;
     this.manufacture_data_length = temp.length;
     console.log(this.manufacture_data_length);
   }
@@ -363,8 +343,6 @@ export class DebitNoteComponent implements OnInit {
     this.manufacture_data = p;
     var temp = this.manufacture_data.filter(a => {
       var date = new Date(a.return_date);
-      // date = date.parse(myDate);
-      // date = date.getTime();
       console.log(date);
       
       return (date >= this.srh_date && date <= this.srh_date2);
@@ -438,8 +416,6 @@ export class DebitNoteComponent implements OnInit {
     }
 
     console.log(form_cont);
-    // let gstTotal = (igst + cgst + sgst) / 100;
-
     let total: number = 0;
     let total_gst: number = 0;
 
@@ -516,28 +492,16 @@ export class DebitNoteComponent implements OnInit {
     console.log(this.userForm.get('invo').value,);
     console.log(this.adduserformArray);
     const reqBody = {
-      // "invoice": this.purchase_form.get('invo').value,
-      // "customer_id": this.purchase_form.get('custmer').value,
-      // // "type": "rawmaterial",
-      // "date": this.datePipe.transform(this.purchase_form.get('p_date').value, 'yyyy-MM-dd'),
-      // "sell_data": user_arr,
-      // "payment_status": this.purchase_form.get('payStatus').value,
-      // "method": this.purchase_form.get('payMode').value,
-      // "paid_amount": this.purchase_form.get('amnt').value
-
     }
 
     this.ErpService.post_Reqs(erp_all_api.urls.trd_sale_entry, reqBody).pipe(finalize(() => { this.loader = false; })).subscribe(
       (res: any) => {
-        // Notiflix.Report.success('SuccessFully Added', '', 'Close');
         console.log(res, "get item");
         this.adduserForm.reset();
-        // this.previousPage();
       },
       (err: any) => {
         console.log(err);
         console.log(err.error.msg);
-        // Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
   };
 
