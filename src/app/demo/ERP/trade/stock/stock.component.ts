@@ -16,10 +16,13 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class StockComponent implements OnInit {
 
   stockData: any;
-  stockPopupData: any[];
+  stockInData: any[];
+  stockOutData: any[];
   stk_modal: boolean;
   loader: boolean;
   modeForm: any;
+  stk_in: boolean = true;
+  stockBasicData: any;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -38,6 +41,7 @@ export class StockComponent implements OnInit {
   ngOnInit(): void {
     // this.get_stock();
     this.get_rawMatData();
+  
   }
 
   changeType = (e)=>{
@@ -62,7 +66,7 @@ export class StockComponent implements OnInit {
 
     this.ErpService.get_Reqs(erp_all_api.urls.trd_get_rawMatData).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
-        console.log("response is",res);
+        // console.log("response is",res);
         this.stockData = res.data;
       },
       (err: any) =>{
@@ -71,8 +75,19 @@ export class StockComponent implements OnInit {
       });
   }
   stockTablePopup = (data, content)=>{
-    this.modalService.open(content);
-    this.stockPopupData = data;
+    // this.modalService.open(content);
+    this.stockInData = data.ItemHistory;
+    this.stockBasicData = data;
+    this.stockOutData = data.SaleHistory
+
+    // console.log("stok==>", this.stockBasicData);
+    
+  }
+
+  changeStockType = (change: boolean) => {
+    console.log("change-->", change);
+    
+    this.stk_in = change
   }
 
 }

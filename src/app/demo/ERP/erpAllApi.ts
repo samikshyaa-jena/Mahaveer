@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 let base_url = 'http://43.205.31.253:3000'
+=======
+// let base_url = 'http://43.205.31.253:3000'
+let base_url = 'http://localhost:3000'
+// let base_url = 'https://a432-/45-114-49-105.ngrok.io'
+>>>>>>> 089393b7ce9a740f500791a223922e1bf55c49a3
 export class erp_all_api{
     public static urls = {
         // manufaturing strarts
@@ -34,6 +40,7 @@ export class erp_all_api{
         add_product:base_url+'/manufacture/productEntry',
         update_product:base_url+'/manufacture/update_productionData',
         get_scrap:base_url+'/manufacture/fetchscrap',
+        get_scrap_data:base_url+'/manufacture/fetchscrap_data',
         add_scrap:base_url+'/manufacture/addscrap',
         get_consumption:base_url+'/manufacture/fetchConsumption',
         add_consumption:base_url+'/manufacture/addConsumption',
@@ -73,6 +80,16 @@ export class erp_all_api{
         getInvoiceNo: base_url+'/trade/prodPurchase',
         debitData: base_url+'/common/purchaseReturnData',
 
+<<<<<<< HEAD
+=======
+        get_next_scrap_invoice_no: base_url+'/trade/scrap_invoiceNo',
+        scrap_sell_update:base_url+'/trade/scrap_updateSalesEntry',
+        scrap_sell_entry:base_url+'/trade/scrap_salesEntry',
+        scrap_sell_record:base_url+'/trade/scrap_salesRecord',
+        
+
+        // updtPurc: base_url+'/trade/prodPurchaseEntry',
+>>>>>>> 089393b7ce9a740f500791a223922e1bf55c49a3
         // trade ends
 
         //quation start
@@ -87,6 +104,10 @@ export class erp_all_api{
 
         creditnote: base_url+'/common/creditNote',
         debitnote: base_url+'/common/debitNote',
+        stock: base_url+'/common/stock',
+
+        // User
+        fetchOrgData: base_url+'/users/fetchOrgData',
 
     };
     public static token = {

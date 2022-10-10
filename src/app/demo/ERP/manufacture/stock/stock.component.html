@@ -8,46 +8,48 @@
     </div>
 </div>
 <!-- Loader Ends -->
-<div class="container">
-    <div class="mode_change col-sm-12 mt-3 p-0">
-        <form [formGroup]="modeForm">
-            <button class="btn btn-primary text-white mr-1" style="cursor:not-allowed" title="Manufacture"
-                disabled>Manufacture</button>
-            <button class="btn btn-primary" routerLink="/v1/trade/stock" title="Go To Manufacture">Trade</button>
-        </form>
-    </div>
-    <div class="table-responsive">
-        <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Manufacture</h3>
-        <table class="table v-middle nowrap">
-            <thead>
-                <tr>
-                    <th class="border-top-0">Item Name</th>
-                    <th class="border-top-0">T_Quantity</th>
-                    <th class="border-top-0">T_Price</th>
+<div class="stockcontainer">
+    <div class="container">
+        <div class="mode_change col-sm-12 mt-3 p-0">
+            <button class="btn btn-primary text-white mr-1"  title="Trade" routerLink="/v1/trade/stock"
+                >Trade</button>
+            <button class="btn btn-primary" style="cursor:not-allowed" 
+                title="Go To Manufacture" disabled>Manufacture</button>
+        </div>
+        <div class="table-responsive">
+            <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Manufacture Stock</h3>
+            <table class="table v-middle nowrap">
+                <thead>
+                    <tr>
+                        <th class="border-top-0">Item</th>
+                        <th class="border-top-0">Quantity</th>
+                        <!-- <th class="border-top-0">T_Price</th>
                     <th class="border-top-0">Unit</th>
-                    <th class="border-top-0">GST</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of stockData; let i = index">
-                    <td><u style="color: blue; cursor: pointer;" (click)="stockTablePopup(data.ItemHistory, content2)">
-                            {{data.item_name}}</u>
-                    </td>
-                    <td>{{data.total_qty}}</td>
-                    <td>{{data.total_price}}</td>
+                    <th class="border-top-0">GST</th> -->
+                    </tr>
+                </thead>
+                <tbody class="item_body">
+                    <tr *ngFor="let data of stockData; let i = index">
+                        <td (click)="stockTablePopup(data, content2)">
+                            {{data.item_name}}
+                        </td>
+                        <td>{{data.total_qty}}</td>
+                        <!-- <td>{{data.total_price}}</td>
                     <td>{{data.unit}}</td>
-                    <td>{{data.gst}}</td>
-                </tr>
-            </tbody>
-        </table>
+                    <td>{{data.gst}}</td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
-<!-- modal starts -->
+    <!-- modal starts -->
+    <!-- 
 <ng-template #content let-c="close" let-d="dismiss">
-    <!-- <div class="modal-header">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Hi there!</h4>
         <i class="fa fa-times-circle" aria-hidden="true" (click)="d('Cross click')"></i>
-    </div> -->
+    </div>
     <div class="modal-body">
 
     </div>
@@ -55,14 +57,13 @@
         <button type="button" class="btn btn-outline-dark" (click)="close(content)">Submit</button>
         <button type="button" class="btn btn-outline-dark" (click)="close(content)">Cancel</button>
     </div>
-</ng-template>
-<!-- popup btn starts -->
-
-<!-- <div id="myModal2" class="modal2" *ngIf="stk_modal"> -->
-    <!-- <button class="btn btn-danger text-right" (click)="stk_modal=false"><i class="fas fa-times-circle"></i></button> -->
+</ng-template> -->
+    <!-- popup btn starts -->
+    <!-- 
 <ng-template #content2 let-c="close" let-d="dismiss">
     <div class="modal-header">
-        <div class="w-100 text-right"><i class="fa fa-times-circle" aria-hidden="true" (click)="close('content2')"></i></div>
+        <div class="w-100 text-right"><i class="fa fa-times-circle" aria-hidden="true" (click)="close('content2')"></i>
+        </div>
     </div>
     <div class="modal-body">
         <table class="table table-bordered">
@@ -84,5 +85,85 @@
             </tbody>
         </table>
     </div>
-</ng-template>
+</ng-template> -->
 
+<div class="container">
+
+    <div class="item_history">
+        <div *ngIf="stockBasicData" class="itembasicdataContainer">
+
+            <div class="itemdata"><b>{{stockBasicData.item_name.toUpperCase()}}</b></div>
+            <div class="itemdata"></div>
+            <div class="itemdata"><button class="btn btn-primary mr-1" 
+                    title="Stock_in">Adjust Item (not complete)</button></div>
+            <div class="itemdata" style="float: right;">Price : {{(stockBasicData.price) ? stockBasicData.price :
+                0}}</div>
+            <div class="itemdata"></div>
+            <div class="itemdata" style="float: right;">Stock Quantity: {{stockBasicData.total_qty}}</div>
+
+        </div>
+        <h3 class="mb-3 mt-3" style="color: blue; font-weight: 700;">Transactions</h3>
+        <div class="mode_change col-sm-12 mt-3 p-0">
+            <button class="btn btn-primary mr-1" (click)="changeStockType(true)" title="Stock_in">Stock
+                In</button>
+            <button class="btn btn-primary" (click)="changeStockType(false)" title="Stock_out">Stock
+                Out</button>
+        </div>
+        <table *ngIf="stk_in === true" class="table v-middle wrap">
+            <thead>
+                <tr>
+                    <th class="border-top-0">Invoice </th>
+                    <th class="border-top-0">Quantity</th>
+                    <th class="border-top-0">Vendor Name</th>
+                    <!-- <th class="border-top-0">Unit</th> -->
+                    <!-- <th class="border-top-0">discount</th>
+                    <th class="border-top-0">total</th> -->
+                </tr>
+            </thead>
+            <!-- <tbody class="item_body"> -->
+            <tbody class="bg-white">
+                <tr *ngFor="let e of stockInData; let i = index">
+                    <td class="text-center">{{e.invoice_no}}</td>
+                    <td class="text-center">{{e.qty}}</td>
+                    <!-- <td class="text-center">{{e.unit}}</td> -->
+                    <td class="text-center">{{e.vendor_name}}</td>
+                    <!-- <td class="text-center">{{e.discount}}</td>
+                    <td class="text-center">{{e.total}}</td> -->
+                    <!-- <td class="text-center">{{e.price}}</td> -->
+
+                </tr>
+
+            </tbody>
+
+        </table>
+        <table *ngIf="stk_in === false" class="table v-middle wrap">
+            <thead>
+                <tr>
+                    <!-- <th class="border-top-0">Invoice No</th> -->
+                    <th class="border-top-0">Used Quantity</th>
+                    <th class="border-top-0">Product Name</th>
+                    <!-- <th class="border-top-0">Unit</th> -->
+                    <th class="border-top-0">Prod Qty</th>
+                    <th class="border-top-0">Sell Date</th>
+                    <th class="border-top-0">Production Status</th>
+                </tr>
+            </thead>
+            <!-- <tbody class="item_body"> -->
+
+            <tbody class="bg-white">
+                <tr *ngFor="let e of stockOutData; let i = index">
+                    <!-- <td class="text-center">{{e.invoice_no}}</td> -->
+                    <td class="text-center">{{e.mat_qty}}</td>
+                    <td class="text-center">{{e.prod_name}}</td>
+                    <td class="text-center">{{e.prod_qty}}</td>
+                    <td class="text-center">{{(e.entry_date).split('T')[0]}}</td>
+                    <td class="text-center">{{e.status}}</td>
+                    <!-- <td class="text-center">{{e.price}}</td> -->
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>

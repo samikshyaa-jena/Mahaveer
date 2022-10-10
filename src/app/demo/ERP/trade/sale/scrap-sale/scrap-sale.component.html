@@ -1,232 +1,282 @@
-<button type="button" class="btn back_btn mt-3" (click)="previousPage()"><i
-    class="fas fa-arrow-alt-circle-left"></i></button>
+<!-- Loader Starts -->
+<div *ngIf="loader"
+  class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
+  <div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+<!-- Loader Ends -->
+
+<app-scrap-sale-add *ngIf="purchase_tab && !invoice" (get_purchase_details)="get_purchase_details()" (BackTab)="back()">
+</app-scrap-sale-add>
+<div class="invoiceTab" *ngIf="!pdf">
+  <div class="container card" style="padding: 15px" *ngIf="!purchase_tab && !invoice">
+    <!-- <div class="card"> -->
+    <!-- <div> -->
+    <div class="mt-3">
+      <button class="btn btn-primary mb-3 mt-2" (click)="purchase_entry()">
+        Scrap Sale Entry
+      </button>
+    </div>
+    <div class="prod_table px-0 py-0 mx-0 my-0">
+      <div class="table-responsive px-0 py-0 mx-0 my-0">
+        <table class="table v-middle nowrap">
+          <thead class="table-secondary">
+            <tr>
+              <th class="border-top-0">Invoice</th>
+              <th class="border-top-0">Date</th>
+              <th class="border-top-0">Customer</th>
+              <th class="border-top-0">GSTN</th>
+              <th class="border-top-0">CGST</th>
+              <th class="border-top-0">SGST</th>
+              <th class="border-top-0">IGST</th>
+              <th class="border-top-0">Total</th>
+              <th class="border-top-0">Print</th>
+              <!-- <th class="border-top-0">Action</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of get_purchase_data; let i = index">
+              <td class="invoice_no" title="update">
+                <span (click)="invoicenumberPopup(data,i)">{{ data.invoice_no
+                  }}</span>
+              </td>
+              <td>{{ data.sell_date | date: "dd/MM/yyyy" }}</td>
+              <td>{{ data.customerData.name }}</td>
+              <td>{{ data.customerData.gstn }}</td>
+              <td>{{ (data.totalcgst).toFixed(2) }}</td>
+              <td>{{ (data.totalsgst).toFixed(2) }}</td>
+              <td>{{ (data.totaligst).toFixed(2) }}</td>
+              <td>{{ (data.totalsum).toFixed(2) }}</td>
+              <td><span title="View Invoice" style="cursor: pointer;" (click)="generateInvoice(data.invoice_no)"><i
+                    class="fa fa-print" aria-hidden="true"></i></span></td>
+              <!-- <td>
+                    <span title="View Invoice" style="cursor: pointer;" (click)="openInvoice(content,data.invoice_no)">
+                      <i class="fa fa-print" aria-hidden="true"></i>
+                    </span>
+                  </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- </div> -->
+    <!-- </div> -->
+  </div>
+</div>
+<div class="genPdfSectio" *ngIf="pdf">
+  <app-invoice (newItemEvent)="hidePdf($event)" [page]="'sale'" [invoiceData]="pdfData"></app-invoice>
+</div>
 
 
-<div class="card main_cnt mb-3">
 
-<div class="main_heading">Scrap Sales Entry</div>
-<hr style="margin: 1% auto 1.5% -3%; width: 106%;">
-<form [formGroup]="purchase_form">
-    <div class="col-sm-12 px-0 d-flex flex-row">
-        <div class="col-sm-2 ">
-            <label for="">Scrap Invoice Number <span class="text-danger">*</span></label>
-            <input type="text" formControlName="invo" class="form-control field_height" readonly="true">
-        </div>
+
+<div *ngIf="invoice && !purchase_tab">
+
+
+  <button type="button" class="btn back_btn mt-3" (click)="invoiceTabclose(); resetProductForm()"><i
+      class="fas fa-arrow-alt-circle-left"></i></button>
+
+  <div class="card main_cnt mb-3">
+
+    <div class="main_heading">Update Scrap Sale</div>
+    <hr style="margin: 1% auto 1.5% -3%; width: 106%;">
+    <form [formGroup]="purchase_form">
+      <div class="col-sm-12 px-0 d-flex flex-row">
         <div class="col-sm-3 pl-0">
-            <label for="">Customer Name <span class="text-danger">*</span></label>
-            <select class="form-control field_height" formControlName="custmer"
-                (ngModelChange)="vendorType($event); resetProductForm()">
-                <option value="choose_cname" disabled>Choose</option>
-                <option [value]="vendor.customer_id" *ngFor="let vendor of getVendorData">{{vendor.name}}
-                </option>
-            </select>
+          <label for="">Invoice Number</label>
+          <input type="text" formControlName="invo" class="form-control field_height" readonly>
+        </div>
+        <div class="col-sm-2 pl-0">
+          <label for="">Custmer Name</label>
+          <input type="hidden" formControlName="custmer_id" class="form-control field_height">
+          <input type="text" formControlName="custmer" class="form-control" readonly>
 
         </div>
         <div class="col-sm-2">
-            <label for="">Purchase Date <span class="text-danger">*</span></label>
-            <input name="dateRange" [owlDateTimeTrigger]="dt1" [owlDateTime]="dt1" formControlName="p_date"
-                class="form-control field_height" [max]="today" readonly="true" placeholder="YYYY-MM-DD">
-            <owl-date-time [pickerType]="'calendar'" #dt1></owl-date-time>
+          <label for="">Purchase Date</label>
+          <input type="text" formControlName="p_date" class="form-control field_height" readonly>
         </div>
+        <!-- <ng-template *ngIf="showInps"> -->
         <div class="col-sm-2 ">
-            <label for="">Payment Status <span class="text-danger">*</span></label>
-            <select formControlName="payStatus" class="form-control field_height">
-                <option value="choosepay" disabled>Choose Payment Status</option>
-                <option value="paid">Fully Paid</option>
-                <option value="part_paid">Partial Paid</option>
-                <option value="not_init">Not Initiated</option>
-            </select>
+          <label for="">Payment Status</label>
+          <!-- <input type="text" formControlName="payStatus" class="form-control" readonly> -->
+          <select formControlName="payStatus" class="form-control field_height">
+            <option value="paid">Fully Paid</option>
+            <option value="part_paid">Partial Paid</option>
+            <option value="not_init">Not Initiated</option>
+          </select>
         </div>
         <div class="col-sm-2">
-            <label for="">Payment Mode <span class="text-danger">*</span></label>
-            <select formControlName="payMode" class="form-control field_height">
-                <option value="choosepaymode" disabled>Choose Payment Mode</option>
-                <option value="cash">Cash</option>
-                <!-- <option value="online">Online</option>
-                <option value="cheque">Cheque</option>
-                <option value="credit">Credit</option> -->
-            </select>
+          <label for="">Payment Mode</label>
+          <!-- <input type="text" formControlName="payMode" class="form-control" readonly> -->
+          <select formControlName="payMode" class="form-control field_height">
+            <option value="cash">Cash</option>
+            <!-- <option value="online">Online</option> -->
+            <!-- <option value="cheque">Cheque</option> -->
+            <!-- <option value="credit">Credit</option> -->
+          </select>
         </div>
         <div class="col-sm-1 px-0">
-            <label for="">Amount <span class="text-danger">*</span></label>
-            <input type="text" formControlName="amnt" class="form-control field_height" [readonly]="purchase_form.value.payStatus !='part_paid'">
+          <label for="">Amount</label>
+          <input type="text" formControlName="amnt" class="form-control field_height" readonly>
         </div>
         <!-- </ng-template> -->
-    </div>
-</form>
-<table class="table w-100 mt-5" *ngIf="productformarray.length!=0">
-    <thead class="bg-primary">
-        <tr>
-            <th class="text-white" scope="col">Product Id</th>
-            <th class="text-white" scope="col">Item Id</th>
-            <th class="text-white" scope="col">IGST</th>
-            <th class="text-white" scope="col">CGST</th>
-            <th class="text-white" scope="col">SGST</th>
-            <th class="text-white" scope="col">HSN</th>
-            <th class="text-white" scope="col">Price</th>
-            <th class="text-white" scope="col">Quantity</th>
-            <th class="text-white" scope="col">Discount</th>
-            <th class="text-white" scope="col">Total</th>
-            <th class="text-white" scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let data of duplicateproductformarray;let i=index">
+      </div>
+    </form>
 
-            <td class="td_e">{{data.category}}</td>
-            <td class="td_e">{{data.prod_id}}</td>
-            <td class="td_e">{{data.igst}}</td>
-            <td class="td_e">{{data.cgst}}</td>
-            <td class="td_e">{{data.sgst}}</td>
-            <td class="td_e">{{data.hsn}}</td>
-            <td class="td_e">{{data.price}}</td>
-            <td class="td_e">{{data.qty}}</td>
-            <td class="td_e">{{data.discount}}</td>
-            <td class="td_e">{{data.total}}</td>
-            <td class="td_e" (click)="delete(i)"><i class="fa fa-trash" aria-hidden="true"></i></td>
-        </tr>
+    <!-- <div class="row col-sm-12" *ngIf="productformarray.length!=0">
 
-    </tbody>
-</table>
-<!-- <div class="row col-sm-12" *ngIf="productformarray.length!=0">
+      <div class="col-sm-12 text-right"><button class="btn btn-success"
+              (click)="add_purchase_details()">Submit</button></div>
+                      </div> -->
 
-    <div class="col-sm-12 text-right"><button class="btn btn-success"
-            (click)="add_purchase_details()">Submit</button></div>
-                    </div> -->
+    <!-- </div> -->
+    <!-- </div> -->
 
-<!-- </div> -->
-<!-- </div> -->
+    <div class="mt-3">
+      <form [formGroup]="updatePurchase">
+        <table class="table2">
+          <thead>
+            <tr>
+              <!-- <th>Category</th> -->
+              <th>Product</th>
+              <th>Hsn</th>
+              <th>Quantity</th>
+              <th style="white-space: nowrap;">Sale Price</th>
+              <th>Discount</th>
+              <th>CGST</th>
+              <th>SGST</th>
+              <th>IGST</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
 
-<div class="mt-3">
-    <form [formGroup]="productForm">
-        <table class="table">
-            <thead class="bg-white">
-                <tr>
-                    <th style="width: 25%;">Product</th>
-                    <th>Hsn</th>
-                    <th>Quantity</th>
-                    <th style="white-space: nowrap;">Sale Price</th>
-                    <th>Discount</th>
-                    <th>CGST</th>
-                    <th>SGST</th>
-                    <th>IGST</th>
-                    <th>Total</th>
-                    <th>Delete</th>
-                </tr>
-
-            </thead>
-            <tbody>
-                <ng-container formArrayName="product">
-                    <tr *ngFor="let Product of productForm.get('product')['controls'];let i=index"
-                        [formGroupName]="i">
-                        <td class="td_e">
-                            <select class="form-control table_input" id="category"
-                                (change)="chooseCategory(Product, $event.target.value); totalCalculation()"
-                                formControlName="category" [disabled]="purchase_form.invalid">
-                                <option selected value="ChooseProduct" disabled>Choose Product</option>
-                                <option class="disable" *ngFor="let scrap of getScrapType;let i=index"
-                                    [value]="scrap.scrap_id"
-                                    [disabled]="purchase_form.invalid || purchase_form.get('custmer').value == 'choose_cname' || purchase_form.get('payStatus').value == 'choosepay' || purchase_form.get('payMode').value == 'choosepaymode'">
-                                    {{scrap.type}}</option>
-                            </select>
-                        </td>
-                      
-                        <td class="td_e"><input type="text" formControlName="hsn" class="form-control table_input" disabled>
-                        </td>
-                        <td class="td_e"><input type="number" formControlName="qty" id="qty" class="form-control table_input"
-                                (input)="calc_total(Product.controls); totalCalculation()"
-                                (keypress)="prevent($event, 'qty')" min="1"
-                                [readonly]="Product.controls.category.value == 'ChooseProduct'">
-                        </td>
-                        <td class="td_e"><input type="number" formControlName="price" id="price" class="form-control table_input"
-                                disabled></td>
-                        <td class="td_e"><input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
-                                min="0" id="discount" class="form-control table_input"
-                                (input)="calc_total(Product.controls); totalCalculation()"
-                                [readonly]="Product.controls.category.value == 'ChooseProduct'"></td>
-                        <td class="td_e"><input type="number" formControlName="cgst" class="form-control table_input" disabled>
-                        </td>
-                        <td class="td_e"><input type="number" formControlName="sgst" class="form-control table_input" disabled>
-                        </td>
-                        <td class="td_e"><input type="number" formControlName="igst" class="form-control table_input" disabled>
-                        </td>
-                        <td class="td_e"><input type="number" formControlName="total" class="form-control table_input" readonly>
-                        </td>
-                        <td class="delete_btn">
-                            <button border="none" class="btn text-danger disable"
-                                (click)="deleteRow(i); totalCalculation()"
-                                [disabled]="productForm.get('product').length == 1"><i
-                                    class="fas fa-times-circle"></i></button>
-                        </td>
-                    </tr>
-                </ng-container>
-            </tbody>
-            <tfoot>
-                <tr style="border: 1px solid lightgray;">
-                    <td colspan="2" style="white-space: nowrap; float: left; padding: 2px; border: 0;"><button
-                            class="btn text-info disable" (click)="add_row()"
-                            [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.category == 'ChooseProduct'">
-                            <span><i class="fas fa-plus"></i>&nbsp; &nbsp;</span><span>Add Row</span>
-                        </button>
-                    </td>
-                </tr>
-            </tfoot>
+          </thead>
+          <tbody>
+            <ng-container formArrayName="product">
+              <tr *ngFor="let Product of updatePurchase.get('product')['controls'];let i=index" [formGroupName]="i">
+                <td class="td_e">
+                  <select class="form-control table_input" id="prud"
+                    (change)="chooseProduct(Product, $event.target.value); totalCalculation()" formControlName="prud"
+                    [disabled]="purchase_form.invalid">
+                    <option selected value="ChooseProduct" disabled>Choose Product</option>
+                    <option class="disable" *ngFor="let prod of itemData2;let i=index" [value]="prod.prod_id">
+                      {{prod.prod_name}}</option>
+                    <!-- <option class="disable" *ngFor="let prod of itemData2;let i=index" [value]="prod.prod_id"
+                      [disabled]="Product.controls.edit.value == false">
+                      {{prod.prod_name}}</option> -->
+                  </select>
+                </td>
+                <td class="td_e"><input type="text" formControlName="hsn" class="form-control table_input" disabled>
+                </td>
+                <td class="td_e">
+                  <input type="number" formControlName="qty" id="qty" class="form-control table_input"
+                    (input)="calc_total(Product.controls); totalCalculation()" (keypress)="prevent($event, 'qty')"
+                    min="1"
+                    [readonly]="Product.controls.prud.value == 'ChooseProduct'">
+                  <!-- <input type="number" formControlName="qty" id="qty" class="form-control table_input"
+                    (input)="calc_total(Product.controls); totalCalculation()" (keypress)="prevent($event, 'qty')"
+                    min="1"
+                    [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'"> -->
+                </td>
+                <td class="td_e">
+                  <input type="number" formControlName="price" id="price"
+                    class="form-control table_input"
+                    [readonly]="Product.controls.prud.value == 'ChooseProduct'">
+                  <!-- <input type="number" formControlName="price" id="price"
+                    class="form-control table_input"
+                    [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'"> -->
+                </td>
+                <td class="td_e">
+                  <input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
+                    min="0" id="discount" class="form-control table_input"
+                    (input)="calc_total(Product.controls); totalCalculation()"
+                    [readonly]="Product.controls.prud.value == 'ChooseProduct'">
+                  <!-- <input type="number" formControlName="discount" (keypress)="prevent($event,'dis')"
+                    min="0" id="discount" class="form-control table_input"
+                    (input)="calc_total(Product.controls); totalCalculation()"
+                    [readonly]="Product.controls.edit.value == false || Product.controls.prud.value == 'ChooseProduct'"> -->
+                </td>
+                <td class="td_e"><input type="number" formControlName="cgst" class="form-control table_input" disabled>
+                </td>
+                <td class="td_e"><input type="number" formControlName="sgst" class="form-control table_input" disabled>
+                </td>
+                <td class="td_e"><input type="number" formControlName="igst" class="form-control table_input" disabled>
+                </td>
+                <td class="td_e"><input type="number" formControlName="total" class="form-control table_input" readonly>
+                </td>
+                <!-- <td class="td_e">
+                              <button border="none" class="btn btn-primary disable" (click)="submitArray(i)"
+                                  [disabled]="i.invalid"><i class="fas fa-check"></i></button>
+                          </td> -->
+                <td class="delete_btn">
+                  <button border="none" class="btn text-danger mr-1 disable" (click)="deleteRow(i); totalCalculation()"
+                    [disabled]="updatePurchase.get('product').length == 1"><i class="fas fa-times-circle"></i></button>
+                  <!-- <button border="none" class="btn text-info disable" formControlName="edit"
+                    (click)="Edit(Product.controls, i)"><i class="fa fa-edit" aria-hidden="true"></i></button> -->
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+          <tfoot>
+            <tr style="border: 1px solid lightgrey;">
+              <td colspan="2" style="white-space: nowrap; float: left; padding: 2px; border: 0;"><button
+                  class="btn text-info disable" (click)="add_row2()"
+                  [disabled]="updatePurchase.get('product')['controls'][updatePurchase.get('product')['controls'].length-1].value.prud == 'ChooseProduct'">
+                  <span><i class="fas fa-plus"></i>&nbsp; &nbsp;</span><span>Add Row</span>
+                </button>
+              </td>
+            </tr>
+          </tfoot>
 
         </table>
 
-    </form>
-</div>
-
-
-
-<div class="total_cal mb-4">
-    <table style="width: 290px; color: black;">
-        <tr>
-            <th style="width: 120px;"></th>
-            <th style="width: 50px;"></th>
-            <th style="width: 120px;"></th>
-        </tr>
-        <tr>
-            <td>Total IGST</td>
-            <td>:</td>
-            <td><input name="t_igst" [(ngModel)]="t_igst" class="total_cal_field" type="text" readonly></td>
-        </tr>
-        <tr>
-            <td>Total SGST</td>
-            <td>:</td>
-            <td><input name="t_sgst" [(ngModel)]="t_sgst" class="total_cal_field" type="text" readonly></td>
-        </tr>
-        <tr>
-            <td>Total CGST</td>
-            <td>:</td>
-            <td><input name="t_cgst" [(ngModel)]="t_cgst" class="total_cal_field" type="text" readonly></td>
-        </tr>
-        <tr>
-            <td>Total Amount</td>
-            <td>:</td>
-            <td><input name="t_amount" [(ngModel)]="t_amount" class="total_cal_field" type="text" readonly></td>
-        </tr>
-    </table>
-</div>
-
-<hr style="margin: 1% auto 1.5% -3%; width: 106%; margin-top: 10%;">
-
-<div class="footer_btn">
-    <button class="btn btn-warning mr-2" (click)="resetProductForm(); previousPage()">Cancel</button>
-    <button class="btn btn-primary disable" (click)="add_purchase_details()"
-        [disabled]="productForm.get('product')['controls'][productForm.get('product')['controls'].length-1].value.category == 'ChooseProduct'">Submit</button>
-</div>
-
-</div>
-
-
-
-<div *ngIf="loader"
-class="spinner-container spinner-container d-flex position-fixed h-100 w-100 justify-content-center align-items-center">
-<div class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
+      </form>
     </div>
+
+
+
+    <div class="total_cal mb-4">
+      <table style="width: 290px; color: black;">
+        <tr>
+          <th style="width: 120px;"></th>
+          <th style="width: 50px;"></th>
+          <th style="width: 120px;"></th>
+        </tr>
+        <tr>
+          <td>Total IGST</td>
+          <td>:</td>
+          <td><input name="t_igst" [(ngModel)]="t_igst" class="total_cal_field" type="text" readonly></td>
+        </tr>
+        <tr>
+          <td>Total SGST</td>
+          <td>:</td>
+          <td><input name="t_sgst" [(ngModel)]="t_sgst" class="total_cal_field" type="text" readonly></td>
+        </tr>
+        <tr>
+          <td>Total CGST</td>
+          <td>:</td>
+          <td><input name="t_cgst" [(ngModel)]="t_cgst" class="total_cal_field" type="text" readonly></td>
+        </tr>
+        <tr>
+          <td>Total Amount</td>
+          <td>:</td>
+          <td><input name="t_amount" [(ngModel)]="t_amount" class="total_cal_field" type="text" readonly></td>
+        </tr>
+      </table>
+    </div>
+
+    <hr style="margin: 1% auto 1.5% -3%; width: 106%; margin-top: 10%;">
+
+    <div class="footer_btn">
+      <button class="btn btn-warning mr-2" (click)="invoiceTabclose()">Cancel</button>
+      <button class="btn btn-primary disable"
+        [disabled]="updatePurchase.get('product')['controls'][updatePurchase.get('product')['controls'].length-1].value.prud == 'ChooseProduct'"
+        (click)="update_purchase_details()">Update</button>
+    </div>
+
+  </div>
 </div>
-</div>
-<!-- Loader Ends -->

@@ -20,6 +20,10 @@ export class StockComponent implements OnInit {
   stk_modal: boolean;
   loader: boolean;
   modeForm: any;
+  stockInData: any[];
+  stockOutData: any[];
+  stockBasicData: any;
+  stk_in: boolean = true;
 
   constructor(
     private ErpService: ErpServiceService,
@@ -27,20 +31,20 @@ export class StockComponent implements OnInit {
     private router: Router,
     config: NgbModalConfig,
     private modalService: NgbModal
-  ) { 
+  ) {
     config.backdrop = 'static';
     config.keyboard = false;
 
     this.modeForm = new FormGroup({
       mode: new FormControl("Choose Type")
     });
-   }
+  }
 
   ngOnInit(): void {
     this.get_rawMatData();
   }
 
-  changeType = (e)=>{
+  changeType = (e) => {
     console.log(e);
     if (e == 'trade') {
       this.router.navigate(["/v2/Erpmain/trade/stock"])
@@ -48,7 +52,7 @@ export class StockComponent implements OnInit {
   }
 
 
-// popup open
+  // popup open
   open(content) {
     this.modalService.open(content);
   }
@@ -56,22 +60,48 @@ export class StockComponent implements OnInit {
   close(content) {
     this.modalService.dismissAll(content);
   }
-  get_rawMatData(){
+  get_rawMatData() {
     this.loader = true;
+<<<<<<< HEAD
     this.ErpService.get_Reqs(erp_all_api.urls.get_rawMatData).pipe(finalize(() => {this.loader = false;})).subscribe(
       (res: any) =>{
         console.log("response is",res);
         this.stockData = res.data;
+=======
+    // let auth_token = sessionStorage.getItem('CORE_SESSION');
+    // let headers = new HttpHeaders();
+    // headers = headers.set('auth-token', auth_token);
+
+    this.ErpService.get_Reqs(erp_all_api.urls.stock).pipe(finalize(() => { this.loader = false; })).subscribe(
+      (res: any) => {
+        // console.log("response is", res);
+        // for (const iterator of res.data) {
+        this.stockData = res.data.filter((el, i) => { return el.c == "manufacture" })
+        // }
+        // this.stockData = res.data;
+        // console.log("hshs=>", this.stockData);        
+>>>>>>> 089393b7ce9a740f500791a223922e1bf55c49a3
       },
-      (err: any) =>{
+      (err: any) => {
         console.log(err);
         Notiflix.Report.failure(err.error.msg, '', 'Close');
       });
   }
-  stockTablePopup = (data, content)=>{
-    console.log(data);
-    this.modalService.open(content);
-    this.stockPopupData = data;
+  stockTablePopup = (data, content) => {
+    // this.modalService.open(content);
+    this.stockInData = data.ItemHistory;
+    this.stockBasicData = data;
+    this.stockOutData = data.out_history
+
+    // console.log("stok==>", this.stockBasicData);
+
   }
+
+  changeStockType = (change: boolean) => {
+    console.log("change-->", change);
+
+    this.stk_in = change
+  }
+
 
 }

@@ -225,8 +225,8 @@ export class PurchaseComponent implements OnInit {
     this.ErpService.get_Reqs(erp_all_api.urls.getTradeCat).pipe(finalize(() => { })).subscribe(
       (res: any) => {
         this.getCategoryData = res.data;
-        console.log("response is", this.getCategoryData);
-        console.log("resps", Object.values(this.getCategoryData));
+        // console.log("response is", this.getCategoryData);
+        // console.log("resps", Object.values(this.getCategoryData));
       },
       (err: any) => {
         console.log(err);
